@@ -1,256 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#092d22">
 <meta name="description" content="A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.">
-<meta property="og:title" content="Ulimi wa Malawi | Agriculture Knowledge Hub">
-<meta property="og:description" content="A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.">
 <title>Ulimi wa Malawi | Agriculture Knowledge Hub</title>
-<style>
-:root{--forest:#092d22;--forest2:#103f30;--green:#176b4a;--mint:#dff1e7;--lime:#a9d8b7;--paper:#f5f8f5;--white:#fff;--ink:#18251f;--muted:#66756d;--line:#e1e9e3;--shadow:0 16px 44px rgba(8,40,28,.09);--radius:22px}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}.shell{min-height:100vh}.topbar{height:76px;background:rgba(9,45,34,.97);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,72px);position:sticky;top:0;z-index:30;border-bottom:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.02em}.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#b9e6c8,#4d9d70);display:grid;place-items:center;color:#092d22;font-size:23px;box-shadow:0 8px 22px #0002}.brand small{display:block;font-size:10px;letter-spacing:.15em;color:#b9d9c5;font-weight:650;margin-top:3px}.nav{display:flex;align-items:center;gap:7px}.nav a{padding:11px 14px;border-radius:999px;color:#d5e7dc;font-size:13px;font-weight:650;transition:.2s}.nav a:hover,.nav a.active{background:#ffffff17;color:#fff}.top-actions{display:flex;align-items:center;gap:10px}.pill{border:1px solid #ffffff30;color:#e8f5ec;padding:9px 13px;border-radius:999px;font-size:12px;font-weight:700}.menu-btn{display:none;background:#ffffff14;border:1px solid #ffffff30;color:white;border-radius:12px;padding:9px 12px}.container{width:min(1180px,calc(100% - 40px));margin:auto}.hero{background:radial-gradient(circle at 82% 15%,#2b7957 0,transparent 29%),linear-gradient(120deg,#092d22,#104c37 65%,#176b4a);color:#fff;padding:68px 0 58px;overflow:hidden;position:relative}.hero:after{content:"";position:absolute;width:460px;height:460px;border:1px solid #ffffff14;border-radius:50%;right:-150px;bottom:-290px;box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff05}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:44px;align-items:center;position:relative;z-index:1}.eyebrow{display:inline-flex;gap:9px;align-items:center;color:#d3eadb;background:#ffffff12;border:1px solid #ffffff22;border-radius:999px;padding:8px 13px;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:#a8e4b8;box-shadow:0 0 0 4px #a8e4b822}.hero h1{font-size:clamp(36px,5vw,60px);line-height:1.04;letter-spacing:-.045em;margin:22px 0 15px;max-width:700px}.hero h1 span{color:#b9e8c6}.hero p{max-width:620px;color:#d3e5da;font-size:16px;line-height:1.75;margin:0}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.btn{border:0;border-radius:13px;padding:13px 18px;font-weight:800;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;transition:transform .2s,box-shadow .2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:#dff1e7;color:#0b3a2a;box-shadow:0 10px 25px #001c1238}.btn-ghost{background:#ffffff12;color:white;border:1px solid #ffffff36}.hero-panel{background:#fff;color:var(--ink);border-radius:26px;padding:24px;box-shadow:0 25px 70px #001a1240;max-width:390px;justify-self:end;width:100%;transform:rotate(1deg)}.panel-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.panel-label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase}.panel-badge{font-size:10px;background:var(--mint);color:var(--green);font-weight:800;border-radius:999px;padding:7px 10px}.panel-title{font-size:20px;font-weight:850;letter-spacing:-.03em;margin:0 0 6px}.panel-copy{font-size:12px;color:var(--muted);line-height:1.6}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}.stat{background:#f3f8f4;border:1px solid #e6eee8;border-radius:14px;padding:13px 10px}.stat strong{display:block;font-size:22px;color:var(--forest)}.stat span{font-size:10px;color:var(--muted);font-weight:700}.main{padding:36px 0 70px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}.section-kicker{font-size:10px;color:var(--green);font-weight:850;letter-spacing:.16em;text-transform:uppercase}.section-head h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;margin:7px 0 5px;color:var(--forest)}.section-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:48px}.feature{background:white;border:1px solid var(--line);border-radius:19px;padding:20px;box-shadow:0 7px 25px #0c35200a}.feature-icon{width:42px;height:42px;border-radius:13px;background:var(--mint);display:grid;place-items:center;font-size:20px;margin-bottom:13px}.feature h3{margin:0 0 7px;font-size:15px;color:var(--forest)}.feature p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}.toolbar{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;gap:12px;align-items:center;justify-content:space-between;box-shadow:0 8px 25px #0c352008}.search-wrap{position:relative;flex:1;max-width:480px}.search-wrap span{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:17px;color:#7b8b81}.search-wrap input{width:100%;height:45px;border:1px solid var(--line);background:#f8faf8;border-radius:12px;padding:0 14px 0 43px;outline:none;font-size:13px;color:var(--ink)}.search-wrap input:focus{border-color:#71a98a;box-shadow:0 0 0 3px #176b4a14}.result-count{font-size:12px;color:var(--muted);font-weight:750;white-space:nowrap}.filters{display:flex;gap:8px;overflow:auto;padding:15px 0 6px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.filter{border:1px solid var(--line);background:white;color:#53635a;border-radius:999px;padding:9px 15px;font-size:11px;font-weight:800;white-space:nowrap;cursor:pointer}.filter.active{background:var(--forest);border-color:var(--forest);color:#fff;box-shadow:0 6px 14px #092d2224}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:13px}.farm-card{background:white;border:1px solid var(--line);border-radius:19px;padding:19px;box-shadow:0 8px 24px #0b35200a;display:flex;flex-direction:column;min-height:250px;transition:.2s;cursor:pointer}.farm-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#c4dacb}.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.crop-icon{width:46px;height:46px;border-radius:14px;background:#edf6ef;display:grid;place-items:center;font-size:23px}.category{background:#f0f5f1;color:#32654a;border:1px solid #e1ebe3;border-radius:999px;padding:6px 9px;font-size:9px;font-weight:850}.farm-card h3{font-size:15px;line-height:1.3;margin:14px 0 3px;color:var(--forest)}.farm-card .english{font-size:11px;color:#819087;font-weight:650}.farm-card .desc{font-size:12px;line-height:1.65;color:#5f6e65;margin:12px 0 15px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}.tag{background:#f5f8f5;border:1px solid #e8eee9;color:#516259;border-radius:8px;padding:6px 8px;font-size:10px;font-weight:650}.card-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #edf1ed;padding-top:12px;margin-top:14px;color:var(--green);font-size:11px;font-weight:850}.save{border:0;background:transparent;color:#718078;cursor:pointer;font-size:17px;padding:2px}.save.saved{color:#16734d}.empty{grid-column:1/-1;text-align:center;padding:50px 20px;background:#fff;border:1px dashed #cad9ce;border-radius:18px;color:var(--muted)}.guides{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.guide{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;gap:15px}.guide .gicon{width:43px;height:43px;border-radius:13px;background:var(--mint);display:grid;place-items:center;flex:0 0 auto;font-size:20px}.guide h3{margin:1px 0 7px;font-size:14px;color:var(--forest)}.guide p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}.guide ul{padding-left:17px;margin:10px 0 0;color:#53635a;font-size:11px;line-height:1.8}.notice{border:1px solid #dce9df;background:#edf6ef;border-radius:16px;padding:15px 17px;margin-top:18px;color:#3c5948;font-size:11px;line-height:1.7}.resources{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.resource{background:var(--forest);color:#fff;border-radius:18px;padding:19px}.resource small{color:#b5d8c1;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.resource h3{font-size:15px;margin:9px 0 7px}.resource p{font-size:11px;line-height:1.6;color:#d2e4d8;margin:0 0 15px}.resource a{font-size:11px;color:#c3ebce;font-weight:850;text-decoration:underline;text-underline-offset:3px}.coming{background:#fff;border:1px dashed #c7d7cb;border-radius:18px;padding:20px;display:flex;align-items:center;gap:15px;margin-top:16px}.coming .gicon{width:42px;height:42px;border-radius:13px;background:#f0f5f1;display:grid;place-items:center;font-size:19px}.coming h3{font-size:13px;margin:0 0 4px;color:var(--forest)}.coming p{font-size:11px;color:var(--muted);margin:0;line-height:1.5}.footer{background:var(--forest);color:#fff;padding:28px 0}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}.footer p{margin:5px 0 0;color:#b9d4c3;font-size:11px}.footer-links{display:flex;gap:17px;flex-wrap:wrap}.footer-links a{color:#d7e9dd;font-size:11px;font-weight:700}.modal-backdrop{position:fixed;inset:0;background:#041c14b8;backdrop-filter:blur(6px);z-index:80;display:none;align-items:center;justify-content:center;padding:18px}.modal-backdrop.open{display:flex}.modal{width:min(650px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:23px;box-shadow:0 30px 90px #0005}.modal-head{padding:22px 24px;background:var(--forest);color:white;display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.modal-head h2{font-size:21px;margin:0 0 4px}.modal-head p{font-size:11px;color:#c8dfd0;margin:0}.close{border:1px solid #ffffff40;background:#ffffff15;color:white;border-radius:10px;width:34px;height:34px;font-size:20px;cursor:pointer}.modal-body{padding:22px 24px}.modal-body h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin:20px 0 9px}.modal-body p,.modal-body li{font-size:13px;line-height:1.75;color:#53635a}.modal-body ul{padding-left:19px;margin:0}.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.modal-box{background:#f4f8f5;border:1px solid #e5eee7;border-radius:14px;padding:13px}.modal-box h4{margin:0 0 8px;font-size:11px;color:var(--forest)}.modal-box ul{font-size:11px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--forest);color:white;padding:11px 16px;border-radius:999px;font-size:12px;font-weight:750;z-index:100;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr .8fr;gap:22px}.cards{grid-template-columns:repeat(2,1fr)}.resources{grid-template-columns:1fr 1fr}.nav{gap:0}.nav a{padding:10px 9px;font-size:11px}}
-@media(max-width:700px){.topbar{height:66px;padding:0 18px}.menu-btn{display:block}.nav{display:none;position:absolute;left:12px;right:12px;top:72px;background:var(--forest2);padding:10px;border:1px solid #ffffff22;border-radius:16px;box-shadow:0 18px 35px #0003;flex-direction:column;align-items:stretch}.nav.open{display:flex}.nav a{padding:12px 14px;font-size:13px}.top-actions .pill{display:none}.hero{padding:48px 0 42px}.hero-grid{grid-template-columns:1fr}.hero-panel{justify-self:stretch;max-width:none;transform:none}.hero h1{font-size:40px}.hero p{font-size:14px}.container{width:min(100% - 30px,1180px)}.feature-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.toolbar{align-items:stretch;flex-direction:column}.search-wrap{max-width:none}.cards{grid-template-columns:1fr}.guides{grid-template-columns:1fr}.resources{grid-template-columns:1fr}.footer-inner{align-items:flex-start;flex-direction:column}.modal-grid{grid-template-columns:1fr}.modal-head,.modal-body{padding:18px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
-
-/* Phase 2 crop library and stronger typography */
-body{font-weight:500} .hero h1,.section-head h2,.panel-title{font-weight:900}.section-head p,.hero p,.feature p,.farm-card .desc,.guide p,.guide ul,.resource p{font-weight:550}.feature h3,.farm-card h3,.guide h3,.resource h3{font-weight:850}.farm-card .english,.category,.tag,.filter,.result-count,.btn{font-weight:800}.crop-toolbar{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 8px 25px #0c352008}.crop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.crop-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;min-height:220px;box-shadow:0 8px 24px #0b35200a;transition:.2s}.crop-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#c4dacb}.crop-card .crop-emoji{width:48px;height:48px;border-radius:15px;background:#eaf5ed;display:grid;place-items:center;font-size:25px;margin-bottom:13px}.crop-card h3{font-size:16px;font-weight:900;color:var(--forest);margin:0 0 3px}.crop-card .crop-en{font-size:11px;color:#75857b;font-weight:750}.crop-card p{font-size:12px;line-height:1.65;color:#52645a;font-weight:550;margin:11px 0 14px}.crop-card button{margin-top:auto;border:0;background:var(--forest);color:#fff;border-radius:11px;padding:11px 13px;font-size:11px;font-weight:850;cursor:pointer}.crop-card button:hover{background:var(--green)}.modal-body h3{font-weight:900;color:var(--forest)}.modal-body strong{font-weight:900;color:var(--forest)}.modal-body li{margin:5px 0;line-height:1.65}.nav a{font-weight:800}
-@media(max-width:900px){.crop-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.crop-grid{grid-template-columns:1fr}.crop-toolbar{align-items:stretch;flex-direction:column}.crop-toolbar .search-wrap{max-width:none}}
-
-/* Phase 3: more comfortable card typography and live weather centre */
-.farm-card{padding:22px;min-height:270px}
-.farm-card h3{font-size:18px;line-height:1.4;font-weight:900;letter-spacing:-.015em;margin-top:16px}
-.farm-card .english{font-size:13px;color:#52665a;font-weight:750;line-height:1.5}
-.farm-card .desc{font-size:14px;line-height:1.8;color:#405247;font-weight:500;margin:13px 0 17px}
-.category{font-size:11px;padding:7px 10px}
-.tag{font-size:11px;line-height:1.45;color:#405247;font-weight:700;padding:7px 9px}
-.card-foot{font-size:12px;padding-top:14px}
-.feature{padding:23px}
-.feature h3,.guide h3{font-size:16px;line-height:1.45}
-.feature p,.guide p{font-size:14px;line-height:1.8;color:#405247}
-.guide{padding:23px}
-.guide ul{font-size:13px;line-height:1.9;color:#405247}
-.crop-card{padding:21px}
-.crop-card h3{font-size:18px;line-height:1.4}
-.crop-card .crop-en{font-size:13px;color:#52665a}
-.crop-card p{font-size:14px;line-height:1.8;color:#405247;font-weight:500}
-.crop-card button{font-size:12px;padding:12px 14px}
-.filter{font-size:12px}
-.weather-panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(16px,3vw,26px);box-shadow:0 10px 32px #0c35200a}
-.weather-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
-.weather-label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:850;color:var(--forest);flex:1;min-width:220px}
-.weather-label select,.weather-controls select{height:46px;border:1px solid #cbd9ce;border-radius:12px;background:#f8faf8;padding:0 13px;color:#1c3326;font-size:15px;font-weight:650;min-width:220px}
-.btn-weather{height:46px;background:var(--forest);color:white;font-size:13px}
-.btn-weather:disabled{opacity:.6;cursor:wait;transform:none}
-.weather-status{margin-top:16px;padding:12px 14px;background:#f1f7f2;border-radius:12px;color:#365442;font-size:13px;line-height:1.6;font-weight:650}
-.weather-status.error{background:#fff4ef;color:#873d25}
-.weather-current{display:grid;grid-template-columns:1.1fr 1.9fr;gap:15px;margin-top:18px}
-.weather-now{background:linear-gradient(135deg,#0b3527,#176b4a);border-radius:18px;color:white;padding:22px}
-.weather-now .place{font-size:13px;color:#d6eadc;font-weight:750}
-.weather-now .temperature{font-size:48px;line-height:1.1;font-weight:900;letter-spacing:-.04em;margin:10px 0 4px}
-.weather-now .condition{font-size:15px;color:#e4f2e8;font-weight:750}
-.weather-now .updated{font-size:11px;color:#c5dfce;margin-top:15px}
-.weather-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.weather-metric{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fbfdfb}
-.weather-metric span{display:block;font-size:12px;color:#52665a;font-weight:700}
-.weather-metric strong{display:block;font-size:22px;color:var(--forest);font-weight:900;margin-top:5px}
-.forecast-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 0 12px}
-.forecast-heading h3{font-size:18px;color:var(--forest);margin:0;font-weight:900}
-.forecast-heading span{font-size:12px;color:#52665a;font-weight:700}
-.forecast-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
-.forecast-day{background:#f5f9f6;border:1px solid #e4ece6;border-radius:14px;padding:12px 9px;text-align:center;min-width:0}
-.forecast-day .day{font-size:12px;color:#344d3d;font-weight:850}
-.forecast-day .symbol{font-size:24px;margin:9px 0}
-.forecast-day .range{font-size:14px;color:var(--forest);font-weight:900}
-.forecast-day .rain{font-size:11px;color:#42664f;font-weight:700;margin-top:7px;line-height:1.45}
-.weather-advice{margin-top:16px;padding:15px 17px;border-left:4px solid #39845b;background:#eef7f0;border-radius:12px;color:#294c37;font-size:13px;line-height:1.75}
-.weather-advice strong{font-weight:900}
-.weather-source{font-size:11px;line-height:1.65;color:#617268;margin:14px 0 0}
-@media(max-width:800px){.weather-current{grid-template-columns:1fr}.forecast-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:520px){.weather-controls{align-items:stretch;flex-direction:column}.weather-label,.weather-label select,.weather-controls select,.btn-weather{width:100%;min-width:0}.forecast-grid{grid-template-columns:repeat(2,1fr)}.forecast-day:last-child{grid-column:1/-1}.weather-metrics{grid-template-columns:repeat(2,1fr)}.farm-card .desc,.crop-card p,.feature p,.guide p{font-size:14px}}
-
-</style>
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="shell">
-<header class="topbar">
-  <a class="brand" href="#home" aria-label="Ulimi wa Malawi home"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span></a>
-  <nav class="nav" id="nav"><a href="#home" class="active">Home</a><a href="#methods">Farming methods</a><a href="#guides">Practical guides</a><a href="#support">Support & resources</a></nav>
-  <div class="top-actions"><span class="pill">🇲🇼 MADE FOR MALAWI</span><button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button></div>
-</header>
-<section class="hero" id="home"><div class="container hero-grid">
-  <div><span class="eyebrow"><i class="dot"></i> PRACTICAL KNOWLEDGE • CHICHEWA & ENGLISH</span><h1>Grow knowledge.<br><span>Grow better harvests.</span></h1><p>Malawi-focused farming knowledge for learners, smallholder farmers and growing agribusinesses. Explore farming systems, practical field guidance and trusted agricultural support.</p><div class="hero-actions"><a class="btn btn-primary" href="#methods">Explore farming methods <span>→</span></a><a class="btn btn-ghost" href="#guides">View practical guides <span>↗</span></a></div></div>
-  <aside class="hero-panel"><div class="panel-top"><span class="panel-label">Your learning hub</span><span class="panel-badge">MALAWI FIRST</span></div><h2 class="panel-title">Ulimi ndi Moyo.</h2><p class="panel-copy">Learn at your pace. Compare farming approaches. Find practical ideas to discuss with your local extension worker.</p><div class="stat-grid"><div class="stat"><strong id="methodCount">18</strong><span>Farming topics</span></div><div class="stat"><strong>4</strong><span>Topic groups</span></div><div class="stat"><strong>2</strong><span>Languages</span></div></div></aside>
-</div></section>
-<main class="main container">
-<section aria-label="Platform features"><div class="section-head"><div><span class="section-kicker">A practical learning platform</span><h2>Useful knowledge for every stage</h2><p>Start with the basics, build practical skills and connect with reliable sources.</p></div></div><div class="feature-grid"><article class="feature"><div class="feature-icon">🌾</div><h3>Explore farming systems</h3><p>Understand traditional, food-focused, commercial and modern farming approaches used in Malawi and elsewhere.</p></article><article class="feature"><div class="feature-icon">🧑🏽‍🌾</div><h3>Improve field practices</h3><p>Learn about soil care, compost, water management, crop protection and post-harvest handling.</p></article><article class="feature"><div class="feature-icon">🤝</div><h3>Find trusted support</h3><p>Connect your learning to Malawi's agricultural extension and research services for local advice.</p></article></div></section>
-<section id="methods"><div class="section-head"><div><span class="section-kicker">Knowledge centre</span><h2>Farming methods & systems</h2><p>Search in Chichewa or English, or filter by the type of farming.</p></div></div><div class="toolbar"><label class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="Search farming methods, crops or examples…" autocomplete="off" aria-label="Search farming methods"></label><div class="result-count" id="resultCount" aria-live="polite">18 topics</div></div><div class="filters" id="filters" aria-label="Filter farming topics"></div><div class="cards" id="cards"></div></section>
-<section id="crops" style="margin-top:54px"><div class="section-head"><div><span class="section-kicker">Phase 2 • Crop knowledge</span><h2>Malawi crop library</h2><p><strong>Explore practical crop profiles</strong> in Chichewa and English. Search by crop name or use a crop group to narrow the list.</p></div></div><div class="crop-toolbar"><label class="search-wrap"><span>⌕</span><input id="cropSearch" type="search" placeholder="Search maize, groundnuts, rice, tomato…" autocomplete="off" aria-label="Search crops"></label><div class="result-count" id="cropCount" aria-live="polite">8 crops</div></div><div class="filters" id="cropFilters" aria-label="Filter crop groups"></div><div class="crop-grid" id="cropGrid"></div><div class="notice"><strong>Crop advice note:</strong> These profiles are introductory learning guides. <strong>Variety choice, planting dates, spacing, seed rate, fertiliser use and pest management</strong> depend on the district, soil, rainfall, irrigation access and current official recommendations. Confirm local decisions with an agricultural extension worker.</div></section>
-
-<section id="weather" style="margin-top:54px">
-  <div class="section-head"><div>
-    <span class="section-kicker">Phase 3 • Weather & climate</span>
-    <h2>Malawi weather centre</h2>
-    <p>Check live weather conditions and a seven-day forecast for selected locations across Malawi. Use forecasts as planning support, and follow local official warnings.</p>
-  </div></div>
-  <div class="weather-panel">
-    <div class="weather-controls">
-      <label class="weather-label" for="weatherDistrict">Choose a location in Malawi</label>
-      <select id="weatherDistrict" aria-label="Choose a weather location">
-        <option value="Lilongwe">Lilongwe</option><option value="Blantyre">Blantyre</option>
-        <option value="Mzuzu">Mzuzu</option><option value="Zomba">Zomba</option>
-        <option value="Kasungu">Kasungu</option><option value="Mangochi">Mangochi</option>
-        <option value="Salima">Salima</option><option value="Dedza">Dedza</option>
-        <option value="Karonga">Karonga</option><option value="Nsanje">Nsanje</option>
-        <option value="Chitipa">Chitipa</option><option value="Balaka">Balaka</option>
-      </select>
-      <button class="btn btn-weather" id="refreshWeather" type="button">↻ Refresh forecast</button>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Ulimi wa Malawi home">
+      <span class="brand-mark">🌱</span>
+      <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#home" class="active">Home</a>
+      <a href="#methods">Farming methods</a>
+      <a href="#guides">Practical guides</a>
+      <a href="#support">Support &amp; resources</a>
+    </nav>
+    <div class="top-actions">
+      <span class="pill">🇲🇼 MADE FOR MALAWI</span>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
     </div>
-    <div class="weather-status" id="weatherStatus" role="status" aria-live="polite">Loading the latest available forecast…</div>
-    <div id="weatherResults" hidden>
-      <div class="weather-current" id="weatherCurrent"></div>
-      <div class="forecast-heading"><h3>7-day forecast</h3><span>Daily outlook</span></div>
-      <div class="forecast-grid" id="forecastGrid"></div>
-      <div class="weather-advice" id="weatherAdvice"></div>
-      <p class="weather-source">Weather data: Open-Meteo. Forecasts can change and may not represent conditions at every farm. Check local observations and official alerts before making important decisions.</p>
-    </div>
-  </div>
-</section>
+  </header>
 
-<section id="guides" style="margin-top:54px"><div class="section-head"><div><span class="section-kicker">Field learning</span><h2>Practical farming guides</h2><p>Simple starting points. Adapt each practice to your location, crop and local extension advice.</p></div></div><div class="guides">
-<article class="guide"><div class="gicon">🌱</div><div><h3>Soil health & conservation</h3><p>Healthy soil supports roots, water storage and crop growth. Protect the soil while improving its organic matter.</p><ul><li>Keep soil covered with suitable plant residues or cover crops.</li><li>Use crop rotation and legume crops where suitable.</li><li>Reduce runoff with locally appropriate contour and erosion-control measures.</li><li>Seek soil testing or extension advice before choosing fertiliser rates.</li></ul></div></article>
-<article class="guide"><div class="gicon">♻️</div><div><h3>Compost & organic matter</h3><p>Composting can turn suitable farm and household plant residues into a useful soil amendment.</p><ul><li>Combine suitable dry and green plant materials.</li><li>Keep the pile moist but not waterlogged.</li><li>Turn it periodically to support airflow and decomposition.</li><li>Use mature compost and avoid contaminated materials.</li></ul></div></article>
-<article class="guide"><div class="gicon">💧</div><div><h3>Water-smart farming</h3><p>Plan water use around crop needs, soil type and the water available to your farm.</p><ul><li>Check soil moisture before watering.</li><li>Water near the root zone and reduce avoidable evaporation.</li><li>Maintain channels and equipment to limit water loss.</li><li>Use safe, reliable water sources and follow local water-use rules.</li></ul></div></article>
-<article class="guide"><div class="gicon">🛡️</div><div><h3>Crop health & safe handling</h3><p>Regular field observation helps identify crop problems early and supports safer decisions.</p><ul><li>Inspect crops regularly and record unusual symptoms.</li><li>Remove or manage affected plant material appropriately.</li><li>Ask an extension officer to help identify pests or diseases.</li><li>Only use registered crop-protection products as labelled, with suitable adult training and protective measures.</li></ul></div></article>
-<article class="guide"><div class="gicon">🌽</div><div><h3>Harvest & storage</h3><p>Careful harvesting, drying and storage can reduce losses and protect food quality.</p><ul><li>Harvest at the crop's recommended maturity.</li><li>Dry produce thoroughly on clean surfaces before storage.</li><li>Use clean, dry, suitable storage containers or structures.</li><li>Check stored produce regularly for moisture, pests and damage.</li></ul></div></article>
-<article class="guide"><div class="gicon">📈</div><div><h3>Farm planning & market readiness</h3><p>Good planning connects production decisions to household needs, costs and possible buyers.</p><ul><li>Write down expected costs and available resources.</li><li>Plan crop choices around local conditions and demand.</li><li>Compare buyer requirements before harvest.</li><li>Keep simple records of inputs, harvests and sales.</li></ul></div></article>
-</div><div class="notice"><strong>Important:</strong> These guides are general learning material, not a substitute for local diagnosis or official recommendations. Planting dates, seed varieties, fertiliser rates, animal-health decisions and crop-protection measures should be confirmed with a qualified agricultural extension worker or relevant Malawi authority.</div></section>
-<section id="support" style="margin-top:54px"><div class="section-head"><div><span class="section-kicker">Trusted information</span><h2>Malawi agricultural support</h2><p>Use official sources for current technical guidance, training and local support.</p></div></div><div class="resources">
-<article class="resource"><small>Government • Extension</small><h3>Agricultural Extension Services</h3><p>Information about farmer training, extension delivery and practical advisory support.</p><a href="https://www.agriculture.gov.mw/index.php/extensionservices" target="_blank" rel="noopener">Visit extension services ↗</a></article>
-<article class="resource"><small>Government • Crop production</small><h3>Crop Development</h3><p>Official information on crop production, improved inputs, diversification and crop protection.</p><a href="https://www.mining.gov.mw/department/crop-development/crop-production" target="_blank" rel="noopener">Explore crop guidance ↗</a></article>
-<article class="resource"><small>Government • Soil & land</small><h3>Soil & Land Management</h3><p>Information on soil fertility, soil and water conservation and sustainable land management.</p><a href="https://www.mining.gov.mw/department/land-resources/soil-land-management" target="_blank" rel="noopener">Explore soil resources ↗</a></article>
-</div><div class="coming"><div class="gicon">📊</div><div><h3>Coming next: market information & digital advisory</h3><p>Market prices and AI-powered farming support will be added in later phases using clearly identified sources and services.</p></div></div></section>
-</main>
-<footer class="footer"><div class="container footer-inner"><div><div class="brand"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span></div><p>Learning for stronger, more resilient agriculture in Malawi.</p></div><div class="footer-links"><a href="#home">Home</a><a href="#methods">Farming methods</a><a href="#crops">Crop library</a><a href="#guides">Practical guides</a><a href="#support">Official resources</a></div></div></footer>
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow"><i class="dot"></i> PRACTICAL KNOWLEDGE • CHICHEWA &amp; ENGLISH</span>
+        <h1>Grow knowledge.<br><span>Grow better harvests.</span></h1>
+        <p>Malawi-focused farming knowledge for learners, smallholder farmers and growing agribusinesses. Explore farming systems, practical field guidance and trusted agricultural support.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#methods">Explore farming methods <span>→</span></a>
+          <a class="btn btn-ghost" href="#guides">View practical guides <span>↗</span></a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <div class="panel-top">
+          <span class="panel-label">Your learning hub</span>
+          <span class="panel-badge">MALAWI FIRST</span>
+        </div>
+        <h2 class="panel-title">Ulimi ndi Moyo.</h2>
+        <p class="panel-copy">Learn at your pace. Compare farming approaches. Find practical ideas to discuss with your local extension worker.</p>
+        <div class="stat-grid">
+          <div class="stat"><strong id="methodCount">18</strong><span>Farming topics</span></div>
+          <div class="stat"><strong>4</strong><span>Topic groups</span></div>
+          <div class="stat"><strong>2</strong><span>Languages</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main class="main container">
+    <section aria-label="Platform features">
+      <div class="section-head"><div>
+        <span class="section-kicker">A practical learning platform</span>
+        <h2>Useful knowledge for every stage</h2>
+        <p>Start with the basics, build practical skills and connect with reliable sources.</p>
+      </div></div>
+      <div class="feature-grid">
+        <article class="feature"><div class="feature-icon">🌾</div><h3>Explore farming systems</h3><p>Understand traditional, food-focused, commercial and modern farming approaches used in Malawi and elsewhere.</p></article>
+        <article class="feature"><div class="feature-icon">🧑🏽‍🌾</div><h3>Improve field practices</h3><p>Learn about soil care, compost, water management, crop protection and post-harvest handling.</p></article>
+        <article class="feature"><div class="feature-icon">🤝</div><h3>Find trusted support</h3><p>Connect your learning to Malawi's agricultural extension and research services for local advice.</p></article>
+      </div>
+    </section>
+
+    <section id="methods">
+      <div class="section-head"><div>
+        <span class="section-kicker">Knowledge centre</span>
+        <h2>Farming methods &amp; systems</h2>
+        <p>Search in Chichewa or English, or filter by the type of farming.</p>
+      </div></div>
+      <div class="toolbar">
+        <label class="search-wrap"><span>⌕</span>
+          <input id="search" type="search" placeholder="Search farming methods, crops or examples…" autocomplete="off" aria-label="Search farming methods">
+        </label>
+        <div class="result-count" id="resultCount" aria-live="polite">18 topics</div>
+      </div>
+      <div class="filters" id="filters" aria-label="Filter farming topics"></div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section id="crops" style="margin-top:54px">
+      <div class="section-head"><div>
+        <span class="section-kicker">Phase 2 • Crop knowledge</span>
+        <h2>Malawi crop library</h2>
+        <p><strong>Explore practical crop profiles</strong> in Chichewa and English. Search by crop name or use a crop group to narrow the list.</p>
+      </div></div>
+      <div class="crop-toolbar">
+        <label class="search-wrap"><span>⌕</span>
+          <input id="cropSearch" type="search" placeholder="Search maize, groundnuts, rice, tomato…" autocomplete="off" aria-label="Search crops">
+        </label>
+        <div class="result-count" id="cropCount" aria-live="polite">8 crops</div>
+      </div>
+      <div class="filters" id="cropFilters" aria-label="Filter crop groups"></div>
+      <div class="crop-grid" id="cropGrid"></div>
+      <div class="notice">
+        <strong>Crop advice note:</strong> These profiles are introductory learning guides.
+        <strong>Variety choice, planting dates, spacing, seed rate, fertiliser use and pest management</strong>
+        depend on the district, soil, rainfall, irrigation access and current official recommendations.
+        Confirm local decisions with an agricultural extension worker.
+      </div>
+    </section>
+
+    <section id="weather" style="margin-top:54px">
+      <div class="section-head"><div>
+        <span class="section-kicker">Phase 3 • Weather &amp; climate</span>
+        <h2>Malawi weather centre</h2>
+        <p>Check live weather conditions and a seven-day forecast for selected locations across Malawi. Use forecasts as planning support, and follow local official warnings.</p>
+      </div></div>
+      <div class="weather-panel">
+        <div class="weather-controls">
+          <label class="weather-label" for="weatherDistrict">Choose a location in Malawi</label>
+          <select id="weatherDistrict" aria-label="Choose a weather location">
+            <option value="Lilongwe">Lilongwe</option>
+            <option value="Blantyre">Blantyre</option>
+            <option value="Mzuzu">Mzuzu</option>
+            <option value="Zomba">Zomba</option>
+            <option value="Kasungu">Kasungu</option>
+            <option value="Mangochi">Mangochi</option>
+            <option value="Salima">Salima</option>
+            <option value="Dedza">Dedza</option>
+            <option value="Karonga">Karonga</option>
+            <option value="Nsanje">Nsanje</option>
+            <option value="Chitipa">Chitipa</option>
+            <option value="Balaka">Balaka</option>
+          </select>
+          <button class="btn btn-weather" id="refreshWeather" type="button">↻ Refresh forecast</button>
+        </div>
+        <div class="weather-status" id="weatherStatus" role="status" aria-live="polite">Loading the latest available forecast…</div>
+        <div id="weatherResults" hidden>
+          <div class="weather-current" id="weatherCurrent"></div>
+          <div class="forecast-heading"><h3>7-day forecast</h3><span>Daily outlook</span></div>
+          <div class="forecast-grid" id="forecastGrid"></div>
+          <div class="weather-advice" id="weatherAdvice"></div>
+          <p class="weather-source">Weather data: Open-Meteo. Forecasts can change and may not represent conditions at every farm. Check local observations and official alerts before making important decisions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="guides" style="margin-top:54px">
+      <div class="section-head"><div>
+        <span class="section-kicker">Field learning</span>
+        <h2>Practical farming guides</h2>
+        <p>Simple starting points. Adapt each practice to your location, crop and local extension advice.</p>
+      </div></div>
+      <div class="guides">
+        <article class="guide"><div class="gicon">🌱</div><div>
+          <h3>Soil health &amp; conservation</h3>
+          <p>Healthy soil supports roots, water storage and crop growth. Protect the soil while improving its organic matter.</p>
+          <ul>
+            <li>Keep soil covered with suitable plant residues or cover crops.</li>
+            <li>Use crop rotation and legume crops where suitable.</li>
+            <li>Reduce runoff with locally appropriate contour and erosion-control measures.</li>
+            <li>Seek soil testing or extension advice before choosing fertiliser rates.</li>
+          </ul>
+        </div></article>
+        <article class="guide"><div class="gicon">♻️</div><div>
+          <h3>Compost &amp; organic matter</h3>
+          <p>Composting can turn suitable farm and household plant residues into a useful soil amendment.</p>
+          <ul>
+            <li>Combine suitable dry and green plant materials.</li>
+            <li>Keep the pile moist but not waterlogged.</li>
+            <li>Turn it periodically to support airflow and decomposition.</li>
+            <li>Use mature compost and avoid contaminated materials.</li>
+          </ul>
+        </div></article>
+        <article class="guide"><div class="gicon">💧</div><div>
+          <h3>Water-smart farming</h3>
+          <p>Plan water use around crop needs, soil type and the water available to your farm.</p>
+          <ul>
+            <li>Check soil moisture before watering.</li>
+            <li>Water near the root zone and reduce avoidable evaporation.</li>
+            <li>Maintain channels and equipment to limit water loss.</li>
+            <li>Use safe, reliable water sources and follow local water-use rules.</li>
+          </ul>
+        </div></article>
+        <article class="guide"><div class="gicon">🛡️</div><div>
+          <h3>Crop health &amp; safe handling</h3>
+          <p>Regular field observation helps identify crop problems early and supports safer decisions.</p>
+          <ul>
+            <li>Inspect crops regularly and record unusual symptoms.</li>
+            <li>Remove or manage affected plant material appropriately.</li>
+            <li>Ask an extension officer to help identify pests or diseases.</li>
+            <li>Only use registered crop-protection products as labelled, with suitable adult training and protective measures.</li>
+          </ul>
+        </div></article>
+        <article class="guide"><div class="gicon">🌽</div><div>
+          <h3>Harvest &amp; storage</h3>
+          <p>Careful harvesting, drying and storage can reduce losses and protect food quality.</p>
+          <ul>
+            <li>Harvest at the crop's recommended maturity.</li>
+            <li>Dry produce thoroughly on clean surfaces before storage.</li>
+            <li>Use clean, dry, suitable storage containers or structures.</li>
+            <li>Check stored produce regularly for moisture, pests and damage.</li>
+          </ul>
+        </div></article>
+        <article class="guide"><div class="gicon">📈</div><div>
+          <h3>Farm planning &amp; market readiness</h3>
+          <p>Good planning connects production decisions to household needs, costs and possible buyers.</p>
+          <ul>
+            <li>Write down expected costs and available resources.</li>
+            <li>Plan crop choices around local conditions and demand.</li>
+            <li>Compare buyer requirements before harvest.</li>
+            <li>Keep simple records of inputs, harvests and sales.</li>
+          </ul>
+        </div></article>
+      </div>
+      <div class="notice">
+        <strong>Important:</strong> These guides are general learning material, not a substitute for local diagnosis or official recommendations.
+        Planting dates, seed varieties, fertiliser rates, animal-health decisions and crop-protection measures should be confirmed
+        with a qualified agricultural extension worker or relevant Malawi authority.
+      </div>
+    </section>
+
+    <section id="support" style="margin-top:54px">
+      <div class="section-head"><div>
+        <span class="section-kicker">Trusted information</span>
+        <h2>Malawi agricultural support</h2>
+        <p>Use official sources for current technical guidance, training and local support.</p>
+      </div></div>
+      <div class="resources">
+        <article class="resource"><small>Government • Extension</small><h3>Agricultural Extension Services</h3><p>Information about farmer training, extension delivery and practical advisory support.</p><a href="https://www.agriculture.gov.mw/index.php/extensionservices" target="_blank" rel="noopener">Visit extension services ↗</a></article>
+        <article class="resource"><small>Government • Crop production</small><h3>Crop Development</h3><p>Official information on crop production, improved inputs, diversification and crop protection.</p><a href="https://www.mining.gov.mw/department/crop-development/crop-production" target="_blank" rel="noopener">Explore crop guidance ↗</a></article>
+        <article class="resource"><small>Government • Soil &amp; land</small><h3>Soil &amp; Land Management</h3><p>Information on soil fertility, soil and water conservation and sustainable land management.</p><a href="https://www.mining.gov.mw/department/land-resources/soil-land-management" target="_blank" rel="noopener">Explore soil resources ↗</a></article>
+      </div>
+      <div class="coming"><div class="gicon">📊</div><div>
+        <h3>Coming next: market information &amp; digital advisory</h3>
+        <p>Market prices and AI-powered farming support will be added in later phases using clearly identified sources and services.</p>
+      </div></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="brand"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span></div>
+        <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#methods">Farming methods</a>
+        <a href="#crops">Crop library</a>
+        <a href="#guides">Practical guides</a>
+        <a href="#support">Official resources</a>
+      </div>
+    </div>
+  </footer>
 </div>
-<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><article class="modal"><div class="modal-head"><div><h2 id="modalTitle"></h2><p id="modalSub"></p></div><button class="close" id="closeModal" aria-label="Close details">×</button></div><div class="modal-body" id="modalBody"></div></article></div><div class="toast" id="toast" role="status"></div>
-<script>
-const farmingData = [{id:1,nameCh:"Ulimi Wosamutsa-samutsa",nameEn:"Shifting Cultivation",emoji:"\uD83D\uDD25",category:"Zachikhalidwe",desc:"Njira yakale imene mlimi amalima malo kwa zaka 2-3 kenako amasiya kuti nthaka ipume. Amabwerera pambuyo pa zaka zambiri. Njirayi imathandiza nthaka kupezanso chonde mwachilengedwe.",mfundo:["Kudula nkhalango ndi kuwotcha","Kulima kwakanthawi kochepa","Kusiya malo kuti abwerere"],bwino:"Ndi bwino ku madera a kumpoto kwa Malawi kumene kuli malo ambiri monga Chitipa ndi Rumphi.",zitsanzo:["Chimanga","Mtedza","Mapira"],full:"Ulimi wosamutsa-samutsa unali wofala kwambiri kale. Mlimi amadula mitengo, amawotcha, ndipo phulusa limapanga feteleza wachilengedwe. Komabe, masiku ano sikugwira ntchito chifukwa anthu achuluka ndipo malo achepa.",ubwino:["Safuna feteleza wogula","Nthaka imapuma","Yosavuta kwa mlimi wamng'ono"],vuto:["Imawononga nkhalango","Kokolola kochepa","Sikokwanira anthu ambiri"]},{id:2,nameCh:"Ulimi Wodalira Mvula",nameEn:"Rainfed Agriculture",emoji:"\uD83C\uDF27️",category:"Chakudya",desc:"Ulimi umene umadalira mvula yokha popanda kuthirira. Mlimi amalima munthawi ya mvula kuyambira November mpaka April. Ndi mtundu wofala kwambiri ku Malawi.",mfundo:["Kudalira mvula ya chilimwe","Kulima nyengo imodzi pachaka","Kusunga mbewu zolimba ku chilala"],bwino:"Ndi bwino ku madera onse a Malawi kumene mvula imagwa bwino monga Lilongwe, Kasungu, Mzimba.",zitsanzo:["Chimanga","Soya","Mtedza"],full:"Pafupifupi 90% ya alimi ku Malawi amadalira mvula. Vuto lalikulu ndi kusintha kwa nyengo. Alimi akulangizidwa kubzala mbewu zosiyanasiyana kuti ngati imodzi yalephera, ina ipulumuke.",ubwino:["Safuna ndalama zambiri","Imagwiritsa ntchito madzi a mvula","Yosavuta kumvetsa"],vuto:["Chilala chimawononga","Kokolola kamodzi kokha","Kusadziwa mvula idzagwa liti"]},{id:3,nameCh:"Ulimi Wothirira",nameEn:"Irrigation Farming",emoji:"\uD83D\uDCA7",category:"Zamakono",desc:"Ulimi umene umagwiritsa ntchito madzi kuchokera ku mitsinje, zitsime kapena madamu kuthirira mbewu. Umathandiza kulima chaka chonse ngakhale mvula ikusowa.",mfundo:["Kugwiritsa ntchito mpopi, madamu","Kulima kawiri kapena katatu pachaka","Kusunga madzi mwanzeru"],bwino:"Ndi bwino ku malo a m'mphepete mwa Nyanja ya Malawi, Shire Valley, ndi madera a Bwanje.",zitsanzo:["Mpunga","Tomato","Anyezi"],full:"Boma la Malawi likulimbikitsa ulimi wothirira kudzera mu Green Belt Initiative. Alimi angagwiritse ntchito kuthirira kwa madontho-dontho (drip) kuti asunge madzi.",ubwino:["Kokolola chaka chonse","Zokolola zambiri","Sizidalira mvula"],vuto:["Ndalama zoyambira zambiri","Kufunika kwa mafuta a mpopi","Kusamalira njira za madzi"]},{id:4,nameCh:"Ulimi Wamphamvu Wodzidalira",nameEn:"Intensive Subsistence Farming",emoji:"\uD83D\uDC68‍\uD83D\uDC69‍\uD83D\uDC67‍\uD83D\uDC66",category:"Chakudya",desc:"Ulimi pa malo ang'onoang'ono koma ndi khama lalikulu ndi chisamaliro chochuluka. Cholinga chake ndi kudyetsa banja. Ndi wofala ku Malawi chifukwa malo ndi ochepa.",mfundo:["Malo ang'ono koma ntchito yambiri","Kugwiritsa ntchito manyowa a m'khola","Kusankha mbewu zabwino"],bwino:"Ndi bwino ku madera a kumwera monga Thyolo, Mulanje, Chiradzulu kumene anthu achuluka.",zitsanzo:["Chimanga cha hybrid","Nyemba","Mbatata"],full:"Mlimi wamphamvu amagwira ntchito molimbika pa kagawo kakang'ono. Amagwiritsa ntchito manyowa a kompositi, feteleza pang'ono, ndi kasamalidwe kabwino kuti apeze zambiri pa malo ochepa.",ubwino:["Zokolola zambiri pa malo ochepa","Kudyetsa banja chaka chonse","Kusunga chonde cha nthaka"],vuto:["Ntchito yotopetsa","Kufunika kwa chidziwitso","Kudalira nyengo"]},{id:5,nameCh:"Ulimi Wokulitsa Malo",nameEn:"Extensive Farming",emoji:"\uD83C\uDF3E",category:"Zamalonda",desc:"Ulimi pa malo aakulu kwambiri koma ndi antchito ochepa komanso ndalama zochepa pa ekala imodzi. Makina ambiri amagwiritsidwa ntchito.",mfundo:["Malo aakulu, antchito ochepa","Kugwiritsa ntchito makina","Kokolola kochepa pa ekala"],bwino:"Ndi bwino ku madera a pakati monga Kasungu ndi Dowa kumene kuli minda yaikulu ya fodya.",zitsanzo:["Tirigu","Chimanga chambiri","Soya"],full:"Ulimi uwu umapezeka ku mayiko a ku Ulaya ndi America. Ku Malawi, makampani ena amagwiritsa ntchito njira imeneyi kulima soya ndi chimanga pa mahekitala mazana ambiri.",ubwino:["Zotsika mtengo pa ekala","Kugwiritsa ntchito makina","Zokolola zambiri zonse"],vuto:["Kufunika kwa malo aakulu","Makina okwera mtengo","Kuwononga chilengedwe"]},{id:6,nameCh:"Ulimi Waminda Yaikulu",nameEn:"Plantation Farming",emoji:"\uD83C\uDF43",category:"Zamalonda",desc:"Minda yaikulu ya mbewu imodzi yokha yogulitsa kunja. Imayendetsedwa ndi makampani. Ndi msana wa chuma cha Malawi.",mfundo:["Mbewu imodzi pa malo aakulu","Kugulitsa kunja","Antchito ambiri"],bwino:"Ndi bwino ku Thyolo ndi Mulanje kwa tiyi, Kasungu kwa fodya, Chikwawa kwa shuga.",zitsanzo:["Tiyi","Fodya","Shuga"],full:"Malawi amadalira kwambiri ulimi waminda yaikulu. Tiyi wa ku Mulanje ndi wotchuka padziko lonse. Minda imeneyi imapereka ntchito kwa anthu masauzande ambiri.",ubwino:["Ndalama zakunja","Ntchito zambiri","Misewu ndi sukulu"],vuto:["Mitengo yotsika pamsika","Kudalira mbewu imodzi","Mikangano ya malo"]},{id:7,nameCh:"Ulimi Wosakaniza",nameEn:"Mixed Farming",emoji:"\uD83D\uDC04",category:"Chakudya",desc:"Kulima mbewu ndi kuweta ziweto pamodzi pa munda umodzi. Ziweto zimapereka manyowa ndipo mbewu zimapereka chakudya cha ziweto.",mfundo:["Mbewu ndi ziweto pamodzi","Manyowa a m'khola ku mbewu","Chakudya cha ziweto kuchokera ku zotsalira"],bwino:"Ndi bwino kwa alimi ang'onoang'ono onse ku Malawi, makamaka ku Ntcheu, Dedza, Ntchisi.",zitsanzo:["Ng'ombe + Chimanga","Nkhuku + Masamba","Mbuzi + Mtedza"],full:"Ulimi wosakaniza ndi wanzeru kwambiri. Ngati mbewu zalephera, mlimi akhoza kugulitsa ziweto. Manyowa a ng'ombe amachepetsa kugula feteleza. Ndi njira yabwino yothana ndi umphawi.",ubwino:["Ndalama ziwiri","Chonde chachilengedwe","Chitetezo ku njala"],vuto:["Kufunika chidziwitso chambiri","Ntchito yambiri","Matenda a ziweto"]},{id:8,nameCh:"Ulimi Wa Ziweto",nameEn:"Livestock / Pastoralism",emoji:"\uD83D\uDC10",category:"Zachikhalidwe",desc:"Kuweta ziweto monga ng'ombe, mbuzi, nkhosa kusamuka ndi msipu. Ena amaweta mokhazikika m'makhola.",mfundo:["Kusamuka kufunafuna msipu","Kuweta m'khola mokhazikika","Kusunga mkaka ndi nyama"],bwino:"Ndi bwino ku Chitipa, Karonga, Nsanje, ndi madera owuma a m'mphepete.",zitsanzo:["Ng'ombe","Mbuzi","Nkhosa"],full:"Ku Malawi, abusa a Chitipa ndi Karonga amasamuka ndi ng'ombe zawo kufunafuna msipu. Kuweta m'khola kukuchulukirachulukira chifukwa cha kusowa kwa malo odyetserako.",ubwino:["Ndalama kuchokera ku nyama ndi mkaka","Manyowa","Chuma chosungika"],vuto:["Kusowa kwa msipu nthawi ya chilala","Matenda","Kuba kwa ziweto"]},{id:9,nameCh:"Ulimi Wa Mkaka",nameEn:"Dairy Farming",emoji:"\uD83E\uDD5B",category:"Zamalonda",desc:"Kuweta ng'ombe za mkaka mwapadera ndi kasamalidwe kabwino. Mkaka umagulitsidwa tsiku ndi tsiku, umabweretsa ndalama zatsiku ndi tsiku.",mfundo:["Ng'ombe za mkaka monga Friesian","Kukama kawiri patsiku","Kusunga mkaka ozizira"],bwino:"Ndi bwino ku madera ozizira monga Dedza, Ntchisi, Mzuzu, Bvumbwe.",zitsanzo:["Ng'ombe ya Friesian","Jersey","Crossbreed"],full:"Malawi Milk Producers Association imathandiza alimi a mkaka. Ng'ombe imodzi yabwino imapereka malita 15-20 patsiku. Madera ozizira ndi abwino chifukwa ng'ombe sizitopa ndi kutentha.",ubwino:["Ndalama zatsiku ndi tsiku","Chakudya chopatsa thanzi","Ng'ombe yamtengo wapatali"],vuto:["Chakudya chokwera mtengo","Kufunika kwa madzi ambiri","Matenda a m'mabere"]},{id:10,nameCh:"Ulimi Wachilengedwe",nameEn:"Organic Farming",emoji:"\uD83C\uDF3F",category:"Zamakono",desc:"Ulimi wopanda mankhwala a fakitale ndi feteleza wa chemical. Umagwiritsa ntchito manyowa a kompositi ndi mankhwala achilengedwe. Chakudya chake ndi chabwino ku thanzi.",mfundo:["Palibe chemical","Manyowa a kompositi","Kusinthanitsa mbewu"],bwino:"Ndi bwino kwa alimi omwe akufuna kugulitsa ku msika wa ku Ulaya ndi anthu a mtawuni.",zitsanzo:["Masamba a organic","Tiyi wa organic","Khofi"],full:"Ulimi wachilengedwe ukukula mofulumira ku Malawi. Mabungwe monga NASFAM amathandiza alimi kupeza satifiketi. Chakudya cha organic chimagulitsidwa mtengo wokwera.",ubwino:["Thanzi labwino","Mtengo wokwera","Kuteteza nthaka ndi madzi"],vuto:["Kokolola kochepa poyamba","Ntchito yambiri yamanja","Kupeza satifiketi kovuta"]},{id:11,nameCh:"Ulimi Wa M'madzi",nameEn:"Aquaculture",emoji:"\uD83D\uDC1F",category:"Zamakono",desc:"Kuweta nsomba m'madamu, m'madziwe kapena m'matumba a m'madzi. Ndi njira yatsopano yothandiza kupeza nsomba pamene nsomba za m'nyanja zachepa.",mfundo:["Madamu a nsomba","Kudyetsa nsomba","Kusunga madzi abwino"],bwino:"Ndi bwino ku madera a m'mphepete mwa nyanja, Machinga, Zomba, Dowa kumene kuli madzi.",zitsanzo:["Chambo","Mlamba","Matemba"],full:"Boma likulimbikitsa ulimi wa m'madzi kudzera mu pulogalamu ya 'Fish for All'. Nsomba ya Chambo imakula bwino m'madamu. Banja limatha kukhala ndi dziwe kuseri kwa nyumba.",ubwino:["Mapuloteni abwino","Ndalama zabwino","Sizifuna malo aakulu"],vuto:["Ana a nsomba okwera mtengo","Chakudya cha nsomba","Kuba kwa nsomba"]},{id:12,nameCh:"Ulimi Wanzeru / Wamakono",nameEn:"Precision / Smart Farming",emoji:"\uD83D\uDE9C",category:"Zamakono",desc:"Kugwiritsa ntchito luso lamakono monga foni, drone, GPS, ndi sensa kudziwa nthaka, nyengo ndi kuthirira mwanzeru. Ulimi wa mtsogolo!",mfundo:["Foni ndi app za ulimi","Drone kuyang'anira munda","Sensa za nthaka ndi madzi"],bwino:"Ndi bwino kwa achinyamata alimi ndi ma cooperative aakulu ku Lilongwe, Blantyre.",zitsanzo:["Drone","GPS Tractor","Esoko App"],full:"Achinyamata ku Malawi ayamba kugwiritsa ntchito mafoni kudziwa mtengo wa chimanga, nyengo, ndi matenda a mbewu. Drone imatha kuthirira mankhwala pa mahekitala ambiri mofulumira.",ubwino:["Kusunga ndalama ndi nthawi","Zolondola kwambiri","Kokolola kwakukulu"],vuto:["Zipangizo zokwera mtengo","Kufunika kwa intaneti","Maphunziro"]},{id:13,nameCh:"Ulimi Wa M'munda Waung'ono",nameEn:"Market Gardening",emoji:"\uD83E\uDD6C",category:"Zamalonda",desc:"Kulima masamba ndi zipatso pa malo ang'ono pafupi ndi mzinda kuti mugulitse msika tsiku ndi tsiku. Ndalama zimabwera mofulumira.",mfundo:["Masamba obiriwira","Kugulitsa tsiku ndi tsiku","Kuthirira pafupipafupi"],bwino:"Ndi bwino kuzungulira Lilongwe, Blantyre, Mzuzu, Zomba - pafupi ndi misika yaikulu.",zitsanzo:["Tomato","Kabichi","Anyezi"],full:"Azimayi ambiri ku Malawi amachita ulimi uwu. Masamba amakula m'masiku 30-60 okha. Munda waung'ono wa 10x20m umatha kupereka ndalama zokwanira banja.",ubwino:["Ndalama zachangu","Chakudya chamasamba","Sizifuna malo aakulu"],vuto:["Mitengo yotsika nthawi yokolola","Kuwola msanga","Kusowa kwa madzi m'chilimwe"]},{id:14,nameCh:"Ulimi Wa M'nkhalango",nameEn:"Agroforestry",emoji:"\uD83C\uDF33",category:"Zachikhalidwe",desc:"Kubzala mitengo pamodzi ndi mbewu kapena msipu wa ziweto. Mitengo imateteza mphepo, imapereka manyowa, nkhuni ndi zipatso.",mfundo:["Mitengo ndi mbewu pamodzi","Faereya (Faidherbia albida)","Kuteteza nthaka ku kukokoloka"],bwino:"Ndi bwino ku madera onse a Malawi, makamaka ku Salima, Nkhotakota, Kasungu kumene kuli vuto la nkhuni.",zitsanzo:["Faereya + Chimanga","Mango + Nyemba","Gliricidia"],full:"Mtengo wa Faereya umatchedwa 'mtengo wa feteleza' chifukwa masamba ake amagwa munthawi ya mvula ndipo amapanga feteleza. Alimi amene ali ndi mitengo imeneyi amakolola chimanga chochuluka kuwirikiza kawiri.",ubwino:["Feteleza wachilengedwe","Nkhuni ndi matabwa","Kuteteza chilengedwe"],vuto:["Kudikirira zaka kuti mitengo ikule","Mpikisano wa dzuwa","Kusamalira mitengo"]},
-{id:15,nameCh:"Ulimi Woteteza Nthaka",nameEn:"Conservation Agriculture",emoji:"🌱",category:"Zamakono",desc:"Njira yolima yosamalira nthaka pogwiritsa ntchito kusasokoneza nthaka kwambiri, kuphimba nthaka ndi zotsalira za mbewu, komanso kusinthasintha mbewu.",mfundo:["Chepetsani kulima mozama mobwerezabwereza","Siyani zotsalira za mbewu kuti ziphimbe nthaka","Sinthanitsani mbewu monga chimanga ndi nyemba"],bwino:"Njirayi ingathandize alimi m'madera ambiri a Malawi, makamaka kumene nthaka imakokoloka kapena mvula imasowa nthawi zina.",zitsanzo:["Chimanga + Nyemba","Mulching","Crop rotation"],full:"Yambani pang'onopang'ono pa gawo laling'ono la munda. Gwiritsani ntchito zotsalira za mbewu zathanzi ngati chophimba nthaka, ndipo pewani kuwotcha zotsalira zonse. Sankhani njira yogwirizana ndi mbewu, udzu ndi ziweto za m'dera lanu.",ubwino:["Kuchepetsa kukokoloka kwa nthaka","Kusunga chinyezi m'nthaka","Kuthandiza nthaka kukhala ndi moyo"],vuto:["Pamafunika kusintha kachitidwe ka ulimi","Zotsalira za mbewu zingafunikenso ngati chakudya cha ziweto","Udzu ungafunike kuwongoleredwa bwino"]},
-{id:16,nameCh:"Kusinthasintha Mbewu",nameEn:"Crop Rotation",emoji:"🔄",category:"Chakudya",desc:"Kubzala mitundu yosiyanasiyana ya mbewu motsatizana pa malo amodzi m'nyengo zosiyanasiyana kuti nthaka ikhale yabwino komanso kuchepetsa tizilombo ndi matenda ena.",mfundo:["Sinthanitsani chimanga ndi nyemba","Phatikizani mbewu za mizu ngati kuli koyenera","Lembani mbewu zimene zabzalidwa nyengo iliyonse"],bwino:"Ndi njira yothandiza m'madera onse a Malawi; sankhani mbewu zogwirizana ndi mvula, nthaka ndi msika wa m'dera lanu.",zitsanzo:["Chimanga","Nandolo","Nyemba"],full:"Mbewu za m'banja la nyemba zingathandize kuwonjezera nayitrogeni m'nthaka. Kusinthasintha mbewu kungathandizenso kusokoneza kayendedwe ka matenda ndi tizilombo tomwe timakonda mbewu imodzi. Zotsatira zimatengera kasamalidwe ndi mtundu wa nthaka.",ubwino:["Kusiyanasiyana kwa chakudya","Kuthandiza thanzi la nthaka","Kuchepetsa chiopsezo cha matenda ena"],vuto:["Pamafunika kukonzekera nyengo isanayambe","Msika wa mbewu zina ungakhale wochepa","Sikuti mbewu zonse zimakwanira dera lililonse"]},
-{id:17,nameCh:"Kupanga Manyowa a Kompositi",nameEn:"Composting",emoji:"♻️",category:"Zachikhalidwe",desc:"Kusandutsa zotsalira za zomera ndi zinthu zina zowola kukhala manyowa achilengedwe othandiza kukonza nthaka.",mfundo:["Sakanizani zotsalira zobiriwira ndi zouma","Sungani chinyezi koma musadzaze madzi","Tembenuzani mulu kuti mpweya ulowe"],bwino:"Mabanja ndi alimi angapange kompositi m'madera ambiri pogwiritsa ntchito zinthu zoyenera zomwe zimapezeka pafupi.",zitsanzo:["Masamba owuma","Udzu wodulidwa","Zotsalira za mbewu"],full:"Gwiritsani ntchito zotsalira za zomera zathanzi ndi zinthu zowola bwino. Pewani pulasitiki, magalasi, mankhwala owopsa, nyama ndi zinyalala zosadziwika. Kompositi ikapsa imakhala yakuda, yophwanyika ndipo imanunkhira ngati nthaka.",ubwino:["Kuchepetsa zinyalala za m'munda","Kuwonjezera zinthu zachilengedwe m'nthaka","Kuthandiza kusunga chinyezi"],vuto:["Zimatenga nthawi kuti kompositi ipse","Mulu ungakope tizilombo ngati sunasamalidwe","Pamafunika malo ndi kutembenuza mulu"]},
-{id:18,nameCh:"Kusunga Zokolola Bwino",nameEn:"Post-harvest Handling & Storage",emoji:"🌽",category:"Zamalonda",desc:"Kusamalira mbewu zikakololedwa kuti zisawonongeke, zisakhale ndi chinyezi chambiri komanso kuti zisungidwe kapena kugulitsidwa zili bwino.",mfundo:["Kololani pa nthawi yoyenera","Yanikani mbewu bwino musanasunge","Gwiritsani ntchito matumba kapena nkhokwe zoyera ndi zouma"],bwino:"Ndikofunika kwa alimi a chimanga, nyemba, mtedza, soya ndi mbewu zina m'madera onse a Malawi.",zitsanzo:["Nkhokwe yoyera","Matumba osungira mbewu","Kuyanika pa nsanja yoyera"],full:"Musasunge mbewu zili ndi chinyezi chambiri chifukwa zingawonongeke ndi nkhungu. Sungani malo ouma, aukhondo komanso otetezeka ku makoswe ndi tizilombo. Tsatirani malangizo a akatswiri a zaulimi pa njira zovomerezeka zotetezera mbewu; musasakanize mankhwala osadziwika ndi chakudya.",ubwino:["Kuchepetsa kutayika kwa zokolola","Kusunga chakudya kwa nthawi yayitali","Kuthandiza kupeza mtengo wabwino"],vuto:["Zida zabwino zosungira zingafune ndalama","Chinyezi chikabwerera mbewu zingawonongeke","Pamafunika kuyang'anira malo osungira nthawi zonse"]}];
 
-const cropData=[
-{id:'maize',ch:'Chimanga',en:'Maize',emoji:'🌽',group:'Cereals',summary:'A major staple crop used for household food and livestock feed.',uses:['Nsima and other household foods','Livestock feed from suitable grain and residues'],field:['Choose a variety suited to your local rainfall pattern and growing conditions.','Prepare a field with good drainage and manage weeds early.','Use recommended seed and nutrient guidance from local extension services.','Harvest at suitable maturity and dry grain properly before storage.'],watch:'Maize can be affected by fall armyworm, stalk borers, weeds, drought and storage pests. Identify problems early and seek local advice before choosing a control method.'},
-{id:'groundnut',ch:'Mtedza',en:'Groundnuts',emoji:'🥜',group:'Legumes',summary:'A legume grown for food, oil and income; good crop rotation planning is important.',uses:['Household food and peanut products','Sale as unshelled or shelled produce'],field:['Select locally recommended seed and a well-drained field.','Avoid repeatedly planting groundnuts in the same field.','Keep the crop free from strong weed competition, especially early in growth.','Harvest carefully and dry pods thoroughly on a clean surface.'],watch:'Poor drying and damp storage can encourage mould and aflatoxin risk. Keep produce dry, clean and well ventilated; follow food-safety guidance.'},
-{id:'soybean',ch:'Soya',en:'Soybean',emoji:'🫘',group:'Legumes',summary:'A protein- and oil-rich legume with food, feed and market value.',uses:['Soy foods and cooking ingredients','Livestock and poultry feed ingredients','Commercial sale'],field:['Use suitable, quality seed and varieties recommended for your area.','Plan rotation with cereals and avoid continuous soybean on the same land.','Ensure good field establishment and timely weed control.','Harvest when pods are mature and handle grain carefully to reduce losses.'],watch:'Inoculant needs, soil fertility and disease pressure vary. Ask extension staff about locally appropriate inoculation and nutrient recommendations.'},
-{id:'rice',ch:'Mpunga',en:'Rice',emoji:'🍚',group:'Cereals',summary:'A cereal grown in suitable lowland, wetland and irrigated production systems.',uses:['Household food','Sale to local markets and processors'],field:['Choose a production system that matches reliable water availability.','Use suitable varieties and locally recommended planting methods.','Manage water carefully and avoid damaging wetland ecosystems.','Harvest at the recommended maturity and dry grain safely.'],watch:'Water availability, weeds, birds and crop diseases can affect production. Follow local water-use and wetland protection rules.'},
-{id:'cassava',ch:'Chinangwa',en:'Cassava',emoji:'🥔',group:'Root crops',summary:'A root crop valued as food and for its ability to perform in a range of conditions.',uses:['Boiled, dried or processed food products','Flour and other value-added products'],field:['Plant healthy, disease-free stem cuttings from a trusted source.','Choose a field with suitable drainage and prepare planting material carefully.','Keep weeds under control while plants establish.','Harvest according to variety, intended use and local recommendations.'],watch:'Cassava mosaic and brown streak diseases can reduce yields and quality. Use healthy planting material and seek advice when plants show unusual symptoms.'},
-{id:'sweetpotato',ch:'Mbatata',en:'Sweet potato',emoji:'🍠',group:'Root crops',summary:'A nutritious root crop grown for household consumption and local markets.',uses:['Fresh household food','Sale of roots and suitable planting vines'],field:['Obtain healthy vines of varieties suited to your area.','Prepare ridges or beds appropriate to the soil and water conditions.','Establish vines well and manage weeds during early growth.','Harvest carefully to reduce bruising and damage.'],watch:'Vine quality, weevils, water stress and storage conditions influence crop performance. Use clean planting material and local extension advice.'},
-{id:'tomato',ch:'Tomato',en:'Tomato',emoji:'🍅',group:'Vegetables',summary:'A high-value vegetable commonly grown for fresh consumption and sale.',uses:['Fresh household food','Sale to markets, retailers and food businesses'],field:['Choose a suitable variety and healthy seedlings.','Plan reliable water access and use well-drained soil.','Use crop rotation and inspect plants regularly for pests and disease.','Harvest carefully and handle fruit gently to reduce bruising.'],watch:'Tomatoes are sensitive to water stress and several pests and diseases. Get a correct diagnosis before applying any crop-protection product.'},
-{id:'pigeonpea',ch:'Nandolo',en:'Pigeon pea',emoji:'🌿',group:'Legumes',summary:'A legume used for food and income, often suited to diversified farming systems.',uses:['Dry grain for household meals','Sale as grain and other products'],field:['Choose varieties and planting timing recommended locally.','Consider its place in a cereal-legume rotation or intercropping plan.','Manage weeds while plants are young.','Harvest mature pods and dry grain safely before storage.'],watch:'Market demand, maturity period and pest pressure vary by variety and location. Confirm variety choice with local extension services.'}
-];
-const cropGroups=['All crops','Cereals','Legumes','Root crops','Vegetables'];let activeCropGroup='All crops';
-function renderCropFilters(){const el=document.querySelector('#cropFilters');if(!el)return;el.innerHTML=cropGroups.map(g=>`<button class="filter ${g===activeCropGroup?'active':''}" data-crop-group="${g}">${g}</button>`).join('')}
-function renderCrops(){const grid=document.querySelector('#cropGrid');if(!grid)return;const q=(document.querySelector('#cropSearch').value||'').trim().toLowerCase();const rows=cropData.filter(c=>(activeCropGroup==='All crops'||c.group===activeCropGroup)&&[c.ch,c.en,c.group,c.summary,...c.uses].join(' ').toLowerCase().includes(q));document.querySelector('#cropCount').textContent=`${rows.length} ${rows.length===1?'crop':'crops'}`;grid.innerHTML=rows.length?rows.map(c=>`<article class="crop-card"><div class="crop-emoji">${c.emoji}</div><h3>${c.ch}</h3><div class="crop-en">${c.en} · ${c.group}</div><p>${c.summary}</p><button type="button" data-crop-id="${c.id}">Explore crop guide →</button></article>`).join(''):'<div class="empty">No crops found. Try another search or crop group.</div>'}
-function openCrop(id){const c=cropData.find(x=>x.id===id);if(!c)return;document.querySelector('#modalTitle').textContent=`${c.emoji} ${c.ch}`;document.querySelector('#modalSub').textContent=`${c.en} • ${c.group} • Malawi crop profile`;document.querySelector('#modalBody').innerHTML=`<p><strong>Overview:</strong> ${c.summary}</p><h3>Common uses</h3><ul>${c.uses.map(v=>`<li>${v}</li>`).join('')}</ul><h3>Field-learning checklist</h3><ol>${c.field.map(v=>`<li>${v}</li>`).join('')}</ol><h3>Things to watch</h3><p>${c.watch}</p><p class="notice"><strong>Local guidance matters:</strong> This is general crop education, not a district-specific production package. Confirm seed variety, planting window, spacing, fertiliser and crop protection recommendations with a qualified local extension worker.</p>`;document.querySelector('#modal').classList.add('open');document.body.style.overflow='hidden';document.querySelector('#closeModal').focus()}
-document.querySelector('#cropFilters').addEventListener('click',e=>{const b=e.target.closest('[data-crop-group]');if(!b)return;activeCropGroup=b.dataset.cropGroup;renderCropFilters();renderCrops()});document.querySelector('#cropSearch').addEventListener('input',renderCrops);document.querySelector('#cropGrid').addEventListener('click',e=>{const b=e.target.closest('[data-crop-id]');if(b)openCrop(b.dataset.cropId)});renderCropFilters();renderCrops();
+<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <article class="modal">
+    <div class="modal-head">
+      <div><h2 id="modalTitle"></h2><p id="modalSub"></p></div>
+      <button class="close" id="closeModal" aria-label="Close details">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </article>
+</div>
+<div class="toast" id="toast" role="status"></div>
 
-const categories=['Zonse','Chakudya','Zamalonda','Zamakono','Zachikhalidwe'];
-const $=s=>document.querySelector(s); let activeCategory='Zonse'; let saved=new Set(JSON.parse(localStorage.getItem('ulimiSaved')||'[]'));
-function escapeHtml(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function renderFilters(){ $('#filters').innerHTML=categories.map(c=>`<button class="filter ${c===activeCategory?'active':''}" data-category="${escapeHtml(c)}">${c==='Zonse'?'All topics':escapeHtml(c)}</button>`).join(''); }
-function renderCards(){const q=$('#search').value.trim().toLowerCase();const list=farmingData.filter(x=>(activeCategory==='Zonse'||x.category===activeCategory)&&(!q||[x.nameCh,x.nameEn,x.desc,x.full,...x.zitsanzo,...x.mfundo].join(' ').toLowerCase().includes(q)));$('#resultCount').textContent=`${list.length} ${list.length===1?'topic':'topics'}`;$('#methodCount').textContent=farmingData.length;$('#cards').innerHTML=list.length?list.map(x=>`<article class="farm-card" tabindex="0" role="button" data-id="${x.id}" aria-label="Read ${escapeHtml(x.nameEn)}"><div class="card-top"><div class="crop-icon">${x.emoji}</div><span class="category">${escapeHtml(x.category)}</span></div><h3>${escapeHtml(x.nameCh)}</h3><div class="english">${escapeHtml(x.nameEn)}</div><p class="desc">${escapeHtml(x.desc)}</p><div class="tags">${x.zitsanzo.slice(0,3).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div><div class="card-foot"><span>Read full guide →</span><button class="save ${saved.has(x.id)?'saved':''}" data-save="${x.id}" aria-label="${saved.has(x.id)?'Remove saved topic':'Save topic'}">${saved.has(x.id)?'★':'☆'}</button></div></article>`).join(''):'<div class="empty"><strong>No matching topics found.</strong><br>Try another word or select a different category.</div>'; }
-function openDetails(id){const x=farmingData.find(v=>v.id===Number(id));if(!x)return;$('#modalTitle').textContent=x.nameCh;$('#modalSub').textContent=`${x.nameEn} • ${x.category}`;$('#modalBody').innerHTML=`<p>${escapeHtml(x.desc)}</p><p>${escapeHtml(x.full||'')}</p><h3>Key points / Mfundo zazikulu</h3><ul>${(x.mfundo||[]).map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul><h3>Where it may be suitable in Malawi</h3><p>${escapeHtml(x.bwino||'Confirm local suitability with an extension worker.')}</p><h3>Examples</h3><p>${(x.zitsanzo||[]).map(escapeHtml).join(' • ')}</p><div class="modal-grid"><div class="modal-box"><h4>Advantages / Ubwino</h4><ul>${(x.ubwino||[]).map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul></div><div class="modal-box"><h4>Challenges / Zovuta</h4><ul>${(x.vuto||[]).map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul></div></div><p style="font-size:11px;color:#718078;margin-top:18px">Use this as learning material and confirm technical decisions with a local agricultural extension worker.</p>`;$('#modal').classList.add('open');document.body.style.overflow='hidden';$('#closeModal').focus();}
-function closeDetails(){$('#modal').classList.remove('open');document.body.style.overflow='';}
-let toastTimer;function toast(msg){$('#toast').textContent=msg;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),1800)}
-$('#filters').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;activeCategory=b.dataset.category;renderFilters();renderCards()});$('#search').addEventListener('input',renderCards);
-$('#cards').addEventListener('click',e=>{const saveBtn=e.target.closest('[data-save]');if(saveBtn){e.stopPropagation();const id=Number(saveBtn.dataset.save);saved.has(id)?saved.delete(id):saved.add(id);localStorage.setItem('ulimiSaved',JSON.stringify([...saved]));renderCards();toast(saved.has(id)?'Topic saved':'Topic removed from saved list');return;}const card=e.target.closest('[data-id]');if(card)openDetails(card.dataset.id)});
-$('#cards').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-id]')){e.preventDefault();openDetails(e.target.dataset.id)}});$('#closeModal').addEventListener('click',closeDetails);$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeDetails()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetails()});
-$('#menuBtn').addEventListener('click',()=>{const nav=$('#nav');nav.classList.toggle('open');$('#menuBtn').setAttribute('aria-expanded',nav.classList.contains('open')?'true':'false')});$('#nav').addEventListener('click',e=>{if(e.target.closest('a'))$('#nav').classList.remove('open')});
-const sections=[...document.querySelectorAll('main section[id],#home')];const navLinks=[...document.querySelectorAll('.nav a')];if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id))}}),{rootMargin:'-30% 0px -60% 0px'});sections.forEach(s=>observer.observe(s))}
-renderFilters();renderCards();
-
-// Phase 3 live weather: Open-Meteo forecast API (no API key required).
-const weatherPlaces = {
-  Lilongwe:{lat:-13.9626,lon:33.7741}, Blantyre:{lat:-15.7861,lon:35.0058},
-  Mzuzu:{lat:-11.4581,lon:34.0151}, Zomba:{lat:-15.3850,lon:35.3188},
-  Kasungu:{lat:-13.0333,lon:33.4833}, Mangochi:{lat:-14.4782,lon:35.2645},
-  Salima:{lat:-13.7804,lon:34.4587}, Dedza:{lat:-14.3779,lon:34.3332},
-  Karonga:{lat:-9.9333,lon:33.9333}, Nsanje:{lat:-16.9190,lon:35.2610},
-  Chitipa:{lat:-9.7024,lon:33.2697}, Balaka:{lat:-14.9793,lon:34.9558}
-};
-function weatherDescription(code){
-  if(code===0)return ['Clear sky','☀️'];
-  if([1,2].includes(code))return ['Mainly clear / partly cloudy','🌤️'];
-  if(code===3)return ['Overcast','☁️'];
-  if([45,48].includes(code))return ['Fog','🌫️'];
-  if([51,53,55,56,57].includes(code))return ['Drizzle','🌦️'];
-  if([61,63,65,66,67].includes(code))return ['Rain','🌧️'];
-  if([71,73,75,77].includes(code))return ['Snow / ice pellets','🌨️'];
-  if([80,81,82].includes(code))return ['Rain showers','🌧️'];
-  if([85,86].includes(code))return ['Snow showers','🌨️'];
-  if([95,96,99].includes(code))return ['Thunderstorm','⛈️'];
-  return ['Variable conditions','🌥️'];
-}
-function farmWeatherAdvice(current,daily){
-  const rain=Number(daily.precipitation_sum?.[0]||0);
-  const prob=Number(daily.precipitation_probability_max?.[0]||0);
-  const code=Number(current.weather_code);
-  if([95,96,99].includes(code)||prob>=70){
-    return '<strong>Farm planning note:</strong> Rain or storm risk may be elevated. Check local warnings, avoid working in unsafe storm conditions, and inspect drainage around fields and storage areas.';
-  }
-  if(rain>=5||prob>=40){
-    return '<strong>Farm planning note:</strong> Rain is possible. Review field drainage and plan field work flexibly. Avoid applying products when rain could wash them away; follow the product label and local extension advice.';
-  }
-  if(Number(current.temperature_2m)>=32){
-    return '<strong>Farm planning note:</strong> Hot conditions are forecast. Monitor crops and livestock for heat stress, check water availability, and schedule demanding outdoor work for cooler periods.';
-  }
-  return '<strong>Farm planning note:</strong> Use this forecast alongside field observations. Check soil moisture before irrigation and continue routine crop and livestock monitoring.';
-}
-async function loadWeather(){
-  const select=document.querySelector('#weatherDistrict');
-  const button=document.querySelector('#refreshWeather');
-  const status=document.querySelector('#weatherStatus');
-  const results=document.querySelector('#weatherResults');
-  const place=select.value,coords=weatherPlaces[place];
-  button.disabled=true;button.textContent='Loading…';status.classList.remove('error');
-  status.textContent=`Getting the latest available forecast for ${place}…`;results.hidden=true;
-  const url=`https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&forecast_days=7&timezone=Africa%2FBlantyre`;
-  try{
-    const response=await fetch(url,{headers:{'Accept':'application/json'}});
-    if(!response.ok)throw new Error('Weather service returned an unavailable response.');
-    const data=await response.json();
-    if(!data.current||!data.daily)throw new Error('The weather service did not return a complete forecast.');
-    const current=data.current,daily=data.daily,desc=weatherDescription(current.weather_code);
-    document.querySelector('#weatherCurrent').innerHTML=`
-      <div class="weather-now"><div class="place">📍 ${place}, Malawi</div><div class="temperature">${Math.round(current.temperature_2m)}°C</div><div class="condition">${desc[1]} ${desc[0]}</div><div class="updated">Updated: ${new Date(current.time).toLocaleString('en-GB',{timeZone:'Africa/Blantyre',dateStyle:'medium',timeStyle:'short'})}</div></div>
-      <div class="weather-metrics">
-        <div class="weather-metric"><span>💧 Relative humidity</span><strong>${Math.round(current.relative_humidity_2m)}%</strong></div>
-        <div class="weather-metric"><span>🌧️ Current precipitation</span><strong>${Number(current.precipitation).toFixed(1)} mm</strong></div>
-        <div class="weather-metric"><span>💨 Wind speed</span><strong>${Math.round(current.wind_speed_10m)} km/h</strong></div>
-        <div class="weather-metric"><span>🌡️ Current temperature</span><strong>${Math.round(current.temperature_2m)}°C</strong></div>
-      </div>`;
-    const grid=document.querySelector('#forecastGrid');
-    grid.innerHTML=daily.time.map((date,i)=>{
-      const d=new Date(date+'T12:00:00');
-      const day=i===0?'Today':d.toLocaleDateString('en-GB',{weekday:'short'});
-      const w=weatherDescription(Number(daily.weather_code[i]));
-      const rain=daily.precipitation_probability_max?.[i];
-      return `<article class="forecast-day"><div class="day">${day}</div><div class="symbol" aria-label="${w[0]}">${w[1]}</div><div class="range">${Math.round(daily.temperature_2m_max[i])}° / ${Math.round(daily.temperature_2m_min[i])}°</div><div class="rain">${rain==null?'—':Math.round(rain)+'%'} rain chance<br>${Number(daily.precipitation_sum?.[i]||0).toFixed(1)} mm</div></article>`;
-    }).join('');
-    document.querySelector('#weatherAdvice').innerHTML=farmWeatherAdvice(current,daily);
-    status.textContent=`Forecast loaded for ${place}.`;results.hidden=false;
-  }catch(error){
-    status.classList.add('error');
-    status.textContent='Unable to load live weather right now. Check your internet connection and try again. No forecast has been invented or substituted.';
-  }finally{button.disabled=false;button.textContent='↻ Refresh forecast';}
-}
-document.querySelector('#weatherDistrict').addEventListener('change',loadWeather);
-document.querySelector('#refreshWeather').addEventListener('click',loadWeather);
-loadWeather();
-
-</script>
-</body></html>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/features/farming-methods.js"></script>
+<script src="js/features/crops.js"></script>
+<script src="js/features/weather.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
