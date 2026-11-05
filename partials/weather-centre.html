@@ -1,0 +1,35 @@
+<section id="weather" style="margin-top:54px">
+      <div class="section-head"><div>
+        <span class="section-kicker">Phase 3 • Weather &amp; climate</span>
+        <h2>Malawi weather centre</h2>
+        <p>Check live weather conditions and a seven-day forecast for selected locations across Malawi. Use forecasts as planning support, and follow local official warnings.</p>
+      </div></div>
+      <div class="weather-panel">
+        <div class="weather-controls">
+          <label class="weather-label" for="weatherDistrict">Choose a location in Malawi</label>
+          <select id="weatherDistrict" aria-label="Choose a weather location">
+            <option value="Lilongwe">Lilongwe</option>
+            <option value="Blantyre">Blantyre</option>
+            <option value="Mzuzu">Mzuzu</option>
+            <option value="Zomba">Zomba</option>
+            <option value="Kasungu">Kasungu</option>
+            <option value="Mangochi">Mangochi</option>
+            <option value="Salima">Salima</option>
+            <option value="Dedza">Dedza</option>
+            <option value="Karonga">Karonga</option>
+            <option value="Nsanje">Nsanje</option>
+            <option value="Chitipa">Chitipa</option>
+            <option value="Balaka">Balaka</option>
+          </select>
+          <button class="btn btn-weather" id="refreshWeather" type="button">↻ Refresh forecast</button>
+        </div>
+        <div class="weather-status" id="weatherStatus" role="status" aria-live="polite">Loading the latest available forecast…</div>
+        <div id="weatherResults" hidden>
+          <div class="weather-current" id="weatherCurrent"></div>
+          <div class="forecast-heading"><h3>7-day forecast</h3><span>Daily outlook</span></div>
+          <div class="forecast-grid" id="forecastGrid"></div>
+          <div class="weather-advice" id="weatherAdvice"></div>
+          <p class="weather-source">Weather data: Open-Meteo. Forecasts can change and may not represent conditions at every farm. Check local observations and official alerts before making important decisions.</p>
+        </div>
+      </div>
+    </section>
