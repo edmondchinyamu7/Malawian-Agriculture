@@ -1,0 +1,8 @@
+{
+  "name": "Ulimi wa Malawi",
+  "description": "A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
