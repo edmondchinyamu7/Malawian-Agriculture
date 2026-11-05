@@ -13,11 +13,13 @@ npm run dev
 The server serves static files from the repository root. The frontend uses plain HTML, CSS and JavaScript and requires no frontend build step.
 
 ## Project structure
-- `index.html` — single-page application entry point
+- `index.html` — lightweight page shell that loads the HTML modules
+- `partials/` — independent homepage, farming methods, crop library, weather, guides, support, footer and modal sections
 - `css/` — base, layout, component, page and master stylesheets
+- `js/layout.js` — loads the HTML partials before the app starts
 - `js/config.js` — farming methods, crop profiles and Malawi weather locations
 - `js/features/` — farming methods, crop library and live weather
-- `js/app.js` — application startup
+- `js/app.js` — application startup after the page modules load
 
 ## Included features
 - 18 farming methods with search, category filters, saved topics and detail modals
