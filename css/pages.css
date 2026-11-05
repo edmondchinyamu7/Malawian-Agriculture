@@ -1,0 +1,102 @@
+/* ===== Page-specific: crop library + weather centre ===== */
+
+/* --- Crop library (Phase 2) --- */
+.crop-toolbar{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  box-shadow:0 8px 25px #0c352008;
+}
+.crop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.crop-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:21px;
+  display:flex;flex-direction:column;min-height:220px;
+  box-shadow:0 8px 24px #0b35200a;transition:.2s;
+}
+.crop-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#c4dacb}
+.crop-card .crop-emoji{
+  width:48px;height:48px;border-radius:15px;background:#eaf5ed;
+  display:grid;place-items:center;font-size:25px;margin-bottom:13px;
+}
+.crop-card h3{font-size:18px;line-height:1.4;font-weight:900;color:var(--forest);margin:0 0 3px}
+.crop-card .crop-en{font-size:13px;color:#52665a;font-weight:750}
+.crop-card p{font-size:14px;line-height:1.8;color:#405247;font-weight:500;margin:11px 0 14px}
+.crop-card button{
+  margin-top:auto;border:0;background:var(--forest);color:#fff;
+  border-radius:11px;padding:12px 14px;font-size:12px;font-weight:850;cursor:pointer;
+}
+.crop-card button:hover{background:var(--green)}
+
+/* --- Weather centre (Phase 3) --- */
+.weather-panel{
+  background:#fff;border:1px solid var(--line);border-radius:22px;
+  padding:clamp(16px,3vw,26px);box-shadow:0 10px 32px #0c35200a;
+}
+.weather-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
+.weather-label{
+  display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:850;
+  color:var(--forest);flex:1;min-width:220px;
+}
+.weather-label select,.weather-controls select{
+  height:46px;border:1px solid #cbd9ce;border-radius:12px;background:#f8faf8;
+  padding:0 13px;color:#1c3326;font-size:15px;font-weight:650;min-width:220px;
+}
+.btn-weather{height:46px;background:var(--forest);color:white;font-size:13px}
+.btn-weather:disabled{opacity:.6;cursor:wait;transform:none}
+.weather-status{
+  margin-top:16px;padding:12px 14px;background:#f1f7f2;border-radius:12px;
+  color:#365442;font-size:13px;line-height:1.6;font-weight:650;
+}
+.weather-status.error{background:#fff4ef;color:#873d25}
+.weather-current{display:grid;grid-template-columns:1.1fr 1.9fr;gap:15px;margin-top:18px}
+.weather-now{
+  background:linear-gradient(135deg,#0b3527,#176b4a);
+  border-radius:18px;color:white;padding:22px;
+}
+.weather-now .place{font-size:13px;color:#d6eadc;font-weight:750}
+.weather-now .temperature{font-size:48px;line-height:1.1;font-weight:900;letter-spacing:-.04em;margin:10px 0 4px}
+.weather-now .condition{font-size:15px;color:#e4f2e8;font-weight:750}
+.weather-now .updated{font-size:11px;color:#c5dfce;margin-top:15px}
+.weather-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.weather-metric{border:1px solid var(--line);border-radius:15px;padding:15px;background:#fbfdfb}
+.weather-metric span{display:block;font-size:12px;color:#52665a;font-weight:700}
+.weather-metric strong{display:block;font-size:22px;color:var(--forest);font-weight:900;margin-top:5px}
+.forecast-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 0 12px}
+.forecast-heading h3{font-size:18px;color:var(--forest);margin:0;font-weight:900}
+.forecast-heading span{font-size:12px;color:#52665a;font-weight:700}
+.forecast-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}
+.forecast-day{
+  background:#f5f9f6;border:1px solid #e4ece6;border-radius:14px;
+  padding:12px 9px;text-align:center;min-width:0;
+}
+.forecast-day .day{font-size:12px;color:#344d3d;font-weight:850}
+.forecast-day .symbol{font-size:24px;margin:9px 0}
+.forecast-day .range{font-size:14px;color:var(--forest);font-weight:900}
+.forecast-day .rain{font-size:11px;color:#42664f;font-weight:700;margin-top:7px;line-height:1.45}
+.weather-advice{
+  margin-top:16px;padding:15px 17px;border-left:4px solid #39845b;
+  background:#eef7f0;border-radius:12px;color:#294c37;font-size:13px;line-height:1.75;
+}
+.weather-advice strong{font-weight:900}
+.weather-source{font-size:11px;line-height:1.65;color:#617268;margin:14px 0 0}
+
+/* Responsive */
+@media(max-width:900px){
+  .crop-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:800px){
+  .weather-current{grid-template-columns:1fr}
+  .forecast-grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:560px){
+  .crop-grid{grid-template-columns:1fr}
+  .crop-toolbar{align-items:stretch;flex-direction:column}
+  .crop-toolbar .search-wrap{max-width:none}
+}
+@media(max-width:520px){
+  .weather-controls{align-items:stretch;flex-direction:column}
+  .weather-label,.weather-label select,.weather-controls select,.btn-weather{width:100%;min-width:0}
+  .forecast-grid{grid-template-columns:repeat(2,1fr)}
+  .forecast-day:last-child{grid-column:1/-1}
+  .weather-metrics{grid-template-columns:repeat(2,1fr)}
+  .farm-card .desc,.crop-card p,.feature p,.guide p{font-size:14px}
+}
