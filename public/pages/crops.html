@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ny">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Laibulale yonse ya mbewu za m'Malawi yokhala ndi malangizo a kalimidwe, mtundu wa nthaka, feteleza ndi tizilombo.">
+  <meta property="og:title" content="Mbewu za m'Malawi (V7) | Ulimi wa Malawi">
+  <meta property="og:description" content="Malangizo a kalimidwe ka chimanga, mtedza, soya, mpunga, chinangwa, mbatata, tomato, nandolo ndi mbewu zina.">
+  <title>Mbewu za m'Malawi (V7) | Ulimi wa Malawi</title>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body id="top">
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi poyambira">
+        <span class="brand-mark">🌱</span>
+        <span>
+          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+          <small data-i18n="navCrops">MBEWU ZA M'MALAWI (V7)</small>
+        </span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html" data-i18n="navHome">Poyambira</a>
+        <a href="crops.html" class="active" data-i18n="navCrops">Mbewu za m'Malawi (V7)</a>
+        <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi (V6)</a>
+        <a href="pest-disease.html" data-i18n="navPest">Tizilombo ndi matenda (V8)</a>
+        <a href="market-centre.html" data-i18n="navMarket">Msika wa zaulimi (V5)</a>
+        <a href="weather.html" data-i18n="navWeather">Zanyengo</a>
+        <a href="admin.html" data-i18n="navAdmin">Uyang'anire</a>
+      </nav>
+      <div class="top-actions">
+        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main container">
+      <!-- Section Header -->
+      <div class="section-head">
+        <div>
+          <span class="section-kicker" data-i18n="cropsKicker">Laibulale ya Mbewu</span>
+          <h2 data-i18n="cropsTitle">Mbewu Zotchuka za m'Malawi (Makadi a Mbewu)</h2>
+          <p data-i18n="cropsDesc">Malangizo a kalimidwe katsatanetsatane oyenera nyengo ndi nthaka zosiyanasiyana m'Malawi. Dziwani kagwiritsidwe ntchito, zoyenera kutsatira m'munda, feteleza woyenera, ndi tizilombo tosokoneza mbewu.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="crop-toolbar">
+        <label class="search-wrap">
+          <span>⌕</span>
+          <input id="cropSearch" type="search" placeholder="Fufuzani chimanga, mtedza, mpunga, tomato, chinangwa…" autocomplete="off" aria-label="Fufuzani mbewu" data-i18n-placeholder="searchCropsPlaceholder">
+        </label>
+        <div class="result-count" id="cropCount" aria-live="polite">Mbewu 16</div>
+      </div>
+
+      <div class="filters" id="cropFilters" aria-label="Sankhani gulu la mbewu"></div>
+
+      <!-- Crops Grid (Rendered in Rich Cards) -->
+      <div class="crop-grid" id="cropGrid"></div>
+
+      <div class="notice" style="margin-top:36px" data-i18n="cropAdviceNote">
+        <strong>Chidziwitso pa mbewu:</strong> Malangizowa ndi othandiza poyambira kuphunzira. Kusankha mtundu wa mbewu, nthawi yobzala, mipata, ndi feteleza (monga 23:10:5+6S ndi Urea) zimatengera boma, nthaka, ndi mvula. Tsimikizirani ndi mlangizi wazaulimi wa m'dera lanu (AEDO) kapena ku ADD.
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <!-- Premium Global Footer -->
+<footer class="footer">
+  <div class="footer-showcase">
+    <div class="container footer-showcase-inner">
+      <div class="footer-showcase-copy">
+        <span class="footer-eyebrow">ULIMI WA MALAWI • GROW WITH KNOWLEDGE</span>
+        <h2>Better farming starts with the right knowledge.</h2>
+        <p>Practical crop guidance, seasonal information and useful resources to support farmers across Malawi.</p>
+        <a class="footer-cta" href="../modules.html">Explore farming resources <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="footer-showcase-mark" aria-hidden="true">🌱</div>
+    </div>
+  </div>
+  <div class="container footer-panel">
+    <div class="footer-main">
+      <div class="footer-brand-block">
+        <a class="brand footer-brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+          <span class="brand-mark">🌱</span>
+          <span><span>ULIMI WA MALAWI</span><small>AGRICULTURE KNOWLEDGE HUB</small></span>
+        </a>
+        <h3>Knowledge for a stronger agricultural future.</h3>
+        <p>Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Farming</h4>
+        <a href="../pages/crop-calendar.html">Crop Calendar</a>
+        <a href="../pages/crops.html">Crop Library</a>
+        <a href="../pages/pest-disease.html">Pests &amp; Diseases</a>
+        <a href="../pages/market-centre.html">Agricultural Market</a>
+      </div>
+      <div class="footer-column">
+        <h4>Discover</h4>
+        <a href="../modules.html">All Learning Modules</a>
+        <a href="../pages/weather.html">Weather Updates</a>
+        <a href="../index.html#methods">Farming Methods</a>
+        <a href="../index.html#guides">Practical Field Guides</a>
+      </div>
+      <div class="footer-column">
+        <h4>Platform</h4>
+        <a href="../index.html">Home</a>
+        <a href="../pages/farm-planner.html">Farm Planner</a>
+        <a href="../pages/farmer-community.html">Farmer Community</a>
+        <a href="../pages/admin.html">Admin Dashboard</a>
+      </div>
+      <div class="footer-column footer-connect">
+        <h4>Connect</h4>
+        <p>Explore trusted learning resources and stay informed about agriculture in Malawi.</p>
+        <a class="footer-text-link" href="../modules.html">Start learning <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ulimi wa Malawi. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="../index.html#support">Agricultural Resources</a>
+        <a href="../modules.html">Learning Modules</a>
+        <a href="../pages/admin.html">Admin</a>
+      </div>
+      <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>
+    </div>
+  </div>
+</footer>
+  </div>
+
+  <!-- Reusable Modal Backdrop -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSub"></p>
+        </div>
+        <button class="close" id="closeModal" aria-label="Tsekani zambiri" data-i18n-aria="modalCloseBtn">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
+  </div>
+
+  <!-- Toast Alert -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/i18n.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/crops.js"></script>
+</body>
+</html>
