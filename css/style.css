@@ -262,12 +262,120 @@ a {
   background: #dff1e7;
   color: #0b3a2a;
   box-shadow: 0 10px 25px rgba(0, 28, 18, 0.22);
+  font-weight: 850;
+}
+
+.btn-primary:hover {
+  background: #c7e8d6;
+  color: #062319;
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-weight: 800;
+  backdrop-filter: blur(8px);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff !important;
+}
+
+.btn-outline {
+  background: #ffffff;
+  color: var(--forest) !important;
+  border: 1.5px solid var(--forest);
+  font-weight: 850;
+}
+
+.btn-outline:hover {
+  background: #edf6f0;
+  border-color: var(--green);
+}
+
+/* Upgrade Showcase Grid */
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+  margin-bottom: 48px;
+}
+
+.upgrade-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  padding: 22px;
+  box-shadow: 0 8px 24px rgba(11, 53, 32, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.upgrade-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: #b7d6c2;
+}
+
+.upgrade-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.upgrade-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: var(--mint);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+
+.badge-version {
+  font-size: 10px;
+  font-weight: 900;
+  background: #eaf5ee;
+  color: var(--green);
+  border: 1px solid #c9e3d2;
+  border-radius: 999px;
+  padding: 4px 9px;
+  letter-spacing: 0.05em;
+}
+
+.upgrade-card h3 {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--forest);
+  margin: 0 0 6px;
+}
+
+.upgrade-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 0 14px;
+  flex: 1;
+}
+
+.upgrade-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #edf2ee;
+  padding-top: 12px;
+  font-size: 12px;
+  font-weight: 850;
+  color: var(--green);
 }
 
 .hero-panel {

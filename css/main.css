@@ -1,11 +1,8 @@
-/* ===== Master stylesheet: single import point =====
-   Load order matters:
-   1) base      – tokens, reset, typography
-   2) layout    – shell, header, hero, grids, footer
-   3) components – buttons, cards, modal, toast
-   4) pages     – crop library, weather centre
-*/
+/* ===== Master stylesheet: single import point ===== */
 @import url("base.css");
+@import url("style.css");
 @import url("layout.css");
 @import url("components.css");
+@import url("dashboard.css");
 @import url("pages.css");
+@import url("responsive.css");

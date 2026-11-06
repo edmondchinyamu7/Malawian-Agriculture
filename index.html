@@ -1,29 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#092d22">
-<meta name="description" content="Ulimi wa Malawi — practical agriculture knowledge for Malawi.">
-<title>Ulimi wa Malawi | Home</title>
-<link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.">
+  <meta property="og:title" content="Ulimi wa Malawi | Agriculture Knowledge Hub">
+  <meta property="og:description" content="A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.">
+  <title>Ulimi wa Malawi | Agriculture Knowledge Hub</title>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-<div class="shell">
-  <div data-include="partials/header.html" style="display:contents"></div>
-  <main>
-    <div data-include="partials/landing.html" style="display:contents"></div>
-  </main>
-  <div data-include="partials/footer.html" style="display:contents"></div>
-</div>
-<script src="js/layout.js"></script>
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/navigation.js"></script>
-<script src="js/features/farming-methods.js"></script>
-<script src="js/features/crops.js"></script>
-<script src="js/features/weather.js"></script>
-<script src="js/app.js"></script>
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="pages/crop-calendar.html">Farming calendar</a>
+        <a href="pages/crops.html">Crop library</a>
+        <a href="pages/pest-disease.html">Pest & disease</a>
+        <a href="pages/market-centre.html">Market centre</a>
+        <a href="pages/weather.html">Weather</a>
+        <a href="modules.html">All modules</a>
+        <a href="pages/admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">🇲🇼 MADE FOR MALAWI</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Deep Emerald Hero Section -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><i class="dot"></i> PRACTICAL KNOWLEDGE • CHICHEWA &amp; ENGLISH</span>
+          <h1>Grow knowledge.<br><span>Grow better harvests.</span></h1>
+          <p>Malawi-focused agricultural knowledge for learners, smallholder farmers and growing agribusinesses. Explore seasonal farming calendars, pest diagnostics, 16+ crop guides, verified market prices, and live weather.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#methods">Explore farming methods <span>🌾</span></a>
+            <a class="btn btn-ghost" href="pages/crop-calendar.html">Farming calendar (V6) <span>📅</span></a>
+            <a class="btn btn-ghost" href="pages/crops.html">Crop library (V7) <span>🌽</span></a>
+            <a class="btn btn-ghost" href="pages/pest-disease.html">Pest & disease (V8) <span>🐛</span></a>
+            <a class="btn btn-ghost" href="pages/market-centre.html">Market prices (V5) <span>📊</span></a>
+          </div>
+        </div>
+
+        <!-- Floating Hero Panel -->
+        <aside class="hero-panel">
+          <div class="panel-top">
+            <span class="panel-label">Your learning hub</span>
+            <span class="panel-badge">🇲🇼 MALAWI FIRST</span>
+          </div>
+          <h2 class="panel-title">Ulimi ndi Moyo.</h2>
+          <p class="panel-copy">Learn at your pace. Access verified spot commodity prices, diagnose pests early, and align your field operations with regional rainfall patterns.</p>
+          <div class="stat-grid">
+            <div class="stat"><strong id="methodCount">18</strong><span>Farming topics</span></div>
+            <div class="stat"><strong>16+</strong><span>Malawi crops</span></div>
+            <div class="stat"><strong>12</strong><span>Weather districts</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main container">
+      <!-- Phase 1 Upgrades Showcase Grid -->
+      <section aria-label="Phase 1 upgrades showcase" style="margin-bottom:20px">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Core Upgrades Live</span>
+            <h2>Smart Farming Tools &amp; Market Intelligence</h2>
+            <p>Access our newly upgraded agricultural modules designed to optimize farm planning, crop protection, and fair market transactions.</p>
+          </div>
+          <a href="modules.html" class="btn btn-outline" style="white-space:nowrap">View all modules →</a>
+        </div>
+
+        <div class="upgrade-grid">
+          <!-- Card 1: V6 Calendar -->
+          <a class="upgrade-card" href="pages/crop-calendar.html">
+            <div class="upgrade-card-head">
+              <div class="upgrade-icon">📅</div>
+              <span class="badge-version">V6 CALENDAR</span>
+            </div>
+            <h3>Seasonal Cropping Calendar</h3>
+            <p>Interactive 12-month timeline with monthly operational priorities, seasonal reminders, and crop growth Gantt schedules.</p>
+            <div class="upgrade-card-foot">
+              <span>Open calendar planner</span>
+              <span>→</span>
+            </div>
+          </a>
+
+          <!-- Card 2: V7 Crops -->
+          <a class="upgrade-card" href="pages/crops.html">
+            <div class="upgrade-card-head">
+              <div class="upgrade-icon">🌽</div>
+              <span class="badge-version">V7 CROPS</span>
+            </div>
+            <h3>16+ Detailed Crop Profiles</h3>
+            <p>Comprehensive agronomic guides, soil requirements, recommended fertiliser schedules, and district ecological suitability.</p>
+            <div class="upgrade-card-foot">
+              <span>Browse crop library</span>
+              <span>→</span>
+            </div>
+          </a>
+
+          <!-- Card 3: V8 Pest & Disease -->
+          <a class="upgrade-card" href="pages/pest-disease.html">
+            <div class="upgrade-card-head">
+              <div class="upgrade-icon">🐛</div>
+              <span class="badge-version">V8 HEALTH</span>
+            </div>
+            <h3>Pest &amp; Disease Diagnostics</h3>
+            <p>Identify visual symptoms of Fall Armyworm, Stalk Borer, Rosette, CMD/CBSD, and Blight with IPM prevention protocols.</p>
+            <div class="upgrade-card-foot">
+              <span>Diagnose crop health</span>
+              <span>→</span>
+            </div>
+          </a>
+
+          <!-- Card 4: V5 Market Centre -->
+          <a class="upgrade-card" href="pages/market-centre.html">
+            <div class="upgrade-card-head">
+              <div class="upgrade-icon">📊</div>
+              <span class="badge-version">V5 MARKET</span>
+            </div>
+            <h3>Agricultural Market Centre</h3>
+            <p>Spot trading prices for maize, groundnuts, soya, and rice across rural and urban markets with verified extension labels.</p>
+            <div class="upgrade-card-foot">
+              <span>Check commodity prices</span>
+              <span>→</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Farming Methods Section -->
+      <section id="methods">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Knowledge Centre</span>
+            <h2>Farming Methods &amp; Systems</h2>
+            <p>Search in Chichewa or English, or filter by farming category to discover traditional, commercial and modern practices.</p>
+          </div>
+        </div>
+        <div class="toolbar">
+          <label class="search-wrap">
+            <span>⌕</span>
+            <input id="search" type="search" placeholder="Search farming methods, crops or examples…" autocomplete="off" aria-label="Search farming methods">
+          </label>
+          <div class="result-count" id="resultCount" aria-live="polite">18 topics</div>
+        </div>
+        <div class="filters" id="filters" aria-label="Filter farming topics"></div>
+        <div class="cards" id="cards"></div>
+      </section>
+
+      <!-- Crop Knowledge Section -->
+      <section id="crops" style="margin-top:54px">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Field Knowledge</span>
+            <h2>Malawi Crop Library</h2>
+            <p>Explore practical crop profiles in Chichewa and English. Search by crop name or use a crop group to narrow the list.</p>
+          </div>
+          <a href="pages/crops.html" class="btn btn-outline">Full 16+ Crop Library →</a>
+        </div>
+        <div class="crop-toolbar">
+          <label class="search-wrap">
+            <span>⌕</span>
+            <input id="cropSearch" type="search" placeholder="Search maize, groundnuts, rice, tomato, cassava…" autocomplete="off" aria-label="Search crops">
+          </label>
+          <div class="result-count" id="cropCount" aria-live="polite">16 crops</div>
+        </div>
+        <div class="filters" id="cropFilters" aria-label="Filter crop groups"></div>
+        <div class="crop-grid" id="cropGrid"></div>
+        <div class="notice">
+          <strong>Crop Advice Note:</strong> These profiles provide foundational field guidance. Specific planting windows, spacing intervals, certified hybrid seed selections, basal and top-dressing fertiliser quantities should be verified with your nearest Ministry of Agriculture Extension Officer.
+        </div>
+      </section>
+
+      <!-- Weather Section -->
+      <section id="weather" style="margin-top:54px">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Live Agro-Meteorology</span>
+            <h2>Malawi Weather Centre</h2>
+            <p>Check live weather conditions and a seven-day forecast for 12 agricultural locations across Malawi. Use forecasts for planning planting, ridge making, and post-harvest drying.</p>
+          </div>
+          <a href="pages/weather.html" class="btn btn-outline">Dedicated Weather Page →</a>
+        </div>
+        <div class="weather-panel">
+          <div class="weather-controls">
+            <label class="weather-label" for="weatherDistrict">Choose a location in Malawi
+              <select id="weatherDistrict" aria-label="Choose a weather location">
+                <option value="Lilongwe">Lilongwe</option>
+                <option value="Blantyre">Blantyre</option>
+                <option value="Mzuzu">Mzuzu</option>
+                <option value="Zomba">Zomba</option>
+                <option value="Kasungu">Kasungu</option>
+                <option value="Mangochi">Mangochi</option>
+                <option value="Salima">Salima</option>
+                <option value="Dedza">Dedza</option>
+                <option value="Karonga">Karonga</option>
+                <option value="Nsanje">Nsanje</option>
+                <option value="Chitipa">Chitipa</option>
+                <option value="Balaka">Balaka</option>
+              </select>
+            </label>
+            <button class="btn btn-weather" id="refreshWeather" type="button">↻ Refresh forecast</button>
+          </div>
+          <div class="weather-status" id="weatherStatus" role="status" aria-live="polite">Loading the latest available forecast…</div>
+          <div id="weatherResults" hidden>
+            <div class="weather-current" id="weatherCurrent"></div>
+            <div class="forecast-heading">
+              <h3>7-day forecast</h3>
+              <span>Daily agricultural outlook</span>
+            </div>
+            <div class="forecast-grid" id="forecastGrid"></div>
+            <div class="weather-advice" id="weatherAdvice"></div>
+            <p class="weather-source">Weather data: Open-Meteo. Forecasts can change and serve as planning support. Monitor local sky and soil conditions before making important decisions.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Practical Field Guides -->
+      <section id="guides" style="margin-top:54px">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Field Learning</span>
+            <h2>Practical Farming Guides</h2>
+            <p>Simple starting points. Adapt each practice to your location, crop and local extension advice.</p>
+          </div>
+        </div>
+        <div class="guides">
+          <article class="guide">
+            <div class="gicon">🌱</div>
+            <div>
+              <h3>Soil health &amp; conservation</h3>
+              <p>Healthy soil supports roots, water storage and crop growth. Protect the soil while improving its organic matter.</p>
+              <ul>
+                <li>Keep soil covered with suitable plant residues or cover crops.</li>
+                <li>Use crop rotation and legume crops where suitable.</li>
+                <li>Reduce runoff with contour ridging and erosion-control swales.</li>
+                <li>Seek soil testing or extension advice before choosing fertiliser rates.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="guide">
+            <div class="gicon">♻️</div>
+            <div>
+              <h3>Compost &amp; organic matter</h3>
+              <p>Composting turns farmyard manure and crop residues into a potent soil amendment that cuts fertiliser expenditure.</p>
+              <ul>
+                <li>Combine suitable dry brown matter with green plant materials.</li>
+                <li>Keep the compost pile moist like a squeezed sponge, but not waterlogged.</li>
+                <li>Turn periodically to ensure adequate airflow and aerobic decomposition.</li>
+                <li>Apply mature, earthy-smelling compost into planting basins before rains.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="guide">
+            <div class="gicon">💧</div>
+            <div>
+              <h3>Water-smart farming</h3>
+              <p>Plan water use around crop needs, soil type and the water available to your farm.</p>
+              <ul>
+                <li>Check root-zone soil moisture before watering.</li>
+                <li>Water in the early morning or evening to limit evaporation loss.</li>
+                <li>Maintain irrigation channels, treadle pump seals, and drip lines.</li>
+                <li>Preserve riverbank buffer zones to protect community water tables.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="guide">
+            <div class="gicon">🛡️</div>
+            <div>
+              <h3>Crop health &amp; safe handling</h3>
+              <p>Regular field observation helps identify crop problems early and supports safer decisions.</p>
+              <ul>
+                <li>Inspect crops weekly in a 'W' pattern and record unusual symptoms.</li>
+                <li>Rogue and safely bury virus-infected cassava or groundnut plants.</li>
+                <li>Ask your Agricultural Extension Development Officer (AEDO) to confirm diagnoses.</li>
+                <li>Only use registered crop-protection products with proper personal protective equipment (PPE).</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="guide">
+            <div class="gicon">🌽</div>
+            <div>
+              <h3>Harvest &amp; storage</h3>
+              <p>Careful harvesting, thorough drying and airtight storage prevent post-harvest loss and aflatoxin contamination.</p>
+              <ul>
+                <li>Harvest at the crop's recommended physiological maturity.</li>
+                <li>Dry grain thoroughly on clean raised tarpaulins to below 13.5% moisture.</li>
+                <li>Store in clean, dry, rodent-proof cribs or multi-layer hermetic PICS bags.</li>
+                <li>Check stored produce regularly for moisture, weevils, and heat.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="guide">
+            <div class="gicon">📈</div>
+            <div>
+              <h3>Farm planning &amp; market readiness</h3>
+              <p>Good planning connects production decisions to household needs, input costs, and profitable commercial sales.</p>
+              <ul>
+                <li>Calculate seed, basal fertiliser, and top-dressing requirements in advance.</li>
+                <li>Plan crop choices around local soil conditions and urban market demand.</li>
+                <li>Compare buyer pricing across district markets before selling.</li>
+                <li>Keep simple records of inputs, harvests, and revenue.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="notice">
+          <strong>Important Extension Notice:</strong> These guides provide general educational material. Seed varieties, fertiliser rates, animal-health decisions and crop-protection measures should be confirmed with a qualified agricultural extension officer in your district.
+        </div>
+      </section>
+
+      <!-- Support & Resources -->
+      <section id="support" style="margin-top:54px">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Trusted Information</span>
+            <h2>Malawi Agricultural Support &amp; Services</h2>
+            <p>Official contacts and resources from the Ministry of Agriculture and research institutions.</p>
+          </div>
+        </div>
+        <div class="resources">
+          <article class="resource">
+            <small>Government • Extension</small>
+            <h3>Agricultural Extension Services</h3>
+            <p>Information on farmer training, lead-farmer delivery, and practical advisory support.</p>
+            <a href="https://www.agriculture.gov.mw/index.php/extensionservices" target="_blank" rel="noopener">Visit extension services ↗</a>
+          </article>
+          <article class="resource">
+            <small>Government • Crop production</small>
+            <h3>Crop Development</h3>
+            <p>Official guidance on improved seed varieties, diversification, and integrated crop protection.</p>
+            <a href="https://www.mining.gov.mw/department/crop-development/crop-production" target="_blank" rel="noopener">Explore crop guidance ↗</a>
+          </article>
+          <article class="resource">
+            <small>Government • Soil &amp; land</small>
+            <h3>Soil &amp; Land Management</h3>
+            <p>Information on soil fertility, water conservation, and sustainable land management.</p>
+            <a href="https://www.mining.gov.mw/department/land-resources/soil-land-management" target="_blank" rel="noopener">Explore soil resources ↗</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="pages/crop-calendar.html">Farming calendar (V6)</a>
+          <a href="pages/crops.html">Crop library (V7)</a>
+          <a href="pages/pest-disease.html">Pest &amp; disease (V8)</a>
+          <a href="pages/market-centre.html">Market centre (V5)</a>
+          <a href="pages/weather.html">Weather centre</a>
+          <a href="modules.html">All modules</a>
+          <a href="pages/admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Reusable Modal Backdrop -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSub"></p>
+        </div>
+        <button class="close" id="closeModal" aria-label="Close details">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
+  </div>
+
+  <!-- Reusable Toast Alert -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular JavaScript Entry Points -->
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/navigation.js"></script>
+  <script type="module" src="js/farming-methods.js"></script>
+  <script type="module" src="js/crops.js"></script>
+  <script type="module" src="js/weather.js"></script>
 </body>
 </html>
