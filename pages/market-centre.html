@@ -130,6 +130,22 @@
           </table>
         </div>
 
+        <!-- World Bank modeled estimates: separate from published ACE observations -->
+        <section class="market-compare-box" style="margin-top:24px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+            <div><h3>World Bank Market Estimates</h3><p style="font-size:13px;color:#405247;margin:0">Monthly modeled estimates for Malawi markets. These are estimates, not live buying or selling offers.</p></div>
+            <span class="badge-unverified">Modeled estimates</span>
+          </div>
+          <p id="worldBankMarketMeta" style="font-size:12px;color:var(--muted);margin:12px 0">Checking for the latest published dataset…</p>
+          <div class="market-table-wrap">
+            <table class="market-table">
+              <thead><tr><th>Commodity</th><th>Market</th><th>Unit</th><th>Estimated range (MWK)</th><th>Estimate date</th><th>Data note</th></tr></thead>
+              <tbody id="worldBankMarketTableBody"><tr><td colspan="6" style="text-align:center;padding:24px">World Bank estimates will appear after the first scheduled data refresh.</td></tr></tbody>
+            </table>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin-top:10px">Source: <a href="https://microdata.worldbank.org/catalog/6171" target="_blank" rel="noopener noreferrer">World Bank Real Time Food Prices</a>. The dataset uses direct observations and statistical estimates, and may include interpolated values.</p>
+        </section>
+
         <!-- Price Comparison Section -->
         <div class="market-compare-box">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
