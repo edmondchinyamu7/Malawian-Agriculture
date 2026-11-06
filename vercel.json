@@ -1,0 +1,20 @@
+{
+  "functions": {
+    "server.js": {
+      "includeFiles": [
+        "index.html",
+        "css/**/*",
+        "js/**/*",
+        "pages/**/*",
+        "partials/**/*",
+        "data/**/*",
+        "*.png",
+        "*.ico",
+        "*.svg",
+        "*.webp",
+        "*.jpg",
+        "*.jpeg"
+      ]
+    }
+  }
+}
