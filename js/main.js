@@ -92,6 +92,7 @@ export function closeModal() {
 
 // Hidden admin entry: tap the header logo five times on the homepage.
 function initHiddenAdminAccess() {
+  document.querySelectorAll('a[href*="admin.html"], a[href="/admin"]').forEach(link => link.remove());
   const brand = document.querySelector('.topbar .brand');
   if (!brand || !['/', '/index.html'].includes(window.location.pathname)) return;
   let taps = 0;
