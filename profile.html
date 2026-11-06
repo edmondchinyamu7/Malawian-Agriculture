@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Profile | Ulimi wa Malawi</title><link rel="stylesheet" href="css/style.css"></head>
+<body><main class="container" style="max-width:720px;margin:60px auto;background:white;padding:32px;border-radius:20px">
+<h1>My Profile</h1><p id="profileEmail">Loading account…</p>
+<form id="profileForm"><p><label>First name <input id="firstName" required maxlength="60"></label></p><p><label>Surname <input id="lastName" required maxlength="60"></label></p><p><label>Email <input id="email" type="email" disabled></label></p><p id="profileStatus" role="status"></p><button type="submit">Save changes</button> <a href="index.html">Return to website</a></form></main>
+<script type="module">
+import {supabase} from './js/auth.js';
+const $=id=>document.getElementById(id);
+const {data:{user}}=await supabase.auth.getUser();
+if(!user) location.replace('/login.html');
+else {
+ const {data:profile,error}=await supabase.from('profiles').select('first_name,last_name').eq('id',user.id).single();
+ if(error) $('profileStatus').textContent=error.message;
+ else {$('firstName').value=profile.first_name||'';$('lastName').value=profile.last_name||'';$('email').value=user.email||'';$('profileEmail').textContent=user.email||'';}
+}
+$('profileForm').addEventListener('submit',async event=>{
+ event.preventDefault();$('profileStatus').textContent='Saving…';
+ const {error}=await supabase.from('profiles').update({first_name:$('firstName').value.trim(),last_name:$('lastName').value.trim()}).eq('id',user.id);
+ $('profileStatus').textContent=error?error.message:'Profile updated.';
+});
+</script></body></html>
