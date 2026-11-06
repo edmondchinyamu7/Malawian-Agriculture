@@ -1,85 +1,79 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
-import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const app = express();
-const PORT = process.env.PORT || 3000;
-const HOST = '0.0.0.0';
-const COOKIE_NAME = 'ulimi_admin_session';
-const SESSION_SECONDS = 8 * 60 * 60;
+const __filename=fileURLToPath(import.meta.url);
+const __dirname=path.dirname(__filename);
+const app=express();
+const PORT=process.env.PORT||3000;
+const HOST='0.0.0.0';
+const COOKIE='ulimi_admin_access';
+const MAX_AGE=8*60*60;
+const SUPABASE_URL=(process.env.SUPABASE_URL||'').replace(/\/$/,'');
+const SUPABASE_KEY=process.env.SUPABASE_ANON_KEY||process.env.SUPABASE_PUBLISHABLE_KEY||'';
 
-app.use(express.json({ limit: '20kb' }));
+app.use(express.json({limit:'20kb'}));
 
-function safeEqual(a = '', b = '') {
-  const left = Buffer.from(String(a));
-  const right = Buffer.from(String(b));
-  return left.length === right.length && crypto.timingSafeEqual(left, right);
-}
-function sign(value) {
-  return crypto.createHmac('sha256', process.env.ADMIN_SESSION_SECRET).update(value).digest('base64url');
-}
-function makeSession() {
-  const payload = Buffer.from(JSON.stringify({ exp: Date.now() + SESSION_SECONDS * 1000 })).toString('base64url');
-  return payload + '.' + sign(payload);
-}
-function validSession(req) {
-  if (!process.env.ADMIN_SESSION_SECRET) return false;
-  const cookies = Object.fromEntries((req.headers.cookie || '').split(';').map(part => {
-    const index = part.indexOf('=');
-    return index < 0 ? ['', ''] : [part.slice(0, index).trim(), decodeURIComponent(part.slice(index + 1).trim())];
-  }).filter(([key]) => key));
-  const token = cookies[COOKIE_NAME] || '';
-  const [payload, signature] = token.split('.');
-  if (!payload || !signature || !safeEqual(signature, sign(payload))) return false;
-  try {
-    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
-    return Number(data.exp) > Date.now();
-  } catch { return false; }
-}
-function requireAdmin(req, res, next) {
-  if (validSession(req)) return next();
-  if (req.path.startsWith('/api/')) return res.status(401).json({ ok: false, message: 'Please sign in again.' });
-  return res.redirect('/admin-login.html');
-}
-
-app.post('/api/admin/login', (req, res) => {
-  const { ADMIN_USERNAME, ADMIN_PASSWORD, ADMIN_SESSION_SECRET } = process.env;
-  if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !ADMIN_SESSION_SECRET) {
-    return res.status(503).json({ ok: false, message: 'Admin sign-in is not configured yet. Set the required Vercel environment variables.' });
+function readCookie(req,name){
+  for(const item of (req.headers.cookie||'').split(';')){
+    const index=item.indexOf('=');
+    if(index>0&&item.slice(0,index).trim()===name)return decodeURIComponent(item.slice(index+1).trim());
   }
-  const username = String(req.body?.username || '');
-  const password = String(req.body?.password || '');
-  if (!safeEqual(username, ADMIN_USERNAME) || !safeEqual(password, ADMIN_PASSWORD)) {
-    return res.status(401).json({ ok: false, message: 'The username or password is incorrect.' });
-  }
-  res.setHeader('Set-Cookie', `${COOKIE_NAME}=${encodeURIComponent(makeSession())}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${SESSION_SECONDS}`);
-  return res.json({ ok: true });
-});
-app.get('/api/admin/session', requireAdmin, (_req, res) => res.json({ ok: true }));
-app.post('/api/admin/logout', (_req, res) => {
-  res.setHeader('Set-Cookie', `${COOKIE_NAME}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`);
-  res.json({ ok: true });
+  return '';
+}
+
+async function isAdmin(token){
+  if(!SUPABASE_URL||!SUPABASE_KEY||!token)return false;
+  try{
+    const userResponse=await fetch(SUPABASE_URL+'/auth/v1/user',{
+      headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+token}
+    });
+    if(!userResponse.ok)return false;
+    const user=await userResponse.json();
+    const profileResponse=await fetch(SUPABASE_URL+'/rest/v1/profiles?id=eq.'+encodeURIComponent(user.id)+'&select=role',{
+      headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+token}
+    });
+    if(!profileResponse.ok)return false;
+    const profiles=await profileResponse.json();
+    return profiles.length===1&&profiles[0].role==='admin';
+  }catch{return false;}
+}
+
+async function requireAdmin(req,res,next){
+  if(await isAdmin(readCookie(req,COOKIE)))return next();
+  if(req.path.startsWith('/api/'))return res.status(401).json({ok:false,message:'Administrator access is required.'});
+  return res.redirect('/login.html');
+}
+
+app.post('/api/admin/session',async(req,res)=>{
+  const authorization=req.headers.authorization||'';
+  const token=authorization.startsWith('Bearer ')?authorization.slice(7):'';
+  if(!await isAdmin(token))return res.status(403).json({ok:false,message:'This account does not have administrator access.'});
+  const secure=process.env.NODE_ENV==='production'?'Secure; ':'';
+  res.setHeader('Set-Cookie',COOKIE+'='+encodeURIComponent(token)+'; HttpOnly; '+secure+'SameSite=Strict; Path=/; Max-Age='+MAX_AGE);
+  return res.json({ok:true});
 });
 
-// These routes must be registered BEFORE static hosting so the private page
-// cannot be fetched directly without a valid signed, HttpOnly session cookie.
-app.get(['/admin', '/admin/'], requireAdmin, (_req, res) => res.sendFile(path.join(__dirname, 'pages', 'admin.html')));
-app.get('/pages/admin.html', requireAdmin, (_req, res) => res.sendFile(path.join(__dirname, 'pages', 'admin.html')));
-app.get('/admin-login', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'admin-login.html')));
+app.post('/api/admin/logout',(_req,res)=>{
+  const secure=process.env.NODE_ENV==='production'?'Secure; ':'';
+  res.setHeader('Set-Cookie',COOKIE+'=; HttpOnly; '+secure+'SameSite=Strict; Path=/; Max-Age=0');
+  return res.json({ok:true});
+});
 
-// Serve the site's existing files after private admin routes.
-app.use(express.static(__dirname, { extensions: ['html'], index: 'index.html' }));
-app.get('/:page', (req, res, next) => {
-  const pagePath = path.join(__dirname, 'pages', `${req.params.page}.html`);
-  if (fs.existsSync(pagePath) && req.params.page !== 'admin') return res.sendFile(pagePath);
+// These checks run before static hosting so the admin HTML cannot be fetched directly.
+app.get(['/admin','/admin/'],requireAdmin,(_req,res)=>res.sendFile(path.join(__dirname,'pages','admin.html')));
+app.get('/pages/admin.html',requireAdmin,(_req,res)=>res.sendFile(path.join(__dirname,'pages','admin.html')));
+
+app.use(express.static(__dirname,{extensions:['html'],index:'index.html'}));
+app.get('/:page',(req,res,next)=>{
+  const pagePath=path.join(__dirname,'pages',req.params.page+'.html');
+  if(fs.existsSync(pagePath)&&req.params.page!=='admin')return res.sendFile(pagePath);
   next();
 });
-app.get('*', (req, res) => {
-  if (path.extname(req.path)) return res.status(404).type('text/plain').send('Requested file was not found.');
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('*',(req,res)=>{
+  if(path.extname(req.path))return res.status(404).type('text/plain').send('Requested file was not found.');
+  return res.sendFile(path.join(__dirname,'index.html'));
 });
-app.listen(PORT, HOST, () => console.log(`Malawian Agriculture running on http://${HOST}:${PORT}`));
+
+app.listen(PORT,HOST,()=>console.log('Malawian Agriculture running on http://'+HOST+':'+PORT));
