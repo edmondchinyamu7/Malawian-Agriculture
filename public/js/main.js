@@ -89,6 +89,7 @@ export function closeModal() {
   }
 }
 
+
 // Attach global modal listeners
 document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('closeModal');
