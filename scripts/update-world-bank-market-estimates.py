@@ -10,7 +10,7 @@ from pathlib import Path
 
 DOWNLOAD_URL = "https://microdata.worldbank.org/api/downloads/MWI_2021_RTFP_v02_M/files?type=data"
 SOURCE_URL = "https://microdata.worldbank.org/catalog/6171"
-OUTPUT = Path("data/world-bank-market-estimates.json")
+OUTPUTS = [Path("data/world-bank-market-estimates.json"), Path("public/data/world-bank-market-estimates.json")]
 
 COMMODITIES = {
     "maize": ("Maize", "maize"),
@@ -94,9 +94,11 @@ def main():
         "recordCount": len(output),
         "data": output
     }
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {len(output)} latest market/commodity estimates to {OUTPUT}")
+    serialized = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    for output_path in OUTPUTS:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(serialized, encoding="utf-8")
+        print(f"Wrote {len(output)} latest market/commodity estimates to {output_path}")
 
 if __name__ == "__main__":
     main()
