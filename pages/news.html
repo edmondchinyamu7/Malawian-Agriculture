@@ -34,43 +34,73 @@
       </div>
     </header>
 
-    <main class="main container">
-      <div class="section-head">
-        <div>
-          <span class="section-kicker">Policy, Programmes & Research</span>
-          <h2>Malawi Agricultural News & Field Bulletins</h2>
-          <p>Official notices from the Ministry of Agriculture, Department of Agricultural Research Services (DARS), and regional development partners.</p>
+    <main class="main container news-page">
+      <section class="news-intro">
+        <div class="news-intro-copy">
+          <span class="section-kicker" data-i18n="newsKicker">MALAWI • AGRICULTURE • FOOD SYSTEMS</span>
+          <h1 data-i18n="newsTitle">Malawi Agriculture News</h1>
+          <p data-i18n="newsDesc">Verified reports and official updates on farming, markets, climate, research and agricultural development across Malawi.</p>
         </div>
-      </div>
+        <div class="news-update">
+          <span class="news-live-dot"></span>
+          <span data-i18n="newsUpdated">Curated updates • 6 November 2026</span>
+        </div>
+      </section>
 
-      <div class="guides">
-        <article class="guide">
-          <div class="gicon">📰</div>
-          <div>
-            <h3>Affordable Inputs Programme (AIP) Distribution Schedule</h3>
-            <p>Redemption centres designated in Lilongwe, Kasungu, Mzimba, and Shire Valley. Farmers are advised to present their National ID cards and confirm seed varieties before leaving retail sheds.</p>
-            <div style="font-size:11px;color:var(--muted);margin-top:6px">Ministry of Agriculture • Official Release</div>
-          </div>
+      <section class="news-grid" aria-label="Latest Malawi agriculture news">
+        <article class="news-card news-featured">
+          <div class="news-card-top"><span class="news-category" data-i18n="newsInputs">Farm inputs</span><span class="news-date">3 November 2026</span></div>
+          <div class="news-icon">🌱</div>
+          <h2 data-i18n="news1Title">Farmers raise concerns over Mbeya fertiliser production delays</h2>
+          <p data-i18n="news1Desc">Farmers say delays in accessing inorganic fertiliser could affect preparation of Mbeya fertiliser before the rains. The report cites a national fertiliser stock gap and concerns from farming communities in several districts.</p>
+          <div class="news-card-footer"><span class="news-source">The Nation</span><a href="https://mwnation.com/farmers-panic-as-mbeya-fertiliser-production-delays/" target="_blank" rel="noopener noreferrer" class="news-link" data-i18n="newsRead">Read original report ↗</a></div>
         </article>
 
-        <article class="guide">
-          <div class="gicon">🔬</div>
-          <div>
-            <h3>DARS Releases Two Drought-Tolerant Hybrid Maize Varieties</h3>
-            <p>Developed at Chitedze Agricultural Research Station. Varieties mature in 115-125 days and produce flint grain suitable for local pounding (nsima) with low cob rotting under mid-season dry spells.</p>
-            <div style="font-size:11px;color:var(--muted);margin-top:6px">Research & Extension Advisory</div>
-          </div>
+        <article class="news-card">
+          <div class="news-card-top"><span class="news-category" data-i18n="newsSafety">Farm input safety</span><span class="news-date">4 November 2026</span></div>
+          <div class="news-icon">🛡️</div>
+          <h2 data-i18n="news2Title">Police arrest six over suspected counterfeit fertiliser</h2>
+          <p data-i18n="news2Desc">Malawi24 reports that six people were arrested in the Lilongwe area in connection with suspected counterfeit fertiliser. Farmers are reminded to buy inputs from trusted, recognised suppliers.</p>
+          <div class="news-card-footer"><span class="news-source">Malawi24</span><a href="https://malawi24.com/2026/11/04/police-arrest-six-over-fake-fertiliser/" target="_blank" rel="noopener noreferrer" class="news-link" data-i18n="newsRead">Read original report ↗</a></div>
         </article>
 
-        <article class="guide">
-          <div class="gicon">🌍</div>
-          <div>
-            <h3>ADMARC Depots Commence Legume & Grain Purchasing</h3>
-            <p>Minimum farmgate floor prices implemented across regional depots to protect smallholders from predatory middleman price undercutting.</p>
-            <div style="font-size:11px;color:var(--muted);margin-top:6px">Grain Reserve & Market Operations</div>
-          </div>
+        <article class="news-card">
+          <div class="news-card-top"><span class="news-category" data-i18n="newsClimate">Climate & resilience</span><span class="news-date">5 October 2026</span></div>
+          <div class="news-icon">🌦️</div>
+          <h2 data-i18n="news3Title">Researchers warn Malawi to prepare for El Niño</h2>
+          <p data-i18n="news3Desc">IFPRI says the 2026/27 season carries a high El Niño risk. Its analysis discusses crop diversification, drought-tolerant crops, soil management and early preparation to reduce possible impacts.</p>
+          <div class="news-card-footer"><span class="news-source">IFPRI</span><a href="https://www.ifpri.org/blog/el-nino-is-coming-and-the-time-for-malawi-to-prepare-is-running-short/" target="_blank" rel="noopener noreferrer" class="news-link" data-i18n="newsRead">Read original report ↗</a></div>
         </article>
-      </div>
+
+        <article class="news-card">
+          <div class="news-card-top"><span class="news-category" data-i18n="newsPolicy">Government update</span><span class="news-date">26 October 2026</span></div>
+          <div class="news-icon">🐄</div>
+          <h2 data-i18n="news4Title">Agriculture Minister calls for dairy commercialisation</h2>
+          <p data-i18n="news4Desc">The Ministry of Agriculture reports that the Minister met the Shire Highlands Milk Producers Association in Blantyre to discuss development of the dairy sector.</p>
+          <div class="news-card-footer"><span class="news-source">Ministry of Agriculture</span><a href="https://mps.gov.mw/news?category=Ministry+News" target="_blank" rel="noopener noreferrer" class="news-link" data-i18n="newsRead">Read original report ↗</a></div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-card-top"><span class="news-category" data-i18n="newsMarkets">Markets & finance</span><span class="news-date">26 October 2026</span></div>
+          <div class="news-icon">📈</div>
+          <h2 data-i18n="news5Title">K42 billion facility targets rural businesses and farmers</h2>
+          <p data-i18n="news5Desc">Malawi24 reports on a financing facility intended to support rural businesses and farmers through access to finance for production and business growth.</p>
+          <div class="news-card-footer"><span class="news-source">Malawi24</span><a href="https://malawi24.com/agriculture/" target="_blank" rel="noopener noreferrer" class="news-link" data-i18n="newsRead">Read original report ↗</a></div>
+        </article>
+
+        <article class="news-card">
+          <div class="news-card-top"><span class="news-category" data-i18n="newsTobacco">Tobacco sector</span><span class="news-date">2 November 2026</span></div>
+          <div class="news-icon">🍃</div>
+          <h2 data-i18n="news6Title">Report highlights child protection concerns in tobacco farming</h2>
+          <p data-i18n="news6Desc">A Malawi24 report examines concerns about children missing school and child labour risks in tobacco-growing communities, alongside the importance of protecting children in agricultural supply chains.</p>
+          <div class="news-card-footer"><span class="news-source">Malawi24</span><a href="https://malawi24.com/agriculture/" target="_blank" rel="noopener noreferrer" class="news-link" data-i18n="newsRead">Read original report ↗</a></div>
+        </article>
+      </section>
+
+      <aside class="news-notice">
+        <strong data-i18n="newsNoticeTitle">About these updates</strong>
+        <p data-i18n="newsNoticeText">These are curated summaries, not original reporting by Ulimi wa Malawi. Each item names its publisher and links to the source. Check the original article for updates, full context and any corrections. News is refreshed manually; this page is not an automatic live news feed.</p>
+      </aside>
     </main>
 
     <!-- Premium Global Footer -->
