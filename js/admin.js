@@ -9,7 +9,14 @@ export function initAdminPriceManagement() {
   const tableBody = document.getElementById('adminPriceTableBody');
   const resetBtn = document.getElementById('resetDefaultPricesBtn');
 
-  if (!tableBody) return;\n\n  const logoutBtn = document.getElementById('adminLogoutBtn');\n  if (logoutBtn) logoutBtn.addEventListener('click', async () => {\n    await fetch('/api/admin/logout', { method: 'POST' });\n    window.location.assign('/');\n  });
+  if (!tableBody) return;
+
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+  if (logoutBtn) logoutBtn.addEventListener('click', async () => {
+    await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+    if (window.ulimiSupabase) await window.ulimiSupabase.auth.signOut();
+    window.location.assign('/login.html');
+  });
 
   function renderAdminTable() {
     const data = getMarketData();
