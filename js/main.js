@@ -90,30 +90,8 @@ export function closeModal() {
 }
 
 
-// Hidden admin entry: tap the header logo five times on the homepage.
-function initHiddenAdminAccess() {
-  document.querySelectorAll('a[href*="admin.html"], a[href="/admin"]').forEach(link => link.remove());
-  const brand = document.querySelector('.topbar .brand');
-  if (!brand || !['/', '/index.html'].includes(window.location.pathname)) return;
-  let taps = 0;
-  let firstTapAt = 0;
-  brand.addEventListener('click', (event) => {
-    const now = Date.now();
-    if (!firstTapAt || now - firstTapAt > 4000) {
-      taps = 0;
-      firstTapAt = now;
-    }
-    taps += 1;
-    event.preventDefault();
-    if (taps >= 5) {
-      taps = 0;
-      firstTapAt = 0;
-      window.location.assign('/admin-login.html');
-    }
-  });
-}
-\n// Attach global modal listeners
-document.addEventListener('DOMContentLoaded', () => {\n  initHiddenAdminAccess();
+// Attach global modal listeners
+document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('closeModal');
   if (closeBtn) {
     closeBtn.addEventListener('click', closeModal);
