@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Malawi Farm Planning Tools: seed requirement calculations, yield estimations, and farm budgeting.">
+  <meta property="og:title" content="Farm Planning Tools | Ulimi wa Malawi">
+  <meta property="og:description" content="Plan seed inputs, estimate yields, and structure seasonal production budgets.">
+  <title>Farm Planner | Ulimi wa Malawi</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>FARM PLANNING TOOLS</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html">Home</a>
+        <a href="crops.html">Crop library</a>
+        <a href="crop-calendar.html">Farming calendar</a>
+        <a href="farm-planner.html" class="active">Farm planner</a>
+        <a href="market-centre.html">Market centre</a>
+        <a href="weather.html">Weather centre</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">V11 • PLANNER</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <main class="main container">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Field Operations</span>
+          <h2>Farm Planning & Input Estimator</h2>
+          <p>Estimate certified seed quantities, expected grain yields, and structure a realistic seasonal input budget before committing capital.</p>
+        </div>
+      </div>
+
+      <!-- Seed Rate Calculator -->
+      <div class="admin-card">
+        <h3>Seed Requirement Calculator</h3>
+        <p>Calculate certified seed packages needed based on crop spacing standards in Malawi.</p>
+
+        <form id="seedCalcForm" class="admin-form">
+          <div class="form-group">
+            <label for="seedCrop">Crop *</label>
+            <select id="seedCrop" required>
+              <option value="maize">Chimanga (Hybrid / Composite Maize)</option>
+              <option value="groundnut">Mtedza (Groundnut - CG7 / Chalimbana)</option>
+              <option value="soybean">Soya (Soybean)</option>
+              <option value="rice">Mpunga (Rice)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="seedArea">Area Cultivated *</label>
+            <input type="number" id="seedArea" min="0.1" step="0.1" placeholder="e.g. 2" required>
+          </div>
+
+          <div class="form-group">
+            <label for="seedUnit">Unit *</label>
+            <select id="seedUnit" required>
+              <option value="acres">Acres</option>
+              <option value="hectares">Hectares</option>
+            </select>
+          </div>
+
+          <div class="admin-actions">
+            <button type="submit" class="btn-admin">Calculate Seed Package 📦</button>
+          </div>
+        </form>
+
+        <div id="seedResults" hidden></div>
+      </div>
+
+      <!-- Yield Potential Benchmarks -->
+      <div class="market-dashboard" style="margin-top:28px">
+        <h3>Realistic Smallholder Yield Estimations (Malawi Benchmarks)</h3>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 16px">Expected harvest yields under standard good agronomic practices (GAP) with timely weeding and recommended fertiliser/manure application.</p>
+
+        <div class="market-table-wrap">
+          <table class="market-table">
+            <thead>
+              <tr>
+                <th>Crop Type</th>
+                <th>Average Yield / Hectare</th>
+                <th>Average Yield / Acre</th>
+                <th>Standard Output Equivalent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Hybrid Maize</strong></td>
+                <td>4.5 – 6.5 metric tonnes</td>
+                <td>36 – 52 bags (50kg)</td>
+                <td>Ample for household food security plus commercial surplus</td>
+              </tr>
+              <tr>
+                <td><strong>Groundnuts (Shelled)</strong></td>
+                <td>1.5 – 2.5 metric tonnes</td>
+                <td>12 – 20 bags (50kg)</td>
+                <td>High cash return per bag at district markets</td>
+              </tr>
+              <tr>
+                <td><strong>Soybean</strong></td>
+                <td>1.8 – 2.8 metric tonnes</td>
+                <td>14 – 22 bags (50kg)</td>
+                <td>In-demand by feed and edible oil processors</td>
+              </tr>
+              <tr>
+                <td><strong>Kilombero Rice (Milled)</strong></td>
+                <td>3.0 – 4.5 metric tonnes</td>
+                <td>24 – 36 bags (50kg)</td>
+                <td>Premium consumer value in urban centers</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a>
+          <a href="crops.html">Crop library</a>
+          <a href="farm-planner.html">Farm planner</a>
+          <a href="market-centre.html">Market centre</a>
+          <a href="weather.html">Weather centre</a>
+          <a href="admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/calculators.js"></script>
+</body>
+</html>

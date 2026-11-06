@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,9 +11,18 @@ const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
 // Serve static assets from project root
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, { extensions: ['html'] }));
 
-// Route all requests to index.html
+// Optional clean URL routing for pages
+app.get('/:page', (req, res, next) => {
+  const pagePath = path.join(__dirname, 'pages', `${req.params.page}.html`);
+  if (fs.existsSync(pagePath)) {
+    return res.sendFile(pagePath);
+  }
+  next();
+});
+
+// Route fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });

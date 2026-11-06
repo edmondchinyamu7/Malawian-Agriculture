@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Live Malawi weather conditions and 7-day agricultural forecasts for farm planning.">
+  <meta property="og:title" content="Malawi Weather Centre | Ulimi wa Malawi">
+  <meta property="og:description" content="Check live weather, 7-day forecasts, rainfall chances, and agricultural field advisories for 12 Malawi locations.">
+  <title>Weather Centre | Ulimi wa Malawi</title>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>WEATHER & CLIMATE CENTRE</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#methods">Farming methods</a>
+        <a href="crops.html">Crop library</a>
+        <a href="market-centre.html">Market centre</a>
+        <a href="weather.html" class="active">Weather centre</a>
+        <a href="../index.html#guides">Practical guides</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">LIVE WEATHER</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main container">
+      <!-- Section Header -->
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Live Agro-Meteorology</span>
+          <h2>Malawi Weather & Climate Centre</h2>
+          <p>Real-time weather observations and a seven-day forecast for 12 agricultural districts across Malawi. Use forecasts for timing planting, ridge making, fertiliser top-dressing, and post-harvest drying.</p>
+        </div>
+      </div>
+
+      <!-- Weather Dashboard Panel -->
+      <div class="weather-panel">
+        <div class="weather-controls">
+          <label class="weather-label" for="weatherDistrict">Choose a location in Malawi
+            <select id="weatherDistrict" aria-label="Choose a weather location">
+              <option value="Lilongwe">Lilongwe</option>
+              <option value="Blantyre">Blantyre</option>
+              <option value="Mzuzu">Mzuzu</option>
+              <option value="Zomba">Zomba</option>
+              <option value="Kasungu">Kasungu</option>
+              <option value="Mangochi">Mangochi</option>
+              <option value="Salima">Salima</option>
+              <option value="Dedza">Dedza</option>
+              <option value="Karonga">Karonga</option>
+              <option value="Nsanje">Nsanje</option>
+              <option value="Chitipa">Chitipa</option>
+              <option value="Balaka">Balaka</option>
+            </select>
+          </label>
+          <button class="btn btn-weather" id="refreshWeather" type="button">↻ Refresh forecast</button>
+        </div>
+
+        <div class="weather-status" id="weatherStatus" role="status" aria-live="polite">
+          Loading the latest available forecast…
+        </div>
+
+        <div id="weatherResults" hidden>
+          <div class="weather-current" id="weatherCurrent"></div>
+          <div class="forecast-heading">
+            <h3>7-day outlook</h3>
+            <span>Daily agricultural forecast</span>
+          </div>
+          <div class="forecast-grid" id="forecastGrid"></div>
+          <div class="weather-advice" id="weatherAdvice"></div>
+          <p class="weather-source">
+            Weather data: Open-Meteo API. Forecasts serve as planning support. Monitor local sky and soil moisture conditions, and check Department of Climate Change and Meteorological Services (DCCMS) official severe alerts.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#methods">Farming methods</a>
+          <a href="crops.html">Crop library</a>
+          <a href="market-centre.html">Market centre</a>
+          <a href="weather.html">Weather centre</a>
+          <a href="../index.html#guides">Practical guides</a>
+          <a href="admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Reusable Toast Alert -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/weather.js"></script>
+</body>
+</html>

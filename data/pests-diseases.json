@@ -1,0 +1,166 @@
+[
+  {
+    "id": "fall-armyworm",
+    "nameCh": "Mbozi Yowononga Chimanga",
+    "nameEn": "Fall Armyworm (FAW)",
+    "scientificName": "Spodoptera frugiperda",
+    "type": "pest",
+    "severity": "Critical",
+    "affectedCrops": ["Maize", "Sorghum", "Rice", "Pasture grasses"],
+    "symptoms": "Ragged holes in whorl leaves (window pane effect), extensive moist yellowish-brown sawdust-like frass inside the plant funnel, severed growing points (dead hearts), and cobs chewed at tip.",
+    "prevention": [
+      "Plant early with the first effective rains to escape peak moth populations.",
+      "Intercrop maize with desmodium or beans (Push-Pull technique) to repel moths and attract natural predators.",
+      "Scout fields weekly starting 7 days after emergence; inspect 20 plants in 5 separate field locations in a 'W' pattern.",
+      "Place handfuls of dry fine sand or wood ash into whorls to physically abrade and suffocate young larvae."
+    ],
+    "control": [
+      "Handpick and crush egg masses and caterpillars in smallholder plots.",
+      "Apply biopesticides like neem seed kernel extract (NSKE) or Bacillus thuringiensis (Bt) early morning or evening when caterpillars feed.",
+      "Where threshold exceeds 20% infested whorls, apply approved synthetic insecticides registered in Malawi (e.g. Chlorantraniliprole / Emamectin benzoate) directing the spray specifically into the whorl funnel."
+    ],
+    "safeHandling": "Wear protective gear (gloves, goggles, long sleeves). Spray early in the morning when wind is low. Strictly observe pre-harvest intervals (PHI)."
+  },
+  {
+    "id": "maize-stalk-borer",
+    "nameCh": "Mbozi ya m'Chitsamba",
+    "nameEn": "African Maize Stalk Borer",
+    "scientificName": "Busseola fusca / Chilo partellus",
+    "type": "pest",
+    "severity": "High",
+    "affectedCrops": ["Maize", "Sorghum", "Millet"],
+    "symptoms": "Pinholes in young leaves, internal stalk tunneling causing stunted growth, premature lodging (falling over), and drying of central shoot (dead heart).",
+    "prevention": [
+      "Destroy and burn or compost dry crop residues after harvest to kill overwintering diapausing pupae in old stalks.",
+      "Practice crop rotation with non-cereal crops such as groundnuts, soya, or cassava.",
+      "Encourage predatory ants, earwigs, and parasitic wasps."
+    ],
+    "control": [
+      "Drop granular or dust insecticides or wood ash/chilli powder mixtures into the funnel at knee-height.",
+      "Cut down and feed heavily infested early plants to livestock to stop generation spread."
+    ],
+    "safeHandling": "Use PPE during application; keep livestock away from treated fields for the duration of the re-entry period."
+  },
+  {
+    "id": "groundnut-rosette",
+    "nameCh": "Chikasu cha Mtedza",
+    "nameEn": "Groundnut Rosette Disease",
+    "scientificName": "Groundnut rosette assistor virus (GRAV)",
+    "type": "disease",
+    "severity": "Critical",
+    "affectedCrops": ["Groundnuts"],
+    "symptoms": "Severe plant stunting, shortened internodes creating a bushy compact rosette appearance, intense leaf yellowing (chlorosis), leaf distortion, and total absence of pods or shriveled empty shells.",
+    "prevention": [
+      "Plant early immediately after the first soaking rain; early dense canopies deter the aphid vector (Aphis craccivora).",
+      "Sow certified resistant varieties such as CG7, Chalimbana 2005, or Nsinjiro.",
+      "Maintain close plant spacing (double rows on 75cm ridges, 15cm between stations) so soil is quickly shaded by a ground-cover canopy."
+    ],
+    "control": [
+      "Rogue out and destroy diseased plants immediately when symptoms first appear in the field.",
+      "Spray aphids with soapy water or botanical neem solution if aphid colonies cluster on stems."
+    ],
+    "safeHandling": "Dispose of rogued virus-infected plants away from the field; wash hands and hoes before moving to healthy plants."
+  },
+  {
+    "id": "cassava-mosaic",
+    "nameCh": "Khate la Chinangwa (CMD)",
+    "nameEn": "Cassava Mosaic Disease",
+    "scientificName": "African cassava mosaic virus (ACMV)",
+    "type": "disease",
+    "severity": "Critical",
+    "affectedCrops": ["Cassava"],
+    "symptoms": "Pronounced yellow-green mosaic mottling on leaves, severe leaf distortion and leaf curling, stunted plant stems, and reduced tuber root yields by up to 80%.",
+    "prevention": [
+      "Strictly plant certified disease-free stem cuttings from accredited multiplication nurseries.",
+      "Use improved resistant varieties like Sauti, Manyokola, Yizaso, or Chitembwere.",
+      "Never take stem cuttings from visibly diseased plants, even if one branch looks green."
+    ],
+    "control": [
+      "Rogue (uproot) and burn or bury infected cassava plants during the first 3 months of field establishment.",
+      "Control whitefly (Bemisia tabaci) populations by intercropping with maize or beans."
+    ],
+    "safeHandling": "Sterilize machetes and knives used for cutting seed stems between bundles using household bleach or flame."
+  },
+  {
+    "id": "cassava-brown-streak",
+    "nameCh": "Chikasu ndi Kuwola kwa Chinangwa (CBSD)",
+    "nameEn": "Cassava Brown Streak Disease",
+    "scientificName": "Cassava brown streak virus (CBSV)",
+    "type": "disease",
+    "severity": "Critical",
+    "affectedCrops": ["Cassava"],
+    "symptoms": "Feathery yellowing along secondary leaf veins without distortion; dark brown streaks on green stems; and corky, dry, yellow-brown necrotic rotting inside the storage roots, making them inedible and unmarketable.",
+    "prevention": [
+      "Use certified CBSD-tolerant planting material released by the Department of Agricultural Research Services (DARS).",
+      "Do not transport cassava cuttings from lakeshore high-prevalence areas to uninfected upland districts without official quarantine clearance.",
+      "Continuous roguing of infected plants."
+    ],
+    "control": [
+      "Harvest early (before month 10) in affected zones to reduce root necrosis progression.",
+      "Community-wide replanting with clean certified materials."
+    ],
+    "safeHandling": "Comply with domestic plant quarantine regulations to safeguard non-infected agricultural districts."
+  },
+  {
+    "id": "tomato-late-blight",
+    "nameCh": "Chikuku cha Tomato",
+    "nameEn": "Tomato Late Blight",
+    "scientificName": "Phytophthora infestans",
+    "type": "disease",
+    "severity": "Critical",
+    "affectedCrops": ["Tomato", "Irish Potato"],
+    "symptoms": "Water-soaked dark lesions on leaves that rapidly turn black and dry; white fluffy fungal growth underneath leaves in damp mornings; dark greasy rot on stems and firm brown rotten patches on fruits.",
+    "prevention": [
+      "Avoid overhead watering; use furrow, bucket-basin, or drip irrigation to keep tomato foliage dry.",
+      "Stake vines and prune lower suckers to maintain strong air circulation through the canopy.",
+      "Mulch soil around plants to prevent rainwater splash from carrying soil-borne spores onto leaves.",
+      "Rotate with non-solanaceous crops (avoid land following potatoes, eggplants, or peppers)."
+    ],
+    "control": [
+      "Spray protective copper-based fungicides (Copper oxychloride) or Mancozeb before the onset of rain or cool damp misty spells.",
+      "Remove and bury infected fruit and leaves immediately. Do not throw into home compost piles."
+    ],
+    "safeHandling": "Always wear rubber gloves, mask, and goggles when mixing and spraying fungicides. Wash knapsack sprayers thoroughly away from drinking wells."
+  },
+  {
+    "id": "tuta-absoluta",
+    "nameCh": "Kafadala wa Tomato",
+    "nameEn": "Tomato Leafminer",
+    "scientificName": "Phthorimaea (Tuta) absoluta",
+    "type": "pest",
+    "severity": "High",
+    "affectedCrops": ["Tomato", "Eggplant", "Potato"],
+    "symptoms": "Irregular transparent blotch mines inside tomato leaves; caterpillars boring directly into stems, flower buds, and green/ripe fruit creating dark entry holes with black frass.",
+    "prevention": [
+      "Install yellow sticky traps and delta pheromone traps in nurseries and fields for early moth monitoring.",
+      "Produce seedlings under insect-proof netting.",
+      "Remove and destroy wild nightshade weeds around tomato beds."
+    ],
+    "control": [
+      "Handpick and crush mined leaves in early stages.",
+      "Rotate chemical classes with different modes of action (e.g. Chlorantraniliprole, Abamectin, Spinosad) to prevent rapid pesticide resistance."
+    ],
+    "safeHandling": "Adhere strictly to labeled pre-harvest intervals (PHI) to avoid toxic pesticide residues on fresh market tomatoes."
+  },
+  {
+    "id": "larger-grain-borer",
+    "nameCh": "Nankafumbwe wa m'Nkhokwe",
+    "nameEn": "Larger Grain Borer (LGB)",
+    "scientificName": "Prostephanus truncatus",
+    "type": "pest",
+    "severity": "Critical",
+    "affectedCrops": ["Stored Maize", "Dried Cassava roots"],
+    "symptoms": "Severe structural destruction of stored maize and dried cassava. Grain reduced to copious amounts of white flour-like dust within weeks. Holes bored through timber cribs and storage sacks.",
+    "prevention": [
+      "Clean, sweep, and burn old grain dust and residues from nkhokwe, granaries, and store rooms before storing new harvest.",
+      "Thoroughly sun-dry grain to below 13.5% moisture.",
+      "Store shelled maize in multi-layer airtight hermetic bags (e.g., PICS bags) without chemicals.",
+      "Ensure cribs have rodent guards and corrugated iron roofing."
+    ],
+    "control": [
+      "Treat clean shelled grain with approved two-component grain protectant dust containing an organophosphate and pyrethroid (e.g., Actellic Gold / Super Guard).",
+      "Fumigate commercial bulk silos with phosphine tablets under strict certified extension supervision."
+    ],
+    "safeHandling": "Never consume freshly dusted grain before the specified withholding period (usually 14 to 30 days). Phosphine fumigation requires professional certification."
+  }
+]

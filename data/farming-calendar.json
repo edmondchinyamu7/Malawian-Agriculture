@@ -1,0 +1,319 @@
+{
+  "months": [
+    {
+      "id": 1,
+      "name": "January",
+      "nameCh": "Januwale",
+      "season": "Peak Rains / Chilimwe Chachikulu",
+      "summary": "Rapid vegetative growth phase across Malawi. High weed competition and top-dressing fertiliser window.",
+      "reminders": [
+        "Apply Urea / CAN top-dressing on maize at knee-height (21-28 days after planting).",
+        "Conduct thorough first and second weeding before weeds set seed.",
+        "Scout early mornings for Fall Armyworm (FAW) egg masses and funnel leaf damage.",
+        "Ensure drainage furrows are open in low-lying fields to prevent waterlogging."
+      ],
+      "cropsInFocus": ["Maize", "Groundnuts", "Soya", "Rice", "Beans"],
+      "districtAdvisories": {
+        "Southern": "High humidity in Shire Valley and Thyolo; monitor tomato late blight and maize stalk borer.",
+        "Central": "Peak top-dressing period across Lilongwe, Kasungu and Dedza. Apply Urea on moist soil.",
+        "Northern": "Lakeside and upland rains steady; maintain terracing and contour bunds in hilly terrain."
+      }
+    },
+    {
+      "id": 2,
+      "name": "February",
+      "nameCh": "Febuluwale",
+      "season": "Mid-Summer Vegetative / Tasseling",
+      "summary": "Maize tasseling and cob formation, groundnut pegging, and pulse flowering across all regions.",
+      "reminders": [
+        "Do not weed or cultivate around groundnuts once pegging begins to protect young pods.",
+        "Apply second split of nitrogen top-dressing on late-planted or long-season cereal varieties.",
+        "Scout for grain borers and fungal leaf spots (Grey Leaf Spot / Turcicum blight).",
+        "Bank ridges and construct contour swales to prevent severe soil erosion during heavy downpours."
+      ],
+      "cropsInFocus": ["Maize (tasseling)", "Groundnuts (pegging)", "Soya (flowering)", "Cassava", "Sweet potato"],
+      "districtAdvisories": {
+        "Southern": "Green maize harvesting begins in early-planted lowlands (Chikwawa, Nsanje, Mangochi).",
+        "Central": "Maize cob filling in progress; keep field perimeters clear of tall bush to deter wild pests.",
+        "Northern": "Peak weeding for late-planted rice in Karonga and Nkhatabay irrigation schemes."
+      }
+    },
+    {
+      "id": 3,
+      "name": "March",
+      "nameCh": "Machesi",
+      "season": "Grain Filling & Late Rains",
+      "summary": "Grain filling, starch accumulation, and early pulse maturation. Preparing for drying and storage.",
+      "reminders": [
+        "Harvest early maturing pulses, cowpeas, and green maize for household consumption.",
+        "Inspect mature groundnut pods by checking internal pod shell browning (70-75% brown indicates maturity).",
+        "Begin repairing granaries, nkhokwe, and ventilated drying cribs.",
+        "Prepare clean tarpaulins, drying mats, and purchase hermetic grain storage bags (PICS bags)."
+      ],
+      "cropsInFocus": ["Green Maize", "Groundnuts", "Common Beans", "Sorghum", "Tobacco (curing)"],
+      "districtAdvisories": {
+        "Southern": "Groundnut lifting commences in early planted areas; avoid damp stacking to prevent aflatoxin.",
+        "Central": "Maize dent stage in Lilongwe and Mchinji; allow stalks to begin natural field drydown.",
+        "Northern": "Steady rice heading in Lakeside schemes; regulate water levels to ensure uniform grain fill."
+      }
+    },
+    {
+      "id": 4,
+      "name": "April",
+      "nameCh": "Epulo",
+      "season": "Maturity & Early Harvest",
+      "summary": "Rainfall tapers off across most of Malawi. Main crop harvest begins for legumes and early maize.",
+      "reminders": [
+        "Harvest mature groundnuts immediately to avoid sprouting and pod detachment in drying ground.",
+        "Stook or bend maize cobs downward to shed late rains and deter bird attack.",
+        "Dry harvested grains on raised platforms or clean sheets, never directly on bare wet soil.",
+        "Collect crop residues for composting or livestock fodder rather than burning them."
+      ],
+      "cropsInFocus": ["Groundnuts", "Soya", "Early Maize", "Pigeon Pea", "Rice"],
+      "districtAdvisories": {
+        "Southern": "Main maize harvest underway; transport dry cobs to secure storage to avoid field theft.",
+        "Central": "Soybean pod maturity reaches 90%; harvest early morning to avoid pod shatter losses.",
+        "Northern": "Cooler temperatures arriving in high plateaus (Misuku, Viphya); prepare seed potato stores."
+      }
+    },
+    {
+      "id": 5,
+      "name": "May",
+      "nameCh": "Meyi",
+      "season": "Main Harvest & Post-Harvest Handling",
+      "summary": "Peak national harvest month. Shelling, drying, moisture testing, and commercial marketing.",
+      "reminders": [
+        "Dry grain thoroughly until moisture is below 13.5% (use salt-bottle test or moisture meter).",
+        "Treat clean grain with approved grain protectant dust or store in airtight hermetic bags.",
+        "Keep records of total bags harvested, household consumption needs, and marketable surplus.",
+        "Check district market price boards (Ulimi wa Malawi Market Centre) before selling to traders."
+      ],
+      "cropsInFocus": ["Hybrid Maize", "Soya", "Rice", "Cotton", "Sunflower"],
+      "districtAdvisories": {
+        "Southern": "Cotton picking begins in Shire Valley; sort clean white seed cotton from stained locks.",
+        "Central": "Central region tobacco auction floors active; assemble certified legume seed stocks.",
+        "Northern": "Rice harvesting in full swing in Karonga and Salima borders."
+      }
+    },
+    {
+      "id": 6,
+      "name": "June",
+      "nameCh": "Juni",
+      "season": "Early Dry Season / Chiwombankhanga",
+      "summary": "Cool dry winds arrive. Main rainfed harvest completes; winter dimba farming commences.",
+      "reminders": [
+        "Prepare dambo wetlands and irrigated beds for dry-season horticulture and winter maize.",
+        "Fence vegetable gardens against roaming goats and cattle.",
+        "Store agricultural produce off the floor on timber pallets with 50cm wall clearance.",
+        "Deworm livestock and construct elevated predator-proof poultry and goat kholas."
+      ],
+      "cropsInFocus": ["Winter Maize (Dimba)", "Tomato", "Cabbage / Rape", "Irish Potato", "Onion"],
+      "districtAdvisories": {
+        "Southern": "Bvumbwe and Thyolo nursery beds established for cool-season brassicas and tomatoes.",
+        "Central": "Dedza and Ntcheu winter Irish potato planting in valley bottoms (dambos).",
+        "Northern": "Construct firebreaks around woodlots, orchards, and perennial coffee fields."
+      }
+    },
+    {
+      "id": 7,
+      "name": "July",
+      "nameCh": "Julayi",
+      "season": "Cool Dry Season / Nyengo Yozizira",
+      "summary": "Coldest month in Malawi. Active irrigation farming in valley bottoms and lakeside schemes.",
+      "reminders": [
+        "Water dimba crops early morning to reduce cold shock and evening fungal dampness.",
+        "Incorporate organic manure and compost into horticultural beds.",
+        "Scout tomato nursery beds for early signs of red spider mites and blight.",
+        "Monitor stored grains in nkhokwe for weevil activity and ensure roofs are leak-free."
+      ],
+      "cropsInFocus": ["Dimba Vegetables", "Winter Maize", "Onion", "Irish Potato", "Wheat"],
+      "districtAdvisories": {
+        "Southern": "Frost caution in high-elevation pockets (Mulanje, Dedza borders); mulch sensitive seedlings.",
+        "Central": "High market demand in Lilongwe for fresh tomatoes, cabbages, and onions.",
+        "Northern": "Lakeside irrigation schemes active along Lake Malawi shorelines."
+      }
+    },
+    {
+      "id": 8,
+      "name": "August",
+      "nameCh": "Agasti",
+      "season": "Dry Season / Nyengo Ya Chilimwe Yowuma",
+      "summary": "Warming weather; peak dry-season vegetable marketing and early land preparation planning.",
+      "reminders": [
+        "Maintain irrigation channels, treadle pump seals, and solar pump filters.",
+        "Harvest winter Irish potatoes in Ntcheu and Dedza.",
+        "Review last season's input costs, crop yields, and financial returns.",
+        "Begin sourcing certified seed and basal fertiliser early to avoid pre-season price spikes."
+      ],
+      "cropsInFocus": ["Vegetables (Tomato, Onion, Rape)", "Winter Maize", "Cassava cuttings", "Fruit orchards"],
+      "districtAdvisories": {
+        "Southern": "Prepare land early in the Lower Shire before intense heat builds up.",
+        "Central": "High tomato yields arriving from Linthipe and Bwanje valley irrigators.",
+        "Northern": "Misuku hills coffee harvesting, pulping, and wet fermentation."
+      }
+    },
+    {
+      "id": 9,
+      "name": "September",
+      "nameCh": "Seputembala",
+      "season": "Hot Dry Season / Dzuwa ndi Kutentha",
+      "summary": "Hot, dry conditions. Active field clearing, ridge reforming, and compost distribution.",
+      "reminders": [
+        "Clear fields and align old crop residues along ridge contours; avoid burning residues.",
+        "Distribute well-rotted livestock manure and compost into planting stations.",
+        "Deep-till hardpan layers to improve rainwater infiltration during upcoming rains.",
+        "Prune fruit trees (mangoes, citrus, macadamia) and clear base tree basins."
+      ],
+      "cropsInFocus": ["Land Preparation", "Compost Application", "Dimba Harvest", "Orchard Management"],
+      "districtAdvisories": {
+        "Southern": "Intense heat in Chikwawa/Nsanje; ensure shade and clean water for all livestock.",
+        "Central": "Tobacco seedbeds established under grass thatch covers in Lilongwe and Kasungu.",
+        "Northern": "Check terracing and water-catchment structures across Mzimba and Chitipa hills."
+      }
+    },
+    {
+      "id": 10,
+      "name": "October",
+      "nameCh": "Okitobala",
+      "season": "Pre-Season Readiness / Kukonzekera Mbewu",
+      "summary": "Hottest month in Malawi. Final input procurement, certified seed verification, and ridge completion.",
+      "reminders": [
+        "Finalize all ridge making, box ridging, and planting basin construction.",
+        "Test seed germination (soak 100 seeds in damp cloth for 5 days; &gt;90% should sprout).",
+        "Purchase certified basal fertiliser (23:10:5+6S) and legume inoculants.",
+        "Construct water absorption bunds (swales) to trap early seasonal rainwater."
+      ],
+      "cropsInFocus": ["All rainfed crops (Seed procurement)", "Tobacco seedlings", "Cassava planting sticks"],
+      "districtAdvisories": {
+        "Southern": "Occasional early showers (Chidzimalole) may occur; do not plant on dry soil until effective rain falls.",
+        "Central": "Ensure all planting ridges are 75cm apart with tied ridges every 2-3 meters.",
+        "Northern": "Sort certified sweet potato vines and disease-free cassava cuttings."
+      }
+    },
+    {
+      "id": 11,
+      "name": "November",
+      "nameCh": "Novembala",
+      "season": "Onset of Main Rains / Chiyambi cha Mvula",
+      "summary": "Rainy season commences. Planting window opens with first effective rains (&ge;25-30mm).",
+      "reminders": [
+        "Do not plant until rain penetrates the soil at least 25-30 cm deep.",
+        "Plant certified maize, groundnuts, and soybean within 48 hours of effective rainfall.",
+        "Apply basal fertiliser (23:10:5+6S) at planting or within 7 days of crop emergence.",
+        "Re-plant missing stations (gap-filling) within 7 days of emergence to maintain plant density."
+      ],
+      "cropsInFocus": ["Hybrid Maize", "Groundnuts", "Soya", "Pigeon Pea", "Sunflower", "Sorghum"],
+      "districtAdvisories": {
+        "Southern": "Rains often start first in Southern Highlands; plant immediately as soil reaches field capacity.",
+        "Central": "Central Plain planting begins; watch soil moisture depth across Lilongwe and Dowa.",
+        "Northern": "Rain onset typically late November to early December; maintain seed readiness."
+      }
+    },
+    {
+      "id": 12,
+      "name": "December",
+      "nameCh": "Disembala",
+      "season": "Full Planting & Early Weeding / Kulima ndi Kusalira",
+      "summary": "Nationwide planting completion, nursery transplanting for rice and tobacco, and first weeding.",
+      "reminders": [
+        "Complete all late cereal and legume planting by mid-December for optimal yield.",
+        "Conduct first weeding 10-14 days after crop emergence to eliminate early weed competition.",
+        "Inspect seedling roots and leaves for cutworms, grasshoppers, and early armyworm.",
+        "Prepare Urea top-dressing fertilizer for January application."
+      ],
+      "cropsInFocus": ["Maize (germinated)", "Groundnuts", "Soya", "Rice (transplanting)", "Tobacco"],
+      "districtAdvisories": {
+        "Southern": "Scout for stalk borers in young maize stands; consult local AEDO for approved controls.",
+        "Central": "Transplant tobacco seedlings into prepared ridges; apply basal compound fertilizer.",
+        "Northern": "Rice seedbed transplanting in Karonga and Nkhotakota wetland paddies."
+      }
+    }
+  ],
+  "cropTimelines": [
+    {
+      "cropKey": "maize",
+      "name": "Chimanga (Maize - Hybrid / OPV)",
+      "emoji": "🌽",
+      "durationDays": "115 – 135 days",
+      "ecology": "All agro-ecological zones (Lowland, Medium & High Plateau)",
+      "stages": [
+        { "phase": "Land Preparation", "timing": "September – October", "notes": "Clear residues, construct 75cm ridges, build tied-ridges every 2m." },
+        { "phase": "Planting & Basal", "timing": "Mid-November – Mid-December", "notes": "Plant 1 seed per hole at 25cm station spacing. Apply 23:10:5+6S (4 bags/ha)." },
+        { "phase": "1st Weeding & Scouting", "timing": "10 – 14 days after emergence", "notes": "Scout for Fall Armyworm funnels; hand-weed stations." },
+        { "phase": "Top-Dressing & 2nd Weeding", "timing": "21 – 28 days (Knee-height)", "notes": "Apply Urea (4 bags/ha) in moist soil, 5-10cm away from stalk." },
+        { "phase": "Tasseling & Cob Filling", "timing": "January – February", "notes": "Ensure good drainage; avoid weed competition." },
+        { "phase": "Harvest & Drying", "timing": "April – May", "notes": "Dry to <13.5% moisture; treat with grain protectant or store in PICS bags." }
+      ]
+    },
+    {
+      "cropKey": "groundnut",
+      "name": "Mtedza (Groundnut - CG7, Chalimbana)",
+      "emoji": "🥜",
+      "durationDays": "120 – 140 days",
+      "ecology": "Medium-altitude plateau (Lilongwe, Kasungu, Mchinji, Mzimba)",
+      "stages": [
+        { "phase": "Land Preparation", "timing": "October – November", "notes": "Prepare deep, loose, well-drained ridges to facilitate peg penetration." },
+        { "phase": "Planting", "timing": "Late November – Early December", "notes": "Plant double rows per 75cm ridge, 15cm between stations, 1 seed per hole." },
+        { "phase": "Early Weeding", "timing": "14 – 21 days after planting", "notes": "Keep weed-free during initial establishment." },
+        { "phase": "Flowering & Pegging", "timing": "January – February", "notes": "CRITICAL: Stop all hoed weeding once pegging starts to avoid cutting pegs." },
+        { "phase": "Harvest Lifting", "timing": "March – April", "notes": "Lift pods when 70% of inner shells turn dark brown; dry pods on clean racks." }
+      ]
+    },
+    {
+      "cropKey": "soybean",
+      "name": "Soya (Soybean - Tikolore, Makwacha)",
+      "emoji": "🫘",
+      "durationDays": "105 – 125 days",
+      "ecology": "Medium to high altitude with reliable rainfall (Kasungu, Dowa, Dedza)",
+      "stages": [
+        { "phase": "Seed Inoculation", "timing": "Prior to planting", "notes": "Mix seed with Rhizobium bio-fertiliser inoculant in shade using sugar-water slurry." },
+        { "phase": "Planting", "timing": "Early to mid-December", "notes": "Plant double rows on ridges, 5-7cm apart in continuous drill." },
+        { "phase": "Weeding & Pest Check", "timing": "December – January", "notes": "Weed twice before crop canopy closes; scout for caterpillars." },
+        { "phase": "Pod Filling", "timing": "February – March", "notes": "Ensure soil moisture; monitor for red leaf blotch or rust." },
+        { "phase": "Timely Harvest", "timing": "April", "notes": "Harvest when 90% of leaves drop and pods rattle; harvest early morning to prevent shattering." }
+      ]
+    },
+    {
+      "cropKey": "rice",
+      "name": "Mpunga (Kilombero / Faya / Nunkile)",
+      "emoji": "🍚",
+      "durationDays": "130 – 150 days",
+      "ecology": "Lakeside plains (Salima, Karonga, Nkhotakota) and Shire Valley schemes",
+      "stages": [
+        { "phase": "Nursery Sowing", "timing": "November – December", "notes": "Prepare raised nursery beds near reliable water source." },
+        { "phase": "Paddy Puddling", "timing": "December", "notes": "Puddle paddy soil to form impervious mud layer." },
+        { "phase": "Transplanting", "timing": "December – January", "notes": "Transplant 2-3 seedlings per hill at 20cm x 20cm spacing." },
+        { "phase": "Water & Urea Management", "timing": "January – March", "notes": "Maintain 5cm water level; top dress with Urea at tillering and panicle initiation." },
+        { "phase": "Drainage & Harvest", "timing": "May – June", "notes": "Drain field 10 days before harvest; cut golden panicles and thresh on tarpaulin." }
+      ]
+    },
+    {
+      "cropKey": "cassava",
+      "name": "Chinangwa (Cassava - Manyokola, Sauti)",
+      "emoji": "🥔",
+      "durationDays": "9 – 12 months",
+      "ecology": "Lakeside districts (Nkhata Bay, Nkhotakota) and Southern lowlands",
+      "stages": [
+        { "phase": "Cutting Selection", "timing": "October – November", "notes": "Select healthy, disease-free stems 25-30cm long with 4-6 nodes." },
+        { "phase": "Planting", "timing": "November – January", "notes": "Plant cuttings slanting at 45 degrees or horizontally 10cm deep, 1m apart." },
+        { "phase": "Weeding & Roguing", "timing": "Months 1 – 3", "notes": "Uproot and destroy any plants showing mosaic distortion or leaf curl." },
+        { "phase": "Bulking Phase", "timing": "Months 4 – 8", "notes": "Roots expand underground; maintain ridges to prevent exposure to sun and pests." },
+        { "phase": "Harvesting", "timing": "From Month 9 onward", "notes": "Harvest progressively as needed or in bulk for commercial starch/flour processing." }
+      ]
+    },
+    {
+      "cropKey": "tomato",
+      "name": "Tomato (Fresh Vegetable - Heinz, Rodade)",
+      "emoji": "🍅",
+      "durationDays": "75 – 90 days after transplanting",
+      "ecology": "Valley bottoms, irrigated schemes, and protected beds nationwide",
+      "stages": [
+        { "phase": "Nursery Bed Sowing", "timing": "March – April (Winter) or August (Early)", "notes": "Fine soil, light shade netting, drench with fungicide to prevent damping off." },
+        { "phase": "Transplanting", "timing": "3 – 4 weeks after sowing", "notes": "Transplant vigorous seedlings in evening; incorporate compost & basal fertiliser." },
+        { "phase": "Staking & Trellising", "timing": "Week 2 – 3 after transplant", "notes": "Tie vines to sturdy stakes to keep foliage off moist soil and improve airflow." },
+        { "phase": "Side-Dressing & Pruning", "timing": "Flowering & fruiting", "notes": "Apply CAN every 2-3 weeks; pinch out bottom suckers." },
+        { "phase": "Harvesting", "timing": "Weeks 10 – 14", "notes": "Pick fruit at breaker or pink stage for distance markets; handle gently in crates." }
+      ]
+    }
+  ]
+}

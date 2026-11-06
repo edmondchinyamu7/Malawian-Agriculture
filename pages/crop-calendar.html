@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Malawi Farming Calendar: interactive monthly activities, seasonal reminders, regional zoning, and crop-specific timelines.">
+  <meta property="og:title" content="Farming Calendar | Ulimi wa Malawi">
+  <meta property="og:description" content="Plan planting, weeding, top-dressing, and harvesting with Malawi's official seasonal agricultural calendar.">
+  <title>Farming Calendar | Ulimi wa Malawi</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>FARMING CALENDAR</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#methods">Farming methods</a>
+        <a href="crops.html">Crop library</a>
+        <a href="crop-calendar.html" class="active">Farming calendar</a>
+        <a href="market-centre.html">Market centre</a>
+        <a href="weather.html">Weather centre</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">V6 • CALENDAR</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <main class="main container">
+      <!-- Section Header -->
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Phase 1 • V6 Upgrade</span>
+          <h2>Interactive Malawi Farming Calendar</h2>
+          <p>Align field preparation, seed procurement, basal manure, nitrogen top-dressing, and pest scouting with regional rainfall and dambo irrigation seasons.</p>
+        </div>
+        <div>
+          <button id="jumpCurrentMonthBtn" class="btn btn-primary" type="button">
+            📅 Current Month Activities
+          </button>
+        </div>
+      </div>
+
+      <!-- Month Selector Bar -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 25px rgba(12,53,32,0.04);margin-bottom:20px">
+        <div style="font-size:12px;font-weight:850;color:var(--forest);margin-bottom:8px">Select Month for Detailed Operational Schedule:</div>
+        <div class="filters" id="calendarMonthNav" style="padding-top:0"></div>
+      </div>
+
+      <!-- Active Month Card -->
+      <div id="monthDetailsCard" class="weather-panel" style="margin-bottom:36px"></div>
+
+      <!-- Crop-Specific Timelines -->
+      <div class="section-head" style="margin-top:20px">
+        <div>
+          <span class="section-kicker">Crop-Specific Schedules</span>
+          <h2>Agronomic Growth Stages & Interventions</h2>
+          <p>Select any staple or cash crop below to review phase-by-phase field operations from ridge clearing to grain storage.</p>
+        </div>
+      </div>
+
+      <div class="filters" id="cropTimelineButtons" style="margin-bottom:16px"></div>
+      <div id="cropTimelineDisplay"></div>
+
+      <!-- General Notice -->
+      <div class="notice" style="margin-top:32px">
+        <strong>Ecological Zone Variance:</strong> Southern Region (Shire Valley/Highlands) typically receives first rains in November; Central Region (Lilongwe Plain) around late November/early December; and Northern Region (Chitipa/Karonga/Mzimba) in December. Calibrate planting windows with live bulletins on the <a href="weather.html" style="font-weight:800;text-decoration:underline">Weather Centre</a>.
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a>
+          <a href="crops.html">Crop library</a>
+          <a href="crop-calendar.html">Farming calendar</a>
+          <a href="market-centre.html">Market centre</a>
+          <a href="weather.html">Weather centre</a>
+          <a href="admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/crop-calendar.js"></script>
+</body>
+</html>

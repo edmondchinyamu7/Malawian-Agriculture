@@ -1,34 +1,110 @@
 # Ulimi wa Malawi | Agriculture Knowledge Hub
 
-A Malawi-focused agriculture learning hub in Chichewa and English.
+Ulimi wa Malawi is a comprehensive, practical agricultural knowledge platform designed for smallholder farmers, learners, agricultural extension workers, and agribusinesses in Malawi.
 
-## Run locally
-This repository includes an Express server. From the project root:
+---
 
-```bash
-npm install
-npm run dev
+## Architecture & Modular File System
+
+```
+ulimi-wa-malawi/
+│
+├── index.html                    # Central Agriculture Knowledge Hub homepage
+├── modules.html                  # All-in-one modules browser view
+├── metadata.json                 # AI Studio applet metadata & capabilities
+├── server.js                     # Express static & clean-routing server (0.0.0.0:3000)
+├── package.json                  # Node.js project manifest & scripts
+├── README.md                     # Architecture & roadmap documentation
+│
+├── pages/                        # Feature-specific subpages
+│   ├── crop-calendar.html        # V6 Farming & Cropping Seasonal Calendar
+│   ├── crops.html                # V7 Advanced Malawi Crop Library (16+ crops)
+│   ├── pest-disease.html         # V8 Integrated Pest & Disease Diagnostic Centre
+│   ├── market-centre.html        # V5 Agricultural Market Information Centre
+│   ├── weather.html              # Live Weather Centre (Open-Meteo 7-day forecast)
+│   ├── fertiliser-calculator.html# V10 Fertiliser & Nutrient Quantity Calculator
+│   ├── farm-planner.html         # V11 Seed Rate & Yield Estimator
+│   ├── soil-centre.html          # V9 Soil Information & Fertility Centre
+│   ├── irrigation.html           # V12 Irrigation & Water Management
+│   ├── livestock.html            # V13 Animal Husbandry & Livestock Centre
+│   ├── learning-centre.html      # V16 Farmer Academy & Tutorials
+│   ├── farmer-community.html     # V17 Farmer Community Forum
+│   ├── news.html                 # V20 Ministry & Research News Bulletins
+│   ├── marketplace.html          # V22 Agricultural Commodities Marketplace
+│   └── admin.html                # V23 Admin Market Price & Verification Portal
+│
+├── css/                          # Modular stylesheets
+│   ├── style.css                 # Base theme variables, typography, layout & shell
+│   ├── components.css            # Reusable cards, filter pills, search bars, modals, badges
+│   ├── dashboard.css             # Dashboards for weather, market tables & analytics
+│   ├── admin.css                 # Administrative controls & management tables
+│   ├── responsive.css            # Mobile drawer navigation & responsive breakpoints
+│   └── main.css                  # Combined stylesheet bundle
+│
+├── js/                           # Modular ES6 JavaScript
+│   ├── main.js                   # Shared utilities, toast alerts, bookmarks & modal system
+│   ├── navigation.js             # Mobile menu toggle, active link tracking, scroll spy
+│   ├── crop-calendar.js          # V6 Interactive monthly calendar, reminders & crop Gantt
+│   ├── crops.js                  # V7 Advanced crop catalog, agronomic guides & modal
+│   ├── pest-disease.js           # V8 Pest & disease diagnostic search, filters & safety
+│   ├── market-centre.js          # V5 Market prices directory, regional comparisons & stats
+│   ├── weather.js                # Live Open-Meteo weather API integration & farm advisories
+│   ├── calculators.js            # Fertiliser quantities, land area & seed calculations
+│   └── admin.js                  # Price administration, verification toggle & data reset
+│
+├── data/                         # Structured JSON datasets
+│   ├── crops.json                # 16 complete Malawi crop profiles & agronomic guides
+│   ├── farming-calendar.json     # 12-month agricultural timeline, seasonal reminders & crop schedules
+│   ├── pests-diseases.json       # Diagnostic profiles for major Malawi pests & crop diseases
+│   ├── farming-guides.json       # 18 traditional, commercial & modern farming systems
+│   ├── markets.json              # Baseline agricultural market prices across Malawi
+│   └── locations.json            # 12 Malawi district coordinates for weather & markets
+│
+└── partials/                     # Reusable HTML partial components
+    ├── header.html
+    ├── hero.html
+    ├── landing.html
+    ├── overview-features.html
+    ├── farming-methods.html
+    ├── crop-library.html
+    ├── weather-centre.html
+    ├── practical-guides.html
+    ├── support-resources.html
+    ├── overlays.html
+    └── footer.html
 ```
 
-The server serves static files from the repository root. The frontend uses plain HTML, CSS and JavaScript and requires no frontend build step.
+---
 
-## Project structure
-- `index.html` — lightweight page shell that loads the HTML modules
-- `partials/` — independent homepage, farming methods, crop library, weather, guides, support, footer and modal sections
-- `css/` — base, layout, component, page and master stylesheets
-- `js/layout.js` — loads the HTML partials before the app starts
-- `js/config.js` — farming methods, crop profiles and Malawi weather locations
-- `js/features/` — farming methods, crop library and live weather
-- `js/app.js` — application startup after the page modules load
+## Roadmap Implementation Status
 
-## Included features
-- 18 farming methods with search, category filters, saved topics and detail modals
-- 8 crop profiles with search, crop-group filters and detail guides
-- Malawi weather centre with a 7-day Open-Meteo forecast for 12 locations
-- Responsive navigation, keyboard support and accessible status messages
+### Phase 1: Core Upgrades (Complete)
+- **V5: Agricultural Market Information Centre**:
+  - Live commodity price directory (Maize, Groundnuts, Soya, Rice, Tomatoes, Cassava, Pigeon Pea).
+  - Market locations (Lilongwe, Blantyre, Mzuzu, Kasungu, Salima, Thyolo, Dedza, Karonga).
+  - Price comparison between surplus rural production and deficit urban demand hubs.
+  - Verified (`✓`) and Unverified (`⏳`) trade status badges.
+  - Admin price management portal with local storage persistence.
 
-## Data and safety
-Market prices are not fabricated or hard-coded. Weather is fetched from Open-Meteo. Confirm local farming decisions with agricultural extension services. Never place private API keys or credentials in frontend files.
+- **V6: Farming Calendar (`pages/crop-calendar.html` & `js/crop-calendar.js`)**:
+  - Interactive 12-month agricultural timeline with seasonal reminders.
+  - Regional ecological zone selector (Southern, Central, Northern) with specific field guidance.
+  - Crop-specific growth timelines (Maize, Groundnuts, Soya, Rice, Cassava, Tomato) with stage-by-stage Gantt cards.
+  - "Current Month Activities" quick jump button.
 
-## Future development
-The modular structure is intended to support the planned V6–V29 features as additive changes.
+- **V7: Advanced Crop Library (`pages/crops.html` & `js/crops.js`)**:
+  - Expanded from 8 to 16 key Malawian crops (Maize, Groundnuts, Soya, Rice, Cassava, Sweet Potato, Tomato, Pigeon Pea, Common Beans, Irish Potato, Cotton, Tobacco, Tea, Coffee, Sunflower, Leafy Brassicas).
+  - Detailed soil requirements, recommended fertiliser schedules (basal & top-dressing), key pests/diseases, planting/harvesting windows, and district ecological suitability.
+
+- **V8: Pest and Disease Management (`pages/pest-disease.html` & `js/pest-disease.js`)**:
+  - Diagnostic profiles for major Malawian pests and diseases (Fall Armyworm, Maize Stalk Borer, Groundnut Rosette, Cassava Mosaic CMD, Cassava Brown Streak CBSD, Tomato Late Blight, Tomato Tuta Absoluta, Larger Grain Borer).
+  - Searchable symptom checker, host crop filters, severity ratings, cultural/biological prevention methods, approved chemical controls, and pesticide safety guidelines.
+
+---
+
+## Technical Standards & Verification
+
+- Pure web standards: HTML5, CSS3, ES6 Modules, and JSON.
+- Fully responsive across mobile phones, tablets, and desktop displays.
+- Strict relative paths (`../css/`, `../js/`, `../data/`) ensuring GitHub Pages and web server compatibility.
+- Build and linting verify clean.

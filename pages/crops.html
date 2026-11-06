@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Comprehensive crop profiles, planting checklists, pests, and field guides for Malawian agriculture.">
+  <meta property="og:title" content="Malawi Crop Library | Ulimi wa Malawi">
+  <meta property="og:description" content="Explore crop guides in Chichewa and English for maize, groundnuts, soya, rice, cassava, sweet potato, tomato, and pigeon pea.">
+  <title>Crop Library | Ulimi wa Malawi</title>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>CROP KNOWLEDGE LIBRARY</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html">Home</a>
+        <a href="crops.html" class="active">Crop library</a>
+        <a href="crop-calendar.html">Farming calendar</a>
+        <a href="pest-disease.html">Pest & disease</a>
+        <a href="market-centre.html">Market centre</a>
+        <a href="weather.html">Weather centre</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">CROP CATALOG</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main container">
+      <!-- Section Header -->
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Field Knowledge</span>
+          <h2>Malawi Crop Library (Chichewa & English)</h2>
+          <p>Practical agronomic profiles tailored to agro-ecological zones across Malawi. Review common uses, field-establishment checklists, soil moisture needs, and pests to watch.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="crop-toolbar">
+        <label class="search-wrap">
+          <span>⌕</span>
+          <input id="cropSearch" type="search" placeholder="Search maize, groundnuts, rice, tomato, cassava…" autocomplete="off" aria-label="Search crops">
+        </label>
+        <div class="result-count" id="cropCount" aria-live="polite">8 crops</div>
+      </div>
+
+      <div class="filters" id="cropFilters" aria-label="Filter crop groups"></div>
+
+      <!-- Crops Grid -->
+      <div class="crop-grid" id="cropGrid"></div>
+
+      <div class="notice" style="margin-top:36px">
+        <strong>Crop Advisory Note:</strong> These profiles provide foundational field guidance. Specific planting windows, spacing intervals, certified hybrid seed selections, basal and top-dressing fertiliser quantities (e.g. 23:10:5+6S and Urea) should be verified with your nearest Ministry of Agriculture Extension Officer or Agricultural Development Division (ADD).
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#methods">Farming methods</a>
+          <a href="crops.html">Crop library</a>
+          <a href="market-centre.html">Market centre</a>
+          <a href="weather.html">Weather centre</a>
+          <a href="../index.html#guides">Practical guides</a>
+          <a href="admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Reusable Modal Backdrop -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSub"></p>
+        </div>
+        <button class="close" id="closeModal" aria-label="Close details">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
+  </div>
+
+  <!-- Toast Alert -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/crops.js"></script>
+</body>
+</html>

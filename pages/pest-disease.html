@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Pest and Disease Management for Malawi agriculture: interactive symptom search, diagnostic profiles, biological controls, and chemical safety.">
+  <meta property="og:title" content="Pest & Disease Management | Ulimi wa Malawi">
+  <meta property="og:description" content="Diagnose common crop pests and diseases across Malawi with IPM prevention and safe chemical management.">
+  <title>Pest & Disease Management | Ulimi wa Malawi</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>PEST & DISEASE MANAGEMENT</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#methods">Farming methods</a>
+        <a href="crops.html">Crop library</a>
+        <a href="crop-calendar.html">Farming calendar</a>
+        <a href="pest-disease.html" class="active">Pest & disease</a>
+        <a href="market-centre.html">Market centre</a>
+        <a href="weather.html">Weather centre</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">V8 • CROP HEALTH</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <main class="main container">
+      <!-- Section Header -->
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Phase 1 • V8 Upgrade</span>
+          <h2>Pest & Crop Disease Diagnostic Centre</h2>
+          <p>Identify visual symptoms, understand life cycles, and choose cultural, biological, or chemical interventions aligned with Integrated Pest Management (IPM) guidelines.</p>
+        </div>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="toolbar" style="margin-bottom:18px">
+        <label class="search-wrap">
+          <span>⌕</span>
+          <input id="pestSearch" type="search" placeholder="Search symptoms, pests or diseases (e.g. armyworm, yellow leaves, blight)…" autocomplete="off" aria-label="Search pest and diseases">
+        </label>
+        <div class="result-count" id="pestCount" aria-live="polite">Loading diagnostic profiles…</div>
+      </div>
+
+      <!-- Type and Crop Selectors -->
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+        <div class="filters" id="pestTypeFilters" style="padding:0">
+          <button class="filter active" data-type="all">All Diagnoses</button>
+          <button class="filter" data-type="pest">🐛 Insect Pests</button>
+          <button class="filter" data-type="disease">🦠 Crop Diseases</button>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px">
+          <label for="pestCropFilter" style="font-size:12px;font-weight:850;color:var(--forest)">Filter by Host Crop:</label>
+          <select id="pestCropFilter" style="height:38px;border-radius:10px;border:1px solid #cbdad0;background:#fff;padding:0 10px;font-size:12px;font-weight:700">
+            <option value="all">All Crops</option>
+            <option value="Maize">Maize (Chimanga)</option>
+            <option value="Groundnuts">Groundnuts (Mtedza)</option>
+            <option value="Cassava">Cassava (Chinangwa)</option>
+            <option value="Tomato">Tomato / Potato</option>
+            <option value="Rice">Rice (Mpunga)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Diagnostic Cards Grid -->
+      <div class="cards" id="pestGrid" style="grid-template-columns:repeat(2, 1fr);gap:18px"></div>
+
+      <!-- Safety Notice -->
+      <div class="notice" style="margin-top:32px">
+        <strong>Pesticide Safety & Stewardship:</strong> Always wear proper Personal Protective Equipment (PPE: rubber gloves, mask, eye goggles, boots, and overall). Never apply agrochemicals against the wind or near water wells. Triple-rinse empty chemical containers, puncture the base, and dispose of safely according to Pesticides Control Board of Malawi regulations.
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a>
+          <a href="crops.html">Crop library</a>
+          <a href="crop-calendar.html">Farming calendar</a>
+          <a href="pest-disease.html">Pest & disease</a>
+          <a href="market-centre.html">Market centre</a>
+          <a href="weather.html">Weather centre</a>
+          <a href="admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Reusable Modal Backdrop -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSub"></p>
+        </div>
+        <button class="close" id="closeModal" aria-label="Close details">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
+  </div>
+
+  <!-- Reusable Toast -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/pest-disease.js"></script>
+</body>
+</html>

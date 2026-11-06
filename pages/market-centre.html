@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Agricultural Market Information Centre for Malawi. Real-time crop prices directory, market comparison, and price verification.">
+  <meta property="og:title" content="Market Centre | Ulimi wa Malawi">
+  <meta property="og:description" content="Check crop prices, compare markets across Malawi, and view verified price updates.">
+  <title>Market Centre | Ulimi wa Malawi</title>
+
+  <!-- Modular Stylesheets with Relative Paths -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>MARKET INFORMATION CENTRE</small></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#methods">Farming methods</a>
+        <a href="crops.html">Crop library</a>
+        <a href="market-centre.html" class="active">Market centre</a>
+        <a href="weather.html">Weather centre</a>
+        <a href="../index.html#guides">Practical guides</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+      <div class="top-actions">
+        <span class="pill">V5 • MARKET INTEL</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main container">
+      <!-- Section Header -->
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Phase 1 • V5 Upgrade</span>
+          <h2>Agricultural Market Information Centre</h2>
+          <p>Real-time commodity price tracking across rural, district assembly and major urban wholesale markets in Malawi. Compare regional pricing, identify fair value, and inspect verified extension records.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="admin.html" class="btn btn-primary" style="padding:10px 16px">Admin Price Desk ⚙️</a>
+        </div>
+      </div>
+
+      <!-- Market Centre Dashboard -->
+      <div class="market-dashboard">
+        <!-- Live Metric Overview -->
+        <div class="market-stats-row" id="marketStatsRow"></div>
+
+        <!-- Filter Controls -->
+        <div class="market-controls">
+          <div class="market-filters-group">
+            <label style="font-size:12px;font-weight:800;color:var(--forest)">Filter by Commodity:
+              <select id="marketCropFilter" aria-label="Filter by commodity">
+                <option value="all">All Commodities</option>
+                <option value="maize">Chimanga (Maize)</option>
+                <option value="groundnut">Mtedza (Groundnuts)</option>
+                <option value="soybean">Soya (Soybean)</option>
+                <option value="rice">Mpunga (Rice)</option>
+                <option value="tomato">Tomato (Fresh)</option>
+                <option value="cassava">Chinangwa (Cassava)</option>
+                <option value="pigeonpea">Nandolo (Pigeon Pea)</option>
+              </select>
+            </label>
+
+            <label style="font-size:12px;font-weight:800;color:var(--forest)">District:
+              <select id="marketDistrictFilter" aria-label="Filter by district">
+                <option value="all">All Districts</option>
+                <option value="Lilongwe">Lilongwe</option>
+                <option value="Blantyre">Blantyre</option>
+                <option value="Mzuzu">Mzuzu</option>
+                <option value="Kasungu">Kasungu</option>
+                <option value="Salima">Salima</option>
+                <option value="Thyolo">Thyolo</option>
+                <option value="Karonga">Karonga</option>
+              </select>
+            </label>
+
+            <label style="font-size:12px;font-weight:800;color:var(--forest)">Status:
+              <select id="marketStatusFilter" aria-label="Filter by verification status">
+                <option value="all">All Records</option>
+                <option value="verified">Verified Only (✓)</option>
+                <option value="unverified">Unverified (⏳)</option>
+              </select>
+            </label>
+          </div>
+
+          <div style="display:flex;gap:10px;align-items:center;flex:1;max-width:320px">
+            <input type="search" id="marketSearch" placeholder="Search market, crop or trader…" style="height:46px;width:100%;border:1px solid #cbd9ce;border-radius:12px;padding:0 12px;background:#fff;font-size:13px;outline:none" aria-label="Search market prices">
+            <button class="btn btn-ghost" id="resetMarketFilters" style="background:#edf5ee;color:var(--forest);border-color:#d5e5da;white-space:nowrap;padding:10px 14px" title="Reset all filters">Reset</button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <span style="font-size:13px;font-weight:800;color:var(--forest)" id="marketRecordCount">Loading records…</span>
+          <span style="font-size:11px;color:var(--muted)">Data refreshed regular morning trading sessions</span>
+        </div>
+
+        <!-- Prices Table -->
+        <div class="market-table-wrap">
+          <table class="market-table">
+            <thead>
+              <tr>
+                <th>Crop / Commodity</th>
+                <th>Market Location</th>
+                <th>Standard Unit</th>
+                <th>Price Range (MWK)</th>
+                <th>Status</th>
+                <th>Reported Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="marketTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Price Comparison Section -->
+        <div class="market-compare-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+            <div>
+              <h3>Regional Price Comparison & Arbitrage Insights</h3>
+              <p style="font-size:13px;color:#405247;margin:0">Analysis of price differentials between high-surplus producing districts and consumer urban hubs.</p>
+            </div>
+            <span class="badge-verified">Live Market Spread</span>
+          </div>
+          <div class="compare-cards-grid" id="priceComparisonGrid"></div>
+        </div>
+
+        <div class="notice" style="margin-top:24px">
+          <strong>Market Data Integrity Notice:</strong> All agricultural prices displayed are collected from district extension officers, agricultural development divisions (ADD), and verified market committee price boards. Unverified submissions are explicitly tagged with an "Unverified" badge until cross-referenced with local field agents.
+        </div>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+          </div>
+          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#methods">Farming methods</a>
+          <a href="crops.html">Crop library</a>
+          <a href="market-centre.html">Market centre</a>
+          <a href="weather.html">Weather centre</a>
+          <a href="../index.html#guides">Practical guides</a>
+          <a href="admin.html">Admin portal</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Reusable Modal Backdrop -->
+  <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <p id="modalSub"></p>
+        </div>
+        <button class="close" id="closeModal" aria-label="Close details">×</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </article>
+  </div>
+
+  <!-- Toast Alert -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/market-centre.js"></script>
+</body>
+</html>
