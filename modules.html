@@ -1,36 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ny">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#092d22">
-<meta name="description" content="Explore farming methods, crop information, weather, practical guides and agricultural resources for Malawi.">
-<title>Ulimi wa Malawi | Modules</title>
-<link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Mitu yonse ya pulogalamu ya Ulimi wa Malawi kuyambira V5 mpaka V29.">
+  <meta property="og:title" content="Mitu Yonse (V5 - V29) | Ulimi wa Malawi">
+  <meta property="og:description" content="Ndondomeko ya mitu yonse ya ulimi ndi zipangizo zamakono zothandiza alimi m'Malawi.">
+  <title>Mitu Yonse ya Ulimi | Ulimi wa Malawi</title>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-<div class="shell">
-  <div data-include="partials/header.html" style="display:contents"></div>
-  <div data-include="partials/hero.html" style="display:contents"></div>
-  <main class="main container">
-    <div data-include="partials/overview-features.html" style="display:contents"></div>
-    <div data-include="partials/farming-methods.html" style="display:contents"></div>
-    <div data-include="partials/crop-library.html" style="display:contents"></div>
-    <div data-include="partials/weather-centre.html" style="display:contents"></div>
-    <div data-include="partials/practical-guides.html" style="display:contents"></div>
-    <div data-include="partials/support-resources.html" style="display:contents"></div>
-  </main>
-  <div data-include="partials/footer.html" style="display:contents"></div>
-</div>
-<div data-include="partials/overlays.html" style="display:contents"></div>
-<script src="js/layout.js"></script>
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/navigation.js"></script>
-<script src="js/features/farming-methods.js"></script>
-<script src="js/features/crops.js"></script>
-<script src="js/features/weather.js"></script>
-<script src="js/app.js"></script>
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Ulimi wa Malawi poyambira">
+        <span class="brand-mark">🌱</span>
+        <span>
+          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+          <small data-i18n="navModules">MITU YONSE YA ULIMI (V5 - V29)</small>
+        </span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="index.html" data-i18n="navHome">Poyambira</a>
+        <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi (V6)</a>
+        <a href="pages/crops.html" data-i18n="navCrops">Mbewu za m'Malawi (V7)</a>
+        <a href="pages/pest-disease.html" data-i18n="navPest">Tizilombo ndi matenda (V8)</a>
+        <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi (V5)</a>
+        <a href="pages/weather.html" data-i18n="navWeather">Zanyengo</a>
+        <a href="modules.html" class="active" data-i18n="navModules">Mitu yonse</a>
+        <a href="pages/admin.html" data-i18n="navAdmin">Uyang'anire</a>
+      </nav>
+      <div class="top-actions">
+        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main container">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Ndondomeko ya Pulogalamu</span>
+          <h2>Mitu ya Ulimi wa Malawi (V5 mpaka V29)</h2>
+          <p>Onani magawo onse a mapulani athu kuyambira zatsopano zotsegulidwa (Phase 1) mpaka kumalizira kwa pulogalamu yathu ya chidziwitso cha ulimi m'Malawi.</p>
+        </div>
+      </div>
+
+      <!-- Phase 1: Core Upgrades (Live) -->
+      <h3 style="font-size:20px;color:var(--forest);margin:32px 0 16px">Phase 1: Core Upgrades (Zikugwira Ntchito Tsopano)</h3>
+      <div class="upgrade-grid">
+        <a class="upgrade-card" href="pages/market-centre.html">
+          <div class="upgrade-card-head">
+            <div class="upgrade-icon">📊</div>
+            <span class="badge-version" style="background:#dcfce7;color:#15803d">V5 • LIVE</span>
+          </div>
+          <h3>Agricultural Market Information Centre</h3>
+          <p>Mitengo ya chimanga, mtedza, soya, ndi mpunga m'misika yosiyanasiyana ya m'Malawi yokhala ndi zitsimikizo.</p>
+          <div class="upgrade-card-foot"><span>Tsegulani msika</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/crop-calendar.html">
+          <div class="upgrade-card-head">
+            <div class="upgrade-icon">📅</div>
+            <span class="badge-version" style="background:#dcfce7;color:#15803d">V6 • LIVE</span>
+          </div>
+          <h3>Farming Calendar</h3>
+          <p>Ndondomeko ya mwezi ndi mwezi yotsatira zochitika za m'munda, zikumbutso za nyengo ndi kubzala mbewu.</p>
+          <div class="upgrade-card-foot"><span>Tsegulani kalendala</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/crops.html">
+          <div class="upgrade-card-head">
+            <div class="upgrade-icon">🌽</div>
+            <span class="badge-version" style="background:#dcfce7;color:#15803d">V7 • LIVE</span>
+          </div>
+          <h3>Advanced Crop Library</h3>
+          <p>Mbewu zoposa 16 zofotokozedwa m'makadi ochititsa chidwi ndi malangizo a feteleza, nthaka ndi tizilombo.</p>
+          <div class="upgrade-card-foot"><span>Onani makadi a mbewu</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/pest-disease.html">
+          <div class="upgrade-card-head">
+            <div class="upgrade-icon">🐛</div>
+            <span class="badge-version" style="background:#dcfce7;color:#15803d">V8 • LIVE</span>
+          </div>
+          <h3>Pest & Disease Management</h3>
+          <p>Kuzindikira tizilombo ndi matenda a mbewu, zizindikiro zake komanso mankhwala oyenera ndi chitetezo.</p>
+          <div class="upgrade-card-foot"><span>Zindikirani thanzi</span><span>→</span></div>
+        </a>
+      </div>
+
+      <!-- Phase 2: Smart Farming Tools -->
+      <h3 style="font-size:20px;color:var(--forest);margin:36px 0 16px">Phase 2: Smart Farming Tools (Zipangizo Zaulimi)</h3>
+      <div class="upgrade-grid">
+        <a class="upgrade-card" href="pages/soil-centre.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">🌱</div><span class="badge-version">V9 SOIL</span></div>
+          <h3>Soil Information Centre</h3>
+          <p>Mitundu ya nthaka ku Malawi, kusanthula nthaka, ndi njira zokonzera chonde.</p>
+          <div class="upgrade-card-foot"><span>Onani gawo la nthaka</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/fertiliser-calculator.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">⚡</div><span class="badge-version">V10 FERT</span></div>
+          <h3>Fertiliser Calculator</h3>
+          <p>Kuwerengera feteleza wa pansi (23:10:5) ndi wa pamwamba (Urea) molingana ndi kukula kwa munda.</p>
+          <div class="upgrade-card-foot"><span>Tsegulani chowerengera</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/farm-planner.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">📐</div><span class="badge-version">V11 PLAN</span></div>
+          <h3>Farm Planning Tools</h3>
+          <p>Kuwerengera mbewu zofunika, ndalama zogwiritsidwa ntchito komanso zokolola zoyembekezeka.</p>
+          <div class="upgrade-card-foot"><span>Konzani bajeti ya munda</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/irrigation.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">💧</div><span class="badge-version">V12 WATER</span></div>
+          <h3>Irrigation & Water Management</h3>
+          <p>Njira zothirira za dambo, kusamala madzi a mvula, ndi ulimi wa nthawi ya dzuwa.</p>
+          <div class="upgrade-card-foot"><span>Onani zothirira</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/livestock.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">🐄</div><span class="badge-version">V13 LIVESTOCK</span></div>
+          <h3>Livestock Farming Centre</h3>
+          <p>Ulimi wa nkhuku, mbuzi, nkhumba ndi ng'ombe, chakudya ndi thanzi la ziweto.</p>
+          <div class="upgrade-card-foot"><span>Onani za ziweto</span><span>→</span></div>
+        </a>
+      </div>
+
+      <!-- Phase 3, 4, 5 Hub Overview -->
+      <h3 style="font-size:20px;color:var(--forest);margin:36px 0 16px">Phases 3 – 5: Digital Agriculture & Professional Platform</h3>
+      <div class="upgrade-grid">
+        <a class="upgrade-card" href="pages/learning-centre.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">📚</div><span class="badge-version">V16 LEARN</span></div>
+          <h3>Agricultural Learning Centre</h3>
+          <p>Maphunziro a ulimi, mavidiyo, zolemba zotsitsidwa ndi mayeso a alimi.</p>
+          <div class="upgrade-card-foot"><span>Phunzirani</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/farmer-community.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">👥</div><span class="badge-version">V17 COMMUNITY</span></div>
+          <h3>Farmer Community Hub</h3>
+          <p>Kukambirana kwa alimi, kugawana luso ndi chidziwitso m'maboma osiyanasiyana.</p>
+          <div class="upgrade-card-foot"><span>Lowani m'gulu</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/news.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">📰</div><span class="badge-version">V20 NEWS</span></div>
+          <h3>Agricultural News & Research</h3>
+          <p>Mauthenga a Unduna wa za Ulimi, ndondomeko za boma ndi kafukufuku watsopano.</p>
+          <div class="upgrade-card-foot"><span>Werengani nkhani</span><span>→</span></div>
+        </a>
+
+        <a class="upgrade-card" href="pages/marketplace.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">🛒</div><span class="badge-version">V22 MARKET</span></div>
+          <h3>Farmer Marketplace</h3>
+          <p>Kugula ndi kugulitsa zokolola ndi zipangizo za ulimi m'Malawi monse.</p>
+          <div class="upgrade-card-foot"><span>Pitani pa msika</span><span>→</span></div>
+        </a>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">🌱</span>
+            <span>
+              <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+              <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+            </span>
+          </div>
+          <p data-i18n="footerTagline">Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html" data-i18n="footerHome">Poyambira</a>
+          <a href="pages/crops.html" data-i18n="footerCrops">Mbewu za m'Malawi (V7)</a>
+          <a href="pages/crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi (V6)</a>
+          <a href="pages/pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda (V8)</a>
+          <a href="pages/market-centre.html" data-i18n="footerMarket">Msika wa zaulimi (V5)</a>
+          <a href="pages/weather.html" data-i18n="footerWeather">Zanyengo</a>
+          <a href="modules.html" data-i18n="footerAllModules">Mitu yonse</a>
+          <a href="pages/admin.html" data-i18n="footerAdmin">Uyang'anire</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script type="module" src="js/navigation.js"></script>
 </body>
 </html>

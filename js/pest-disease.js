@@ -2,6 +2,7 @@
  * Ulimi wa Malawi | V8 Pest & Disease Diagnostic Centre
  */
 import { escapeHtml, openModal } from './main.js';
+import { getCurrentLang } from './i18n.js';
 
 let pestData = [];
 let activeType = 'all';
@@ -57,35 +58,46 @@ export function renderPestCards() {
     return;
   }
 
+  const lang = getCurrentLang();
+
   container.innerHTML = filtered.map(item => {
     const isPest = item.type === 'pest';
+    const typeLabel = isPest
+      ? (lang === 'ny' ? '🐛 Tizilombo Towononga' : '🐛 Insect Pest')
+      : (lang === 'ny' ? '🦠 Matenda a Mbewu' : '🦠 Crop Disease');
+
     const typeBadge = isPest
-      ? `<span class="tag" style="background:#fff3e0;color:#b45309;font-weight:800">🐛 Insect Pest</span>`
-      : `<span class="tag" style="background:#fce7f3;color:#be185d;font-weight:800">🦠 Crop Disease</span>`;
+      ? `<span class="tag" style="background:#fff3e0;color:#b45309;font-weight:800">${typeLabel}</span>`
+      : `<span class="tag" style="background:#fce7f3;color:#be185d;font-weight:800">${typeLabel}</span>`;
 
     const severityColor = item.severity === 'Critical' ? '#dc2626' : '#d97706';
+    const severityLabel = lang === 'ny' ? (item.severity === 'Critical' ? 'Choopsa Kwambiri' : 'Choopsa') : item.severity;
+    const title = lang === 'ny' ? item.nameCh : item.nameEn;
+    const subTitle = lang === 'ny' ? `${item.nameEn} (${item.scientificName})` : `${item.nameCh} (${item.scientificName})`;
+    const symptomsLabel = lang === 'ny' ? 'Zizindikiro Zazikulu:' : 'Key Symptoms:';
+    const actionLabel = lang === 'ny' ? 'Onani Kafukufuku & Mankhwala →' : 'View Diagnostics & Treatment →';
 
     return `
-      <article class="farm-card" style="min-height:auto" tabindex="0" role="button" data-pest-id="${escapeHtml(item.id)}" aria-label="Diagnose ${escapeHtml(item.nameEn)}">
+      <article class="farm-card" style="min-height:auto" tabindex="0" role="button" data-pest-id="${escapeHtml(item.id)}" aria-label="Diagnose ${escapeHtml(title)}">
         <div class="card-top">
           <div class="crop-icon">${isPest ? '🐛' : '🍂'}</div>
           <div style="display:flex;gap:6px;align-items:center">
             ${typeBadge}
             <span style="font-size:10px;font-weight:850;color:${severityColor};background:#fff;border:1px solid ${severityColor}40;border-radius:999px;padding:3px 8px">
-              ${escapeHtml(item.severity)}
+              ${escapeHtml(severityLabel)}
             </span>
           </div>
         </div>
-        <h3 style="margin-top:12px">${escapeHtml(item.nameCh)}</h3>
-        <div class="english">${escapeHtml(item.nameEn)} <em>(${escapeHtml(item.scientificName)})</em></div>
+        <h3 style="margin-top:12px">${escapeHtml(title)}</h3>
+        <div class="english">${escapeHtml(subTitle)}</div>
         <p class="desc" style="margin-bottom:12px">
-          <strong>Key Symptoms:</strong> ${escapeHtml(item.symptoms.slice(0, 140))}…
+          <strong>${symptomsLabel}</strong> ${escapeHtml(item.symptoms.slice(0, 140))}…
         </p>
         <div class="tags" style="margin-bottom:12px">
           ${(item.affectedCrops || []).map(c => `<span class="tag">${escapeHtml(c)}</span>`).join('')}
         </div>
         <div class="card-foot">
-          <span>View Diagnostics & Treatment →</span>
+          <span>${actionLabel}</span>
         </div>
       </article>
     `;
@@ -194,6 +206,8 @@ export function initPestDisease() {
 
     loadPestData();
   }
+
+  window.addEventListener('languageChanged', renderPestCards);
 }
 
 document.addEventListener('DOMContentLoaded', initPestDisease);

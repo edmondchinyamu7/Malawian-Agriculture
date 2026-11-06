@@ -1,41 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ny">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#092d22">
-  <meta name="description" content="A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.">
-  <meta property="og:title" content="Ulimi wa Malawi | Agriculture Knowledge Hub">
-  <meta property="og:description" content="A practical Chichewa and English agriculture learning hub for farmers, learners and agribusiness communities in Malawi.">
-  <title>Ulimi wa Malawi | Agriculture Knowledge Hub</title>
+  <meta name="description" content="Chidziwitso cha ulimi chothandiza alimi, ophunzira ndi mabizinesi a zaulimi ku Malawi m'Chichewa ndi m'Chizungu.">
+  <meta property="og:title" content="Ulimi wa Malawi | Malo Ophunzirira za Ulimi">
+  <meta property="og:description" content="Chidziwitso cha ulimi chothandiza alimi, ophunzira ndi mabizinesi a zaulimi ku Malawi m'Chichewa ndi m'Chizungu.">
+  <title>Ulimi wa Malawi | Malo Ophunzirira za Ulimi</title>
 
   <!-- Modular Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
   <div class="shell">
     <!-- Topbar Navigation -->
     <header class="topbar">
-      <a class="brand" href="index.html" aria-label="Ulimi wa Malawi home">
+      <a class="brand" href="index.html" aria-label="Ulimi wa Malawi poyambira">
         <span class="brand-mark">🌱</span>
-        <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+        <span>
+          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+          <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+        </span>
       </a>
+
       <nav class="nav" id="nav" aria-label="Main navigation">
-        <a href="index.html" class="active">Home</a>
-        <a href="pages/crop-calendar.html">Farming calendar</a>
-        <a href="pages/crops.html">Crop library</a>
-        <a href="pages/pest-disease.html">Pest & disease</a>
-        <a href="pages/market-centre.html">Market centre</a>
-        <a href="pages/weather.html">Weather</a>
-        <a href="modules.html">All modules</a>
-        <a href="pages/admin.html">Admin</a>
+        <a href="index.html" class="active" data-i18n="navHome">Poyambira</a>
+        <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi (V6)</a>
+        <a href="pages/crops.html" data-i18n="navCrops">Mbewu za m'Malawi (V7)</a>
+        <a href="pages/pest-disease.html" data-i18n="navPest">Tizilombo ndi matenda (V8)</a>
+        <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi (V5)</a>
+        <a href="pages/weather.html" data-i18n="navWeather">Zanyengo</a>
+        <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
+        <a href="pages/admin.html" data-i18n="navAdmin">Uyang'anire</a>
       </nav>
+
       <div class="top-actions">
-        <span class="pill">🇲🇼 MADE FOR MALAWI</span>
-        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
       </div>
     </header>
 
@@ -43,30 +53,30 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow"><i class="dot"></i> PRACTICAL KNOWLEDGE • CHICHEWA &amp; ENGLISH</span>
-          <h1>Grow knowledge.<br><span>Grow better harvests.</span></h1>
-          <p>Malawi-focused agricultural knowledge for learners, smallholder farmers and growing agribusinesses. Explore seasonal farming calendars, pest diagnostics, 16+ crop guides, verified market prices, and live weather.</p>
+          <span class="eyebrow" data-i18n="heroEyebrow"><i class="dot"></i> KUDZIWA NDI CHUMA • CHICHEWA NDI CHIZUNGU</span>
+          <h1 data-i18n-html="heroTitleHtml">Kulitsa nzeru zanu.<br><span>Kokololani zambiri.</span></h1>
+          <p data-i18n="heroDesc">Chidziwitso cha ulimi choyenera alimi aang'onoang'ono, ophunzira ndi mabizinesi a zaulimi ku Malawi. Pezani kalendala ya ulimi, njira zothanirana ndi tizilombo, mbewu zosiyanasiyana zoposa 16, mitengo ya pamsika yotsimikizika, ndi zanyengo zatsiku ndi tsiku.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#methods">Explore farming methods <span>🌾</span></a>
-            <a class="btn btn-ghost" href="pages/crop-calendar.html">Farming calendar (V6) <span>📅</span></a>
-            <a class="btn btn-ghost" href="pages/crops.html">Crop library (V7) <span>🌽</span></a>
-            <a class="btn btn-ghost" href="pages/pest-disease.html">Pest & disease (V8) <span>🐛</span></a>
-            <a class="btn btn-ghost" href="pages/market-centre.html">Market prices (V5) <span>📊</span></a>
+            <a class="btn btn-primary" href="#methods" data-i18n="btnExploreMethods">Onani njira za ulimi 🌾</a>
+            <a class="btn btn-ghost" href="pages/crop-calendar.html" data-i18n="btnCalendarV6">Kalendala ya ulimi (V6) 📅</a>
+            <a class="btn btn-ghost" href="pages/crops.html" data-i18n="btnCropsV7">Mbewu za m'Malawi (V7) 🌽</a>
+            <a class="btn btn-ghost" href="pages/pest-disease.html" data-i18n="btnPestV8">Tizilombo ndi matenda (V8) 🐛</a>
+            <a class="btn btn-ghost" href="pages/market-centre.html" data-i18n="btnMarketV5">Mitengo pamsika (V5) 📊</a>
           </div>
         </div>
 
         <!-- Floating Hero Panel -->
         <aside class="hero-panel">
           <div class="panel-top">
-            <span class="panel-label">Your learning hub</span>
-            <span class="panel-badge">🇲🇼 MALAWI FIRST</span>
+            <span class="panel-label" data-i18n="panelLabel">Malo anu ophunzirira</span>
+            <span class="panel-badge" data-i18n="panelBadge">🇲🇼 MALAWI WATHU</span>
           </div>
-          <h2 class="panel-title">Ulimi ndi Moyo.</h2>
-          <p class="panel-copy">Learn at your pace. Access verified spot commodity prices, diagnose pests early, and align your field operations with regional rainfall patterns.</p>
+          <h2 class="panel-title" data-i18n="panelTitle">Ulimi ndi Moyo.</h2>
+          <p class="panel-copy" data-i18n="panelCopy">Phunzirani pa nthawi yanu. Pezani mitengo yovomerezeka ya pamsika, zindikirani matenda a mbewu mwamsanga, ndi kutsatira mvula ya m'dera lanu mwa mgwirizano ndi azaulimi.</p>
           <div class="stat-grid">
-            <div class="stat"><strong id="methodCount">18</strong><span>Farming topics</span></div>
-            <div class="stat"><strong>16+</strong><span>Malawi crops</span></div>
-            <div class="stat"><strong>12</strong><span>Weather districts</span></div>
+            <div class="stat"><strong id="methodCount">18</strong><span data-i18n="statTopics">Mitu ya ulimi</span></div>
+            <div class="stat"><strong>16+</strong><span data-i18n="statCrops">Mbewu zodziwika</span></div>
+            <div class="stat"><strong>12</strong><span data-i18n="statDistricts">Maboma a nyengo</span></div>
           </div>
         </aside>
       </div>
@@ -75,14 +85,14 @@
     <!-- Main Container -->
     <main class="main container">
       <!-- Phase 1 Upgrades Showcase Grid -->
-      <section aria-label="Phase 1 upgrades showcase" style="margin-bottom:20px">
+      <section aria-label="Phase 1 upgrades showcase" style="margin-bottom:32px">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Core Upgrades Live</span>
-            <h2>Smart Farming Tools &amp; Market Intelligence</h2>
-            <p>Access our newly upgraded agricultural modules designed to optimize farm planning, crop protection, and fair market transactions.</p>
+            <span class="section-kicker" data-i18n="upgradesKicker">Zatsopano Zowonjezera</span>
+            <h2 data-i18n="upgradesTitle">Zipangizo Zaulimi Zamakono &amp; Chidziwitso cha Msika</h2>
+            <p data-i18n="upgradesDesc">Zigawo zofunika kwambiri zothandiza kukonzekera ulimi, kuteteza mbewu, komanso kudziwa mitengo pamsika.</p>
           </div>
-          <a href="modules.html" class="btn btn-outline" style="white-space:nowrap">View all modules →</a>
+          <a href="modules.html" class="btn btn-outline" style="white-space:nowrap" data-i18n="viewAllModules">Onani mitu yonse →</a>
         </div>
 
         <div class="upgrade-grid">
@@ -90,12 +100,12 @@
           <a class="upgrade-card" href="pages/crop-calendar.html">
             <div class="upgrade-card-head">
               <div class="upgrade-icon">📅</div>
-              <span class="badge-version">V6 CALENDAR</span>
+              <span class="badge-version">V6 KALENDALA</span>
             </div>
-            <h3>Seasonal Cropping Calendar</h3>
-            <p>Interactive 12-month timeline with monthly operational priorities, seasonal reminders, and crop growth Gantt schedules.</p>
+            <h3 data-i18n="cardCalendarTitle">Kalendala ya Ulimi ya Nyengo</h3>
+            <p data-i18n="cardCalendarDesc">Ndondomeko ya mwezi ndi mwezi yotsatira ntchito za m'munda, zikumbutso za nyengo, ndi nthawi zoyenera kubzala mbewu.</p>
             <div class="upgrade-card-foot">
-              <span>Open calendar planner</span>
+              <span data-i18n="cardCalendarAction">Tsegulani kalendala ya ulimi</span>
               <span>→</span>
             </div>
           </a>
@@ -104,12 +114,12 @@
           <a class="upgrade-card" href="pages/crops.html">
             <div class="upgrade-card-head">
               <div class="upgrade-icon">🌽</div>
-              <span class="badge-version">V7 CROPS</span>
+              <span class="badge-version">V7 MBEWU</span>
             </div>
-            <h3>16+ Detailed Crop Profiles</h3>
-            <p>Comprehensive agronomic guides, soil requirements, recommended fertiliser schedules, and district ecological suitability.</p>
+            <h3 data-i18n="cardCropsTitle">Mbewu Zoposa 16 za m'Malawi</h3>
+            <p data-i18n="cardCropsDesc">Malangizo a kalimidwe ka mbewu, mtundu wa nthaka, feteleza woyenera (wa pansi ndi wa pamwamba), ndi madera oyenera.</p>
             <div class="upgrade-card-foot">
-              <span>Browse crop library</span>
+              <span data-i18n="cardCropsAction">Onani laibulale ya mbewu</span>
               <span>→</span>
             </div>
           </a>
@@ -118,12 +128,12 @@
           <a class="upgrade-card" href="pages/pest-disease.html">
             <div class="upgrade-card-head">
               <div class="upgrade-icon">🐛</div>
-              <span class="badge-version">V8 HEALTH</span>
+              <span class="badge-version">V8 MATENDA</span>
             </div>
-            <h3>Pest &amp; Disease Diagnostics</h3>
-            <p>Identify visual symptoms of Fall Armyworm, Stalk Borer, Rosette, CMD/CBSD, and Blight with IPM prevention protocols.</p>
+            <h3 data-i18n="cardPestTitle">Kuzindikira Tizilombo &amp; Matenda</h3>
+            <p data-i18n="cardPestDesc">Zizindikiro za Nkhondo (Fall Armyworm), Mbozi ya m'chitsamba, Chikasu, ndi Chiwawu cha tomato limodzi ndi mankhwala oyenera.</p>
             <div class="upgrade-card-foot">
-              <span>Diagnose crop health</span>
+              <span data-i18n="cardPestAction">Zindikirani thanzi la mbewu</span>
               <span>→</span>
             </div>
           </a>
@@ -132,12 +142,12 @@
           <a class="upgrade-card" href="pages/market-centre.html">
             <div class="upgrade-card-head">
               <div class="upgrade-icon">📊</div>
-              <span class="badge-version">V5 MARKET</span>
+              <span class="badge-version">V5 MSIKA</span>
             </div>
-            <h3>Agricultural Market Centre</h3>
-            <p>Spot trading prices for maize, groundnuts, soya, and rice across rural and urban markets with verified extension labels.</p>
+            <h3 data-i18n="cardMarketTitle">Msika wa Zaulimi ndi Mitengo</h3>
+            <p data-i18n="cardMarketDesc">Mitengo ya chimanga, mtedza, soya, ndi mpunga m'misika ya ku midzi ndi m'matauni yokhala ndi chitsimikizo.</p>
             <div class="upgrade-card-foot">
-              <span>Check commodity prices</span>
+              <span data-i18n="cardMarketAction">Onani mitengo pamsika</span>
               <span>→</span>
             </div>
           </a>
@@ -148,43 +158,43 @@
       <section id="methods">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Knowledge Centre</span>
-            <h2>Farming Methods &amp; Systems</h2>
-            <p>Search in Chichewa or English, or filter by farming category to discover traditional, commercial and modern practices.</p>
+            <span class="section-kicker" data-i18n="methodsKicker">Malo a Chidziwitso</span>
+            <h2 data-i18n="methodsTitle">Njira ndi Kakhalidwe ka Ulimi</h2>
+            <p data-i18n="methodsDesc">Fufuzani m'Chichewa kapena m'Chizungu, kapena sankhani gulu la njira za ulimi.</p>
           </div>
         </div>
         <div class="toolbar">
           <label class="search-wrap">
             <span>⌕</span>
-            <input id="search" type="search" placeholder="Search farming methods, crops or examples…" autocomplete="off" aria-label="Search farming methods">
+            <input id="search" type="search" placeholder="Fufuzani njira yolimira, mbewu kapena chitsanzo…" autocomplete="off" aria-label="Fufuzani njira za ulimi" data-i18n-placeholder="searchMethodsPlaceholder">
           </label>
-          <div class="result-count" id="resultCount" aria-live="polite">18 topics</div>
+          <div class="result-count" id="resultCount" aria-live="polite">Mitu 18</div>
         </div>
-        <div class="filters" id="filters" aria-label="Filter farming topics"></div>
+        <div class="filters" id="filters" aria-label="Sankhani gulu la ulimi"></div>
         <div class="cards" id="cards"></div>
       </section>
 
-      <!-- Crop Knowledge Section -->
+      <!-- Crop Knowledge Section (In Rich Cards) -->
       <section id="crops" style="margin-top:54px">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Field Knowledge</span>
-            <h2>Malawi Crop Library</h2>
-            <p>Explore practical crop profiles in Chichewa and English. Search by crop name or use a crop group to narrow the list.</p>
+            <span class="section-kicker" data-i18n="cropsKicker">Laibulale ya Mbewu</span>
+            <h2 data-i18n="cropsTitle">Mbewu Zotchuka za m'Malawi</h2>
+            <p data-i18n="cropsDesc">Onani malangizo a kalimidwe katsatanetsatane m'Chichewa ndi m'Chizungu. Fufuzani dzina la mbewu kapena sankhani gulu la mbewu.</p>
           </div>
-          <a href="pages/crops.html" class="btn btn-outline">Full 16+ Crop Library →</a>
+          <a href="pages/crops.html" class="btn btn-outline" data-i18n="fullCropLibraryBtn">Laibulale Yonse ya Mbewu (16+) →</a>
         </div>
         <div class="crop-toolbar">
           <label class="search-wrap">
             <span>⌕</span>
-            <input id="cropSearch" type="search" placeholder="Search maize, groundnuts, rice, tomato, cassava…" autocomplete="off" aria-label="Search crops">
+            <input id="cropSearch" type="search" placeholder="Fufuzani chimanga, mtedza, mpunga, tomato, chinangwa…" autocomplete="off" aria-label="Fufuzani mbewu" data-i18n-placeholder="searchCropsPlaceholder">
           </label>
-          <div class="result-count" id="cropCount" aria-live="polite">16 crops</div>
+          <div class="result-count" id="cropCount" aria-live="polite">Mbewu 16</div>
         </div>
-        <div class="filters" id="cropFilters" aria-label="Filter crop groups"></div>
+        <div class="filters" id="cropFilters" aria-label="Sankhani gulu la mbewu"></div>
         <div class="crop-grid" id="cropGrid"></div>
-        <div class="notice">
-          <strong>Crop Advice Note:</strong> These profiles provide foundational field guidance. Specific planting windows, spacing intervals, certified hybrid seed selections, basal and top-dressing fertiliser quantities should be verified with your nearest Ministry of Agriculture Extension Officer.
+        <div class="notice" data-i18n="cropAdviceNote">
+          <strong>Chidziwitso pa mbewu:</strong> Malangizowa ndi othandiza poyambira kuphunzira. Kusankha mtundu wa mbewu, nthawi yobzala, mipata, ndi feteleza zimatengera boma, nthaka, ndi mvula. Tsimikizirani ndi mlangizi wazaulimi wa m'dera lanu.
         </div>
       </section>
 
@@ -192,42 +202,50 @@
       <section id="weather" style="margin-top:54px">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Live Agro-Meteorology</span>
-            <h2>Malawi Weather Centre</h2>
-            <p>Check live weather conditions and a seven-day forecast for 12 agricultural locations across Malawi. Use forecasts for planning planting, ridge making, and post-harvest drying.</p>
+            <span class="section-kicker" data-i18n="weatherKicker">Zanyengo ndi Kulima</span>
+            <h2 data-i18n="weatherTitle">Nyengo ku Madera a Malawi</h2>
+            <p data-i18n="weatherDesc">Onani momwe nyengo ilili komanso zolosera zamasiku 7 m'maboma 12 a Malawi. Gwiritsani ntchito zoloserazi pokonzekera kulima, kupanga mizere ndi kuyanika mbewu.</p>
           </div>
-          <a href="pages/weather.html" class="btn btn-outline">Dedicated Weather Page →</a>
+          <a href="pages/weather.html" class="btn btn-outline" data-i18n="weatherDedicatedBtn">Tsamba la Zanyengo Lokha →</a>
         </div>
+
         <div class="weather-panel">
           <div class="weather-controls">
-            <label class="weather-label" for="weatherDistrict">Choose a location in Malawi
-              <select id="weatherDistrict" aria-label="Choose a weather location">
-                <option value="Lilongwe">Lilongwe</option>
-                <option value="Blantyre">Blantyre</option>
-                <option value="Mzuzu">Mzuzu</option>
-                <option value="Zomba">Zomba</option>
-                <option value="Kasungu">Kasungu</option>
-                <option value="Mangochi">Mangochi</option>
-                <option value="Salima">Salima</option>
-                <option value="Dedza">Dedza</option>
-                <option value="Karonga">Karonga</option>
-                <option value="Nsanje">Nsanje</option>
-                <option value="Chitipa">Chitipa</option>
-                <option value="Balaka">Balaka</option>
+            <label class="weather-label" for="weatherDistrict">
+              <span data-i18n="chooseDistrictLabel">Sankhani boma la m'Malawi:</span>
+              <select id="weatherDistrict" aria-label="Sankhani boma">
+                <option value="Lilongwe">Lilongwe (Central Plateau)</option>
+                <option value="Blantyre">Blantyre (Southern Highlands)</option>
+                <option value="Mzuzu">Mzuzu (Northern Region)</option>
+                <option value="Zomba">Zomba (Highland Slopes)</option>
+                <option value="Kasungu">Kasungu (Tobacco &amp; Grain Plains)</option>
+                <option value="Mangochi">Mangochi (Lakeshore South)</option>
+                <option value="Salima">Salima (Central Lakeshore)</option>
+                <option value="Dedza">Dedza (High Altitude &amp; Irish Potato)</option>
+                <option value="Karonga">Karonga (Northern Lakeshore &amp; Rice)</option>
+                <option value="Nsanje">Nsanje (Lower Shire Valley)</option>
+                <option value="Chitipa">Chitipa (Northern Highlands)</option>
+                <option value="Balaka">Balaka (Rift Valley Plains)</option>
               </select>
             </label>
-            <button class="btn btn-weather" id="refreshWeather" type="button">↻ Refresh forecast</button>
+            <button class="btn btn-weather" id="refreshWeather" type="button" data-i18n="refreshWeatherBtn">↻ Pezani nyengo yatsopano</button>
           </div>
-          <div class="weather-status" id="weatherStatus" role="status" aria-live="polite">Loading the latest available forecast…</div>
-          <div id="weatherResults" hidden>
+
+          <div class="weather-status" id="weatherStatus" role="status" aria-live="polite" data-i18n="loadingWeatherStatus">
+            Kutenga zolosera za nyengo zatsopano…
+          </div>
+
+          <div id="weatherResults">
             <div class="weather-current" id="weatherCurrent"></div>
             <div class="forecast-heading">
-              <h3>7-day forecast</h3>
-              <span>Daily agricultural outlook</span>
+              <h3 data-i18n="forecastHeading">Zolosera za Masiku 7</h3>
+              <span data-i18n="forecastSub">Maimidwe a nyengo tsiku ndi tsiku</span>
             </div>
             <div class="forecast-grid" id="forecastGrid"></div>
             <div class="weather-advice" id="weatherAdvice"></div>
-            <p class="weather-source">Weather data: Open-Meteo. Forecasts can change and serve as planning support. Monitor local sky and soil conditions before making important decisions.</p>
+            <p class="weather-source" data-i18n="weatherSourceNotice">
+              Zanyengo zachokera ku: Open-Meteo. Zolosera zitha kusintha. Onetsetsani mmene thambo lilili komanso nthaka musanapange zigamulo zikuluzikulu.
+            </p>
           </div>
         </div>
       </section>
@@ -236,129 +254,88 @@
       <section id="guides" style="margin-top:54px">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Field Learning</span>
-            <h2>Practical Farming Guides</h2>
-            <p>Simple starting points. Adapt each practice to your location, crop and local extension advice.</p>
+            <span class="section-kicker" data-i18n="guidesKicker">Maphunziro a m'Munda</span>
+            <h2 data-i18n="guidesTitle">Malangizo Othandiza pa Ulimi</h2>
+            <p data-i18n="guidesDesc">Mfundo zosavuta zoyambira. Zinthu zimene mungatsatire kuti munda wanu ukhale wachonde komanso zokolola zanu zikhale zambiri.</p>
           </div>
         </div>
-        <div class="guides">
+
+        <div class="feature-grid">
           <article class="guide">
             <div class="gicon">🌱</div>
             <div>
-              <h3>Soil health &amp; conservation</h3>
-              <p>Healthy soil supports roots, water storage and crop growth. Protect the soil while improving its organic matter.</p>
-              <ul>
-                <li>Keep soil covered with suitable plant residues or cover crops.</li>
-                <li>Use crop rotation and legume crops where suitable.</li>
-                <li>Reduce runoff with contour ridging and erosion-control swales.</li>
-                <li>Seek soil testing or extension advice before choosing fertiliser rates.</li>
-              </ul>
+              <h3 data-i18n="guide1Title">Thanzi la nthaka ndi kuiteteza</h3>
+              <p data-i18n="guide1Desc">Nthaka yathanzi imasunga madzi ndi kudyetsa mizu ya mbewu bwino.</p>
             </div>
           </article>
-
           <article class="guide">
-            <div class="gicon">♻️</div>
+            <div class="gicon">🌿</div>
             <div>
-              <h3>Compost &amp; organic matter</h3>
-              <p>Composting turns farmyard manure and crop residues into a potent soil amendment that cuts fertiliser expenditure.</p>
-              <ul>
-                <li>Combine suitable dry brown matter with green plant materials.</li>
-                <li>Keep the compost pile moist like a squeezed sponge, but not waterlogged.</li>
-                <li>Turn periodically to ensure adequate airflow and aerobic decomposition.</li>
-                <li>Apply mature, earthy-smelling compost into planting basins before rains.</li>
-              </ul>
+              <h3 data-i18n="guide2Title">Manyowa achilengedwe a kompositi</h3>
+              <p data-i18n="guide2Desc">Kupanga manyowa kuchokera ku zotsalira za m'munda ndi m'khola kumachepetsa kugula feteleza.</p>
             </div>
           </article>
-
           <article class="guide">
             <div class="gicon">💧</div>
             <div>
-              <h3>Water-smart farming</h3>
-              <p>Plan water use around crop needs, soil type and the water available to your farm.</p>
-              <ul>
-                <li>Check root-zone soil moisture before watering.</li>
-                <li>Water in the early morning or evening to limit evaporation loss.</li>
-                <li>Maintain irrigation channels, treadle pump seals, and drip lines.</li>
-                <li>Preserve riverbank buffer zones to protect community water tables.</li>
-              </ul>
+              <h3 data-i18n="guide3Title">Kusamalira ndi kuthirira madzi mwanzeru</h3>
+              <p data-i18n="guide3Desc">Gwiritsani ntchito njira zothirira zosawononga madzi monga drip kapena kuthirira m'mizu.</p>
             </div>
           </article>
-
           <article class="guide">
             <div class="gicon">🛡️</div>
             <div>
-              <h3>Crop health &amp; safe handling</h3>
-              <p>Regular field observation helps identify crop problems early and supports safer decisions.</p>
-              <ul>
-                <li>Inspect crops weekly in a 'W' pattern and record unusual symptoms.</li>
-                <li>Rogue and safely bury virus-infected cassava or groundnut plants.</li>
-                <li>Ask your Agricultural Extension Development Officer (AEDO) to confirm diagnoses.</li>
-                <li>Only use registered crop-protection products with proper personal protective equipment (PPE).</li>
-              </ul>
+              <h3 data-i18n="guide4Title">Kuteteza mbewu ndi kusamala mankhwala</h3>
+              <p data-i18n="guide4Desc">Kuyendera munda nthawi zonse kumathandiza kuona tizilombo mwachangu musanawonongeke.</p>
             </div>
           </article>
-
           <article class="guide">
-            <div class="gicon">🌽</div>
+            <div class="gicon">📦</div>
             <div>
-              <h3>Harvest &amp; storage</h3>
-              <p>Careful harvesting, thorough drying and airtight storage prevent post-harvest loss and aflatoxin contamination.</p>
-              <ul>
-                <li>Harvest at the crop's recommended physiological maturity.</li>
-                <li>Dry grain thoroughly on clean raised tarpaulins to below 13.5% moisture.</li>
-                <li>Store in clean, dry, rodent-proof cribs or multi-layer hermetic PICS bags.</li>
-                <li>Check stored produce regularly for moisture, weevils, and heat.</li>
-              </ul>
+              <h3 data-i18n="guide5Title">Kukolola ndi kusunga bwino zokolola</h3>
+              <p data-i18n="guide5Desc">Kuyanika mbewu ziume bwino (pansi pa 13.5% ya chinyezi) kumateteza ku nkhungu ndi nankafumbwe.</p>
             </div>
           </article>
-
           <article class="guide">
             <div class="gicon">📈</div>
             <div>
-              <h3>Farm planning &amp; market readiness</h3>
-              <p>Good planning connects production decisions to household needs, input costs, and profitable commercial sales.</p>
-              <ul>
-                <li>Calculate seed, basal fertiliser, and top-dressing requirements in advance.</li>
-                <li>Plan crop choices around local soil conditions and urban market demand.</li>
-                <li>Compare buyer pricing across district markets before selling.</li>
-                <li>Keep simple records of inputs, harvests, and revenue.</li>
-              </ul>
+              <h3 data-i18n="guide6Title">Kukonzekera munda ndi malonda</h3>
+              <p data-i18n="guide6Desc">Kuwerengera mtengo wa feteleza, mbewu, ndi ntchito kumathandiza kudziwa phindu.</p>
             </div>
           </article>
         </div>
-
-        <div class="notice">
-          <strong>Important Extension Notice:</strong> These guides provide general educational material. Seed varieties, fertiliser rates, animal-health decisions and crop-protection measures should be confirmed with a qualified agricultural extension officer in your district.
+        <div class="notice" data-i18n="guidesNotice">
+          <strong>Chenjezo:</strong> Malangizowa ndi ophunzitsira. Feteleza woyenera, mtundu wa mbewu, ndi mankhwala ziyenera kutsimikizidwa ndi alangizi a zaulimi a m'dera lanu.
         </div>
       </section>
 
-      <!-- Support & Resources -->
+      <!-- Support & Research Section -->
       <section id="support" style="margin-top:54px">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Trusted Information</span>
-            <h2>Malawi Agricultural Support &amp; Services</h2>
-            <p>Official contacts and resources from the Ministry of Agriculture and research institutions.</p>
+            <span class="section-kicker" data-i18n="supportKicker">Thandizo Lodalirika</span>
+            <h2 data-i18n="supportTitle">Maofesi ndi Thandizo la Zaulimi m'Malawi</h2>
+            <p data-i18n="supportDesc">Lumikizanani ndi maofesi a boma ndi kafukufuku wazaulimi kuti mupeze malangizo ovomerezeka.</p>
           </div>
         </div>
-        <div class="resources">
+        <div class="feature-grid">
           <article class="resource">
-            <small>Government • Extension</small>
-            <h3>Agricultural Extension Services</h3>
-            <p>Information on farmer training, lead-farmer delivery, and practical advisory support.</p>
-            <a href="https://www.agriculture.gov.mw/index.php/extensionservices" target="_blank" rel="noopener">Visit extension services ↗</a>
+            <small>Boma • Thandizo la Alimi</small>
+            <h3 data-i18n="resourceExtTitle">Dipatimenti Yolimbikitsa Zaulimi (Extension)</h3>
+            <p data-i18n="resourceExtDesc">Maphunziro kwa alimi, uphungu wa m'munda ndi chithandizo cha akatswiri a zaulimi.</p>
+            <a href="https://www.mining.gov.mw/department/agricultural-extension-services" target="_blank" rel="noopener" data-i18n="resourceExtLink">Pitani ku Extension ↗</a>
           </article>
           <article class="resource">
-            <small>Government • Crop production</small>
-            <h3>Crop Development</h3>
-            <p>Official guidance on improved seed varieties, diversification, and integrated crop protection.</p>
-            <a href="https://www.mining.gov.mw/department/crop-development/crop-production" target="_blank" rel="noopener">Explore crop guidance ↗</a>
+            <small>Boma • Chitukuko cha Mbewu</small>
+            <h3 data-i18n="resourceCropsTitle">Kutukula Mbewu (Crop Development)</h3>
+            <p data-i18n="resourceCropsDesc">Chidziwitso cha mbewu zatsopano, kasamalidwe ndi njira zotetezera mbewu ku matenda.</p>
+            <a href="https://www.mining.gov.mw/department/crop-development/crop-production" target="_blank" rel="noopener" data-i18n="resourceCropsLink">Onani zambiri za mbewu ↗</a>
           </article>
           <article class="resource">
-            <small>Government • Soil &amp; land</small>
-            <h3>Soil &amp; Land Management</h3>
-            <p>Information on soil fertility, water conservation, and sustainable land management.</p>
-            <a href="https://www.mining.gov.mw/department/land-resources/soil-land-management" target="_blank" rel="noopener">Explore soil resources ↗</a>
+            <small>Boma • Nthaka ndi Madera</small>
+            <h3 data-i18n="resourceSoilTitle">Nthaka ndi Chitetezo Chachilengedwe</h3>
+            <p data-i18n="resourceSoilDesc">Kukonza chonde cha nthaka, kuchepetsa kukokoloka kwa nthaka ndi ulimi woteteza chilengedwe.</p>
+            <a href="https://www.mining.gov.mw/department/land-resources/soil-land-management" target="_blank" rel="noopener" data-i18n="resourceSoilLink">Onani za nthaka ↗</a>
           </article>
         </div>
       </section>
@@ -370,19 +347,22 @@
         <div>
           <div class="brand">
             <span class="brand-mark">🌱</span>
-            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+            <span>
+              <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+              <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+            </span>
           </div>
-          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+          <p data-i18n="footerTagline">Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
         </div>
         <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="pages/crop-calendar.html">Farming calendar (V6)</a>
-          <a href="pages/crops.html">Crop library (V7)</a>
-          <a href="pages/pest-disease.html">Pest &amp; disease (V8)</a>
-          <a href="pages/market-centre.html">Market centre (V5)</a>
-          <a href="pages/weather.html">Weather centre</a>
-          <a href="modules.html">All modules</a>
-          <a href="pages/admin.html">Admin portal</a>
+          <a href="index.html" data-i18n="footerHome">Poyambira</a>
+          <a href="pages/crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi (V6)</a>
+          <a href="pages/crops.html" data-i18n="footerCrops">Mbewu za m'Malawi (V7)</a>
+          <a href="pages/pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda (V8)</a>
+          <a href="pages/market-centre.html" data-i18n="footerMarket">Msika wa zaulimi (V5)</a>
+          <a href="pages/weather.html" data-i18n="footerWeather">Zanyengo</a>
+          <a href="modules.html" data-i18n="footerAllModules">Mitu yonse</a>
+          <a href="pages/admin.html" data-i18n="footerAdmin">Uyang'anire</a>
         </div>
       </div>
     </footer>
@@ -396,7 +376,7 @@
           <h2 id="modalTitle"></h2>
           <p id="modalSub"></p>
         </div>
-        <button class="close" id="closeModal" aria-label="Close details">×</button>
+        <button class="close" id="closeModal" aria-label="Tsekani zambiri" data-i18n-aria="modalCloseBtn">×</button>
       </div>
       <div class="modal-body" id="modalBody"></div>
     </article>
@@ -407,6 +387,7 @@
 
   <!-- Modular JavaScript Entry Points -->
   <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/i18n.js"></script>
   <script type="module" src="js/navigation.js"></script>
   <script type="module" src="js/farming-methods.js"></script>
   <script type="module" src="js/crops.js"></script>

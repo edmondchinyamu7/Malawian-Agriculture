@@ -33,7 +33,10 @@
         <a href="admin.html" class="active">Admin</a>
       </nav>
       <div class="top-actions">
-        <span class="pill" style="background:rgba(255,255,255,0.18)">V5 ADMIN DESK</span>
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
         <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
       </div>
     </header>
@@ -204,6 +207,7 @@
 
   <!-- Modular Scripts -->
   <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/admin.js"></script>
 </body>

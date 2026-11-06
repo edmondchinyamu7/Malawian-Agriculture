@@ -1,39 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ny">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#092d22">
-  <meta name="description" content="Comprehensive crop profiles, planting checklists, pests, and field guides for Malawian agriculture.">
-  <meta property="og:title" content="Malawi Crop Library | Ulimi wa Malawi">
-  <meta property="og:description" content="Explore crop guides in Chichewa and English for maize, groundnuts, soya, rice, cassava, sweet potato, tomato, and pigeon pea.">
-  <title>Crop Library | Ulimi wa Malawi</title>
+  <meta name="description" content="Laibulale yonse ya mbewu za m'Malawi yokhala ndi malangizo a kalimidwe, mtundu wa nthaka, feteleza ndi tizilombo.">
+  <meta property="og:title" content="Mbewu za m'Malawi (V7) | Ulimi wa Malawi">
+  <meta property="og:description" content="Malangizo a kalimidwe ka chimanga, mtedza, soya, mpunga, chinangwa, mbatata, tomato, nandolo ndi mbewu zina.">
+  <title>Mbewu za m'Malawi (V7) | Ulimi wa Malawi</title>
 
   <!-- Modular Stylesheets -->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
   <div class="shell">
     <!-- Topbar Navigation -->
     <header class="topbar">
-      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi poyambira">
         <span class="brand-mark">🌱</span>
-        <span>ULIMI WA MALAWI<small>CROP KNOWLEDGE LIBRARY</small></span>
+        <span>
+          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+          <small data-i18n="navCrops">MBEWU ZA M'MALAWI (V7)</small>
+        </span>
       </a>
       <nav class="nav" id="nav">
-        <a href="../index.html">Home</a>
-        <a href="crops.html" class="active">Crop library</a>
-        <a href="crop-calendar.html">Farming calendar</a>
-        <a href="pest-disease.html">Pest & disease</a>
-        <a href="market-centre.html">Market centre</a>
-        <a href="weather.html">Weather centre</a>
-        <a href="admin.html">Admin</a>
+        <a href="../index.html" data-i18n="navHome">Poyambira</a>
+        <a href="crops.html" class="active" data-i18n="navCrops">Mbewu za m'Malawi (V7)</a>
+        <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi (V6)</a>
+        <a href="pest-disease.html" data-i18n="navPest">Tizilombo ndi matenda (V8)</a>
+        <a href="market-centre.html" data-i18n="navMarket">Msika wa zaulimi (V5)</a>
+        <a href="weather.html" data-i18n="navWeather">Zanyengo</a>
+        <a href="admin.html" data-i18n="navAdmin">Uyang'anire</a>
       </nav>
       <div class="top-actions">
-        <span class="pill">CROP CATALOG</span>
-        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
       </div>
     </header>
 
@@ -42,9 +50,9 @@
       <!-- Section Header -->
       <div class="section-head">
         <div>
-          <span class="section-kicker">Field Knowledge</span>
-          <h2>Malawi Crop Library (Chichewa & English)</h2>
-          <p>Practical agronomic profiles tailored to agro-ecological zones across Malawi. Review common uses, field-establishment checklists, soil moisture needs, and pests to watch.</p>
+          <span class="section-kicker" data-i18n="cropsKicker">Laibulale ya Mbewu</span>
+          <h2 data-i18n="cropsTitle">Mbewu Zotchuka za m'Malawi (Makadi a Mbewu)</h2>
+          <p data-i18n="cropsDesc">Malangizo a kalimidwe katsatanetsatane oyenera nyengo ndi nthaka zosiyanasiyana m'Malawi. Dziwani kagwiritsidwe ntchito, zoyenera kutsatira m'munda, feteleza woyenera, ndi tizilombo tosokoneza mbewu.</p>
         </div>
       </div>
 
@@ -52,18 +60,18 @@
       <div class="crop-toolbar">
         <label class="search-wrap">
           <span>⌕</span>
-          <input id="cropSearch" type="search" placeholder="Search maize, groundnuts, rice, tomato, cassava…" autocomplete="off" aria-label="Search crops">
+          <input id="cropSearch" type="search" placeholder="Fufuzani chimanga, mtedza, mpunga, tomato, chinangwa…" autocomplete="off" aria-label="Fufuzani mbewu" data-i18n-placeholder="searchCropsPlaceholder">
         </label>
-        <div class="result-count" id="cropCount" aria-live="polite">8 crops</div>
+        <div class="result-count" id="cropCount" aria-live="polite">Mbewu 16</div>
       </div>
 
-      <div class="filters" id="cropFilters" aria-label="Filter crop groups"></div>
+      <div class="filters" id="cropFilters" aria-label="Sankhani gulu la mbewu"></div>
 
-      <!-- Crops Grid -->
+      <!-- Crops Grid (Rendered in Rich Cards) -->
       <div class="crop-grid" id="cropGrid"></div>
 
-      <div class="notice" style="margin-top:36px">
-        <strong>Crop Advisory Note:</strong> These profiles provide foundational field guidance. Specific planting windows, spacing intervals, certified hybrid seed selections, basal and top-dressing fertiliser quantities (e.g. 23:10:5+6S and Urea) should be verified with your nearest Ministry of Agriculture Extension Officer or Agricultural Development Division (ADD).
+      <div class="notice" style="margin-top:36px" data-i18n="cropAdviceNote">
+        <strong>Chidziwitso pa mbewu:</strong> Malangizowa ndi othandiza poyambira kuphunzira. Kusankha mtundu wa mbewu, nthawi yobzala, mipata, ndi feteleza (monga 23:10:5+6S ndi Urea) zimatengera boma, nthaka, ndi mvula. Tsimikizirani ndi mlangizi wazaulimi wa m'dera lanu (AEDO) kapena ku ADD.
       </div>
     </main>
 
@@ -73,18 +81,21 @@
         <div>
           <div class="brand">
             <span class="brand-mark">🌱</span>
-            <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+            <span>
+              <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+              <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+            </span>
           </div>
-          <p>Learning for stronger, more resilient agriculture in Malawi.</p>
+          <p data-i18n="footerTagline">Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
         </div>
         <div class="footer-links">
-          <a href="../index.html">Home</a>
-          <a href="../index.html#methods">Farming methods</a>
-          <a href="crops.html">Crop library</a>
-          <a href="market-centre.html">Market centre</a>
-          <a href="weather.html">Weather centre</a>
-          <a href="../index.html#guides">Practical guides</a>
-          <a href="admin.html">Admin portal</a>
+          <a href="../index.html" data-i18n="footerHome">Poyambira</a>
+          <a href="../index.html#methods" data-i18n="btnExploreMethods">Njira za ulimi</a>
+          <a href="crops.html" data-i18n="footerCrops">Mbewu za m'Malawi (V7)</a>
+          <a href="market-centre.html" data-i18n="footerMarket">Msika wa zaulimi (V5)</a>
+          <a href="weather.html" data-i18n="footerWeather">Zanyengo</a>
+          <a href="../index.html#guides" data-i18n="navGuides">Malangizo a m'munda</a>
+          <a href="admin.html" data-i18n="footerAdmin">Uyang'anire</a>
         </div>
       </div>
     </footer>
@@ -98,7 +109,7 @@
           <h2 id="modalTitle"></h2>
           <p id="modalSub"></p>
         </div>
-        <button class="close" id="closeModal" aria-label="Close details">×</button>
+        <button class="close" id="closeModal" aria-label="Tsekani zambiri" data-i18n-aria="modalCloseBtn">×</button>
       </div>
       <div class="modal-body" id="modalBody"></div>
     </article>
@@ -109,6 +120,7 @@
 
   <!-- Modular Scripts -->
   <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/crops.js"></script>
 </body>

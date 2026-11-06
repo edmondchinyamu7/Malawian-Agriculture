@@ -189,6 +189,11 @@ export function initCropCalendar() {
   if (document.getElementById('calendarMonthNav')) {
     loadCalendarData();
   }
+
+  window.addEventListener('languageChanged', () => {
+    renderMonthButtons();
+    renderMonthDetails(selectedMonthId);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', initCropCalendar);
