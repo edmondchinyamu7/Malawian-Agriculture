@@ -16,7 +16,6 @@ export const translations = {
     navWeather: "Zanyengo",
     navModules: "Mitu yonse",
     navAdmin: "Uyang'anire",
-    navGuides: "Malangizo a m'munda",
     navFarmMethods: "Njira za ulimi",
     navGuides: "Malangizo a m'munda",
     navFarmPlanner: "Kukonza mapulani a munda",
