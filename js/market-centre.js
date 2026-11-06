@@ -224,11 +224,11 @@ export function openMarketDetail(id) {
     <div style="background:#f4f9f5;border:1px solid #dbeae0;border-radius:14px;padding:16px;margin-bottom:16px">
       <div style="font-size:11px;color:#52645a;font-weight:700">PUBLISHED REFERENCE PRICE</div>
       <div style="font-size:24px;font-weight:900;color:var(--forest);margin:4px 0">
-        ${item.currency} ${Number(item.priceMin).toLocaleString()} – ${Number(item.priceMax).toLocaleString()}
+        ${item.currency} ${Number(item.priceMin).toLocaleString()}${Number(item.priceMin) === Number(item.priceMax) ? '' : ' – ' + Number(item.priceMax).toLocaleString()}
       </div>
       <div style="font-size:12px;color:#355340">Unit: ${escapeHtml(item.unit)}</div>
     </div>
-    <h3>Market Observation & Quality Notes</h3>
+    <h3>Published Observation & Notes</h3>
     <p>${escapeHtml(item.notes || 'Normal market trading conditions.')}</p>
     <h3>Source & Verification Audit</h3>
     <p>
@@ -237,7 +237,7 @@ export function openMarketDetail(id) {
       <strong>Verification Status:</strong> ${item.status.toUpperCase()}
     </p>
     <div class="notice">
-      <strong>Important Market Notice:</strong> Prices reflect spot trading observations at specific times and can fluctuate daily based on transport costs, moisture grade, sorting, and wholesale volumes. Never make speculative decisions without direct local confirmation.
+      <strong>Important Market Notice:</strong> These are dated published reference observations, not live offers. Prices can change with location, quality, grade, season and trading volume. Confirm the current price directly with the market before making a transaction.
     </div>
   `;
 
