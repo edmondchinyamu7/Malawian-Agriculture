@@ -784,3 +784,6 @@ a {
   font-size: 17px;
   font-weight: 800;
 }
+
+/* Account controls */
+.account-area{position:relative;display:flex;align-items:center}.account-login-link{display:inline-flex;align-items:center;justify-content:center;padding:9px 14px;border:1px solid rgba(255,255,255,.42);border-radius:999px;color:#fff;font-size:12px;font-weight:850;white-space:nowrap}.profile-menu{position:relative}.profile-avatar{width:40px;height:40px;border:2px solid #c7e8d6;border-radius:50%;background:#dff1e7;color:#0b6245;font-size:14px;font-weight:900;cursor:pointer}.profile-dropdown{position:absolute;right:0;top:50px;z-index:120;min-width:170px;padding:7px;background:#fff;border:1px solid #dce8df;border-radius:13px;box-shadow:0 14px 35px rgba(0,0,0,.18)}.profile-dropdown a,.profile-dropdown button{display:block;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;text-align:left;color:#173c2d;font:inherit;font-size:13px;font-weight:750;cursor:pointer}[hidden]{display:none!important}
