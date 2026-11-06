@@ -135,7 +135,7 @@ export function renderMarketTable() {
         </td>
         <td>${escapeHtml(item.unit)}</td>
         <td class="price-val">
-          ${item.currency} ${Number(item.priceMin).toLocaleString()} – ${Number(item.priceMax).toLocaleString()}
+          ${item.currency} ${Number(item.priceMin).toLocaleString()} ${Number(item.priceMin) === Number(item.priceMax) ? '' : '– ' + Number(item.priceMax).toLocaleString()}
         </td>
         <td>${statusBadge}</td>
         <td style="font-size:12px;color:#52645a">
@@ -156,38 +156,42 @@ export function renderPriceComparison() {
   const container = document.getElementById('priceComparisonGrid');
   if (!container) return;
 
-  // Group by crop to show price spread between districts
-  const crops = ['maize', 'groundnut', 'rice'];
-  const cropLabels = {
-    maize: 'Chimanga (Maize, 50kg bag)',
-    groundnut: 'Mtedza (Groundnuts, 1kg shelled)',
-    rice: 'Mpunga (Kilombero Rice, 1kg milled)'
-  };
+  // Compare only the same named commodity and unit; do not mix crop varieties.
+  const groups = new Map();
+  marketData.forEach(item => {
+    const key = `${item.crop}|${item.unit}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  });
 
-  container.innerHTML = crops.map(key => {
-    const records = marketData.filter(m => m.cropKey === key);
-    if (!records.length) return '';
+  const comparable = [...groups.entries()]
+    .filter(([, records]) => records.length > 1)
+    .sort((a, b) => a[0].localeCompare(b[0]));
 
-    const pricesMin = records.map(r => r.priceMin);
-    const pricesMax = records.map(r => r.priceMax);
-    const lowest = Math.min(...pricesMin);
-    const highest = Math.max(...pricesMax);
-    const lowestRecord = records.find(r => r.priceMin === lowest);
-    const highestRecord = records.find(r => r.priceMax === highest);
+  if (!comparable.length) {
+    container.innerHTML = '<p>More observations are needed before a price comparison can be shown.</p>';
+    return;
+  }
+
+  container.innerHTML = comparable.map(([key, records]) => {
+    const prices = records.map(r => Number(r.priceMin));
+    const lowest = Math.min(...prices);
+    const highest = Math.max(...prices);
+    const lowestRecord = records.find(r => Number(r.priceMin) === lowest);
+    const highestRecord = [...records].reverse().find(r => Number(r.priceMin) === highest);
+    const formatPrice = value => `MWK ${value.toLocaleString()}`;
 
     return `
       <div class="compare-card">
-        <span class="region-tag">Spread Analysis</span>
-        <h4>${escapeHtml(cropLabels[key] || key)}</h4>
-        <div class="price-spread">
-          MWK ${lowest.toLocaleString()} – ${highest.toLocaleString()}
-        </div>
+        <span class="region-tag">Published observations</span>
+        <h4>${escapeHtml(records[0].crop)} (${escapeHtml(records[0].unit)})</h4>
+        <div class="price-spread">${formatPrice(lowest)} – ${formatPrice(highest)}</div>
         <p style="font-size:12px;margin:6px 0;color:#405247;line-height:1.5">
-          <strong>Lowest:</strong> MWK ${lowest.toLocaleString()} in ${escapeHtml(lowestRecord?.marketName || '')} (${escapeHtml(lowestRecord?.district || '')})<br>
-          <strong>Highest:</strong> MWK ${highest.toLocaleString()} in ${escapeHtml(highestRecord?.marketName || '')} (${escapeHtml(highestRecord?.district || '')})
+          <strong>Lowest:</strong> ${formatPrice(lowest)} in ${escapeHtml(lowestRecord.marketName)} (${escapeHtml(lowestRecord.district)}), ${escapeHtml(lowestRecord.dateReported)}<br>
+          <strong>Highest:</strong> ${formatPrice(highest)} in ${escapeHtml(highestRecord.marketName)} (${escapeHtml(highestRecord.district)}), ${escapeHtml(highestRecord.dateReported)}
         </p>
         <div style="font-size:11px;color:#617368;margin-top:6px">
-          Spread: MWK ${(highest - lowest).toLocaleString()} between surplus & consumer markets.
+          Difference: ${formatPrice(highest - lowest)}. Dates may differ; this is not a same-day quote comparison.
         </div>
       </div>
     `;
