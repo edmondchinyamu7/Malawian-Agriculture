@@ -17,6 +17,17 @@ export const translations = {
     navModules: "Mitu yonse",
     navAdmin: "Uyang'anire",
     navGuides: "Malangizo a m'munda",
+    navFarmMethods: "Njira za ulimi",
+    navGuides: "Malangizo a m'munda",
+    navFarmPlanner: "Kukonza mapulani a munda",
+    navCommunity: "Gulu la alimi",
+    navFertiliser: "Chowerengera feteleza",
+    navIrrigation: "Kuthirira ndi kasamalidwe ka madzi",
+    navLivestock: "Ulimi wa ziweto",
+    navLearning: "Malo ophunzirira za ulimi",
+    navMarketplace: "Msika wa alimi",
+    navNews: "Nkhani za ulimi",
+    navSoil: "Malo a chidziwitso cha nthaka",
     badgeMadeForMalawi: "🇲🇼 CHINANGWA NDI CHUMA CHA MALAWI",
 
     // Hero Section
@@ -174,6 +185,17 @@ export const translations = {
     navModules: "All modules",
     navAdmin: "Admin",
     navGuides: "Field guides",
+    navFarmMethods: "Farming methods",
+    navGuides: "Practical guides",
+    navFarmPlanner: "Farm planner",
+    navCommunity: "Farmer community",
+    navFertiliser: "Fertiliser calculator",
+    navIrrigation: "Irrigation & water management",
+    navLivestock: "Livestock farming",
+    navLearning: "Agricultural learning centre",
+    navMarketplace: "Farmer marketplace",
+    navNews: "Agricultural news",
+    navSoil: "Soil information centre",
     badgeMadeForMalawi: "🇲🇼 MADE FOR MALAWI",
 
     // Hero Section
@@ -351,6 +373,44 @@ export function setLanguage(lang) {
 export function applyTranslations() {
   const lang = getCurrentLang();
   const dict = translations[lang] || translations.ny;
+
+  // Translate navigation links from their destinations on every page.
+  const navRouteKeys = {
+    "index.html": "navHome",
+    "crop-calendar.html": "navCalendar",
+    "crops.html": "navCrops",
+    "pest-disease.html": "navPest",
+    "market-centre.html": "navMarket",
+    "weather.html": "navWeather",
+    "modules.html": "navModules",
+    "admin.html": "navAdmin",
+    "farm-planner.html": "navFarmPlanner",
+    "farmer-community.html": "navCommunity",
+    "fertiliser-calculator.html": "navFertiliser",
+    "irrigation.html": "navIrrigation",
+    "learning-centre.html": "navLearning",
+    "livestock.html": "navLivestock",
+    "marketplace.html": "navMarketplace",
+    "news.html": "navNews",
+    "soil-centre.html": "navSoil"
+  };
+
+  document.querySelectorAll(".nav a").forEach(link => {
+    const rawHref = link.getAttribute("href") || "";
+    let key = "";
+    try {
+      const target = new URL(rawHref, window.location.href);
+      const file = target.pathname.split("/").filter(Boolean).pop() || "index.html";
+      if (target.hash === "#methods") key = "navFarmMethods";
+      else if (target.hash === "#guides") key = "navGuides";
+      else key = navRouteKeys[file] || "";
+    } catch (_) {}
+
+    if (key && dict[key]) {
+      link.textContent = dict[key];
+      link.setAttribute("data-i18n", key);
+    }
+  });
 
   // Text content translation
   document.querySelectorAll('[data-i18n]').forEach(el => {
