@@ -1,0 +1,437 @@
+/* Ulimi wa Malawi | Dashboards: Weather, Market Centre & Farming Tools */
+
+/* Weather Centre Dashboard */
+.weather-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: clamp(16px, 3vw, 26px);
+  box-shadow: 0 10px 32px rgba(12, 53, 32, 0.04);
+}
+
+.weather-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.weather-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 850;
+  color: var(--forest);
+  flex: 1;
+  min-width: 220px;
+}
+
+.weather-label select,
+.weather-controls select,
+.market-controls select {
+  height: 46px;
+  border: 1px solid #cbd9ce;
+  border-radius: 12px;
+  background: #f8faf8;
+  padding: 0 13px;
+  color: #1c3326;
+  font-size: 14px;
+  font-weight: 650;
+  min-width: 200px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.weather-label select:focus,
+.weather-controls select:focus,
+.market-controls select:focus {
+  border-color: #71a98a;
+  box-shadow: 0 0 0 3px rgba(23, 107, 74, 0.12);
+}
+
+.btn-weather {
+  height: 46px;
+  background: var(--forest);
+  color: white;
+  font-size: 13px;
+  padding: 0 20px;
+}
+
+.btn-weather:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
+.weather-status {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #f1f7f2;
+  border-radius: 12px;
+  color: #365442;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 650;
+}
+
+.weather-status.error {
+  background: #fff4ef;
+  color: #873d25;
+}
+
+.weather-current {
+  display: grid;
+  grid-template-columns: 1.1fr 1.9fr;
+  gap: 15px;
+  margin-top: 18px;
+}
+
+.weather-now {
+  background: linear-gradient(135deg, #0b3527, #176b4a);
+  border-radius: 18px;
+  color: white;
+  padding: 22px;
+}
+
+.weather-now .place {
+  font-size: 13px;
+  color: #d6eadc;
+  font-weight: 750;
+}
+
+.weather-now .temperature {
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin: 10px 0 4px;
+}
+
+.weather-now .condition {
+  font-size: 15px;
+  color: #e4f2e8;
+  font-weight: 750;
+}
+
+.weather-now .updated {
+  font-size: 11px;
+  color: #c5dfce;
+  margin-top: 15px;
+}
+
+.weather-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.weather-metric {
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 15px;
+  background: #fbfdfb;
+}
+
+.weather-metric span {
+  display: block;
+  font-size: 12px;
+  color: #52665a;
+  font-weight: 700;
+}
+
+.weather-metric strong {
+  display: block;
+  font-size: 22px;
+  color: var(--forest);
+  font-weight: 900;
+  margin-top: 5px;
+}
+
+.forecast-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 12px;
+}
+
+.forecast-heading h3 {
+  font-size: 18px;
+  color: var(--forest);
+  margin: 0;
+  font-weight: 900;
+}
+
+.forecast-heading span {
+  font-size: 12px;
+  color: #52665a;
+  font-weight: 700;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.forecast-day {
+  background: #f5f9f6;
+  border: 1px solid #e4ece6;
+  border-radius: 14px;
+  padding: 12px 9px;
+  text-align: center;
+  min-width: 0;
+}
+
+.forecast-day .day {
+  font-size: 12px;
+  color: #344d3d;
+  font-weight: 850;
+}
+
+.forecast-day .symbol {
+  font-size: 24px;
+  margin: 9px 0;
+}
+
+.forecast-day .range {
+  font-size: 14px;
+  color: var(--forest);
+  font-weight: 900;
+}
+
+.forecast-day .rain {
+  font-size: 11px;
+  color: #42664f;
+  font-weight: 700;
+  margin-top: 7px;
+  line-height: 1.45;
+}
+
+.weather-advice {
+  margin-top: 16px;
+  padding: 15px 17px;
+  border-left: 4px solid #39845b;
+  background: #eef7f0;
+  border-radius: 12px;
+  color: #294c37;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.weather-advice strong {
+  font-weight: 900;
+}
+
+.weather-source {
+  font-size: 11px;
+  line-height: 1.65;
+  color: #617268;
+  margin: 14px 0 0;
+}
+
+/* ========================================================
+   V5 Market Information Centre Dashboard
+   ======================================================== */
+.market-dashboard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: clamp(18px, 3vw, 28px);
+  box-shadow: 0 10px 32px rgba(12, 53, 32, 0.04);
+}
+
+.market-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.market-stat-card {
+  background: #f4f8f5;
+  border: 1px solid #e2ebe4;
+  border-radius: 16px;
+  padding: 16px 18px;
+}
+
+.market-stat-card small {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.market-stat-card strong {
+  font-size: 22px;
+  color: var(--forest);
+  font-weight: 900;
+  display: block;
+  margin: 4px 0 2px;
+}
+
+.market-stat-card span {
+  font-size: 11px;
+  color: #436150;
+  font-weight: 650;
+}
+
+.market-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: #fbfdfb;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+
+.market-filters-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.market-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.market-table th {
+  background: #f2f7f3;
+  color: var(--forest);
+  padding: 14px 16px;
+  font-weight: 850;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.market-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf2ee;
+  color: #32443a;
+  vertical-align: middle;
+}
+
+.market-table tr:hover td {
+  background: #f9fcf9;
+}
+
+.market-table .crop-col {
+  font-weight: 800;
+  color: var(--forest);
+}
+
+.market-table .price-val {
+  font-weight: 900;
+  color: var(--green);
+  font-size: 14px;
+}
+
+.market-compare-box {
+  background: #f0f7f2;
+  border: 1px solid #d4e7da;
+  border-radius: 18px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.market-compare-box h3 {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--forest);
+  margin: 0 0 10px;
+}
+
+.compare-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.compare-card {
+  background: #fff;
+  border: 1px solid #dae7de;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.compare-card h4 {
+  font-size: 14px;
+  font-weight: 850;
+  color: var(--forest);
+  margin: 0 0 6px;
+}
+
+.compare-card .region-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.compare-card .price-spread {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--green);
+  margin: 6px 0;
+}
+
+/* Responsive Dashboard Rules */
+@media (max-width: 900px) {
+  .market-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .compare-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .weather-current {
+    grid-template-columns: 1fr;
+  }
+  .forecast-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .market-stats-row {
+    grid-template-columns: 1fr;
+  }
+  .compare-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .forecast-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .forecast-day:last-child {
+    grid-column: 1 / -1;
+  }
+  .market-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .market-filters-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .market-filters-group select {
+    width: 100%;
+  }
+}
