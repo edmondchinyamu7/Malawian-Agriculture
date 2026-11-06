@@ -36,7 +36,6 @@
         <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi (V5)</a>
         <a href="pages/weather.html" data-i18n="navWeather">Zanyengo</a>
         <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
-        <a href="pages/admin.html" data-i18n="navAdmin">Uyang'anire</a>
       </nav>
 
       <div class="top-actions">
@@ -44,6 +43,16 @@
         <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
           <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <div class="account-area" id="accountArea">
+          <a class="account-login-link" href="login.html" id="accountLoginLink">Log In / Sign Up</a>
+          <div class="profile-menu" id="profileMenu" hidden>
+            <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
+            <div class="profile-dropdown" id="profileDropdown" hidden>
+              <a href="profile.html">My Profile</a>
+              <button type="button" id="accountLogoutButton">Log Out</button>
+            </div>
+          </div>
         </div>
         <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
       </div>
@@ -437,5 +446,6 @@
   <script type="module" src="js/farming-methods.js"></script>
   <script type="module" src="js/crops.js"></script>
   <script type="module" src="js/weather.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
