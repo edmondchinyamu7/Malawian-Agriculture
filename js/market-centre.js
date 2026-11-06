@@ -4,7 +4,7 @@
 import { escapeHtml, openModal, showToast } from './main.js';
 
 let marketData = [];
-const STORAGE_KEY = 'ulimi_markets_v5';
+const STORAGE_KEY = 'ulimi_markets_v6';
 
 export async function loadMarketData() {
   try {
@@ -62,12 +62,12 @@ export function renderMarketStats() {
     <div class="market-stat-card">
       <small>Price Reports</small>
       <strong>${totalEntries} Listings</strong>
-      <span>Regular field updates</span>
+      <span>Published source observations</span>
     </div>
     <div class="market-stat-card">
       <small>Data Quality</small>
       <strong>${Math.round((verifiedEntries / totalEntries) * 100)}% Verified</strong>
-      <span>${verifiedEntries} verified by extension boards</span>
+      <span>${verifiedEntries} published by ACE</span>
     </div>
   `;
 }
@@ -120,8 +120,8 @@ export function renderMarketTable() {
   tbody.innerHTML = filtered.map(item => {
     const isVerified = item.status === 'verified';
     const statusBadge = isVerified
-      ? `<span class="badge-verified" title="Verified by official trade monitoring or ADD desk">✓ Verified</span>`
-      : `<span class="badge-unverified" title="Submitted by local traders; awaiting official cross-check">⏳ Unverified</span>`;
+      ? `<span class="badge-verified" title="Published by Agricultural Commodity Exchange (ACE)">✓ Verified</span>`
+      : `<span class="badge-unverified" title="Community submission; awaiting source confirmation">⏳ Unverified</span>`;
 
     return `
       <tr>
@@ -200,8 +200,8 @@ export function openMarketDetail(id) {
 
   const isVerified = item.status === 'verified';
   const statusHtml = isVerified
-    ? `<span class="badge-verified">✓ Official Verified Market Report</span>`
-    : `<span class="badge-unverified">⏳ Unverified Community Report (Verification in Progress)</span>`;
+    ? `<span class="badge-verified">✓ Published ACE Market Record</span>`
+    : `<span class="badge-unverified">⏳ Unverified Community Submission</span>`;
 
   const bodyHtml = `
     <div style="margin-bottom:14px">${statusHtml}</div>
@@ -218,7 +218,7 @@ export function openMarketDetail(id) {
       </div>
     </div>
     <div style="background:#f4f9f5;border:1px solid #dbeae0;border-radius:14px;padding:16px;margin-bottom:16px">
-      <div style="font-size:11px;color:#52645a;font-weight:700">REPORTED TRADING RANGE</div>
+      <div style="font-size:11px;color:#52645a;font-weight:700">PUBLISHED REFERENCE PRICE</div>
       <div style="font-size:24px;font-weight:900;color:var(--forest);margin:4px 0">
         ${item.currency} ${Number(item.priceMin).toLocaleString()} – ${Number(item.priceMax).toLocaleString()}
       </div>
@@ -228,7 +228,7 @@ export function openMarketDetail(id) {
     <p>${escapeHtml(item.notes || 'Normal market trading conditions.')}</p>
     <h3>Source & Verification Audit</h3>
     <p>
-      <strong>Reporting Source:</strong> ${escapeHtml(item.reporter || 'Field trade surveyor')}<br>
+      <strong>Reporting Source:</strong> ${escapeHtml(item.reporter || 'Source not recorded')}<br>\n      <strong>Price basis:</strong> ${escapeHtml(item.priceBasis || 'Not specified')}<br>\n      ${item.sourceUrl ? `<strong>Source record:</strong> <a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceName || 'View source')}</a><br>` : ''}
       <strong>Date of Observation:</strong> ${escapeHtml(item.dateReported)}<br>
       <strong>Verification Status:</strong> ${item.status.toUpperCase()}
     </p>
