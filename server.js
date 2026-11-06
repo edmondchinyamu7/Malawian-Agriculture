@@ -10,8 +10,8 @@ const PORT=process.env.PORT||3000;
 const HOST='0.0.0.0';
 const COOKIE='ulimi_admin_access';
 const MAX_AGE=8*60*60;
-const SUPABASE_URL=(process.env.SUPABASE_URL||'').replace(/\/$/,'');
-const SUPABASE_KEY=process.env.SUPABASE_ANON_KEY||process.env.SUPABASE_PUBLISHABLE_KEY||'';
+const SUPABASE_URL=(process.env.SUPABASE_URL||'https://pwoyfialzlwxamhawfyy.supabase.co').replace(/\/$/,'');
+const SUPABASE_KEY=process.env.SUPABASE_ANON_KEY||process.env.SUPABASE_PUBLISHABLE_KEY||'sb_publishable_KBnv1nmCc_iKGcTro_Z-aQ_uhW8Qv5J';
 
 app.use(express.json({limit:'20kb'}));
 
