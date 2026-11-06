@@ -9,7 +9,7 @@ export function initAdminPriceManagement() {
   const tableBody = document.getElementById('adminPriceTableBody');
   const resetBtn = document.getElementById('resetDefaultPricesBtn');
 
-  if (!tableBody) return;
+  if (!tableBody) return;\n\n  const logoutBtn = document.getElementById('adminLogoutBtn');\n  if (logoutBtn) logoutBtn.addEventListener('click', async () => {\n    await fetch('/api/admin/logout', { method: 'POST' });\n    window.location.assign('/');\n  });
 
   function renderAdminTable() {
     const data = getMarketData();
