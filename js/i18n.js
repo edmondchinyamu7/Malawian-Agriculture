@@ -413,19 +413,19 @@ function translateUnkeyedContent(lang) {
     const clean = original.replace(/\\s+/g, ' ').trim();
     if (!clean) continue;
     const translated = lang === 'ny' ? siteChichewa[clean] : null;
-    if (translated) node.nodeValue = original.replace(clean, translated);
-    else if (lang === 'en') node.nodeValue = original;
+    if (translated) { const target = original.replace(clean, translated); if (node.nodeValue !== target) node.nodeValue = target; }
+    else if (lang === 'en' && node.nodeValue !== original) node.nodeValue = original;
   }
   document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(el => {
     if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.placeholder;
-    if (lang === 'ny' && siteChichewa[el.dataset.originalPlaceholder]) el.placeholder = siteChichewa[el.dataset.originalPlaceholder];
-    else if (lang === 'en') el.placeholder = el.dataset.originalPlaceholder;
+    if (lang === 'ny' && siteChichewa[el.dataset.originalPlaceholder] && el.placeholder !== siteChichewa[el.dataset.originalPlaceholder]) el.placeholder = siteChichewa[el.dataset.originalPlaceholder];
+    else if (lang === 'en' && el.placeholder !== el.dataset.originalPlaceholder) el.placeholder = el.dataset.originalPlaceholder;
   });
   document.querySelectorAll('option').forEach(el => {
     if (!el.dataset.originalLabel) el.dataset.originalLabel = el.textContent;
     const original = el.dataset.originalLabel.trim();
-    if (lang === 'ny' && siteChichewa[original]) el.textContent = siteChichewa[original];
-    else if (lang === 'en') el.textContent = el.dataset.originalLabel;
+    if (lang === 'ny' && siteChichewa[original] && el.textContent !== siteChichewa[original]) el.textContent = siteChichewa[original];
+    else if (lang === 'en' && el.textContent !== el.dataset.originalLabel) el.textContent = el.dataset.originalLabel;
   });
 }
 function observeDynamicTranslations() {
