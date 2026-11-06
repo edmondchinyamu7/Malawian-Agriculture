@@ -22,8 +22,11 @@ app.get('/:page', (req, res, next) => {
   next();
 });
 
-// Route fallback to index.html
+// Route fallback to index.html. Never return HTML for missing static assets.
 app.get('*', (req, res) => {
+  if (path.extname(req.path)) {
+    return res.status(404).type('text/plain').send('Requested file was not found.');
+  }
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
