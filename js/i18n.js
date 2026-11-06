@@ -397,6 +397,43 @@ export const translations = {
 const STORAGE_KEY = 'ulimi_lang';
 
 // Default language is Chichewa ('ny')
+// Site-wide phrasebook translates shared page copy not yet assigned data-i18n keys.
+const siteChichewa = {"Home":"Poyambira","Farming methods":"Njira za ulimi","Crop library":"Laibulale ya mbewu","Market centre":"Msika wa zaulimi","Weather centre":"Malo a zanyengo","Practical guides":"Malangizo othandiza","Crop Calendar":"Kalendala ya ulimi","Crop Library":"Laibulale ya mbewu","Pests & Diseases":"Tizilombo ndi matenda","Agricultural Market":"Msika wa zaulimi","Discover":"Dziwani zambiri","All Learning Modules":"Maphunziro onse","Weather Updates":"Zosintha za nyengo","Farming Methods":"Njira za ulimi","Practical Field Guides":"Malangizo a m'munda","Platform":"Tsamba","Farm Planner":"Kukonza mapulani a munda","Farmer Community":"Gulu la alimi","Admin Dashboard":"Malo oyang'anira","Connect":"Lumikizanani","Farming":"Ulimi","News":"Nkhani","Livestock":"Ziweto","Irrigation":"Kuthirira mbewu","Marketplace":"Msika wa alimi","Community":"Gulu la alimi","Soil centre":"Malo a nthaka","Learning centre":"Malo ophunzirira","Better farming starts with the right knowledge.":"Ulimi wabwino umayamba ndi chidziwitso choyenera.","Practical crop guidance, seasonal information and useful resources to support farmers across Malawi.":"Malangizo a mbewu, chidziwitso cha nyengo ndi zinthu zothandiza alimi ku Malawi.","Explore farming resources ↗":"Onani zinthu zothandiza pa ulimi ↗","Knowledge for a stronger agricultural future.":"Chidziwitso cholimbikitsa tsogolo la ulimi.","Explore trusted learning resources and stay informed about agriculture in Malawi.":"Onani maphunziro odalirika ndipo dziwani zambiri za ulimi ku Malawi.","Start learning →":"Yambani kuphunzira →","Agricultural Resources":"Zothandiza pa ulimi","Learning Modules":"Maphunziro","© 2026 Ulimi wa Malawi. All rights reserved.":"© 2026 Ulimi wa Malawi. Ufulu wonse ndi wotetezedwa.","Administrative Controls":"Kasamalidwe ka tsamba","Agricultural Market Price Administration":"Kasamalidwe ka mitengo ya zokolola pamsika","Submit New Crop Price Record":"Tumizani mtengo watsopano wa zokolola","Commodity Name *":"Dzina la zokolola *","Category *":"Gulu *","Cereals":"Mbewu monga chimanga","Legumes":"Nyemba ndi mtedza","Vegetables":"Masamba","Root crops":"Mbewu za mizu","Cash crops":"Mbewu za malonda","Market Name *":"Dzina la msika *","District *":"Boma *","Region *":"Chigawo *","Central":"Chapakati","Southern":"Kummwera","Northern":"Kumpoto","Trading Unit *":"Muyezo wogulitsira *","Minimum Price (MWK) *":"Mtengo wotsika kwambiri (MWK) *","Maximum Price (MWK) *":"Mtengo wokwera kwambiri (MWK) *","Reporter / Data Source":"Wopereka lipoti / Gwero la deta","Market Notes / Quality Factors":"Ndemanga za msika / Ubwino wa zokolola","Save Market Record":"Sungani mbiri ya msika","Clear Fields":"Chotsani zomwe zalowetsedwa","All Diagnoses":"Matenda onse","Insect Pests":"Tizilombo toononga mbewu","Crop Diseases":"Matenda a mbewu","All Crops":"Mbewu zonse","Filter by Host Crop:":"Sankhani mbewu yomwe yakhudzidwa:","Interactive Malawi Farming Calendar":"Kalendala yolumikizana ya ulimi ku Malawi","Current Month Activities":"Ntchito za mwezi uno","Crop-Specific Schedules":"Ndondomeko za mbewu zosiyanasiyana","Agronomic Growth Stages & Interventions":"Magawo a kukula kwa mbewu ndi ntchito zofunika","Weather Centre":"Malo a zanyengo","Field Operations":"Ntchito za m'munda","Farm Planning & Input Estimator":"Kukonza munda ndi kuwerengera zipangizo zofunika","Seed Requirement Calculator":"Chowerengera mbewu zofunika","Crop *":"Mbewu *","Area Cultivated *":"Kukula kwa malo olimidwa *","Unit *":"Muyezo *","Acres":"Maekala","Hectares":"Mahekitala","Calculate Seed Package 📦":"Werengerani mbewu zofunika 📦","Calculate Field Requirements":"Werengerani zofunika m'munda","Cultivated Area *":"Kukula kwa malo olimidwa *","Area Unit *":"Muyezo wa malo *","Calculate Fertiliser Needs ⚡":"Werengerani feteleza wofunika ⚡","Smart Farming Tools":"Zipangizo zamakono za ulimi","Fertiliser & Nutrient Quantity Calculator":"Chowerengera kuchuluka kwa feteleza ndi zakudya za nthaka","Calculate your target crop and enter your cultivated land area.":"Sankhani mbewu yanu ndipo lowetsani kukula kwa malo amene mwalima.","Water-Smart Agriculture":"Ulimi wogwiritsa ntchito madzi mwanzeru","Irrigation and Dry-Season Farming Guidance":"Malangizo othirira ndi ulimi m'nyengo youma","Renewable Energy":"Mphamvu zongowonjezeka","Solar-Powered Pumping":"Kupopa madzi pogwiritsa ntchito dzuwa","High Efficiency":"Kuchita bwino kwambiri","Drip Irrigation Kits":"Zipangizo zothirira madontho","Traditional & Effective":"Njira zachikhalidwe zogwira ntchito","Dambo & Residual Moisture (Dimba)":"Dambo ndi chinyezi chotsala (Dimba)","Knowledge Building":"Kukulitsa chidziwitso","Farmer Academy & Self-Paced Learning":"Sukulu ya alimi yophunzirira pa nthawi yanu","Animal Husbandry & Wealth Preservation":"Kuweta ziweto ndi kusunga chuma","Malawi Livestock Farming Centre":"Malo ophunzirira ulimi wa ziweto ku Malawi","Malawi Farmer Community Forum":"Bwalo la alimi ku Malawi","Community Code of Conduct":"Malamulo a kagwiritsidwe ntchito ka gulu","Agribusiness & Commodity Exchange":"Bizinesi ya ulimi ndi kusinthanitsa zokolola","Malawi Farmer & Buyer Marketplace":"Msika wa alimi ndi ogula ku Malawi","Malawi Soil Information Centre":"Malo a chidziwitso cha nthaka ku Malawi","Land & Soil Fertility":"Nthaka ndi chonde chake","Malawi Weather & Climate Centre":"Malo a nyengo ndi zanyengo ku Malawi","Live Agro-Meteorology":"Zanyengo zothandiza ulimi","Choose a location in Malawi":"Sankhani malo ku Malawi","Refresh forecast":"Pezani zolosera zatsopano","7-day outlook":"Zolosera za masiku 7","Daily agricultural forecast":"Zolosera za ulimi za tsiku ndi tsiku","Malawi Agriculture News":"Nkhani za ulimi ku Malawi","Farm inputs":"Zipangizo za ulimi","Farm input safety":"Chitetezo cha zipangizo za ulimi","Climate & resilience":"Nyengo ndi kupirira","Government update":"Zolengeza za boma","Markets & finance":"Misika ndi ndalama","Tobacco sector":"Gawo la fodya","Read original report ↗":"Werengani lipoti loyambirira ↗","About these updates":"Za nkhanizi","All Commodities":"Zokolola zonse","All Districts":"Maboma onse","All Records":"Zolemba zonse","Verified Only (✓)":"Zotsimikizika zokha (✓)","Unverified (⏳)":"Zosatsimikizika (⏳)","Loading records…":"Deta ikutsegulidwa…","Filter by Commodity:":"Sankhani zokolola:","District:":"Boma:","Status:":"Mkhalidwe:"};
+const originalTextNodes = new WeakMap();
+let siteTranslationObserver;
+function translateUnkeyedContent(lang) {
+  if (!document.body) return;
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const parent = node.parentElement;
+    if (!parent || parent.closest('script,style,noscript,textarea,code,pre,[data-i18n],[data-i18n-html]')) continue;
+    if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+    const original = originalTextNodes.get(node);
+    const clean = original.replace(/\\s+/g, ' ').trim();
+    if (!clean) continue;
+    const translated = lang === 'ny' ? siteChichewa[clean] : null;
+    if (translated) node.nodeValue = original.replace(clean, translated);
+    else if (lang === 'en') node.nodeValue = original;
+  }
+  document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(el => {
+    if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.placeholder;
+    if (lang === 'ny' && siteChichewa[el.dataset.originalPlaceholder]) el.placeholder = siteChichewa[el.dataset.originalPlaceholder];
+    else if (lang === 'en') el.placeholder = el.dataset.originalPlaceholder;
+  });
+  document.querySelectorAll('option').forEach(el => {
+    if (!el.dataset.originalLabel) el.dataset.originalLabel = el.textContent;
+    const original = el.dataset.originalLabel.trim();
+    if (lang === 'ny' && siteChichewa[original]) el.textContent = siteChichewa[original];
+    else if (lang === 'en') el.textContent = el.dataset.originalLabel;
+  });
+}
+function observeDynamicTranslations() {
+  if (siteTranslationObserver || !document.body) return;
+  siteTranslationObserver = new MutationObserver(() => { if (getCurrentLang() === 'ny') translateUnkeyedContent('ny'); });
+  siteTranslationObserver.observe(document.body, {childList:true,subtree:true});
+}
+
 export function getCurrentLang() {
   return localStorage.getItem(STORAGE_KEY) || 'ny';
 }
@@ -489,7 +526,7 @@ export function applyTranslations() {
     }
   });
 
-  // Title / aria-label translation
+  // Translate remaining shared page copy and dynamic labels.\n  translateUnkeyedContent(lang);\n  observeDynamicTranslations();\n\n  // Title / aria-label translation
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {
     const key = el.getAttribute('data-i18n-aria');
     if (dict[key]) {
