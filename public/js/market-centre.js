@@ -251,6 +251,37 @@ export function openMarketDetail(id) {
 // Global hook for inline table buttons
 window.viewMarketDetail = openMarketDetail;
 
+
+async function loadWorldBankMarketEstimates() {
+  const tbody = document.getElementById('worldBankMarketTableBody');
+  const meta = document.getElementById('worldBankMarketMeta');
+  if (!tbody) return;
+  try {
+    const basePath = window.location.pathname.includes('/pages/') ? '../data/' : 'data/';
+    const response = await fetch(`${basePath}world-bank-market-estimates.json?refresh=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) throw new Error('World Bank estimate file is not available yet');
+    const payload = await response.json();
+    const rows = Array.isArray(payload.data) ? payload.data : [];
+    if (meta) meta.textContent = rows.length
+      ? `${rows.length} latest market/commodity estimates • Dataset sync: ${payload.datasetUpdatedAt ? new Date(payload.datasetUpdatedAt).toLocaleString() : 'date not supplied'}`
+      : 'The weekly data refresh has not produced its first dataset yet.';
+    if (!rows.length) return;
+    tbody.innerHTML = rows.map(item => `
+      <tr>
+        <td><strong>${escapeHtml(item.crop)}</strong></td>
+        <td>${escapeHtml(item.marketName)}<div style="font-size:11px;color:#617368">${escapeHtml(item.district)} • ${escapeHtml(item.region)}</div></td>
+        <td>${escapeHtml(item.unit)}</td>
+        <td class="price-val">MWK ${Number(item.priceMin).toLocaleString()} – ${Number(item.priceMax).toLocaleString()}<div style="font-size:11px;color:#617368">Close estimate: MWK ${Number(item.priceEstimate).toLocaleString()}</div></td>
+        <td>${escapeHtml(item.dateReported)}</td>
+        <td><span class="badge-unverified">Estimated</span>${item.isInterpolated ? '<div style="font-size:11px;color:#805b1b">Spatially interpolated</div>' : ''}</td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    console.warn('World Bank market estimates unavailable:', error);
+    if (meta) meta.textContent = 'World Bank estimates are temporarily unavailable. ACE published observations above remain available.';
+  }
+}
+
 export function initMarketCentre() {
   const cropSelect = document.getElementById('marketCropFilter');
   const districtSelect = document.getElementById('marketDistrictFilter');
@@ -277,6 +308,7 @@ export function initMarketCentre() {
   // Load data if market elements exist on this page
   if (document.getElementById('marketTableBody')) {
     loadMarketData();
+    loadWorldBankMarketEstimates();
   }
 }
 
