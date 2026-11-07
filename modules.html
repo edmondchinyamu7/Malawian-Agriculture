@@ -39,6 +39,16 @@
           <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
         </div>
+        <div class="account-area" id="accountArea">
+          <a class="account-login-link" href="login.html" id="accountLoginLink" data-i18n="navLogin">Log In / Sign Up</a>
+          <div class="profile-menu" id="profileMenu" hidden>
+            <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
+            <div class="profile-dropdown" id="profileDropdown" hidden>
+              <a href="profile.html" data-i18n="navProfile">My Profile</a>
+              <button type="button" id="accountLogoutButton" data-i18n="navLogout">Log Out</button>
+            </div>
+          </div>
+        </div>
         <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
       </div>
     </header>
@@ -57,6 +67,9 @@
       <h3 style="font-size:20px;color:var(--forest);margin:32px 0 16px">Phase 1: Core Upgrades (Zikugwira Ntchito Tsopano)</h3>
       <div class="upgrade-grid">
         <a class="upgrade-card" href="pages/market-centre.html">
+          <div class="upgrade-card-thumb">
+            <img src="assets/images/market_grain.jpg" alt="Msika wa zaulimi ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+          </div>
           <div class="upgrade-card-head">
             <div class="upgrade-icon">📊</div>
             <span class="badge-version" style="background:#dcfce7;color:#15803d">V5 • LIVE</span>
@@ -67,6 +80,9 @@
         </a>
 
         <a class="upgrade-card" href="pages/crop-calendar.html">
+          <div class="upgrade-card-thumb">
+            <img src="assets/images/calendar_planting.jpg" alt="Kubzala m'mizere ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+          </div>
           <div class="upgrade-card-head">
             <div class="upgrade-icon">📅</div>
             <span class="badge-version" style="background:#dcfce7;color:#15803d">V6 • LIVE</span>
@@ -77,6 +93,9 @@
         </a>
 
         <a class="upgrade-card" href="pages/crops.html">
+          <div class="upgrade-card-thumb">
+            <img src="assets/images/crop_maize.jpg" alt="Chimanga cha m'Malawi" loading="lazy" referrerpolicy="no-referrer">
+          </div>
           <div class="upgrade-card-head">
             <div class="upgrade-icon">🌽</div>
             <span class="badge-version" style="background:#dcfce7;color:#15803d">V7 • LIVE</span>
@@ -87,6 +106,9 @@
         </a>
 
         <a class="upgrade-card" href="pages/pest-disease.html">
+          <div class="upgrade-card-thumb">
+            <img src="assets/images/pest_inspection.jpg" alt="Kuyang'anira tizilombo ndi matenda" loading="lazy" referrerpolicy="no-referrer">
+          </div>
           <div class="upgrade-card-head">
             <div class="upgrade-icon">🐛</div>
             <span class="badge-version" style="background:#dcfce7;color:#15803d">V8 • LIVE</span>
@@ -166,6 +188,13 @@
           <p>Kugula ndi kugulitsa zokolola ndi zipangizo za ulimi m'Malawi monse.</p>
           <div class="upgrade-card-foot"><span>Pitani pa msika</span><span>→</span></div>
         </a>
+
+        <a class="upgrade-card" href="login.html">
+          <div class="upgrade-card-head"><div class="upgrade-icon">👤</div><span class="badge-version">V18 ACCOUNTS</span></div>
+          <h3>Farmer Accounts & Profiles</h3>
+          <p>Lembetsani akaunti ya mlimi, sungani mbiri yanu, ndi kulumikizana ndi pulogalamu ya Ulimi wa Malawi.</p>
+          <div class="upgrade-card-foot"><span data-i18n="navLogin">Lowani / Lembetsani</span><span>→</span></div>
+        </a>
       </div>
     </main>
 
@@ -175,11 +204,11 @@
 <div class="footer-showcase"><div class="container footer-showcase-inner"><div class="footer-showcase-copy"><span class="footer-eyebrow">ULIMI WA MALAWI • GROW WITH KNOWLEDGE</span><h2>Better farming starts with the right knowledge.</h2><p>Practical crop guidance, seasonal information and useful resources to support farmers across Malawi.</p><a class="footer-cta" href="modules.html">Explore farming resources <span aria-hidden="true">↗</span></a></div><div class="footer-showcase-mark" aria-hidden="true">🌱</div></div></div>
 <div class="container footer-panel"><div class="footer-main">
 <div class="footer-brand-block"><a class="brand footer-brand" href="index.html" aria-label="Ulimi wa Malawi home"><span class="brand-mark">🌱</span><span><span>ULIMI WA MALAWI</span><small>AGRICULTURE KNOWLEDGE HUB</small></span></a><h3>Knowledge for a stronger agricultural future.</h3><p>Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p></div>
-<div class="footer-column"><h4>Farming</h4><a href="pages/crop-calendar.html">Crop Calendar</a><a href="pages/crops.html">Crop Library</a><a href="pages/pest-disease.html">Pests &amp; Diseases</a><a href="pages/market-centre.html">Agricultural Market</a></div>
-<div class="footer-column"><h4>Discover</h4><a href="modules.html">All Learning Modules</a><a href="pages/weather.html">Weather Updates</a><a href="index.html#methods">Farming Methods</a><a href="index.html#guides">Practical Field Guides</a></div>
-<div class="footer-column"><h4>Platform</h4><a href="index.html">Home</a><a href="pages/farm-planner.html">Farm Planner</a><a href="pages/farmer-community.html">Farmer Community</a><a href="pages/admin.html">Admin Dashboard</a></div>
+<div class="footer-column"><h4>Farming</h4><a href="pages/crop-calendar.html" data-i18n="navCalendar">Crop Calendar</a><a href="pages/crops.html" data-i18n="navCrops">Crop Library</a><a href="pages/pest-disease.html" data-i18n="navPest">Pests &amp; Diseases</a><a href="pages/market-centre.html" data-i18n="navMarket">Agricultural Market</a></div>
+<div class="footer-column"><h4>Discover</h4><a href="modules.html" data-i18n="navModules">All Learning Modules</a><a href="pages/weather.html" data-i18n="navWeather">Weather Updates</a><a href="index.html#methods" data-i18n="navFarmMethods">Farming Methods</a><a href="index.html#guides" data-i18n="navGuides">Practical Field Guides</a></div>
+<div class="footer-column"><h4>Platform</h4><a href="index.html" data-i18n="navHome">Home</a><a href="pages/farm-planner.html" data-i18n="navFarmPlanner">Farm Planner</a><a href="pages/farmer-community.html" data-i18n="navCommunity">Farmer Community</a><a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a><a href="pages/admin.html" data-i18n="navAdmin">Admin Dashboard</a></div>
 <div class="footer-column footer-connect"><h4>Connect</h4><p>Explore trusted learning resources and stay informed about agriculture in Malawi.</p><a class="footer-text-link" href="modules.html">Start learning <span aria-hidden="true">→</span></a></div>
-</div><div class="footer-bottom"><span>© 2026 Ulimi wa Malawi. All rights reserved.</span><div class="footer-legal"><a href="index.html#support">Agricultural Resources</a><a href="modules.html">Learning Modules</a><a href="pages/admin.html">Admin</a></div><a class="back-to-top" href="#top" aria-label="Back to top">↑</a></div></div>
+</div><div class="footer-bottom"><span>© 2026 Ulimi wa Malawi. All rights reserved.</span><div class="footer-legal"><a href="index.html#support">Agricultural Resources</a><a href="modules.html">Learning Modules</a><a href="login.html" data-i18n="navLogin">Log In</a><a href="pages/admin.html">Admin</a></div><a class="back-to-top" href="#top" aria-label="Back to top">↑</a></div></div>
 </footer>
   </div>
 
@@ -189,5 +218,6 @@
   <script type="module" src="js/main.js"></script>
   <script type="module" src="js/i18n.js"></script>
   <script type="module" src="js/navigation.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>

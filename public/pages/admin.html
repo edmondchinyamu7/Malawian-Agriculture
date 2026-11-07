@@ -35,6 +35,16 @@
           <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
         </div>
+        <div class="account-area" id="accountArea">
+          <a class="account-login-link" href="/login.html" id="accountLoginLink" data-i18n="navLogin">Lowani / Lembetsani</a>
+          <div class="profile-menu" id="profileMenu" hidden>
+            <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
+            <div class="profile-dropdown" id="profileDropdown" hidden>
+              <a href="/profile.html" data-i18n="navProfile">Mbiri Yanga</a>
+              <button type="button" id="accountLogoutButton" data-i18n="navLogout">Tulukani</button>
+            </div>
+          </div>
+        </div>
         <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
       </div>
     </header>
@@ -233,6 +243,7 @@
       <div class="footer-legal">
         <a href="../index.html#support">Agricultural Resources</a>
         <a href="../modules.html">Learning Modules</a>
+        <a href="/login.html" data-i18n="navLogin">Log In</a>
         <a href="../pages/admin.html">Admin</a>
       </div>
       <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>

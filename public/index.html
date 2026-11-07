@@ -44,12 +44,12 @@
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
         </div>
         <div class="account-area" id="accountArea">
-          <a class="account-login-link" href="login.html" id="accountLoginLink">Log In / Sign Up</a>
+          <a class="account-login-link" href="login.html" id="accountLoginLink" data-i18n="navLogin">Lowani / Lembetsani</a>
           <div class="profile-menu" id="profileMenu" hidden>
             <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
             <div class="profile-dropdown" id="profileDropdown" hidden>
-              <a href="profile.html">My Profile</a>
-              <button type="button" id="accountLogoutButton">Log Out</button>
+              <a href="profile.html" data-i18n="navProfile">Mbiri Yanga</a>
+              <button type="button" id="accountLogoutButton" data-i18n="navLogout">Tulukani</button>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
       </div>
     </header>
 
-    <!-- Deep Emerald Hero Section -->
+    <!-- Deep Emerald Hero Section with Real Photo Showcase -->
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div>
@@ -65,35 +65,28 @@
           <h1 data-i18n-html="heroTitleHtml">Kulitsa nzeru zanu.<br><span>Kokololani zambiri.</span></h1>
           <p data-i18n="heroDesc">Chidziwitso cha ulimi choyenera alimi aang'onoang'ono, ophunzira ndi mabizinesi a zaulimi ku Malawi. Pezani kalendala ya ulimi, njira zothanirana ndi tizilombo, mbewu zosiyanasiyana zoposa 16, mitengo ya pamsika yotsimikizika, ndi zanyengo zatsiku ndi tsiku.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#methods" data-i18n="btnExploreMethods">Onani njira za ulimi 🌾</a>
+            <a class="btn btn-primary" href="pages/crops.html" data-i18n="btnCropsV7">Mbewu za m'Malawi (V7) 🌽</a>
             <a class="btn btn-ghost" href="pages/crop-calendar.html" data-i18n="btnCalendarV6">Kalendala ya ulimi (V6) 📅</a>
-            <a class="btn btn-ghost" href="pages/crops.html" data-i18n="btnCropsV7">Mbewu za m'Malawi (V7) 🌽</a>
-            <a class="btn btn-ghost" href="pages/pest-disease.html" data-i18n="btnPestV8">Tizilombo ndi matenda (V8) 🐛</a>
             <a class="btn btn-ghost" href="pages/market-centre.html" data-i18n="btnMarketV5">Mitengo pamsika (V5) 📊</a>
+            <a class="btn btn-ghost" href="pages/pest-disease.html" data-i18n="btnPestV8">Tizilombo ndi matenda (V8) 🐛</a>
           </div>
         </div>
 
-        <!-- Floating Hero Panel -->
-        <aside class="hero-panel">
-          <div class="panel-top">
-            <span class="panel-label" data-i18n="panelLabel">Malo anu ophunzirira</span>
-            <span class="panel-badge" data-i18n="panelBadge">🇲🇼 MALAWI WATHU</span>
+        <!-- Real Photographic Hero Showcase -->
+        <div class="hero-image-wrap">
+          <img src="assets/images/hero_malawi_farm.jpg" alt="Munda wa ulimi ku Malawi" loading="eager" referrerpolicy="no-referrer">
+          <div class="hero-image-badge">
+            <span>🌱 Ulimi Wokhazikika • Munda wa m'Malawi</span>
+            <span>🇲🇼 MALAWI WATHU</span>
           </div>
-          <h2 class="panel-title" data-i18n="panelTitle">Ulimi ndi Moyo.</h2>
-          <p class="panel-copy" data-i18n="panelCopy">Phunzirani pa nthawi yanu. Pezani mitengo yovomerezeka ya pamsika, zindikirani matenda a mbewu mwamsanga, ndi kutsatira mvula ya m'dera lanu mwa mgwirizano ndi azaulimi.</p>
-          <div class="stat-grid">
-            <div class="stat"><strong id="methodCount">18</strong><span data-i18n="statTopics">Mitu ya ulimi</span></div>
-            <div class="stat"><strong>16+</strong><span data-i18n="statCrops">Mbewu zodziwika</span></div>
-            <div class="stat"><strong>12</strong><span data-i18n="statDistricts">Maboma a nyengo</span></div>
-          </div>
-        </aside>
+        </div>
       </div>
     </section>
 
     <!-- Main Container -->
     <main class="main container">
-      <!-- Phase 1 Upgrades Showcase Grid -->
-      <section aria-label="Phase 1 upgrades showcase" style="margin-bottom:32px">
+      <!-- Phase 1 Upgrades Showcase Grid with Real Photos -->
+      <section aria-label="Phase 1 upgrades showcase" style="margin-bottom:48px">
         <div class="section-head">
           <div>
             <span class="section-kicker" data-i18n="upgradesKicker">Zatsopano Zowonjezera</span>
@@ -106,9 +99,12 @@
         <div class="upgrade-grid">
           <!-- Card 1: V6 Calendar -->
           <a class="upgrade-card" href="pages/crop-calendar.html">
+            <div class="upgrade-card-thumb">
+              <img src="assets/images/calendar_planting.jpg" alt="Kubzala m'mizere ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+            </div>
             <div class="upgrade-card-head">
-              <div class="upgrade-icon">📅</div>
               <span class="badge-version">V6 KALENDALA</span>
+              <span>📅</span>
             </div>
             <h3 data-i18n="cardCalendarTitle">Kalendala ya Ulimi ya Nyengo</h3>
             <p data-i18n="cardCalendarDesc">Ndondomeko ya mwezi ndi mwezi yotsatira ntchito za m'munda, zikumbutso za nyengo, ndi nthawi zoyenera kubzala mbewu.</p>
@@ -120,9 +116,12 @@
 
           <!-- Card 2: V7 Crops -->
           <a class="upgrade-card" href="pages/crops.html">
+            <div class="upgrade-card-thumb">
+              <img src="assets/images/crop_maize.jpg" alt="Chimanga cha m'Malawi" loading="lazy" referrerpolicy="no-referrer">
+            </div>
             <div class="upgrade-card-head">
-              <div class="upgrade-icon">🌽</div>
               <span class="badge-version">V7 MBEWU</span>
+              <span>🌽</span>
             </div>
             <h3 data-i18n="cardCropsTitle">Mbewu Zoposa 16 za m'Malawi</h3>
             <p data-i18n="cardCropsDesc">Malangizo a kalimidwe ka mbewu, mtundu wa nthaka, feteleza woyenera (wa pansi ndi wa pamwamba), ndi madera oyenera.</p>
@@ -134,9 +133,12 @@
 
           <!-- Card 3: V8 Pest & Disease -->
           <a class="upgrade-card" href="pages/pest-disease.html">
+            <div class="upgrade-card-thumb">
+              <img src="assets/images/pest_inspection.jpg" alt="Kuyang'anira tizilombo ndi matenda" loading="lazy" referrerpolicy="no-referrer">
+            </div>
             <div class="upgrade-card-head">
-              <div class="upgrade-icon">🐛</div>
               <span class="badge-version">V8 MATENDA</span>
+              <span>🐛</span>
             </div>
             <h3 data-i18n="cardPestTitle">Kuzindikira Tizilombo &amp; Matenda</h3>
             <p data-i18n="cardPestDesc">Zizindikiro za Nkhondo (Fall Armyworm), Mbozi ya m'chitsamba, Chikasu, ndi Chiwawu cha tomato limodzi ndi mankhwala oyenera.</p>
@@ -148,9 +150,12 @@
 
           <!-- Card 4: V5 Market Centre -->
           <a class="upgrade-card" href="pages/market-centre.html">
+            <div class="upgrade-card-thumb">
+              <img src="assets/images/market_grain.jpg" alt="Msika wa zaulimi ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+            </div>
             <div class="upgrade-card-head">
-              <div class="upgrade-icon">📊</div>
               <span class="badge-version">V5 MSIKA</span>
+              <span>📊</span>
             </div>
             <h3 data-i18n="cardMarketTitle">Msika wa Zaulimi ndi Mitengo</h3>
             <p data-i18n="cardMarketDesc">Mitengo ya chimanga, mtedza, soya, ndi mpunga m'misika ya ku midzi ndi m'matauni yokhala ndi chitsimikizo.</p>
@@ -162,59 +167,138 @@
         </div>
       </section>
 
-      <!-- Farming Methods Section -->
-      <section id="methods">
+      <!-- Spotlight Crops Section with Real Photography -->
+      <section id="crops" style="margin-bottom:52px">
         <div class="section-head">
           <div>
-            <span class="section-kicker" data-i18n="methodsKicker">Malo a Chidziwitso</span>
-            <h2 data-i18n="methodsTitle">Njira ndi Kakhalidwe ka Ulimi</h2>
-            <p data-i18n="methodsDesc">Fufuzani m'Chichewa kapena m'Chizungu, kapena sankhani gulu la njira za ulimi.</p>
+            <span class="section-kicker">Mbewu Zazikulu za m'Malawi</span>
+            <h2>Mbewu Zofunika Kwambiri Zakudya ndi Malonda</h2>
+            <p>Zitsanzo za mbewu zazikulu zomwe alimi ambiri amadalira. Tsegulani laibulale yonse kuti muone mbewu zoposa 16 zokhala ndi malangizo a kalimidwe.</p>
           </div>
+          <a href="pages/crops.html" class="btn btn-outline">Laibulale Yonse ya Mbewu (16+) →</a>
         </div>
-        <div class="toolbar">
-          <label class="search-wrap">
-            <span>⌕</span>
-            <input id="search" type="search" placeholder="Fufuzani njira yolimira, mbewu kapena chitsanzo…" autocomplete="off" aria-label="Fufuzani njira za ulimi" data-i18n-placeholder="searchMethodsPlaceholder">
-          </label>
-          <div class="result-count" id="resultCount" aria-live="polite">Mitu 18</div>
+
+        <div class="spotlight-grid">
+          <!-- Chimanga -->
+          <a href="pages/crops.html" class="spotlight-card">
+            <div class="spotlight-media">
+              <img src="assets/images/crop_maize.jpg" alt="Chimanga (Maize) munda wa m'Malawi" loading="lazy" referrerpolicy="no-referrer">
+              <span class="spotlight-pill">Cereals • Chakudya</span>
+            </div>
+            <div class="spotlight-body">
+              <h3>Chimanga</h3>
+              <span class="en-name">Maize (Zea mays)</span>
+              <p>Mbewu yaikulu ya chakudya ku Malawi. Imakonda nthaka yakuya ya mchenga wosakanikirana ndi dongo komanso mvula ya 600–1200mm.</p>
+              <div class="spotlight-footer">
+                <span>Onani feteleza &amp; kalimidwe</span>
+                <span>→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Mtedza -->
+          <a href="pages/crops.html" class="spotlight-card">
+            <div class="spotlight-media">
+              <img src="assets/images/crop_groundnuts.jpg" alt="Mtedza (Groundnuts) ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+              <span class="spotlight-pill">Legumes • Malonda</span>
+            </div>
+            <div class="spotlight-body">
+              <h3>Mtedza</h3>
+              <span class="en-name">Groundnut (Arachis hypogaea)</span>
+              <p>Mbewu yopatsa mafuta, ndalama ndi kukhazikitsa nayitrojeni m'nthaka. Mitundu yotchuka: CG7, Nsinjiro ndi Chitala.</p>
+              <div class="spotlight-footer">
+                <span>Onani mtundu wa nthaka</span>
+                <span>→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Soya -->
+          <a href="pages/crops.html" class="spotlight-card">
+            <div class="spotlight-media">
+              <img src="assets/images/calendar_planting.jpg" alt="Soya ndi nyemba ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+              <span class="spotlight-pill">Legumes • Puloteni</span>
+            </div>
+            <div class="spotlight-body">
+              <h3>Soya</h3>
+              <span class="en-name">Soybean (Glycine max)</span>
+              <p>Mbewu yabwino yopangira chakudya, mafuta ndi kudyetsa ziweto. Imasowa feteleza wochepa wa nayitrojeni chifukwa imadzidyetsa yokha.</p>
+              <div class="spotlight-footer">
+                <span>Onani kalimidwe katsatanetsatane</span>
+                <span>→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Full Library Card -->
+          <a href="pages/crops.html" class="spotlight-card" style="background:#f4f9f5;border-color:#b8deca">
+            <div class="spotlight-media" style="background:#e3f2e8;display:grid;place-items:center">
+              <div style="font-size:48px">🌽</div>
+              <span class="spotlight-pill" style="background:#0b6245">+12 Mbewu Zina</span>
+            </div>
+            <div class="spotlight-body">
+              <h3>Onani Mbewu Zina Zonse</h3>
+              <span class="en-name">Rice, Cassava, Sweet Potato, Tomato &amp; more</span>
+              <p>Fufuzani mpunga, chinangwa, mbatata, tomato, nyemba, nandolo, mbatata ya chizungu ndi fodya mu laibulale yokonzedwa bwino.</p>
+              <div class="spotlight-footer">
+                <span>Tsegulani Laibulale Yonse (16+)</span>
+                <span>→</span>
+              </div>
+            </div>
+          </a>
         </div>
-        <div class="filters" id="filters" aria-label="Sankhani gulu la ulimi"></div>
-        <div class="cards" id="cards"></div>
       </section>
 
-      <!-- Crop Knowledge Section (In Rich Cards) -->
-      <section id="crops" style="margin-top:54px">
+      <!-- Field Guidance & Water Management with Real Photo -->
+      <section style="margin-bottom:52px">
         <div class="section-head">
           <div>
-            <span class="section-kicker" data-i18n="cropsKicker">Laibulale ya Mbewu</span>
-            <h2 data-i18n="cropsTitle">Mbewu Zotchuka za m'Malawi</h2>
-            <p data-i18n="cropsDesc">Onani malangizo a kalimidwe katsatanetsatane m'Chichewa ndi m'Chizungu. Fufuzani dzina la mbewu kapena sankhani gulu la mbewu.</p>
+            <span class="section-kicker">Maphunziro a m'Munda</span>
+            <h2>Kusamala Nthaka, Madzi ndi Mbewu</h2>
+            <p>Njira zothandiza alimi aang'onoang'ono kupirira chilala, kukonza chonde cha nthaka, komanso kuonjezera zokolola.</p>
           </div>
-          <a href="pages/crops.html" class="btn btn-outline" data-i18n="fullCropLibraryBtn">Laibulale Yonse ya Mbewu (16+) →</a>
+          <a href="pages/irrigation.html" class="btn btn-outline">Kuthirira &amp; Madzi (V12) →</a>
         </div>
-        <div class="crop-toolbar">
-          <label class="search-wrap">
-            <span>⌕</span>
-            <input id="cropSearch" type="search" placeholder="Fufuzani chimanga, mtedza, mpunga, tomato, chinangwa…" autocomplete="off" aria-label="Fufuzani mbewu" data-i18n-placeholder="searchCropsPlaceholder">
-          </label>
-          <div class="result-count" id="cropCount" aria-live="polite">Mbewu 16</div>
-        </div>
-        <div class="filters" id="cropFilters" aria-label="Sankhani gulu la mbewu"></div>
-        <div class="crop-grid" id="cropGrid"></div>
-        <div class="notice" data-i18n="cropAdviceNote">
-          <strong>Chidziwitso pa mbewu:</strong> Malangizowa ndi othandiza poyambira kuphunzira. Kusankha mtundu wa mbewu, nthawi yobzala, mipata, ndi feteleza zimatengera boma, nthaka, ndi mvula. Tsimikizirani ndi mlangizi wazaulimi wa m'dera lanu.
+
+        <div class="field-feature-split">
+          <div class="field-feature-img">
+            <img src="assets/images/irrigation_water.jpg" alt="Alimi akuthirira mbewu ndi madzi a m'munda ku Malawi" loading="lazy" referrerpolicy="no-referrer">
+          </div>
+          <div class="field-feature-points">
+            <div class="field-point">
+              <div class="field-point-icon">🌱</div>
+              <div>
+                <h4>Thanzi la Nthaka &amp; Manyowa a Mbeya</h4>
+                <p>Kupanga manyowa a kompositi ndi Mbeya kumachepetsa ndalama yogulira feteleza wa m'fakitale ndi kubwezeretsa chonde m'munda.</p>
+              </div>
+            </div>
+            <div class="field-point">
+              <div class="field-point-icon">💧</div>
+              <div>
+                <h4>Kuthirira mwa Drip &amp; Kusamala Madzi</h4>
+                <p>Njira zothirira za dambo ndi mizere zimateteza madzi kuti asatayike ndi kulola kulima masamba nthawi ya chilala.</p>
+              </div>
+            </div>
+            <div class="field-point">
+              <div class="field-point-icon">📦</div>
+              <div>
+                <h4>Kukolola &amp; Kuyanika Zokolola Bwino</h4>
+                <p>Kuyanika chimanga ndi mtedza pansi pa 13.5% ya chinyezi kumateteza ku nkhungu ya aflatoxin ndi kuwonongeka m'nkhokwe.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- Weather Section -->
-      <section id="weather" style="margin-top:54px">
+      <section id="weather" style="margin-bottom:52px">
         <div class="section-head">
           <div>
             <span class="section-kicker" data-i18n="weatherKicker">Zanyengo ndi Kulima</span>
             <h2 data-i18n="weatherTitle">Nyengo ku Madera a Malawi</h2>
-            <p data-i18n="weatherDesc">Onani momwe nyengo ilili komanso zolosera zamasiku 7 m'maboma 12 a Malawi. Gwiritsani ntchito zoloserazi pokonzekera kulima, kupanga mizere ndi kuyanika mbewu.</p>
+            <p data-i18n="weatherDesc">Onani momwe nyengo ilili komanso zolosera zamasiku 7 m'maboma 12 a Malawi.</p>
           </div>
-          <a href="pages/weather.html" class="btn btn-outline" data-i18n="weatherDedicatedBtn">Tsamba la Zanyengo Lokha →</a>
+          <a href="pages/weather.html" class="btn btn-outline" data-i18n="weatherDedicatedBtn">Tsamba la Zanyengo Lokha (7-Day) →</a>
         </div>
 
         <div class="weather-panel">
@@ -245,80 +329,13 @@
 
           <div id="weatherResults">
             <div class="weather-current" id="weatherCurrent"></div>
-            <div class="forecast-heading">
-              <h3 data-i18n="forecastHeading">Zolosera za Masiku 7</h3>
-              <span data-i18n="forecastSub">Maimidwe a nyengo tsiku ndi tsiku</span>
-            </div>
-            <div class="forecast-grid" id="forecastGrid"></div>
-            <div class="weather-advice" id="weatherAdvice"></div>
-            <p class="weather-source" data-i18n="weatherSourceNotice">
-              Zanyengo zachokera ku: Open-Meteo. Zolosera zitha kusintha. Onetsetsani mmene thambo lilili komanso nthaka musanapange zigamulo zikuluzikulu.
-            </p>
+            <div class="weather-advice" id="weatherAdvice" style="margin-top:16px"></div>
           </div>
-        </div>
-      </section>
-
-      <!-- Practical Field Guides -->
-      <section id="guides" style="margin-top:54px">
-        <div class="section-head">
-          <div>
-            <span class="section-kicker" data-i18n="guidesKicker">Maphunziro a m'Munda</span>
-            <h2 data-i18n="guidesTitle">Malangizo Othandiza pa Ulimi</h2>
-            <p data-i18n="guidesDesc">Mfundo zosavuta zoyambira. Zinthu zimene mungatsatire kuti munda wanu ukhale wachonde komanso zokolola zanu zikhale zambiri.</p>
-          </div>
-        </div>
-
-        <div class="feature-grid">
-          <article class="guide">
-            <div class="gicon">🌱</div>
-            <div>
-              <h3 data-i18n="guide1Title">Thanzi la nthaka ndi kuiteteza</h3>
-              <p data-i18n="guide1Desc">Nthaka yathanzi imasunga madzi ndi kudyetsa mizu ya mbewu bwino.</p>
-            </div>
-          </article>
-          <article class="guide">
-            <div class="gicon">🌿</div>
-            <div>
-              <h3 data-i18n="guide2Title">Manyowa achilengedwe a kompositi</h3>
-              <p data-i18n="guide2Desc">Kupanga manyowa kuchokera ku zotsalira za m'munda ndi m'khola kumachepetsa kugula feteleza.</p>
-            </div>
-          </article>
-          <article class="guide">
-            <div class="gicon">💧</div>
-            <div>
-              <h3 data-i18n="guide3Title">Kusamalira ndi kuthirira madzi mwanzeru</h3>
-              <p data-i18n="guide3Desc">Gwiritsani ntchito njira zothirira zosawononga madzi monga drip kapena kuthirira m'mizu.</p>
-            </div>
-          </article>
-          <article class="guide">
-            <div class="gicon">🛡️</div>
-            <div>
-              <h3 data-i18n="guide4Title">Kuteteza mbewu ndi kusamala mankhwala</h3>
-              <p data-i18n="guide4Desc">Kuyendera munda nthawi zonse kumathandiza kuona tizilombo mwachangu musanawonongeke.</p>
-            </div>
-          </article>
-          <article class="guide">
-            <div class="gicon">📦</div>
-            <div>
-              <h3 data-i18n="guide5Title">Kukolola ndi kusunga bwino zokolola</h3>
-              <p data-i18n="guide5Desc">Kuyanika mbewu ziume bwino (pansi pa 13.5% ya chinyezi) kumateteza ku nkhungu ndi nankafumbwe.</p>
-            </div>
-          </article>
-          <article class="guide">
-            <div class="gicon">📈</div>
-            <div>
-              <h3 data-i18n="guide6Title">Kukonzekera munda ndi malonda</h3>
-              <p data-i18n="guide6Desc">Kuwerengera mtengo wa feteleza, mbewu, ndi ntchito kumathandiza kudziwa phindu.</p>
-            </div>
-          </article>
-        </div>
-        <div class="notice" data-i18n="guidesNotice">
-          <strong>Chenjezo:</strong> Malangizowa ndi ophunzitsira. Feteleza woyenera, mtundu wa mbewu, ndi mankhwala ziyenera kutsimikizidwa ndi alangizi a zaulimi a m'dera lanu.
         </div>
       </section>
 
       <!-- Support & Research Section -->
-      <section id="support" style="margin-top:54px">
+      <section id="support" style="margin-bottom:32px">
         <div class="section-head">
           <div>
             <span class="section-kicker" data-i18n="supportKicker">Thandizo Lodalirika</span>
@@ -396,6 +413,7 @@
           <div class="footer-column">
             <h4 data-i18n="footerPlatform">Platform</h4>
             <a href="index.html" data-i18n="footerHome">Home</a>
+            <a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a>
             <a href="index.html#support" data-i18n="footerSupport">Agricultural Support</a>
             <a href="index.html#crops" data-i18n="footerCropKnowledge">Crop Knowledge</a>
           </div>
@@ -412,7 +430,8 @@
           <div class="footer-legal">
             <a href="index.html#support" data-i18n="footerSupport">Agricultural Resources</a>
             <a href="modules.html" data-i18n="footerAllModules">Learning Modules</a>
-              </div>
+            <a href="login.html" data-i18n="navLogin">Log In</a>
+          </div>
           <a class="back-to-top" href="#home" aria-label="Back to top">↑</a>
         </div>
       </div>

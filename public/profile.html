@@ -1,21 +1,417 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Profile | Ulimi wa Malawi</title><link rel="stylesheet" href="css/style.css"></head>
-<body><main class="container" style="max-width:720px;margin:60px auto;background:white;padding:32px;border-radius:20px">
-<h1>My Profile</h1><p id="profileEmail">Loading account…</p>
-<form id="profileForm"><p><label>First name <input id="firstName" required maxlength="60"></label></p><p><label>Surname <input id="lastName" required maxlength="60"></label></p><p><label>Email <input id="email" type="email" disabled></label></p><p id="profileStatus" role="status"></p><button type="submit">Save changes</button> <a href="index.html">Return to website</a></form></main>
-<script type="module">
-import {supabase} from './js/auth.js';
-const $=id=>document.getElementById(id);
-const {data:{user}}=await supabase.auth.getUser();
-if(!user) location.replace('/login.html');
-else {
- const {data:profile,error}=await supabase.from('profiles').select('first_name,last_name').eq('id',user.id).single();
- if(error) $('profileStatus').textContent=error.message;
- else {$('firstName').value=profile.first_name||'';$('lastName').value=profile.last_name||'';$('email').value=user.email||'';$('profileEmail').textContent=user.email||'';}
-}
-$('profileForm').addEventListener('submit',async event=>{
- event.preventDefault();$('profileStatus').textContent='Saving…';
- const {error}=await supabase.from('profiles').update({first_name:$('firstName').value.trim(),last_name:$('lastName').value.trim()}).eq('id',user.id);
- $('profileStatus').textContent=error?error.message:'Profile updated.';
-});
-</script></body></html>
+<html lang="ny">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <title>Mbiri Yanga (My Profile) | Ulimi wa Malawi</title>
+  <meta name="description" content="Mbiri ya mlimi ndi akaunti yanu ya Ulimi wa Malawi.">
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    .profile-page {
+      padding: 40px 16px 80px;
+      min-height: calc(100vh - 120px);
+      background: #f4f7f4;
+    }
+    .profile-card {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #dce8df;
+      border-radius: 24px;
+      box-shadow: 0 16px 45px rgba(9, 45, 34, 0.08);
+      overflow: hidden;
+    }
+    .profile-hero-bar {
+      background: linear-gradient(135deg, #092d22 0%, #166547 100%);
+      padding: 36px 32px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .profile-hero-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #eef7f2;
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      color: #0b6245;
+      font-size: 26px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .profile-hero-info h1 {
+      font-size: 24px;
+      margin: 0 0 6px;
+      color: #ffffff;
+      font-weight: 850;
+    }
+    .profile-hero-info p {
+      margin: 0;
+      color: #bbf7d0;
+      font-size: 14px;
+    }
+    .profile-body {
+      padding: 32px;
+    }
+    .profile-role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: #edf7f1;
+      border: 1px solid #c7e3d1;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0b6245;
+      margin-bottom: 24px;
+    }
+    .profile-grid-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) {
+      .profile-grid-fields {
+        grid-template-columns: 1fr;
+      }
+      .profile-hero-bar {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    .profile-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 750;
+      margin-bottom: 6px;
+      color: #193d30;
+    }
+    .profile-field input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd9cf;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 14px;
+      color: #112d22;
+      background: #fff;
+    }
+    .profile-field input:focus {
+      outline: none;
+      border-color: #0b6245;
+      box-shadow: 0 0 0 3px rgba(11, 98, 69, 0.15);
+    }
+    .profile-field input:disabled {
+      background: #f1f5f2;
+      color: #63776b;
+      cursor: not-allowed;
+    }
+    .profile-status {
+      min-height: 24px;
+      font-size: 13.5px;
+      margin: 14px 0;
+      font-weight: 700;
+    }
+    .profile-status.success { color: #166534; }
+    .profile-status.error { color: #991b1b; }
+    .profile-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-top: 16px;
+      border-top: 1px solid #e5eee8;
+      margin-top: 24px;
+    }
+    .quick-tools-panel {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e5eee8;
+    }
+    .quick-tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .quick-tool-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #f8faf8;
+      border: 1px solid #e0eae2;
+      border-radius: 12px;
+      color: #092d22;
+      font-weight: 750;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .quick-tool-card:hover {
+      background: #edf7f1;
+      border-color: #b5deca;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body id="top">
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Ulimi wa Malawi poyambira">
+        <span class="brand-mark">🌱</span>
+        <span>
+          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+          <small data-i18n="navProfile">MBIRI YANGA</small>
+        </span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="index.html" data-i18n="navHome">Poyambira</a>
+        <a href="pages/crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
+        <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
+        <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi</a>
+        <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
+      </nav>
+      <div class="top-actions">
+        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <button type="button" id="topLogoutBtn" class="account-login-link" style="background:transparent;cursor:pointer" data-i18n="navLogout">Tulukani</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Profile Container -->
+    <main class="profile-page container">
+      <article class="profile-card">
+        <div class="profile-hero-bar">
+          <div class="profile-hero-avatar" id="avatarBox">U</div>
+          <div class="profile-hero-info">
+            <h1 id="heroFullName">Akaunti ya Mlimi</h1>
+            <p id="heroEmail">Tikufufuza mbiri yanu…</p>
+          </div>
+        </div>
+
+        <div class="profile-body">
+          <div class="profile-role-badge" id="roleBadge">
+            <span>🌾</span> <span id="roleText">Mlimi wovomerezeka ku Malawi</span>
+          </div>
+
+          <form id="profileForm">
+            <div class="profile-grid-fields">
+              <div class="profile-field">
+                <label for="firstName" data-i18n="authLabelFirst">Dzina loyamba</label>
+                <input id="firstName" required maxlength="60" placeholder="Kondwani">
+              </div>
+              <div class="profile-field">
+                <label for="lastName" data-i18n="authLabelLast">Dzina la banja (Surname)</label>
+                <input id="lastName" required maxlength="60" placeholder="Phiri">
+              </div>
+            </div>
+
+            <div class="profile-field">
+              <label for="email" data-i18n="authLabelEmail">Keyala ya imelo</label>
+              <input id="email" type="email" disabled>
+            </div>
+
+            <div id="profileStatus" class="profile-status" role="status"></div>
+
+            <div class="profile-actions">
+              <button class="btn btn-primary" type="submit" id="saveBtn">Sungani Zosintha (Save Changes)</button>
+              <button type="button" id="bodyLogoutBtn" class="btn btn-ghost" style="border-color:#d0ded5;color:#851a1a" data-i18n="navLogout">Tulukani mu Akaunti</button>
+            </div>
+          </form>
+
+          <div class="quick-tools-panel">
+            <h3 style="font-size:16px;color:#092d22;margin:0 0 4px">Zida Zothandiza pa Ulimi (Quick Farm Tools)</h3>
+            <p style="font-size:13px;color:#617368;margin:0">Tsegulani zida za ulimi mwachangu:</p>
+            <div class="quick-tools-grid">
+              <a href="pages/crop-calendar.html" class="quick-tool-card">📅 Kalendala ya Ulimi</a>
+              <a href="pages/crops.html" class="quick-tool-card">🌽 Mbewu za m'Malawi</a>
+              <a href="pages/market-centre.html" class="quick-tool-card">📊 Msika wa Mitengo</a>
+              <a href="pages/farm-planner.html" class="quick-tool-card">📐 Kukonza Munda</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-panel">
+        <div class="footer-main">
+          <div class="footer-brand-block">
+            <a class="brand footer-brand" href="index.html" aria-label="Ulimi wa Malawi home">
+              <span class="brand-mark">🌱</span>
+              <span>
+                <span>ULIMI WA MALAWI</span>
+                <small>AGRICULTURE KNOWLEDGE HUB</small>
+              </span>
+            </a>
+            <h3>Knowledge for a stronger agricultural future.</h3>
+            <p>Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
+          </div>
+          <div class="footer-column">
+            <h4>Farming</h4>
+            <a href="pages/crop-calendar.html" data-i18n="navCalendar">Crop Calendar</a>
+            <a href="pages/crops.html" data-i18n="navCrops">Crop Library</a>
+            <a href="pages/pest-disease.html" data-i18n="navPest">Pests &amp; Diseases</a>
+            <a href="pages/market-centre.html" data-i18n="navMarket">Agricultural Market</a>
+          </div>
+          <div class="footer-column">
+            <h4>Discover</h4>
+            <a href="modules.html" data-i18n="navModules">All Learning Modules</a>
+            <a href="pages/weather.html" data-i18n="navWeather">Weather Updates</a>
+            <a href="index.html#methods" data-i18n="navFarmMethods">Farming Methods</a>
+            <a href="index.html#guides" data-i18n="navGuides">Practical Field Guides</a>
+          </div>
+          <div class="footer-column">
+            <h4>Platform</h4>
+            <a href="index.html" data-i18n="navHome">Home</a>
+            <a href="pages/farm-planner.html" data-i18n="navFarmPlanner">Farm Planner</a>
+            <a href="pages/farmer-community.html" data-i18n="navCommunity">Farmer Community</a>
+            <a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi</a>
+            <a href="pages/admin.html" data-i18n="navAdmin">Admin Dashboard</a>
+          </div>
+          <div class="footer-column footer-connect">
+            <h4>Connect</h4>
+            <p>Explore trusted learning resources and stay informed about agriculture in Malawi.</p>
+            <a class="footer-text-link" href="modules.html">Start learning <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Ulimi wa Malawi. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="index.html#support">Agricultural Resources</a>
+            <a href="modules.html">Learning Modules</a>
+            <a href="login.html" data-i18n="navLogin">Log In</a>
+            <a href="pages/admin.html">Admin</a>
+          </div>
+          <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script type="module" src="js/navigation.js"></script>
+  <script type="module">
+    import { supabase, logoutUser } from './js/auth.js';
+    const $ = (id) => document.getElementById(id);
+
+    let currentUser = null;
+
+    async function loadProfile() {
+      try {
+        const { data: { user }, error: authErr } = await supabase.auth.getUser();
+        if (authErr || !user) {
+          window.location.replace('/login.html');
+          return;
+        }
+
+        currentUser = user;
+        $('email').value = user.email || '';
+        $('heroEmail').textContent = user.email || '';
+
+        let profileData = {
+          first_name: user.user_metadata?.first_name || '',
+          last_name: user.user_metadata?.last_name || '',
+          role: 'farmer'
+        };
+
+        try {
+          const { data: p, error: pErr } = await supabase.from('profiles').select('first_name,last_name,role').eq('id', user.id).maybeSingle();
+          if (!pErr && p) {
+            profileData = { ...profileData, ...p };
+          }
+        } catch (_) {}
+
+        $('firstName').value = profileData.first_name || '';
+        $('lastName').value = profileData.last_name || '';
+
+        const fn = profileData.first_name || '';
+        const ln = profileData.last_name || '';
+        const fullName = [fn, ln].filter(Boolean).join(' ') || user.email.split('@')[0];
+        $('heroFullName').textContent = fullName;
+
+        const initials = ((fn[0] || '') + (ln[0] || '')).toUpperCase() || (user.email ? user.email[0].toUpperCase() : 'U');
+        $('avatarBox').textContent = initials;
+
+        if (profileData.role === 'admin') {
+          $('roleBadge').innerHTML = '<span>🛡️</span> <span>Mtsogoleri wa Pulogalamu (Administrator)</span>';
+          $('roleBadge').style.background = '#fef3c7';
+          $('roleBadge').style.borderColor = '#fde68a';
+          $('roleBadge').style.color = '#92400e';
+        }
+      } catch (err) {
+        console.error('Failed to load profile:', err);
+        $('profileStatus').textContent = 'Zalephera kutsegula mbiri: ' + err.message;
+        $('profileStatus').className = 'profile-status error';
+      }
+    }
+
+    $('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const statusEl = $('profileStatus');
+      const saveBtn = $('saveBtn');
+      saveBtn.disabled = true;
+      statusEl.textContent = 'Kusunga zosintha… (Saving…)';
+      statusEl.className = 'profile-status';
+
+      const first_name = $('firstName').value.trim();
+      const last_name = $('lastName').value.trim();
+
+      try {
+        const { error } = await supabase.from('profiles').upsert({
+          id: currentUser.id,
+          first_name,
+          last_name
+        });
+
+        if (error) throw error;
+
+        statusEl.textContent = 'Zasungidwa bwinobwino! (Profile updated successfully)';
+        statusEl.className = 'profile-status success';
+
+        const fullName = [first_name, last_name].filter(Boolean).join(' ') || currentUser.email;
+        $('heroFullName').textContent = fullName;
+        const initials = ((first_name[0] || '') + (last_name[0] || '')).toUpperCase() || 'U';
+        $('avatarBox').textContent = initials;
+      } catch (err) {
+        console.error('Save error:', err);
+        statusEl.textContent = 'Zalephera kusunga: ' + (err.message || 'Error occurred');
+        statusEl.className = 'profile-status error';
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+
+    $('topLogoutBtn')?.addEventListener('click', () => logoutUser());
+    $('bodyLogoutBtn')?.addEventListener('click', () => logoutUser());
+
+    loadProfile();
+  </script>
+</body>
+</html>

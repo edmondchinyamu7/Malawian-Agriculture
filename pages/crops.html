@@ -39,12 +39,31 @@
           <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
         </div>
+        <div class="account-area" id="accountArea">
+          <a class="account-login-link" href="/login.html" id="accountLoginLink" data-i18n="navLogin">Lowani / Lembetsani</a>
+          <div class="profile-menu" id="profileMenu" hidden>
+            <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
+            <div class="profile-dropdown" id="profileDropdown" hidden>
+              <a href="/profile.html" data-i18n="navProfile">Mbiri Yanga</a>
+              <button type="button" id="accountLogoutButton" data-i18n="navLogout">Tulukani</button>
+            </div>
+          </div>
+        </div>
         <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
       </div>
     </header>
 
     <!-- Main Container -->
     <main class="main container">
+      <!-- Real Agricultural Photography Banner -->
+      <div class="page-photo-banner">
+        <img src="../assets/images/crop_maize.jpg" alt="Munda wa chimanga ku Malawi" loading="eager" referrerpolicy="no-referrer">
+        <div class="page-photo-overlay">
+          <h2>🌽 Mbewu za m'Malawi • V7 Advanced Crop Library</h2>
+          <p>Malangizo a kalimidwe katsatanetsatane, nthaka yoyenera, feteleza wa pansi ndi wa pamwamba, ndi zokolola za mbewu zosiyanasiyana m'Malawi.</p>
+        </div>
+      </div>
+
       <!-- Section Header -->
       <div class="section-head">
         <div>
@@ -116,6 +135,7 @@
         <a href="../index.html">Home</a>
         <a href="../pages/farm-planner.html">Farm Planner</a>
         <a href="../pages/farmer-community.html">Farmer Community</a>
+        <a href="/login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a>
         <a href="../pages/admin.html">Admin Dashboard</a>
       </div>
       <div class="footer-column footer-connect">
@@ -129,6 +149,7 @@
       <div class="footer-legal">
         <a href="../index.html#support">Agricultural Resources</a>
         <a href="../modules.html">Learning Modules</a>
+        <a href="/login.html" data-i18n="navLogin">Log In</a>
         <a href="../pages/admin.html">Admin</a>
       </div>
       <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>
@@ -159,5 +180,6 @@
   <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/crops.js"></script>
+  <script type="module" src="../js/auth.js"></script>
 </body>
 </html>

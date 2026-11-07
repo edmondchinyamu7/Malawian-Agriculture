@@ -1,4 +1,539 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#092d22"><title>Log In / Sign Up | Ulimi wa Malawi"><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/components.css"><style>
-body{min-height:100vh;background:#f3f7f3;display:grid;place-items:center;padding:24px}.auth-card{width:min(100%,470px);background:white;border:1px solid #dce8df;border-radius:24px;padding:clamp(24px,5vw,38px);box-shadow:0 20px 55px #092d221f}.auth-card h1{color:#092d22;margin:12px 0 8px}.auth-card p{color:#617368}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#edf4ef;padding:5px;border-radius:12px;margin:20px 0}.tabs button{border:0;padding:11px;border-radius:9px;background:transparent;font-weight:800;color:#315444}.tabs button.active{background:white;color:#0b6245}.field{margin:15px 0}.field label{display:block;font-weight:750;margin-bottom:7px;color:#193d30}.field input{width:100%;padding:13px;border:1px solid #cbd9cf;border-radius:10px;font:inherit}.submit{width:100%;padding:14px;border:0;border-radius:10px;background:#0b6245;color:white;font-weight:800}.message{min-height:24px;font-size:14px}.back{display:inline-block;margin-top:16px;color:#176747}[hidden]{display:none!important}</style></head><body><main class="auth-card"><div style="font-size:38px">🌱</div><span class="section-kicker">ULIMI WA MALAWI</span><h1 id="heading">Welcome back</h1><p id="intro">Sign in to your account.</p><div class="tabs"><button id="loginTab" class="active" type="button">Log In</button><button id="signupTab" type="button">Sign Up</button></div>
-<form id="form"><div id="names" hidden><div class="field"><label for="first">First name</label><input id="first" maxlength="60"></div><div class="field"><label for="last">Surname</label><input id="last" maxlength="60"></div></div><div class="field"><label for="email">Email address</label><input id="email" type="email" required autocomplete="email"></div><div class="field"><label for="password">Password</label><input id="password" type="password" minlength="8" required autocomplete="current-password"></div><button class="submit" id="submit" type="submit">Log In</button><p class="message" id="message" role="status"></p></form><a class="back" href="index.html">← Return to website</a></main>
-<script type="module">import{supabase}from'./js/auth.js';const $=id=>document.getElementById(id);let mode='login';function setMode(m){mode=m;$('names').hidden=m!=='signup';$('first').required=m==='signup';$('last').required=m==='signup';$('loginTab').classList.toggle('active',m==='login');$('signupTab').classList.toggle('active',m==='signup');$('heading').textContent=m==='login'?'Welcome back':'Create your account';$('intro').textContent=m==='login'?'Sign in to your account.':'Register with your first name, surname and email address.';$('submit').textContent=m==='login'?'Log In':'Create Account';$('message').textContent='';}$('loginTab').onclick=()=>setMode('login');$('signupTab').onclick=()=>setMode('signup');$('form').onsubmit=async e=>{e.preventDefault();const b=$('submit'),m=$('message');b.disabled=true;m.textContent='Please wait…';try{let r;if(mode==='signup'){r=await supabase.auth.signUp({email:$('email').value.trim(),password:$('password').value,options:{data:{first_name:$('first').value.trim(),last_name:$('last').value.trim()},emailRedirectTo:location.origin+'/login.html'}});if(r.error)throw r.error;if(!r.data.session){m.textContent='Account created. Check your email to confirm, then log in.';return;}}else{r=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(r.error)throw r.error;}const{data:{user}}=await supabase.auth.getUser();const{data:p,error}=await supabase.from('profiles').select('role').eq('id',user.id).single();if(error)throw error;if(p.role==='admin'){const{data:{session}}=await supabase.auth.getSession();const response=await fetch('/api/admin/session',{method:'POST',headers:{Authorization:'Bearer '+session.access_token},credentials:'same-origin'});if(!response.ok)throw Error('The server could not verify administrator access.');location.assign('/admin');}else location.assign('/profile.html');}catch(err){m.textContent=err.message||'Unable to sign in.';}finally{b.disabled=false;}};</script></body></html>
+<!doctype html>
+<html lang="ny">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <title>Lowani / Lembetsani | Ulimi wa Malawi</title>
+  <meta name="description" content="Lowani mu akaunti ya mlimi ya Ulimi wa Malawi kapena lembetsani kuti musunge mbiri ya munda wanu, malangizo ndi mitengo.">
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    .auth-page {
+      min-height: calc(100vh - 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      background: radial-gradient(circle at 50% 15%, rgba(22, 101, 71, 0.08), transparent 70%), #f4f7f4;
+    }
+    .auth-wrapper {
+      width: 100%;
+      max-width: 480px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid #dce8df;
+      border-radius: 24px;
+      padding: clamp(24px, 5vw, 38px);
+      box-shadow: 0 16px 45px rgba(9, 45, 34, 0.09);
+    }
+    .auth-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .auth-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      font-size: 28px;
+      background: #eef6f0;
+      border: 1px solid #c7e3d1;
+      border-radius: 18px;
+      margin-bottom: 12px;
+    }
+    .auth-header h1 {
+      font-size: 24px;
+      color: #092d22;
+      margin: 8px 0 6px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+    .auth-header p {
+      color: #556b5e;
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #edf4ef;
+      padding: 5px;
+      border-radius: 12px;
+      margin: 20px 0 24px;
+    }
+    .auth-tab-btn {
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 9px;
+      background: transparent;
+      font-weight: 750;
+      font-size: 14px;
+      color: #315444;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .auth-tab-btn.active {
+      background: #ffffff;
+      color: #0b6245;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 750;
+      margin-bottom: 6px;
+      color: #193d30;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd9cf;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 14px;
+      color: #112d22;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #0b6245;
+      box-shadow: 0 0 0 3px rgba(11, 98, 69, 0.15);
+    }
+    .auth-submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #0b6245;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      box-shadow: 0 4px 14px rgba(11, 98, 69, 0.22);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .auth-submit-btn:hover:not(:disabled) {
+      background: #094f38;
+      transform: translateY(-1px);
+    }
+    .auth-submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .auth-alert {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      display: none;
+    }
+    .auth-alert.show {
+      display: block;
+    }
+    .auth-alert.error {
+      background: #fdf2f2;
+      border: 1px solid #f8b4b4;
+      color: #9b1c1c;
+    }
+    .auth-alert.success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .auth-alert.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+    .auth-helper-notes {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #e5eee8;
+      text-align: center;
+      font-size: 12.5px;
+      color: #617368;
+    }
+    .auth-helper-notes a {
+      color: #0b6245;
+      font-weight: 750;
+      text-decoration: underline;
+    }
+    .existing-session-box {
+      background: #eef7f2;
+      border: 1px solid #cce5d6;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .existing-session-box h3 {
+      font-size: 16px;
+      color: #092d22;
+      margin: 0 0 6px;
+    }
+    .existing-session-box p {
+      font-size: 13px;
+      color: #406050;
+      margin: 0 0 14px;
+    }
+    .session-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body id="top">
+  <div class="shell">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Ulimi wa Malawi poyambira">
+        <span class="brand-mark">🌱</span>
+        <span>
+          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+          <small data-i18n="authKicker">AKAUNTI YA MLIMI • V18</small>
+        </span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="index.html" data-i18n="navHome">Poyambira</a>
+        <a href="pages/crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
+        <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
+        <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi</a>
+        <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
+      </nav>
+      <div class="top-actions">
+        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+        <a href="index.html" class="account-login-link" style="border-color:rgba(255,255,255,0.4)" data-i18n="authReturnHome">← Bwererani Poyambira</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
+      </div>
+    </header>
+
+    <!-- Main Auth Content -->
+    <main class="auth-page">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <!-- Active session banner if user is already signed in -->
+          <div id="alreadyLoggedInBox" class="existing-session-box" hidden>
+            <div style="font-size:32px;margin-bottom:8px">🌱</div>
+            <h3 id="sessionGreeting">Munalowa kale mu akaunti</h3>
+            <p id="sessionUserEmail">email@example.com</p>
+            <div class="session-actions">
+              <a href="profile.html" class="btn btn-primary" style="padding:8px 16px;font-size:13px" data-i18n="authGoProfile">Onani Mbiri Yanga</a>
+              <button type="button" id="sessionLogoutBtn" class="btn btn-ghost" style="padding:8px 16px;font-size:13px;border-color:#b5cebe;color:#092d22" data-i18n="navLogout">Tulukani</button>
+            </div>
+          </div>
+
+          <div class="auth-header">
+            <div class="auth-logo-badge">🌱</div>
+            <span class="section-kicker" data-i18n="authKicker">AKAUNTI YA MLIMI • V18</span>
+            <h1 id="heading" data-i18n="authWelcomeLogin">Takulandirani ku Ulimi wa Malawi</h1>
+            <p id="intro" data-i18n="authSubLogin">Lowani mu akaunti yanu kuti muwone mbiri ya munda, malangizo ndi mitengo yovomerezeka.</p>
+          </div>
+
+          <!-- Tabs: Log In / Sign Up -->
+          <div class="auth-tabs" role="tablist">
+            <button id="loginTab" class="auth-tab-btn active" type="button" role="tab" aria-selected="true" data-i18n="authTabLogin">Lowani</button>
+            <button id="signupTab" class="auth-tab-btn" type="button" role="tab" aria-selected="false" data-i18n="authTabSignup">Lembetsani</button>
+          </div>
+
+          <!-- Auth Form -->
+          <form id="authForm" novalidate>
+            <div id="namesSection" hidden>
+              <div class="form-group">
+                <label for="first" data-i18n="authLabelFirst">Dzina loyamba</label>
+                <input class="form-control" id="first" type="text" maxlength="60" placeholder="e.g. Kondwani">
+              </div>
+              <div class="form-group">
+                <label for="last" data-i18n="authLabelLast">Dzina la banja (Surname)</label>
+                <input class="form-control" id="last" type="text" maxlength="60" placeholder="e.g. Phiri">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" data-i18n="authLabelEmail">Keyala ya imelo (Email)</label>
+              <input class="form-control" id="email" type="email" required autocomplete="email" placeholder="alimi@example.mw">
+            </div>
+
+            <div class="form-group">
+              <label for="password" data-i18n="authLabelPassword">Mawu achinsinsi (Password)</label>
+              <input class="form-control" id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="••••••••">
+            </div>
+
+            <button class="auth-submit-btn" id="submitBtn" type="submit">
+              <span id="submitText" data-i18n="authBtnLogin">Lowani mu Akaunti</span>
+            </button>
+
+            <!-- Feedback Alert -->
+            <div class="auth-alert" id="authAlert" role="status"></div>
+          </form>
+
+          <div class="auth-helper-notes">
+            <p>Ulimi wa Malawi • <a href="index.html" data-i18n="authReturnHome">Bwererani poyambira</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="footer">
+      <div class="container footer-panel">
+        <div class="footer-main">
+          <div class="footer-brand-block">
+            <a class="brand footer-brand" href="index.html" aria-label="Ulimi wa Malawi home">
+              <span class="brand-mark">🌱</span>
+              <span>
+                <span>ULIMI WA MALAWI</span>
+                <small>AGRICULTURE KNOWLEDGE HUB</small>
+              </span>
+            </a>
+            <h3>Knowledge for a stronger agricultural future.</h3>
+            <p>Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
+          </div>
+          <div class="footer-column">
+            <h4>Farming</h4>
+            <a href="pages/crop-calendar.html" data-i18n="navCalendar">Crop Calendar</a>
+            <a href="pages/crops.html" data-i18n="navCrops">Crop Library</a>
+            <a href="pages/pest-disease.html" data-i18n="navPest">Pests &amp; Diseases</a>
+            <a href="pages/market-centre.html" data-i18n="navMarket">Agricultural Market</a>
+          </div>
+          <div class="footer-column">
+            <h4>Discover</h4>
+            <a href="modules.html" data-i18n="navModules">All Learning Modules</a>
+            <a href="pages/weather.html" data-i18n="navWeather">Weather Updates</a>
+            <a href="index.html#methods" data-i18n="navFarmMethods">Farming Methods</a>
+            <a href="index.html#guides" data-i18n="navGuides">Practical Field Guides</a>
+          </div>
+          <div class="footer-column">
+            <h4>Platform</h4>
+            <a href="index.html" data-i18n="navHome">Home</a>
+            <a href="pages/farm-planner.html" data-i18n="navFarmPlanner">Farm Planner</a>
+            <a href="pages/farmer-community.html" data-i18n="navCommunity">Farmer Community</a>
+            <a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a>
+            <a href="pages/admin.html" data-i18n="navAdmin">Admin Dashboard</a>
+          </div>
+          <div class="footer-column footer-connect">
+            <h4>Connect</h4>
+            <p>Explore trusted learning resources and stay informed about agriculture in Malawi.</p>
+            <a class="footer-text-link" href="modules.html">Start learning <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Ulimi wa Malawi. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="index.html#support">Agricultural Resources</a>
+            <a href="modules.html">Learning Modules</a>
+            <a href="login.html" data-i18n="navLogin">Log In</a>
+            <a href="pages/admin.html">Admin</a>
+          </div>
+          <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Reusable Toast Alert -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Scripts -->
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script type="module" src="js/navigation.js"></script>
+  <script type="module">
+    import { supabase, logoutUser } from './js/auth.js';
+    import { getCurrentLang, translations } from './js/i18n.js';
+
+    const $ = (id) => document.getElementById(id);
+    let mode = 'login';
+
+    function showAlert(msg, type = 'error') {
+      const alert = $('authAlert');
+      if (!alert) return;
+      alert.textContent = msg;
+      alert.className = `auth-alert show ${type}`;
+    }
+
+    function clearAlert() {
+      const alert = $('authAlert');
+      if (!alert) return;
+      alert.textContent = '';
+      alert.className = 'auth-alert';
+    }
+
+    function updateLanguageLabels() {
+      const lang = getCurrentLang();
+      const t = translations[lang] || translations.ny;
+      if (mode === 'login') {
+        $('heading').textContent = t.authWelcomeLogin || 'Welcome back to Ulimi wa Malawi';
+        $('intro').textContent = t.authSubLogin || 'Sign in to access your farm records.';
+        $('submitText').textContent = t.authBtnLogin || 'Lowani mu Akaunti';
+      } else {
+        $('heading').textContent = t.authWelcomeSignup || 'Create Your Farmer Account';
+        $('intro').textContent = t.authSubSignup || 'Register with your name and email.';
+        $('submitText').textContent = t.authBtnSignup || 'Lembetsani Tsopano';
+      }
+    }
+
+    function setMode(m) {
+      mode = m;
+      $('namesSection').hidden = (m !== 'signup');
+      $('first').required = (m === 'signup');
+      $('last').required = (m === 'signup');
+      $('loginTab').classList.toggle('active', m === 'login');
+      $('loginTab').setAttribute('aria-selected', String(m === 'login'));
+      $('signupTab').classList.toggle('active', m === 'signup');
+      $('signupTab').setAttribute('aria-selected', String(m === 'signup'));
+      clearAlert();
+      updateLanguageLabels();
+    }
+
+    $('loginTab').addEventListener('click', () => setMode('login'));
+    $('signupTab').addEventListener('click', () => setMode('signup'));
+
+    window.addEventListener('languageChanged', updateLanguageLabels);
+
+    // Check if user is already authenticated
+    async function checkCurrentSession() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          $('alreadyLoggedInBox').hidden = false;
+          $('sessionUserEmail').textContent = user.email || '';
+          const lang = getCurrentLang();
+          const t = translations[lang] || translations.ny;
+          $('sessionGreeting').textContent = (lang === 'en')
+            ? `Signed in as ${user.email}`
+            : `Munalowa kale mu akaunti: ${user.email}`;
+        }
+      } catch (_) {}
+    }
+
+    $('sessionLogoutBtn')?.addEventListener('click', async () => {
+      await logoutUser();
+      location.reload();
+    });
+
+    checkCurrentSession();
+
+    // Form Submission
+    $('authForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const email = $('email').value.trim();
+      const password = $('password').value;
+      const firstName = $('first').value.trim();
+      const lastName = $('last').value.trim();
+
+      if (!email || !password) {
+        showAlert('Chonde lembani imelo ndi mawu achinsinsi.', 'error');
+        return;
+      }
+
+      if (mode === 'signup' && (!firstName || !lastName)) {
+        showAlert('Chonde lembani dzina lanu loyamba ndi la banja.', 'error');
+        return;
+      }
+
+      const submitBtn = $('submitBtn');
+      submitBtn.disabled = true;
+      const originalText = $('submitText').textContent;
+      $('submitText').textContent = 'Chonde dikirani… (Please wait)';
+
+      try {
+        let authResult;
+        if (mode === 'signup') {
+          authResult = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { first_name: firstName, last_name: lastName },
+              emailRedirectTo: window.location.origin + '/login.html'
+            }
+          });
+
+          if (authResult.error) throw authResult.error;
+
+          if (!authResult.data.session) {
+            showAlert('Akaunti yapangidwa! Chonde tsegulani imelo yanu kuti mutsimikize, kenako lowani pano. (Account created. Check your email to confirm, then log in.)', 'success');
+            submitBtn.disabled = false;
+            $('submitText').textContent = originalText;
+            return;
+          }
+        } else {
+          authResult = await supabase.auth.signInWithPassword({
+            email,
+            password
+          });
+
+          if (authResult.error) throw authResult.error;
+        }
+
+        // Successfully signed in or registered with session
+        showAlert('Mwalowa bwinobwino! Tikukulumikizani… (Redirecting…)', 'success');
+
+        const { data: { user } } = await supabase.auth.getUser();
+        let role = 'farmer';
+
+        if (user) {
+          try {
+            const { data: p } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
+            if (p && p.role) role = p.role;
+          } catch (_) {}
+        }
+
+        if (role === 'admin') {
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.access_token) {
+              const res = await fetch('/api/admin/session', {
+                method: 'POST',
+                headers: { Authorization: 'Bearer ' + session.access_token },
+                credentials: 'same-origin'
+              });
+              if (!res.ok) {
+                console.warn('Admin session API returned non-200, continuing to admin portal.');
+              }
+            }
+          } catch (sessionErr) {
+            console.warn('Session API notice:', sessionErr);
+          }
+          window.location.assign('/admin');
+        } else {
+          window.location.assign('/profile.html');
+        }
+      } catch (err) {
+        console.error('Auth error:', err);
+        const errMsg = err?.message || 'Zalephera kulowa mu akaunti. Yesaninso.';
+        showAlert(errMsg, 'error');
+        submitBtn.disabled = false;
+        $('submitText').textContent = originalText;
+      }
+    });
+  </script>
+</body>
+</html>
