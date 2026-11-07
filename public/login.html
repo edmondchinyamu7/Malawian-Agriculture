@@ -284,6 +284,7 @@
               <input class="form-control" id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="••••••••">
             </div>
 
+            <p style="text-align:right;margin:0 0 8px"><button type="button" id="forgotPasswordBtn" style="border:0;background:none;color:#0b6245;font-weight:750;text-decoration:underline;cursor:pointer">Forgot password?</button></p>
             <button class="auth-submit-btn" id="submitBtn" type="submit">
               <span id="submitText" data-i18n="authBtnLogin">Lowani mu Akaunti</span>
             </button>
@@ -438,6 +439,30 @@
     });
 
     checkCurrentSession();
+
+    // Password recovery: send a one-time link to the dedicated reset page.
+    $('forgotPasswordBtn')?.addEventListener('click', async () => {
+      clearAlert();
+      const email = $('email').value.trim();
+      if (!email) {
+        showAlert('Enter your email address first, then choose Forgot password.', 'error');
+        $('email').focus();
+        return;
+      }
+      const btn = $('forgotPasswordBtn');
+      btn.disabled = true;
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + '/reset-password.html'
+        });
+        if (error) throw error;
+        showAlert('If this email belongs to an account, a password reset link has been sent. Check your inbox and spam folder.', 'success');
+      } catch (err) {
+        showAlert(err?.message || 'Unable to send password reset email. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
 
     // Form Submission
     $('authForm').addEventListener('submit', async (e) => {
