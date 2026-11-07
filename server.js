@@ -15,6 +15,15 @@ const SUPABASE_KEY=process.env.SUPABASE_ANON_KEY||process.env.SUPABASE_PUBLISHAB
 
 app.use(express.json({limit:'20kb'}));
 
+app.use((req,res,next)=>{
+  if(/\\.(?:html|css|js)$/i.test(req.path)){
+    res.setHeader('Cache-Control','no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma','no-cache');
+    res.setHeader('Expires','0');
+  }
+  next();
+});
+
 function readCookie(req,name){
   for(const item of (req.headers.cookie||'').split(';')){
     const index=item.indexOf('=');
