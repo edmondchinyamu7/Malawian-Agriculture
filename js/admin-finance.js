@@ -25,18 +25,21 @@ async function loadDashboard(){
   const results=await Promise.all([
     supabase.from('profiles').select('id,role,created_at'),
     supabase.from('app_activity_events').select('user_id,activity_date').gte('activity_date',from).lt('activity_date',to),
-    supabase.from('subscriptions').select('id,user_id,plan_id,status,expires_at,plan:subscription_plans(name,monthly_price_mwk)').gte('created_at',from).lt('created_at',to),
+    supabase.from('subscriptions').select('id,user_id,plan_id,status,expires_at,created_at,updated_at,plan:subscription_plans(name,monthly_price_mwk)'),
     supabase.from('revenue_entries').select('*').gte('received_at',from).lt('received_at',to).order('received_at',{ascending:false}),
     supabase.from('expense_entries').select('*').gte('spent_at',from).lt('spent_at',to).order('spent_at',{ascending:false}),
     supabase.from('subscription_plans').select('*').eq('active',true).order('display_order'),
-    supabase.from('subscriptions').select('id,user_id,plan_id,status,expires_at,plan:subscription_plans(name,monthly_price_mwk)').eq('status','active')
+    Promise.resolve({data:[],error:null})
   ]);
   const error=results.find(r=>r.error);
   if(error){ setStatus('Unable to load dashboard data: '+error.error.message,true); return; }
-  const [profiles,activity,monthSubs,revenue,expenses,plans,activeSubs]=results.map(r=>r.data||[]);
+  const [profiles,activity,allSubs,revenue,expenses,plans]=results.slice(0,6).map(r=>r.data||[]);
   const uniqueActive=new Set(activity.map(x=>x.user_id)).size;
-  const paidActive=activeSubs.filter(s=>s.plan_id!=='free' && (!s.expires_at || new Date(s.expires_at)>=new Date())).length;
-  const freeProfiles=profiles.length-paidActive;
+  const activeSubs=allSubs.filter(s=>s.status==='active' && s.plan_id!=='free' && (!s.expires_at || new Date(s.expires_at)>=new Date()));
+  const paidActive=activeSubs.length;
+  const farmerCount=profiles.filter(p=>p.role!=='admin').length;
+  const freeProfiles=Math.max(0,farmerCount-paidActive);
+  const monthSubs=allSubs.filter(s=>s.created_at>=from && s.created_at<to);
   const totalRevenue=revenue.reduce((n,x)=>n+Number(x.amount_mwk),0);
   const totalExpenses=expenses.reduce((n,x)=>n+Number(x.amount_mwk),0);
   setText('totalUsers',profiles.length.toLocaleString());
@@ -54,7 +57,7 @@ async function loadDashboard(){
   const sources=[['Subscriptions','subscription'],['Advertising','advertising'],['Partnerships','partnership'],['Other','other']];
   $('revenueBreakdown').innerHTML=sources.map(([label,key])=>{const total=revenue.filter(x=>x.source===key).reduce((n,x)=>n+Number(x.amount_mwk),0);return '<div class="finance-breakdown-row"><span>'+label+'</span><strong>'+money(total)+'</strong></div>';}).join('');
   const statuses=['active','pending','cancelled','expired','past_due','refunded'];
-  $('subscriptionBreakdown').innerHTML=statuses.map(s=>'<div class="finance-breakdown-row"><span>'+s.replace('_',' ')+'</span><strong>'+monthSubs.filter(x=>x.status===s).length+'</strong></div>').join('');
+  $('subscriptionBreakdown').innerHTML=statuses.map(s=>'<div class="finance-breakdown-row"><span>'+s.replace('_',' ')+'</span><strong>'+allSubs.filter(x=>x.status===s).length+'</strong></div>').join('')+'<div class="finance-breakdown-row"><span>New subscriptions this month</span><strong>'+monthSubs.length+'</strong></div>';
   $('revenueRows').innerHTML=revenue.length?revenue.slice(0,12).map(x=>'<tr><td>'+dateOnly(x.received_at)+'</td><td>'+esc(x.source)+'</td><td>'+money(x.amount_mwk)+'</td><td>'+esc(x.reference||x.notes||'—')+'</td></tr>').join(''):'<tr><td colspan="4">No revenue entries for this month.</td></tr>';
   $('expenseRows').innerHTML=expenses.length?expenses.slice(0,12).map(x=>'<tr><td>'+dateOnly(x.spent_at)+'</td><td>'+esc(x.category)+'</td><td>'+money(x.amount_mwk)+'</td><td>'+esc(x.description)+'</td></tr>').join(''):'<tr><td colspan="4">No expense entries for this month.</td></tr>';
   $('planRows').innerHTML=plans.map(p=>'<tr><td>'+esc(p.name)+'</td><td>'+money(p.monthly_price_mwk)+'</td><td>'+(p.ads_enabled?'Shown':'Off')+'</td><td>'+(p.active?'Active':'Inactive')+'</td></tr>').join('');
