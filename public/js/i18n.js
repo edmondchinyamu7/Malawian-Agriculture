@@ -217,6 +217,7 @@ export const translations = {
     footerMarket: "Msika wa zaulimi (V5)",
     footerWeather: "Zanyengo",
     footerAllModules: "Mitu yonse",
+    footerPlans: "Mapulani",
     footerAdmin: "Uyang'anire wa msika",
 
     // Modal Common Labels
@@ -447,6 +448,7 @@ export const translations = {
     footerMarket: "Market centre (V5)",
     footerWeather: "Weather centre",
     footerAllModules: "All modules",
+    footerPlans: "Plans",
     footerAdmin: "Admin portal",
 
     // Modal Common Labels
