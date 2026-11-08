@@ -57,6 +57,10 @@ export async function initAuth() {
 
   try {
     const a = await getAccount();
+    if (a?.user?.id) {
+      const { error: activityError } = await supabase.from('app_activity_events').insert({ user_id: a.user.id, event_name: 'app_open' });
+      if (activityError && activityError.code !== '23505') console.warn('Activity tracking notice:', activityError.message);
+    }
     if (login) login.hidden = !!a;
     if (menu) menu.hidden = !a;
 
