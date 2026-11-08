@@ -213,6 +213,22 @@
             <span>🌾</span> <span id="roleText">Mlimi wovomerezeka ku Malawi</span>
           </div>
 
+          <!-- Farmer Membership Status Panel -->
+          <div class="membership-status-panel" id="membershipPanel" style="background:#f4f9f6;border:1.5px solid #d4e8dc;border-radius:16px;padding:18px 20px;margin:20px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+              <div>
+                <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#178052;display:block;">UMEMBALA WANU WA ULIMI • SUBSCRIPTION</span>
+                <h3 id="profilePlanName" style="font-size:18px;color:#092d22;margin:4px 0 0;">Free Farmer (Mlimi Waulere)</h3>
+              </div>
+              <a href="pages/subscriptions.html" class="btn btn-outline" style="padding:8px 14px;font-size:13px;border-color:#178052;color:#0b5c3b;">Kwezani Umembala ↗</a>
+            </div>
+            <p id="profilePlanBenefits" style="font-size:13px;color:#53695d;margin:0 0 10px;line-height:1.5;">Maphunziro ndi chidziwitso chofunikira chaulimi popanda kulipira chilichonse.</p>
+            <div id="unlockedPills" style="display:flex;flex-wrap:wrap;gap:8px;font-size:11.5px;">
+              <span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;">✓ Mbewu 16+</span>
+              <span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;">✓ Kalendala Yoyamba</span>
+            </div>
+          </div>
+
           <form id="profileForm">
             <div class="profile-grid-fields">
               <div class="profile-field">
@@ -363,6 +379,47 @@
           $('roleBadge').style.background = '#fef3c7';
           $('roleBadge').style.borderColor = '#fde68a';
           $('roleBadge').style.color = '#92400e';
+        }
+
+        // Query active subscription tier
+        let activePlanId = localStorage.getItem('ulimi_simulated_plan') || 'free';
+        try {
+          const { data: subData } = await supabase.rpc('get_my_subscription_access');
+          if (subData && subData.plan_id) {
+            activePlanId = subData.plan_id;
+          }
+        } catch (_) {}
+
+        const planDetails = {
+          free: {
+            name: "Free Farmer (Mlimi Waulere)",
+            desc: "Maphunziro ndi chidziwitso chofunikira chaulimi popanda kulipira chilichonse.",
+            badges: ["✓ Mbewu 16+", "✓ Kalendala Yoyamba", "✓ Nkhani za Ulimi"]
+          },
+          standard: {
+            name: "Standard Farmer (Mlimi Wodziwika)",
+            desc: "Kalendala yatsatanetsatane, chidziwitso cha zigawo za m'Malawi ndi zolemba zosungidwa.",
+            badges: ["✓ Kalendala ya Mwezi ndi Mwezi", "✓ Malangizo a Zigawo", "✓ Zosungira Zolemba", "✓ Chithandizo cha Matenda"]
+          },
+          professional: {
+            name: "Professional Farmer (Mlimi Waluso) ⭐",
+            desc: "Chiwerengero cha feteleza, Farm Planner, mabuku a PDF oti mutsitse komanso 100% yopanda zotsatsa.",
+            badges: ["✓ Chowerengera Feteleza", "✓ Farm Planner", "✓ Mabuku a PDF Otsitsidwa", "✓ 100% Yopanda Zotsatsa"]
+          },
+          agribusiness: {
+            name: "Agribusiness Premium (Mabizinesi Azaulimi)",
+            desc: "Mitengo yeniyeni ya misika, mgwirizano wa alimi, mapulani a makampani ndi thandizo la akatswiri.",
+            badges: ["✓ Mitengo Yovomerezeka ya Misika", "✓ Wholesale Network", "✓ Mbiri ya Gulu / Cooperative", "✓ Akatswiri 24h"]
+          }
+        };
+
+        const currentPlan = planDetails[activePlanId] || planDetails.free;
+        if ($('profilePlanName')) $('profilePlanName').textContent = currentPlan.name;
+        if ($('profilePlanBenefits')) $('profilePlanBenefits').textContent = currentPlan.desc;
+        if ($('unlockedPills')) {
+          $('unlockedPills').innerHTML = currentPlan.badges.map(b => 
+            `<span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;font-weight:600;">${b}</span>`
+          ).join('');
         }
       } catch (err) {
         console.error('Failed to load profile:', err);

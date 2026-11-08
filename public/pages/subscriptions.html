@@ -23,8 +23,8 @@
         <span>ULIMI WA MALAWI<small>UMEMBALA WA ALIMI</small></span>
       </a>
 
-      <!-- Max 5 Navigation Tabs -->
-            <nav class="nav" id="nav">
+      <!-- Standard 5 Navigation Tabs -->
+      <nav class="nav" id="nav">
         <a href="../index.html" data-i18n="navHome">Poyambira</a>
         <a href="crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
         <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
@@ -33,13 +33,13 @@
       </nav>
 
       <div class="top-actions">
-        <!-- Language Switcher -->
+        <!-- Bilingual Switcher -->
         <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
           <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
         </div>
 
-        <!-- User Authentication & Profile -->
+        <!-- User Authentication & Profile Menu -->
         <div class="auth-box" id="authBox">
           <a class="btn btn-outline" id="accountLoginLink" href="../login.html" data-i18n="navLogin">Lowani</a>
           <div class="profile-menu" id="profileMenu" style="display:none">
@@ -59,13 +59,13 @@
 
     <!-- Main Content Area -->
     <main class="main container plans-page">
-      <!-- Intro Hero -->
+      <!-- Intro Hero Section -->
       <section class="plans-intro">
         <span class="section-kicker">KUDZIWA NDI CHUMA • GROW WITH KNOWLEDGE</span>
         <h1 id="pageTitle">Sankhani Umembala Wanu Wa Ulimi</h1>
         <p id="pageSubtitle">Yambani kwaulere ndipo kwerani pamene mukufuna zipangizo zapamwamba zaulimi. Mitengo yonse ili mu Kwacha ya Malawi.</p>
         
-        <!-- Billing Cycle Switcher -->
+        <!-- Billing Cycle Toggle -->
         <div class="billing-toggle-wrap">
           <div class="billing-toggle" role="group" aria-label="Billing frequency">
             <button class="billing-btn active" id="billingMonthly" type="button" aria-pressed="true">Mwezi Uliwonse</button>
@@ -75,12 +75,12 @@
         </div>
       </section>
 
-      <!-- Account / System Status Bar -->
+      <!-- Account Status Bar -->
       <div id="plansStatus" class="finance-status" role="status">
         Mitengo yonse 4 ili yokonzeka. Lowani kapena lembetsani kuti mukonzekere umembala wanu.
       </div>
 
-      <!-- Subscription Cards Grid (Pre-rendered for Instant Display) -->
+      <!-- 4 Core Subscription Cards (Pre-rendered for Instant Loading) -->
       <section id="planCards" class="plan-grid" aria-live="polite">
         <!-- 1. Free Farmer Card -->
         <article class="plan-card" data-plan-id="free">
@@ -216,11 +216,269 @@
         </article>
       </section>
 
-      <!-- Subscriptions & Payments Note -->
+      <!-- 5. Complete Feature Comparison Matrix -->
+      <section class="comparison-section">
+        <div class="comparison-header">
+          <span class="section-kicker">KUSIYANA KWA MAPULANI • FEATURE MATRIX</span>
+          <h2>Fananizani Zonse Zophatikizidwa mu Mapulani</h2>
+          <p>Onani mndandanda wathunthu wa zipangizo, maupangiri ndi mwayi woperekedwa pa gawo lililonse.</p>
+        </div>
+
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th class="col-feature">Chida / Chidziwitso (Feature)</th>
+                <th class="col-plan">Free Farmer</th>
+                <th class="col-plan">Standard</th>
+                <th class="col-plan featured">Professional ⭐</th>
+                <th class="col-plan">Agribusiness</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Category 1 -->
+              <tr class="category-row">
+                <td colspan="5">🌾 Mbewu &amp; Chidziwitso Choyambirira (Crops &amp; General Knowledge)</td>
+              </tr>
+              <tr>
+                <td>Laibulale ya Mbewu 16+ (Crop Library)</td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Malangizo Oyambirira a m'Munda (Basic Farming Guides)</td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Nkhani za Ulimi &amp; Chenjezo la Nyengo (Daily Weather &amp; News)</td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+
+              <!-- Category 2 -->
+              <tr class="category-row">
+                <td colspan="5">📅 Dongosolo &amp; Kalendala ya Ulimi (Planning &amp; Calendars)</td>
+              </tr>
+              <tr>
+                <td>Kalendala ya Nyengo Yoyambirira (Basic Seasonal Overview)</td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Kalendala Yatsatanetsatane ya Mwezi ndi Mwezi (Monthly Interactive Calendar)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Kusankha Zigawo &amp; Nyengo za m'Malawi (Regional Zoning &amp; Soil Advice)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Kusunga Zolemba za m'Munda (Saved Field Notes &amp; Offline Bookmarks)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+
+              <!-- Category 3 -->
+              <tr class="category-row">
+                <td colspan="5">🧮 Zowerengera Zamakono &amp; Bajeti (Precision Calculators &amp; Budgeting)</td>
+              </tr>
+              <tr>
+                <td>Chowerengera Chenicheni cha Feteleza (Basal &amp; Top Dressing Calculator)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Upangiri Wokonza Feteleza wa Mbeya (Organic Mbeya Fertiliser Guide)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Dongosolo la Ndalama &amp; Bajeti ya Ulimi (Farm Budget &amp; Profit Planner)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+
+              <!-- Category 4 -->
+              <tr class="category-row">
+                <td colspan="5">📚 Maphunziro Apamwamba &amp; Mabuku Otsitsidwa (Manuals &amp; Learning)</td>
+              </tr>
+              <tr>
+                <td>Malo Ophunzirira Oyambirira (Starter Learning Centre Modules)</td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Maphunziro Apamwamba a Alimi (Advanced Professional Learning Courses)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Mabuku a PDF Otsitsidwa pa Foni (Downloadable Offline Field Manuals)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+
+              <!-- Category 5 -->
+              <tr class="category-row">
+                <td colspan="5">📊 Misika &amp; Mabizinesi (Commercial Intelligence &amp; Wholesale Trade)</td>
+              </tr>
+              <tr>
+                <td>Mitengo Yoyambirira ya Katundu (Standard Retail Market Estimates)</td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+                <td class="col-plan featured"><span class="check-yes">✓</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Chidziwitso cha Mitengo Yovomerezeka ya Misika (Verified Commodity Prices)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Kulumikizana ndi Ogula Katundu Wambiri (Wholesale Aggregator Network)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+              <tr>
+                <td>Mbiri ya Magulu a Alimi / Mgwirizano (Cooperative &amp; Multi-Farm Management)</td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-no">—</span></td>
+                <td class="col-plan featured"><span class="check-no">—</span></td>
+                <td class="col-plan"><span class="check-yes">✓</span></td>
+              </tr>
+
+              <!-- Category 6 -->
+              <tr class="category-row">
+                <td colspan="5">⚙️ Chidziwitso &amp; Thandizo (Experience &amp; Platform Privileges)</td>
+              </tr>
+              <tr>
+                <td>Ndondomeko ya Zotsatsa (Advertisement Policy)</td>
+                <td class="col-plan">Zotsatsa zilipo</td>
+                <td class="col-plan">Zotsatsa zochepa</td>
+                <td class="col-plan featured"><strong>100% Yopanda Zotsatsa</strong></td>
+                <td class="col-plan"><strong>100% Yopanda Zotsatsa</strong></td>
+              </tr>
+              <tr>
+                <td>Thandizo la Akatswiri (Agronomist Platform Support)</td>
+                <td class="col-plan">Gulu la alimi</td>
+                <td class="col-plan">Thandizo la pa imelo</td>
+                <td class="col-plan featured">Thandizo loyambirira</td>
+                <td class="col-plan"><strong>Akatswiri Oyankha Mwachangu (24h)</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6. Downloadable Field Manuals & PDF Section (Professional & Agribusiness) -->
+      <section class="manuals-section" id="manualsSection">
+        <div class="manuals-header">
+          <span class="section-kicker">MABUKU A M'MUNDA • FIELD MANUALS</span>
+          <h2>Mabuku Opezeka Oti Mutsitse Pa Foni (PDF Guides)</h2>
+          <p>Alimi a pa Professional ndi Agribusiness amatha kutsitsa kapena kusindikiza maupangiri awa kuti awerenge m'munda popanda intaneti.</p>
+        </div>
+
+        <div class="manuals-grid">
+          <!-- Manual 1: Maize Production -->
+          <article class="manual-card">
+            <div class="manual-card-icon">🌽</div>
+            <span class="manual-badge">Professional &amp; Up</span>
+            <h3>Buku la Ulimi wa Chimanga ku Malawi</h3>
+            <p>Maupangiri athunthu a kubzala, feteleza wa basal ndi top dressing, kuthana ndi mbozi ya kasikisi (Fall armyworm), komanso kusunga chimanga mu nkhokwe ya PICS.</p>
+            <div class="manual-meta">
+              <span>PDF • 14 Masamba</span>
+              <span>Kukula: 1.2 MB</span>
+            </div>
+            <button class="manual-download-btn" type="button" data-manual="maize">
+              <span>📥 Tsegulani Bukuli (PDF)</span>
+            </button>
+          </article>
+
+          <!-- Manual 2: Groundnut & Soybeans -->
+          <article class="manual-card">
+            <div class="manual-card-icon">🥜</div>
+            <span class="manual-badge">Professional &amp; Up</span>
+            <h3>Maupangiri a Ulimi wa Mtedza ndi Soya</h3>
+            <p>Njira zolera mbewu za mitundu ya CG7, Nsinjiro ndi Chitala. Kusamalira nthaka, kupewa matenda a rosette, ndi kukulitsa zokolola zopindulitsa pamsika.</p>
+            <div class="manual-meta">
+              <span>PDF • 10 Masamba</span>
+              <span>Kukula: 980 KB</span>
+            </div>
+            <button class="manual-download-btn" type="button" data-manual="legumes">
+              <span>📥 Tsegulani Bukuli (PDF)</span>
+            </button>
+          </article>
+
+          <!-- Manual 3: Mbeya Fertiliser -->
+          <article class="manual-card">
+            <div class="manual-card-icon">🌱</div>
+            <span class="manual-badge">Professional &amp; Up</span>
+            <h3>Kupanga ndi Kugwiritsa Ntchito Feteleza wa Mbeya</h3>
+            <p>Buku lophunzitsa kupanga feteleza wotsika mtengo pogwiritsa ntchito manyowa a ziweto, zinyalala za munda, phulusa ndi feteleza wochepa wa m'fakitale.</p>
+            <div class="manual-meta">
+              <span>PDF • 8 Masamba</span>
+              <span>Kukula: 750 KB</span>
+            </div>
+            <button class="manual-download-btn" type="button" data-manual="mbeya">
+              <span>📥 Tsegulani Bukuli (PDF)</span>
+            </button>
+          </article>
+
+          <!-- Manual 4: Soil & Water Conservation -->
+          <article class="manual-card">
+            <div class="manual-card-icon">💧</div>
+            <span class="manual-badge">Agribusiness &amp; Pro</span>
+            <h3>Kusamalira Nthaka ndi Madzi m'Munda</h3>
+            <p>Upangiri wopanga mipanda ya nthaka (contour ridges), ma swales, manyowa obisa (mulching), ndi njira zothirira mbewu zosataya madzi m'madambo.</p>
+            <div class="manual-meta">
+              <span>PDF • 12 Masamba</span>
+              <span>Kukula: 1.1 MB</span>
+            </div>
+            <button class="manual-download-btn" type="button" data-manual="soil">
+              <span>📥 Tsegulani Bukuli (PDF)</span>
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <!-- 7. Malawian Payment Methods Information -->
       <section class="plans-note">
         <div class="plans-note-header">
           <span class="icon">🇲🇼</span>
-          <strong>Njira Zovomerezeka Zolipirira ku Malawi (Payment Methods)</strong>
+          <strong>Njira Zovomerezeka Zolipirira ku Malawi (Approved Payment Methods)</strong>
         </div>
         <p>Alimi amatha kulipira umembala kudzera m'njira zotsatirazi mosavuta pa foni kapena ku banki. Musatumize ndalama ku akaunti yachinsinsi kapena yosavomerezeka.</p>
         <div class="payment-methods-strip">
@@ -229,6 +487,36 @@
           <span class="payment-method-pill">🏛️ National Bank of Malawi</span>
           <span class="payment-method-pill">🏛️ Standard Bank Malawi</span>
           <span class="payment-method-pill">🛒 Google Play Billing</span>
+        </div>
+      </section>
+
+      <!-- 8. Frequently Asked Questions (FAQ) -->
+      <section class="faq-section">
+        <div class="faq-header">
+          <span class="section-kicker">MAFUNSO OFUNSIDWA KAWIRIKAWIRI • FAQ</span>
+          <h2>Mafunso Okhudza Umembala wa Ulimi wa Malawi</h2>
+        </div>
+
+        <div class="faq-grid">
+          <article class="faq-card">
+            <h3><span>❓</span> Kodi ndimalipira bwanji ndi Airtel Money kapena TNM Mpamba?</h3>
+            <p>Mukasankha plan imene mukufuna, dinani batani la planiyo. Paneli ya malipiro idzatseguka ndi nambala ya malonda (Merchant code: 548921 pa Airtel kapena 883100 pa TNM). Tumizani ndalama ndipo lembani nambala ya chitupa (SMS reference) kuti mutsegule umembala nthawi yomweyo.</p>
+          </article>
+
+          <article class="faq-card">
+            <h3><span>❓</span> Kodi ndingathe kugwiritsa ntchito mapulaniwa ngati ndilibe intaneti m'munda?</h3>
+            <p>Inde! Alimi a pa Professional ndi Agribusiness amatha kutsitsa mabuku onse a m'munda (PDF) ndipo zolemba zonse zomwe mwasunga zimakhalabe pa foni yanu ngakhale mulibe intaneti.</p>
+          </article>
+
+          <article class="faq-card">
+            <h3><span>❓</span> Kodi ndingasinthe kapena kuleka plan nthawi ina iliyonse?</h3>
+            <p>Mutha kukweza kapena kusintha plan nthawi iliyonse. Palibe ndalama zowonjezera kapena mikangano; umembala wanu umagwira ntchito mpaka tsiku loyenera lisanathe.</p>
+          </article>
+
+          <article class="faq-card">
+            <h3><span>❓</span> Kodi ndingatsegule bwanji zida ngati Kalendala kapena Chowerengera Feteleza?</h3>
+            <p>Zida zonse zili ndi loko ya umembala. Mukakhala pa Standard, Kalendala ya ulimi ndi Malo ophunzirira zimatseguka; mukakhala pa Professional, Chowerengera Feteleza ndi Dongosolo la Munda zimatseguka zonse basi.</p>
+          </article>
         </div>
       </section>
 
@@ -327,6 +615,22 @@
             <button class="btn btn-outline" id="btnCancelPayment" type="button" onclick="document.getElementById('paymentModal').classList.remove('open')">Siyani</button>
             <button class="btn btn-primary" id="btnConfirmPayment" type="button">Tsimikizani &amp; Tsegulani Umembala</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Printable / Offline Manual Preview Modal -->
+    <div class="payment-modal-backdrop" id="manualModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="manualModalTitle">
+      <div class="payment-modal" style="width:min(700px, 100%)">
+        <div class="payment-modal-head">
+          <div>
+            <h2 id="manualModalTitle">Buku la m'Munda</h2>
+            <p id="manualModalSubtitle">Maupangiri a Ulimi wa Malawi</p>
+          </div>
+          <button class="payment-modal-close" id="manualModalClose" type="button" aria-label="Tsekani">✕</button>
+        </div>
+        <div class="payment-modal-body" id="manualModalBody">
+          <!-- Dynamic reader content -->
         </div>
       </div>
     </div>

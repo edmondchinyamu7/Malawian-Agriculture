@@ -515,19 +515,156 @@ async function initSubscriptions() {
     });
   });
 
-  const btnConfirm = document.getElementById('btnConfirmPayment');
-  if (btnConfirm) {
-    btnConfirm.addEventListener('click', confirmPaymentActivation);
-  }
+  // 7. Manuals Download & Reading Handler (Professional & Agribusiness)
+  const manuals = {
+    maize: {
+      title: "Buku la Ulimi wa Chimanga ku Malawi",
+      title_en: "Malawi Maize Production Field Guide",
+      subtitle: "Njira Zabwino Zokwezera Zokolola za Chimanga (2026)",
+      content: `
+        <div style="font-size:13px;line-height:1.7;color:#284234;">
+          <h4 style="color:#092d22;margin:12px 0 6px;">1. Kukonzekera Munda ndi Kubzala</h4>
+          <p>Konzani mizere ya 75cm. Dzalanani mbewu imodzi pa dzenje lililonse pa mtunda wa 25cm. Izi zimapereka mbewu zokwana 53,333 pa hekitala imodzi (pafupifupi 21,500 pa ekala).</p>
+          
+          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kuthira Feteleza Woyambira (Basal Dressing)</h4>
+          <p>Gwiritsani ntchito feteleza wa <strong>23:10:5 + 6S + 1Zn</strong>. Thirani feteleza pobzala kapena pasanathe masiku 7 mbewu zitamera. Mlingo: Chivundikiro chimodzi cha botolo la mowa kapena kwasakwasa (chigubu) pambali pa dzenje la mbewu, pafupifupi 5cm kuchokera pa mtengo.</p>
 
-  // 6. Language switch observer
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.dataset.lang || 'ny';
-      currentLang = lang;
-      renderCards();
+          <h4 style="color:#092d22;margin:12px 0 6px;">3. Feteleza wa Pamwamba (Top Dressing - Urea)</h4>
+          <p>Thirani <strong>Urea (46% N)</strong> pamene chimanga chafika m'mawondo (masabata 3 mpaka 4 mutabzala). Feteleza aziyikidwa pa nthaka yonyowa ndipo muphimbe nthawi yomweyo kuti mpweya wa nayitrojeni usapite m'mwamba.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">4. Kuthana ndi Mbozi ya Kasikisi (Fall Armyworm)</h4>
+          <p>Fufuzani m'munda kawiri pa sabata. Ngati mwaona mbozi pa mitengo 10 pa 100 iliyonse, tsirani mankhwala ovomerezeka monga Emamectin Benzoate (Proclaim) m'mawa kwambiri kapena madzulo. Mutha kuthiranso phulusa kapena mchenga m'mitima ya chimanga.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">5. Kukolola ndi Kusunga Zokolola</h4>
+          <p>Kololani chimanga chikauma bwino pa chinyezi chosapitirira 12.5%. Gwiritsani ntchito matumba a <strong>PICS (Purdue Improved Crop Storage)</strong> amene alibe mpweya kuti muteteze zokolola popanda mankhwala owopsa a kachasu kapena fumbi.</p>
+        </div>
+      `
+    },
+    legumes: {
+      title: "Maupangiri a Ulimi wa Mtedza ndi Soya",
+      title_en: "Groundnut & Soybean Yield Handbook",
+      subtitle: "Kusamalira Mitundu Yovomerezeka ku Malawi",
+      content: `
+        <div style="font-size:13px;line-height:1.7;color:#284234;">
+          <h4 style="color:#092d22;margin:12px 0 6px;">1. Mitundu ya Mtedza Yovomerezeka</h4>
+          <p><strong>CG7:</strong> Mtundu wabwino wopatsa mafuta ambiri komanso wogulitsidwa pamitengo yabwino. <strong>Nsinjiro & Chitala:</strong> Zosachedwa kucha komanso zopirira chilala m'maboma a m'mbali mwa nyanja ndi m'zigwa.</p>
+          
+          <h4 style="color:#092d22;margin:12px 0 6px;">2. Makulidwe a Mizere ndi Kubzala</h4>
+          <p>Dzalanani mtedza mizere iwiri pa mzere umodzi wa 75cm, pa mtunda wa 15cm pakati pa mbewu. Izi zimateteza mtedza ku matenda a Chikasu (Groundnut Rosette Virus) chifukwa kafadala sangathe kulowa mosavuta pa munda wophimbidwa.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">3. Ulimi wa Soya ndi Inoculant</h4>
+          <p>Mukadzala soya, sakanizani mbewu ndi mankhwala opatsa tizilombo tachilengedwe ta <em>Rhizobium Inoculant</em>. Izi zimathandiza kuti mtedza ndi soya zizidzitengera zokha nayitrojeni m'mpweya popanda kufunika feteleza wambiri wogula.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">4. Kupewa Chenzi la Aflatoxin</h4>
+          <p>Osasiya mtedza pansi pamtunda utakolola. Yanikani mtedza pa machira kapena zikwa pamtunda kuti uume mwamsanga komanso kupewa bowa wowopsa wa aflatoxin umene ungakanidwe pamsika wa kunja.</p>
+        </div>
+      `
+    },
+    mbeya: {
+      title: "Kupanga ndi Kugwiritsa Ntchito Feteleza wa Mbeya",
+      title_en: "Mbeya Organic Fertiliser Guide",
+      subtitle: "Njira Yaulimi Wotsika Mtengo Pogwiritsa Ntchito Zipangizo za m'Khola",
+      content: `
+        <div style="font-size:13px;line-height:1.7;color:#284234;">
+          <h4 style="color:#092d22;margin:12px 0 6px;">1. Zipangizo Zofunika</h4>
+          <ul>
+            <li>Manyowa a ng'ombe, mbuzi kapena nkhuku: <strong>Makilogalamu 20</strong></li>
+            <li>Madeya a chimanga kapena mpunga: <strong>Makilogalamu 20</strong></li>
+            <li>Phulusa loyera lophika: <strong>Makilogalamu 10</strong></li>
+            <li>Feteleza wa m'fakitale (23:10:5 kapena CAN): <strong>Makilogalamu 5 okha</strong></li>
+            <li>Madzi abwino aukhondo: <strong>Malita 20</strong></li>
+          </ul>
+          
+          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kusakaniza ndi Kuwundika</h4>
+          <p>Thirani manyowa, madeya, phulusa ndi feteleza wa makilogalamu 5 pa malo amthunzi. Sakanizani bwinobwino pamene mukuwaza madzi pang'onopang'ono. Kani nthaka ndi dzanja lanu: madzi sayenera kudontha koma azingokhala onyowa chabe.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">3. Nthawi ya Kuwundika (Masiku 21)</h4>
+          <p>Phimbani hepiyo ndi pulasitiki yakuda mwamphamvu kuti mpweya usalowe. Tembenuzani fetelezayo sabata iliyonse. Pakatha masiku 21, fetelezayo amakhala wozizira, wakuda ndipo wokonzeka kugwiritsidwa ntchito m'munda.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">4. Mlingo m'Munda</h4>
+          <p>Thirani dzanja limodzi modzaza pa dzenje lililonse la chimanga pobzala. Feteleza wa Mbeya amakhalitsa m'nthaka zaka ziwiri mpaka zitatu ndipo amasunga chinyezi.</p>
+        </div>
+      `
+    },
+    soil: {
+      title: "Kusamalira Nthaka ndi Madzi m'Munda",
+      title_en: "Soil & Water Conservation Field Guide",
+      subtitle: "Kupanga Mipanda ndi Kusunga Chinyezi m'Madambo ndi m'Mapiri",
+      content: `
+        <div style="font-size:13px;line-height:1.7;color:#284234;">
+          <h4 style="color:#092d22;margin:12px 0 6px;">1. Kupanga Mipanda ya Nthaka ndi A-Frame</h4>
+          <p>Gwiritsani ntchito chipangizo cha A-frame kuti mupeze mzere wolunjika pa mapiri. Pangani mipanda yotchinga madzi (contour ridges) kuti madzi a mvula asakokolole dothi lonona.</p>
+          
+          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kubzala Msipu wa Vetiver</h4>
+          <p>Bzalani msipu wakuya wa Vetiver pambali pa mipanda. Muzu wa vetiver umalowa pansi kwambiri (mpaka mamita 3) ndipo umalimbitsa nthaka kuti madzi asagwetse mizere panthawi ya mphepo ndi mikunzo.</p>
+
+          <h4 style="color:#092d22;margin:12px 0 6px;">3. Manyowa Obisa (Mulching)</h4>
+          <p>Phimbani munda ndi udzu wouma, masamba kapena zotsala za chimanga. Izi zimachepetsa kutentha kwa nthaka ndi kupewa kuti madzi asamweke ndi dzuwa panthawi ya chilala.</p>
+        </div>
+      `
+    }
+  };
+
+  document.querySelectorAll('.manual-download-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const manualKey = btn.getAttribute('data-manual');
+      const manual = manuals[manualKey];
+      if (!manual) return;
+
+      const isNy = currentLang === 'ny';
+      const hasProAccess = userAccess.plan_id === 'professional' || userAccess.plan_id === 'agribusiness';
+
+      if (!hasProAccess) {
+        const proceedUpgrade = confirm(
+          isNy
+            ? `Buku ili ("${manual.title}") likupezeka pa umembala wa Professional Farmer kapena Agribusiness Premium. Mukufuna kukweza plan yanu kuti mutsegule mabuku onse a m'munda?`
+            : `This field guide ("${manual.title_en}") requires Professional Farmer or Agribusiness Premium. Would you like to upgrade your membership to unlock all downloadable guides?`
+        );
+        if (proceedUpgrade) {
+          const proPlan = DEFAULT_PLANS.find(p => p.id === 'professional');
+          if (proPlan) openPaymentModal(proPlan);
+        }
+        return;
+      }
+
+      // Open formatted manual modal for reading & printing
+      const modal = document.getElementById('manualModal');
+      const titleEl = document.getElementById('manualModalTitle');
+      const subtitleEl = document.getElementById('manualModalSubtitle');
+      const bodyEl = document.getElementById('manualModalBody');
+
+      if (modal && bodyEl) {
+        titleEl.textContent = isNy ? manual.title : manual.title_en;
+        subtitleEl.textContent = manual.subtitle;
+        bodyEl.innerHTML = `
+          <div style="background:#f4f9f6;border:1px solid #d8e8dd;border-radius:12px;padding:14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <span style="font-size:12px;font-weight:700;color:#134b34;">📄 Ulimi wa Malawi • Buku Lotsimikizika la Alimi</span>
+            <button id="btnPrintManual" type="button" class="btn btn-primary" style="padding:7px 14px;font-size:12px;">🖨️ Sindikizani / Print PDF</button>
+          </div>
+          ${manual.content}
+        `;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+
+        const printBtn = document.getElementById('btnPrintManual');
+        if (printBtn) {
+          printBtn.addEventListener('click', () => {
+            window.print();
+          });
+        }
+      }
     });
   });
+
+  const manualClose = document.getElementById('manualModalClose');
+  const manualModal = document.getElementById('manualModal');
+  if (manualClose) manualClose.addEventListener('click', () => manualModal.classList.remove('open'));
+  if (manualModal) {
+    manualModal.addEventListener('click', (e) => {
+      if (e.target === manualModal) manualModal.classList.remove('open');
+    });
+  }
 }
 
 if (document.readyState === 'loading') {
@@ -535,3 +672,4 @@ if (document.readyState === 'loading') {
 } else {
   initSubscriptions();
 }
+
