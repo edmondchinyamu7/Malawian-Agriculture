@@ -38,6 +38,7 @@ ulimi-wa-malawi/
 │   ├── components.css            # Reusable cards, filter pills, search bars, modals, badges
 │   ├── dashboard.css             # Dashboards for weather, market tables & analytics
 │   ├── admin.css                 # Administrative controls & management tables
+│   └── monetization.css          # Finance dashboard and membership plan styling
 │   ├── responsive.css            # Mobile drawer navigation & responsive breakpoints
 │   └── main.css                  # Combined stylesheet bundle
 │
@@ -50,7 +51,9 @@ ulimi-wa-malawi/
 │   ├── market-centre.js          # V5 Market prices directory, regional comparisons & stats
 │   ├── weather.js                # Live Open-Meteo weather API integration & farm advisories
 │   ├── calculators.js            # Fertiliser quantities, land area & seed calculations
-│   └── admin.js                  # Price administration, verification toggle & data reset
+│   ├── admin.js                  # Price administration, verification toggle & data reset
+│   ├── admin-finance.js          # Revenue, expenses, users and subscription analytics
+│   └── subscriptions.js          # Public four-tier membership catalogue
 │
 ├── data/                         # Structured JSON datasets
 │   ├── crops.json                # 16 complete Malawi crop profiles & agronomic guides
@@ -108,3 +111,13 @@ ulimi-wa-malawi/
 - Fully responsive across mobile phones, tablets, and desktop displays.
 - Strict relative paths (`../css/`, `../js/`, `../data/`) ensuring GitHub Pages and web server compatibility.
 - Build and linting verify clean.
+
+
+## Monetisation & Business Dashboard
+
+- Four membership plans are stored in Supabase: Free (MWK 0), Standard (MWK 2,000/month), Professional (MWK 5,000/month), and Agribusiness Premium (MWK 10,000/month).
+- The administrator portal includes a finance dashboard for active users, subscriptions, recorded revenue, operating expenses and operating result.
+- Finance dashboard access is restricted through the existing administrator sign-in and Supabase Row Level Security.
+- Daily authenticated activity is recorded once per user per day to support monthly active user reporting.
+- Revenue and expense entries are administrator-managed. Actual AdMob and Google Play Billing integrations remain separate launch tasks.
+- SQL setup is documented in `supabase/monetization.sql`.
