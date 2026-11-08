@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ny">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <meta name="description" content="Mapulani a umembala wa Ulimi wa Malawi: Free, Standard, Professional ndi Agribusiness. Pezani zipangizo zapamwamba za ulimi ku Malawi.">
+  <meta property="og:title" content="Mapulani a Umembala | Ulimi wa Malawi">
+  <meta property="og:description" content="Sankhani umembala wanu wa ulimi ku Malawi: maulere, standard, professional ndi agribusiness.">
+  <title>Mapulani a Umembala | Ulimi wa Malawi</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/monetization.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body id="top">
+  <div class="shell">
+    <!-- Topbar Header -->
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+        <span class="brand-mark">🌱</span>
+        <span>ULIMI WA MALAWI<small>UMEMBALA WA ALIMI</small></span>
+      </a>
+
+      <!-- Max 5 Navigation Tabs -->
+            <nav class="nav" id="nav">
+        <a href="../index.html" data-i18n="navHome">Poyambira</a>
+        <a href="crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
+        <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
+        <a href="../modules.html" data-i18n="navModules">Mitu yonse</a>
+        <a href="subscriptions.html" class="active" data-i18n="navSubscriptions">Mapulani</a>
+      </nav>
+
+      <div class="top-actions">
+        <!-- Language Switcher -->
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+        </div>
+
+        <!-- User Authentication & Profile -->
+        <div class="auth-box" id="authBox">
+          <a class="btn btn-outline" id="accountLoginLink" href="../login.html" data-i18n="navLogin">Lowani</a>
+          <div class="profile-menu" id="profileMenu" style="display:none">
+            <button class="profile-btn" id="profileMenuButton" type="button" aria-expanded="false" aria-haspopup="true">
+              <span class="profile-avatar" id="userInitials">U</span>
+              <span class="profile-name" id="profileName">Mlimi</span>
+            </button>
+            <div class="profile-dropdown" id="profileDropdown" role="menu">
+              <a href="../profile.html" class="dropdown-item" role="menuitem" data-i18n="navProfile">Mbiri Yanga</a>
+              <a href="subscriptions.html" class="dropdown-item" role="menuitem">Umembala Wanga</a>
+              <button class="dropdown-item" id="logoutButton" type="button" role="menuitem" data-i18n="navLogout">Tulukani</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main container plans-page">
+      <!-- Intro Hero -->
+      <section class="plans-intro">
+        <span class="section-kicker">KUDZIWA NDI CHUMA • GROW WITH KNOWLEDGE</span>
+        <h1 id="pageTitle">Sankhani Umembala Wanu Wa Ulimi</h1>
+        <p id="pageSubtitle">Yambani kwaulere ndipo kwerani pamene mukufuna zipangizo zapamwamba zaulimi. Mitengo yonse ili mu Kwacha ya Malawi.</p>
+        
+        <!-- Billing Cycle Switcher -->
+        <div class="billing-toggle-wrap">
+          <div class="billing-toggle" role="group" aria-label="Billing frequency">
+            <button class="billing-btn active" id="billingMonthly" type="button" aria-pressed="true">Mwezi Uliwonse</button>
+            <button class="billing-btn" id="billingYearly" type="button" aria-pressed="false">Chaka Chathunthu</button>
+          </div>
+          <span class="billing-save-tag">🎉 Sungani 15% (Miyezi 2 Yaulere)</span>
+        </div>
+      </section>
+
+      <!-- Account / System Status Bar -->
+      <div id="plansStatus" class="finance-status" role="status">
+        Mitengo yonse 4 ili yokonzeka. Lowani kapena lembetsani kuti mukonzekere umembala wanu.
+      </div>
+
+      <!-- Subscription Cards Grid (Pre-rendered for Instant Display) -->
+      <section id="planCards" class="plan-grid" aria-live="polite">
+        <!-- 1. Free Farmer Card -->
+        <article class="plan-card" data-plan-id="free">
+          <div class="plan-header">
+            <span class="plan-kicker">KWAULERE NTHAWI YONSE</span>
+            <h2>Free Farmer</h2>
+            <p class="plan-description">Maphunziro ndi chidziwitso chofunikira chaulimi popanda kulipira chilichonse.</p>
+          </div>
+          <div class="plan-price-wrap">
+            <div class="plan-price">
+              <span>MWK 0</span>
+              <small>/ mwezi</small>
+            </div>
+            <div class="plan-subtext">Kwa alimi onse ku Malawi</div>
+          </div>
+          <ul class="plan-features">
+            <li><span class="check-icon">✓</span><span>Mbewu za m'Malawi (Laibulale ya mbewu 16+)</span></li>
+            <li><span class="check-icon">✓</span><span>Kalendala yoyambira ulimi wa nyengo</span></li>
+            <li><span class="check-icon">✓</span><span>Nkhani za ulimi ndi zanyengo zatsiku ndi tsiku</span></li>
+            <li><span class="check-icon">✓</span><span>Malangizo oyambirira a m'munda</span></li>
+          </ul>
+          <div class="plan-ad-note">
+            <span class="icon">ℹ️</span>
+            <span>Zotsatsa zitha kuonekera mwaulere</span>
+          </div>
+          <div class="plan-actions">
+            <button class="plan-btn plan-btn-free" type="button" data-plan="free">
+              <span>Yambani Kwaulere</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 2. Standard Farmer Card -->
+        <article class="plan-card" data-plan-id="standard">
+          <div class="plan-header">
+            <span class="plan-kicker">KULIMA MWANZERU</span>
+            <h2>Standard Farmer</h2>
+            <p class="plan-description">Maupangiri ochulukirapo, zosungira zolemba ndi kalendala yatsatanetsatane.</p>
+          </div>
+          <div class="plan-price-wrap">
+            <div class="plan-price">
+              <span>MWK 2,000</span>
+              <small>/ mwezi</small>
+            </div>
+            <div class="plan-subtext">Kulima kwamakono ndi njira zoyenera</div>
+          </div>
+          <ul class="plan-features">
+            <li><span class="check-icon">✓</span><span>Zonse zopezeka pa Mlimi Waulere</span></li>
+            <li><span class="check-icon">✓</span><span>Kalendala ya ulimi yatsatanetsatane ya mwezi ndi mwezi</span></li>
+            <li><span class="check-icon">✓</span><span>Maupangiri apadera amadera ndi nthaka za m'Malawi</span></li>
+            <li><span class="check-icon">✓</span><span>Kusunga zolemba za munda ndi zithunzi zothandiza</span></li>
+            <li><span class="check-icon">✓</span><span>Chidziwitso cha matenda a mbewu ndi chithandizo</span></li>
+          </ul>
+          <div class="plan-ad-note">
+            <span class="icon">ℹ️</span>
+            <span>Zotsatsa zochepa zothandiza mlimi</span>
+          </div>
+          <div class="plan-actions">
+            <button class="plan-btn plan-btn-upgrade" type="button" data-plan="standard">
+              <span>Sankhani Standard Farmer</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 3. Professional Farmer Card (Featured / Recommended) -->
+        <article class="plan-card featured" data-plan-id="professional">
+          <div class="plan-top-ribbon">⭐ YOTCHUKA KWAMBIRI • RECOMMENDED</div>
+          <div class="plan-header">
+            <span class="plan-kicker">AKATSWIRI AULIMI</span>
+            <h2>Professional Farmer</h2>
+            <p class="plan-description">Zipangizo zamakono zowerengera bajeti ya ulimi ndi maphunziro apamwamba.</p>
+          </div>
+          <div class="plan-price-wrap">
+            <div class="plan-price">
+              <span>MWK 5,000</span>
+              <small>/ mwezi</small>
+            </div>
+            <div class="plan-subtext">Kukolola mochulukira komanso mwaubwino</div>
+          </div>
+          <ul class="plan-features">
+            <li><span class="check-icon">✓</span><span>Zonse zopezeka pa Mlimi Wodziwika</span></li>
+            <li class="premium-highlight"><span class="check-icon">✓</span><span>Chiwerengero chenicheni cha feteleza (Basal &amp; Top dressing)</span></li>
+            <li class="premium-highlight"><span class="check-icon">✓</span><span>Dongosolo lonse la ndalama ndi bajeti ya ulimi (Farm Planner)</span></li>
+            <li><span class="check-icon">✓</span><span>Maupangiri ndi mabuku a PDF oti mutsitse pa foni</span></li>
+            <li><span class="check-icon">✓</span><span>Maphunziro apamwamba a ulimi wopindulitsa (Learning Centre)</span></li>
+            <li class="premium-highlight"><span class="check-icon">✓</span><span>100% Yopanda zotsatsa zilizonse</span></li>
+          </ul>
+          <div class="plan-ad-note">
+            <span class="icon">🛡️</span>
+            <span>100% Yopanda zotsatsa zilizonse</span>
+          </div>
+          <div class="plan-actions">
+            <button class="plan-btn plan-btn-featured" type="button" data-plan="professional">
+              <span>Sankhani Professional Farmer</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 4. Agribusiness Premium Card -->
+        <article class="plan-card" data-plan-id="agribusiness">
+          <div class="plan-header">
+            <span class="plan-kicker">BIZINESI YAULIMI</span>
+            <h2>Agribusiness Premium</h2>
+            <p class="plan-description">Chidziwitso cha misika yapamwamba, mitengo yogulitsira ndi zida za mabizinesi.</p>
+          </div>
+          <div class="plan-price-wrap">
+            <div class="plan-price">
+              <span>MWK 10,000</span>
+              <small>/ mwezi</small>
+            </div>
+            <div class="plan-subtext">Mabizinesi, makampani ndi magulu a alimi</div>
+          </div>
+          <ul class="plan-features">
+            <li><span class="check-icon">✓</span><span>Zonse zopezeka pa Mlimi Waluso</span></li>
+            <li class="premium-highlight"><span class="check-icon">✓</span><span>Chidziwitso cha mitengo yovomerezeka ya misika ya m'Malawi</span></li>
+            <li><span class="check-icon">✓</span><span>Mwayi wolumikizana ndi ogula katundu wambiri pamsika</span></li>
+            <li><span class="check-icon">✓</span><span>Mapulani ndi zowerengera za makampani azaulimi</span></li>
+            <li><span class="check-icon">✓</span><span>Thandizo loyambirira kuchokera kwa akatswiri</span></li>
+            <li class="premium-highlight"><span class="check-icon">✓</span><span>Kusamalira mbiri ya gulu kapena mgwirizano wa alimi</span></li>
+          </ul>
+          <div class="plan-ad-note">
+            <span class="icon">🛡️</span>
+            <span>100% Yopanda zotsatsa zilizonse</span>
+          </div>
+          <div class="plan-actions">
+            <button class="plan-btn plan-btn-upgrade" type="button" data-plan="agribusiness">
+              <span>Sankhani Agribusiness Premium</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- Subscriptions & Payments Note -->
+      <section class="plans-note">
+        <div class="plans-note-header">
+          <span class="icon">🇲🇼</span>
+          <strong>Njira Zovomerezeka Zolipirira ku Malawi (Payment Methods)</strong>
+        </div>
+        <p>Alimi amatha kulipira umembala kudzera m'njira zotsatirazi mosavuta pa foni kapena ku banki. Musatumize ndalama ku akaunti yachinsinsi kapena yosavomerezeka.</p>
+        <div class="payment-methods-strip">
+          <span class="payment-method-pill">📱 Airtel Money (*211#)</span>
+          <span class="payment-method-pill">📱 TNM Mpamba (*444#)</span>
+          <span class="payment-method-pill">🏛️ National Bank of Malawi</span>
+          <span class="payment-method-pill">🏛️ Standard Bank Malawi</span>
+          <span class="payment-method-pill">🛒 Google Play Billing</span>
+        </div>
+      </section>
+
+      <p class="plans-back">
+        <a href="../index.html">← Bwererani Poyambira pa Ulimi wa Malawi</a>
+      </p>
+    </main>
+
+    <!-- Payment & Verification Modal -->
+    <div class="payment-modal-backdrop" id="paymentModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalPlanTitle">
+      <div class="payment-modal">
+        <div class="payment-modal-head">
+          <div>
+            <h2 id="modalPlanTitle">Kutsiriza Umembala</h2>
+            <p>Kulipira ndi kutsegula zipangizo zapamwamba za Ulimi wa Malawi</p>
+          </div>
+          <button class="payment-modal-close" id="paymentModalClose" type="button" aria-label="Tsekani modal">✕</button>
+        </div>
+
+        <div class="payment-modal-body">
+          <!-- Selected plan preview -->
+          <div class="selected-plan-summary">
+            <div class="summary-title">
+              <h3 id="modalPlanPeriod">Mwezi Umodzi</h3>
+              <p>Mtengo Wathunthu Woti Mulipire:</p>
+            </div>
+            <div class="summary-amount" id="modalPlanAmount">MWK 5,000</div>
+          </div>
+
+          <!-- Alert feedback box -->
+          <div class="payment-alert" id="paymentAlert" role="alert"></div>
+
+          <!-- Payment Tabs -->
+          <div class="pay-tabs" role="tablist">
+            <button class="pay-tab active" data-target="tabAirtel" type="button" role="tab">Airtel Money</button>
+            <button class="pay-tab" data-target="tabMpamba" type="button" role="tab">TNM Mpamba</button>
+            <button class="pay-tab" data-target="tabBank" type="button" role="tab">Bank Transfer</button>
+            <button class="pay-tab" data-target="tabPlay" type="button" role="tab">Google Play</button>
+          </div>
+
+          <!-- Tab: Airtel Money -->
+          <div class="pay-content active" id="tabAirtel">
+            <div class="step-box">
+              <ol>
+                <li>Imbani <strong>*211#</strong> pa foni yanu ya Airtel.</li>
+                <li>Sankhani <strong>Lipirani Ogulitsa (Pay Merchant)</strong>.</li>
+                <li>Lembani Nambala ya Malonda: <strong>548921</strong> (Ulimi wa Malawi).</li>
+                <li>Lembani ndalama zoyenera monga zasonyezedwa pamwambapa.</li>
+                <li>Lembani mawu achinsinsi anu a Airtel Money (PIN) kuti mutsimikize.</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Tab: TNM Mpamba -->
+          <div class="pay-content" id="tabMpamba">
+            <div class="step-box">
+              <ol>
+                <li>Imbani <strong>*444#</strong> pa foni yanu ya TNM.</li>
+                <li>Sankhani <strong>Lipirani Katundu (Pay Merchant)</strong>.</li>
+                <li>Lembani Merchant Code: <strong>883100</strong> (Ulimi wa Malawi).</li>
+                <li>Lembani ndalama zoyenera za umembala umene mwasankha.</li>
+                <li>Lembani PIN yanu ya Mpamba kutsimikiza kutumiza.</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Tab: Bank Transfer -->
+          <div class="pay-content" id="tabBank">
+            <div class="step-box">
+              <ol>
+                <li>Banki: <strong>National Bank of Malawi</strong></li>
+                <li>Akaunti Name: <strong>Ulimi wa Malawi Agriculture Hub</strong></li>
+                <li>Nambala ya Akaunti: <strong>1004928192</strong> (Victoria Ave Branch)</li>
+                <li>Reference: Lembani nambala yanu ya foni kapena dzina lanu.</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Tab: Google Play -->
+          <div class="pay-content" id="tabPlay">
+            <div class="step-box">
+              <p style="margin:0;font-size:13px;color:#314d3e;">
+                Mukamagwiritsa ntchito App ya Android, mutha kulipira mwachindunji kudzera mu Google Play Store kudzera pa kirediti kadi kapena nkhokwe ya Google Play.
+              </p>
+            </div>
+          </div>
+
+          <!-- Reference Input Form -->
+          <div class="form-group">
+            <label for="paymentRefInput">Nambala ya Chitupa cha Malipiro (Transaction Reference / ID):</label>
+            <input type="text" id="paymentRefInput" placeholder="Mwachitsanzo: MP261108.0945.A108 kapena NBM-REF" autocomplete="off">
+            <small style="color:#657b6f;display:block;margin-top:4px;font-size:11px;">Mukalandira SMS yochokera ku Airtel, TNM kapena Banki, lembani nambala ya ID pano.</small>
+          </div>
+
+          <div class="payment-modal-actions">
+            <button class="btn btn-outline" id="btnCancelPayment" type="button" onclick="document.getElementById('paymentModal').classList.remove('open')">Siyani</button>
+            <button class="btn btn-primary" id="btnConfirmPayment" type="button">Tsimikizani &amp; Tsegulani Umembala</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium Global Footer -->
+    <footer class="footer">
+      <div class="footer-showcase">
+        <div class="container footer-showcase-inner">
+          <div class="footer-showcase-copy">
+            <span class="footer-eyebrow" data-i18n="footerEyebrow">ULIMI WA MALAWI • GROW WITH KNOWLEDGE</span>
+            <h2 data-i18n="footerHeroTitle">Better farming starts with the right knowledge.</h2>
+            <p data-i18n="footerHeroDesc">Practical crop guidance, seasonal information and useful resources to support farmers across Malawi.</p>
+            <a class="footer-cta" href="../modules.html" data-i18n="footerExplore">Explore farming resources <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="footer-showcase-mark" aria-hidden="true">🌱</div>
+        </div>
+      </div>
+
+      <div class="container footer-panel">
+        <div class="footer-main">
+          <div class="footer-brand-block">
+            <a class="brand footer-brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+              <span class="brand-mark">🌱</span>
+              <span>
+                <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+                <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+              </span>
+            </a>
+            <h3 data-i18n="footerVision">Knowledge for a stronger agricultural future.</h3>
+            <p data-i18n="footerTagline">Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
+          </div>
+
+          <div class="footer-column">
+            <h4 data-i18n="footerFarming">Farming</h4>
+            <a href="crop-calendar.html" data-i18n="navCalendar">Crop Calendar</a>
+            <a href="crops.html" data-i18n="navCrops">Crop Library</a>
+            <a href="pest-disease.html" data-i18n="navPest">Pests &amp; Diseases</a>
+            <a href="market-centre.html" data-i18n="navMarket">Agricultural Market</a>
+          </div>
+
+          <div class="footer-column">
+            <h4 data-i18n="footerDiscover">Discover</h4>
+            <a href="../modules.html" data-i18n="navModules">All Learning Modules</a>
+            <a href="weather.html" data-i18n="navWeather">Weather Updates</a>
+            <a href="farm-planner.html" data-i18n="navFarmPlanner">Farm Planner</a>
+            <a href="fertiliser-calculator.html" data-i18n="navFertiliser">Fertiliser Calculator</a>
+          </div>
+
+          <div class="footer-column">
+            <h4 data-i18n="footerPlatform">Platform</h4>
+            <a href="../index.html" data-i18n="navHome">Home</a>
+            <a href="../login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a>
+            <a href="subscriptions.html">Mapulani a Umembala</a>
+            <a href="../index.html#crops">Crop Knowledge</a>
+          </div>
+
+          <div class="footer-column footer-connect">
+            <h4 data-i18n="footerConnect">Connect</h4>
+            <p data-i18n="footerConnectDesc">Explore trusted learning resources and stay informed about agriculture in Malawi.</p>
+            <a class="footer-text-link" href="../modules.html" data-i18n="footerStart">Start learning <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© <span id="footerYear">2026</span> Ulimi wa Malawi. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="../index.html#support">Agricultural Resources</a>
+            <a href="../modules.html">Learning Modules</a>
+            <a href="subscriptions.html">Membership Plans</a>
+          </div>
+          <a class="back-to-top" href="#top" aria-label="Back to top">↑</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="subscription-toast" id="subscriptionToast" role="status"></div>
+
+  <!-- Modular Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/i18n.js"></script>
+  <script type="module" src="../js/navigation.js"></script>
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/subscriptions.js"></script>
+</body>
+</html>

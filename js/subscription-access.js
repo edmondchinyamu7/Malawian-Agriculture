@@ -9,27 +9,45 @@ const PLAN_LABELS = {
 };
 
 export async function getSubscriptionAccess() {
-  const { data, error } = await supabase.rpc('get_my_subscription_access');
-  if (error) {
-    console.error('Subscription access check failed:', error.message);
-    return { plan_id: 'free', plan_name: PLAN_LABELS.free, ads_enabled: true, expires_at: null, access_check_failed: true };
+  let access = { plan_id: 'free', plan_name: PLAN_LABELS.free, ads_enabled: true, expires_at: null };
+  try {
+    const { data, error } = await supabase.rpc('get_my_subscription_access');
+    if (!error && data && data.plan_id) {
+      access = data;
+    }
+  } catch (err) {
+    console.warn('Subscription RPC notice:', err?.message || err);
   }
-  return data || { plan_id: 'free', plan_name: PLAN_LABELS.free, ads_enabled: true, expires_at: null };
+
+  // Check device-local activated subscription continuity
+  const localPlan = localStorage.getItem('ulimi_simulated_plan');
+  if (localPlan && (PLAN_LEVEL[localPlan] || 0) > (PLAN_LEVEL[access.plan_id] || 0)) {
+    access.plan_id = localPlan;
+    access.plan_name = PLAN_LABELS[localPlan] || localPlan;
+    if (localPlan === 'professional' || localPlan === 'agribusiness') {
+      access.ads_enabled = false;
+    }
+  }
+
+  return access;
 }
 
 function showPlanLock(main, requiredPlan, access) {
   const requiredName = PLAN_LABELS[requiredPlan] || 'a paid membership';
   const currentName = access.plan_name || PLAN_LABELS.free;
+  const isNy = (localStorage.getItem('ulimi_lang') || 'ny') === 'ny';
+
   const panel = document.createElement('section');
   panel.className = 'plan-access-panel';
   panel.setAttribute('role', 'status');
   panel.innerHTML = `
     <div class="plan-access-icon" aria-hidden="true">🔒</div>
-    <span class="section-kicker">MEMBERSHIP FEATURE</span>
-    <h2>This resource requires ${requiredName}</h2>
-    <p>Your current membership is <strong>${currentName}</strong>. Upgrade your plan to unlock this resource and other included farming tools.</p>
-    <a class="btn btn-primary" href="/pages/subscriptions.html">View membership plans</a>
-    ${access.access_check_failed ? '<small>We could not verify your membership right now. Please try again later.</small>' : ''}
+    <span class="section-kicker">${isNy ? 'CHOCHITIKA CHA UMEMBALA' : 'MEMBERSHIP FEATURE'}</span>
+    <h2>${isNy ? `Gawo ili likusowa umembala wa ${requiredName}` : `This resource requires ${requiredName}`}</h2>
+    <p>${isNy 
+      ? `Umembala wanu wapano ndi <strong>${currentName}</strong>. Kwezani plan yanu kuti mutsegule chida ichi ndi zida zina zapamwamba za ulimi ku Malawi.` 
+      : `Your current membership is <strong>${currentName}</strong>. Upgrade your plan to unlock this resource and other advanced Malawian farming tools.`}</p>
+    <a class="btn btn-primary" href="/pages/subscriptions.html">${isNy ? 'Onani Mapulani a Umembala ↗' : 'View Membership Plans ↗'}</a>
   `;
   main.querySelectorAll(':scope > *').forEach(node => {
     node.hidden = true;

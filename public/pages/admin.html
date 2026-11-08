@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/monetization.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body id="top">
@@ -23,12 +24,12 @@
         <span class="brand-mark">🌱</span>
         <span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span>
       </a>
-      <nav class="nav" id="nav">
+            <nav class="nav" id="nav">
         <a href="../index.html" data-i18n="navHome">Poyambira</a>
         <a href="crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
         <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
-        <a href="market-centre.html" data-i18n="navMarket">Msika wa zaulimi</a>
         <a href="../modules.html" data-i18n="navModules">Mitu yonse</a>
+        <a href="subscriptions.html" data-i18n="navSubscriptions">Mapulani</a>
       </nav>
       <div class="top-actions">
         <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
@@ -59,7 +60,8 @@
           <p>Submit and verify new field price reports, manage verified and unverified status labels, and audit commodity pricing data stored in your local session.</p>
         </div>
         <div>
-          <a href="market-centre.html" class="btn btn-primary">View Public Market Centre ↗</a>
+          <a href="#financeDashboard" class="btn btn-primary">Business &amp; Finance Dashboard ↗</a>
+          <a href="market-centre.html" class="btn btn-outline">View Public Market Centre ↗</a>
         </div>
       </div>
 
@@ -188,6 +190,55 @@
       </section>
     </main>
 
+
+      <section id="financeDashboard" class="admin-card finance-page">
+        <div class="finance-card-head">
+          <div><span class="section-kicker">BUSINESS PERFORMANCE</span><h2>Business &amp; Finance Dashboard</h2><p>Track users, four membership levels, revenue and operating costs. All financial amounts are in MWK.</p></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-outline" href="../pages/subscriptions.html">View membership plans ↗</a><button id="financeLogout" class="btn btn-ghost" type="button">Sign out</button></div>
+        </div>
+        <div id="financeStatus" class="finance-status" role="status">Checking administrator access…</div>
+        <label class="finance-month">Reporting month<input id="reportMonth" type="month"></label>
+        <div class="finance-kpis">
+          <article class="finance-kpi"><span>Registered accounts</span><strong id="totalUsers">—</strong><small id="userBreakdown">Free and premium users</small></article>
+          <article class="finance-kpi"><span>Monthly active users</span><strong id="activeUsers">—</strong><small>Unique users active this month</small></article>
+          <article class="finance-kpi"><span>Active subscribers</span><strong id="activeSubs">—</strong><small id="tierBreakdown">Across paid plans</small></article>
+          <article class="finance-kpi"><span>Active subscription MRR</span><strong id="activeMrr">—</strong><small>Estimated recurring value, not cash received</small></article>
+          <article class="finance-kpi"><span>Recorded revenue</span><strong id="totalRevenue">—</strong><small>Current reporting month</small></article>
+          <article class="finance-kpi"><span>Operating expenses</span><strong id="totalExpenses">—</strong><small>Current reporting month</small></article>
+          <article class="finance-kpi finance-kpi-highlight"><span>Operating result</span><strong id="operatingResult">—</strong><small>Recorded revenue less recorded expenses</small></article>
+        </div>
+        <div class="finance-grid">
+          <article class="admin-card"><h3>Revenue breakdown</h3><p>Actual receipts recorded for the selected month.</p><div id="revenueBreakdown" class="finance-breakdown"></div></article>
+          <article class="admin-card"><h3>Subscription performance</h3><p>Current subscription status and new records this month.</p><div id="subscriptionBreakdown" class="finance-breakdown"></div></article>
+        </div>
+        <article class="admin-card">
+          <h3>Record revenue</h3><p>Enter actual advertising, subscription or partnership income. Do not enter projections as actual receipts.</p>
+          <form id="revenueForm" class="finance-form">
+            <label>Revenue source<select id="revenueSource" required><option value="advertising">Advertising</option><option value="subscription">Subscriptions</option><option value="partnership">Business partnerships</option><option value="other">Other</option></select></label>
+            <label>Amount (MWK)<input id="revenueAmount" type="number" min="1" step="0.01" required></label>
+            <label>Received date<input id="revenueDate" type="date" required></label>
+            <label>Reference / notes<input id="revenueNote" maxlength="180" placeholder="e.g. AdMob monthly payout"></label>
+            <button class="btn-admin" type="submit">Save revenue</button>
+          </form>
+        </article>
+        <article class="admin-card">
+          <h3>Record operating expense</h3><p>Track hosting, domain, marketing, content and maintenance costs.</p>
+          <form id="expenseForm" class="finance-form">
+            <label>Expense category<select id="expenseCategory" required><option>Hosting &amp; database</option><option>Domain</option><option>Marketing</option><option>Content creation</option><option>Maintenance</option><option>Payment fees</option><option>Other</option></select></label>
+            <label>Amount (MWK)<input id="expenseAmount" type="number" min="1" step="0.01" required></label>
+            <label>Expense date<input id="expenseDate" type="date" required></label>
+            <label>Description<input id="expenseDescription" maxlength="180" required></label>
+            <button class="btn-admin" type="submit">Save expense</button>
+          </form>
+        </article>
+        <div class="finance-grid">
+          <article class="admin-card"><h3>Recent revenue entries</h3><div class="table-scroll"><table class="admin-table"><thead><tr><th>Date</th><th>Source</th><th>Amount</th><th>Reference</th></tr></thead><tbody id="revenueRows"></tbody></table></div></article>
+          <article class="admin-card"><h3>Recent expenses</h3><div class="table-scroll"><table class="admin-table"><thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Description</th></tr></thead><tbody id="expenseRows"></tbody></table></div></article>
+        </div>
+        <article class="admin-card"><h3>Four-level subscription catalogue</h3><div class="table-scroll"><table class="admin-table"><thead><tr><th>Plan</th><th>Monthly price</th><th>Ads</th><th>Status</th></tr></thead><tbody id="planRows"></tbody></table></div></article>
+        <p class="finance-footnote">Only records entered or integrated into Supabase are included in actual revenue and expenses. An active subscription is not proof of payment received. Google Play Billing and AdMob payout integrations still need to be configured separately.</p>
+      </section>
+
     <!-- Global Footer -->
     <!-- Premium Global Footer -->
 <footer class="footer">
@@ -260,6 +311,7 @@
   <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/admin.js"></script>
+  <script type="module" src="../js/admin-finance.js"></script>
   <script type="module" src="../js/auth.js"></script>
 </body>
 </html>

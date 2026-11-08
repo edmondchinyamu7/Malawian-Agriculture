@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/dashboard.css">
   <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/subscription-access.css">
 </head>
 <body id="top">
   <div class="shell">
@@ -22,12 +23,12 @@
         <span class="brand-mark">🌱</span>
         <span>ULIMI WA MALAWI<small>FERTILISER CALCULATOR</small></span>
       </a>
-      <nav class="nav" id="nav">
+            <nav class="nav" id="nav">
         <a href="../index.html" data-i18n="navHome">Poyambira</a>
         <a href="crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
         <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
-        <a href="market-centre.html" data-i18n="navMarket">Msika wa zaulimi</a>
         <a href="../modules.html" data-i18n="navModules">Mitu yonse</a>
+        <a href="subscriptions.html" data-i18n="navSubscriptions">Mapulani</a>
       </nav>
       <div class="top-actions">
         <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
@@ -48,7 +49,7 @@
       </div>
     </header>
 
-    <main class="main container">
+    <main class="main container" data-requires-plan="professional">
       <div class="section-head">
         <div>
           <span class="section-kicker">Smart Farming Tools</span>
@@ -140,5 +141,6 @@
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/calculators.js"></script>
   <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/subscription-access.js"></script>
 </body>
 </html>

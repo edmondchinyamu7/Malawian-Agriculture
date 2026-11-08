@@ -15,11 +15,11 @@ const SUPABASE_KEY=process.env.SUPABASE_ANON_KEY||process.env.SUPABASE_PUBLISHAB
 
 app.use(express.json({limit:'20kb'}));
 
-app.use((req,res,next)=>{
-  if(/\\.(?:html|css|js)$/i.test(req.path)){
-    res.setHeader('Cache-Control','no-store, no-cache, must-revalidate, proxy-revalidate');
-    res.setHeader('Pragma','no-cache');
-    res.setHeader('Expires','0');
+app.use((req, res, next) => {
+  if (/\.(?:html|css|js)$/i.test(req.path)) {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
   }
   next();
 });
@@ -74,10 +74,13 @@ app.post('/api/admin/logout',(_req,res)=>{
 app.get(['/admin','/admin/'],requireAdmin,(_req,res)=>res.sendFile(path.join(__dirname,'pages','admin.html')));
 app.get('/pages/admin.html',requireAdmin,(_req,res)=>res.sendFile(path.join(__dirname,'pages','admin.html')));
 
-app.use(express.static(__dirname,{extensions:['html'],index:'index.html'}));
-app.get('/:page',(req,res,next)=>{
-  const pagePath=path.join(__dirname,'pages',req.params.page+'.html');
-  if(fs.existsSync(pagePath)&&req.params.page!=='admin')return res.sendFile(pagePath);
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
+app.use(express.static(__dirname, { extensions: ['html'], index: 'index.html' }));
+app.get('/:page', (req, res, next) => {
+  const publicPagePath = path.join(__dirname, 'public', 'pages', req.params.page + '.html');
+  if (fs.existsSync(publicPagePath) && req.params.page !== 'admin') return res.sendFile(publicPagePath);
+  const pagePath = path.join(__dirname, 'pages', req.params.page + '.html');
+  if (fs.existsSync(pagePath) && req.params.page !== 'admin') return res.sendFile(pagePath);
   next();
 });
 app.get('*',(req,res)=>{

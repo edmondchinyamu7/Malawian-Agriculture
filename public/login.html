@@ -8,10 +8,10 @@
   <meta name="description" content="Lowani mu akaunti ya mlimi ya Ulimi wa Malawi kapena lembetsani kuti musunge mbiri ya munda wanu, malangizo ndi mitengo.">
 
   <!-- Modular Stylesheets -->
-  <link rel="stylesheet" href="css/style.css?v=20261108-auth1">
-  <link rel="stylesheet" href="css/components.css?v=20261108-auth1">
-  <link rel="stylesheet" href="css/pages.css?v=20261108-auth1">
-  <link rel="stylesheet" href="css/responsive.css?v=20261108-auth1">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/responsive.css">
 
   <style>
     .auth-page {
@@ -219,8 +219,8 @@
         <a href="index.html" data-i18n="navHome">Poyambira</a>
         <a href="pages/crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
         <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
-        <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi</a>
         <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
+        <a href="pages/subscriptions.html" data-i18n="navSubscriptions">Mapulani</a>
       </nav>
       <div class="top-actions">
         <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
@@ -284,7 +284,6 @@
               <input class="form-control" id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="••••••••">
             </div>
 
-            <p style="text-align:right;margin:0 0 8px"><button type="button" id="forgotPasswordBtn" style="border:0;background:none;color:#0b6245;font-weight:750;text-decoration:underline;cursor:pointer">Forgot password?</button></p>
             <button class="auth-submit-btn" id="submitBtn" type="submit">
               <span id="submitText" data-i18n="authBtnLogin">Lowani mu Akaunti</span>
             </button>
@@ -440,30 +439,6 @@
 
     checkCurrentSession();
 
-    // Password recovery: send a one-time link to the dedicated reset page.
-    $('forgotPasswordBtn')?.addEventListener('click', async () => {
-      clearAlert();
-      const email = $('email').value.trim();
-      if (!email) {
-        showAlert('Enter your email address first, then choose Forgot password.', 'error');
-        $('email').focus();
-        return;
-      }
-      const btn = $('forgotPasswordBtn');
-      btn.disabled = true;
-      try {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin + '/reset-password.html'
-        });
-        if (error) throw error;
-        showAlert('If this email belongs to an account, a password reset link has been sent. Check your inbox and spam folder.', 'success');
-      } catch (err) {
-        showAlert(err?.message || 'Unable to send password reset email. Please try again.', 'error');
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
     // Form Submission
     $('authForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -549,7 +524,13 @@
           }
           window.location.assign('/admin');
         } else {
-          window.location.assign('/profile.html');
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectUrl = urlParams.get('redirect');
+          if (redirectUrl && (redirectUrl.startsWith('/') || redirectUrl.startsWith('pages/'))) {
+            window.location.assign(redirectUrl);
+          } else {
+            window.location.assign('/profile.html');
+          }
         }
       } catch (err) {
         console.error('Auth error:', err);

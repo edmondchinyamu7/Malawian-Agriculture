@@ -15,6 +15,7 @@ export const translations = {
     navMarket: "Msika wa zaulimi",
     navWeather: "Zanyengo",
     navModules: "Mitu yonse",
+    navSubscriptions: "Mapulani",
     navAdmin: "Uyang'anire",
     navFarmMethods: "Njira za ulimi",
     navGuides: "Malangizo a m'munda",
@@ -243,6 +244,7 @@ export const translations = {
     navMarket: "Market centre",
     navWeather: "Weather",
     navModules: "All modules",
+    navSubscriptions: "Plans",
     navAdmin: "Admin",
     navGuides: "Field guides",
     navFarmMethods: "Farming methods",
@@ -552,7 +554,9 @@ export function applyTranslations() {
     "news.html": "navNews",
     "soil-centre.html": "navSoil",
     "login.html": "navLogin",
-    "profile.html": "navProfile"
+    "profile.html": "navProfile",
+    "subscriptions.html": "navSubscriptions",
+    "subscriptions": "navSubscriptions"
   };
 
   document.querySelectorAll(".nav a").forEach(link => {

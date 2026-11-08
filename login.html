@@ -219,8 +219,8 @@
         <a href="index.html" data-i18n="navHome">Poyambira</a>
         <a href="pages/crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
         <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
-        <a href="pages/market-centre.html" data-i18n="navMarket">Msika wa zaulimi</a>
         <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
+        <a href="pages/subscriptions.html" data-i18n="navSubscriptions">Mapulani</a>
       </nav>
       <div class="top-actions">
         <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
@@ -524,7 +524,13 @@
           }
           window.location.assign('/admin');
         } else {
-          window.location.assign('/profile.html');
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectUrl = urlParams.get('redirect');
+          if (redirectUrl && (redirectUrl.startsWith('/') || redirectUrl.startsWith('pages/'))) {
+            window.location.assign(redirectUrl);
+          } else {
+            window.location.assign('/profile.html');
+          }
         }
       } catch (err) {
         console.error('Auth error:', err);
