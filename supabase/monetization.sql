@@ -138,6 +138,7 @@ create policy "Admins manage business partners" on public.business_partners for 
 using(exists(select 1 from public.admin_access aa where aa.user_id=(select auth.uid())))
 with check(exists(select 1 from public.admin_access aa where aa.user_id=(select auth.uid())));
 
+grant select on public.admin_access to anon,authenticated;
 grant select on public.subscription_plans to anon,authenticated;
 grant select on public.subscriptions,public.app_activity_events to authenticated;
 grant select,insert,update,delete on public.subscription_plans,public.revenue_entries,public.expense_entries,public.business_partners to authenticated;
