@@ -42,10 +42,12 @@ async function loadDashboard(){
   const monthSubs=allSubs.filter(s=>s.created_at>=from && s.created_at<to);
   const totalRevenue=revenue.reduce((n,x)=>n+Number(x.amount_mwk),0);
   const totalExpenses=expenses.reduce((n,x)=>n+Number(x.amount_mwk),0);
-  setText('totalUsers',profiles.length.toLocaleString());
+  setText('totalUsers',farmerCount.toLocaleString());
   setText('userBreakdown',freeProfiles+' free/other accounts • '+paidActive+' active paid subscriptions');
   setText('activeUsers',uniqueActive.toLocaleString());
   setText('activeSubs',paidActive.toLocaleString());
+  const activeMrr=activeSubs.reduce((sum,s)=>sum+Number(s.plan?.monthly_price_mwk||0),0);
+  setText('activeMrr',money(activeMrr));
   const tiers=activeSubs.reduce((a,s)=>(a[s.plan_id]=(a[s.plan_id]||0)+1,a),{});
   setText('tierBreakdown',plans.filter(p=>p.id!=='free').map(p=>(tiers[p.id]||0)+' '+p.name).join(' • ')||'No paid plans configured');
   setText('totalRevenue',money(totalRevenue));
