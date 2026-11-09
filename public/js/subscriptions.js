@@ -498,6 +498,9 @@ async function initSubscriptions() {
     });
   }
 
+  const confirmPaymentBtn = document.getElementById('btnConfirmPayment');
+  if (confirmPaymentBtn) confirmPaymentBtn.addEventListener('click', submitPaymentRequest);
+
   const payTabs = document.querySelectorAll('.pay-tab');
   payTabs.forEach(tab => {
     tab.addEventListener('click', () => {
