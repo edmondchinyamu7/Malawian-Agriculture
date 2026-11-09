@@ -1,311 +1,254 @@
 /**
- * Ulimi wa Malawi | V5 Agricultural Market Information Centre
+ * Ulimi wa Malawi | Market Intelligence V6
+ * Supabase is the shared source of truth. The bundled JSON is a read-only
+ * fallback for outages; browser localStorage is never treated as canonical.
  */
 import { escapeHtml, openModal, showToast } from './main.js';
+import { supabase } from './auth.js';
 
 let marketData = [];
-const STORAGE_KEY = 'ulimi_markets_v6';
+let dataOrigin = 'database';
+const DATA_PATH = '../data/markets.json';
+
+function fromDb(row) {
+  return {
+    id: row.id,
+    crop: row.crop_name,
+    cropKey: row.crop_key,
+    category: row.category,
+    marketName: row.market_name,
+    district: row.district,
+    region: row.region,
+    unit: row.unit,
+    priceMin: Number(row.price_min),
+    priceMax: Number(row.price_max),
+    currency: row.currency || 'MWK',
+    dateReported: row.date_observed,
+    status: row.status,
+    reporter: row.reporter_name || row.source_name || 'Market report',
+    sourceName: row.source_name,
+    sourceUrl: row.source_url,
+    sourceReference: row.source_reference,
+    priceBasis: row.price_basis,
+    notes: row.notes,
+    sourceType: row.source_type
+  };
+}
+
+function money(value) {
+  return new Intl.NumberFormat('en-MW', { maximumFractionDigits: 2 }).format(Number(value) || 0);
+}
+
+function setLoadMessage(message, isError = false) {
+  const count = document.getElementById('marketRecordCount');
+  const body = document.getElementById('marketTableBody');
+  if (count) count.textContent = message;
+  if (body && isError) body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px">Market prices could not be loaded. Please refresh or try again later.</td></tr>';
+}
 
 export async function loadMarketData() {
+  setLoadMessage('Loading published market observations…');
   try {
-    // Check localStorage first for any local entries/updates
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      marketData = JSON.parse(stored);
-    } else {
-      const basePath = window.location.pathname.includes('/pages/') ? '../data/' : 'data/';
-      const response = await fetch(`${basePath}markets.json`);
-      if (!response.ok) throw new Error('Failed to load market data');
-      marketData = await response.json();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(marketData));
-    }
+    const { data, error } = await supabase
+      .from('market_price_reports')
+      .select('*')
+      .eq('status', 'verified')
+      .order('date_observed', { ascending: false })
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    marketData = (data || []).map(fromDb);
+    dataOrigin = 'database';
     renderMarketStats();
     renderMarketTable();
     renderPriceComparison();
+    renderMarketFreshness();
+    return marketData;
   } catch (err) {
-    console.error('Error loading market data:', err);
+    console.error('Shared market data unavailable; using bundled reference data:', err);
+    try {
+      const response = await fetch(DATA_PATH, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Bundled market data request failed');
+      marketData = await response.json();
+      dataOrigin = 'fallback';
+      renderMarketStats();
+      renderMarketTable();
+      renderPriceComparison();
+      renderMarketFreshness();
+      showToast('Showing saved reference data. Live database is unavailable.');
+      return marketData;
+    } catch (fallbackError) {
+      console.error('Market fallback unavailable:', fallbackError);
+      marketData = [];
+      renderMarketStats();
+      renderMarketTable();
+      renderPriceComparison();
+      setLoadMessage('Market data is temporarily unavailable.', true);
+      return [];
+    }
   }
-}
-
-export function saveMarketData(data) {
-  marketData = data;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  renderMarketStats();
-  renderMarketTable();
-  renderPriceComparison();
 }
 
 export function getMarketData() {
   return marketData;
 }
 
+// Kept for older modules; database writes are handled by the admin module.
+export function saveMarketData(data) {
+  marketData = Array.isArray(data) ? data : [];
+  renderMarketStats();
+  renderMarketTable();
+  renderPriceComparison();
+  renderMarketFreshness();
+}
+
+export function renderMarketFreshness() {
+  const el = document.getElementById('marketFreshness');
+  if (!el) return;
+  const dates = marketData.map(item => item.dateReported).filter(Boolean).sort();
+  const latest = dates.at(-1);
+  const label = latest ? new Date(`${latest}T00:00:00`).toLocaleDateString('en-MW', { day: 'numeric', month: 'long', year: 'numeric' }) : 'No observations yet';
+  el.textContent = dataOrigin === 'database'
+    ? `Shared database • Latest observation: ${label}`
+    : `Offline reference copy • Latest observation: ${label}`;
+}
+
 export function renderMarketStats() {
   const container = document.getElementById('marketStatsRow');
   if (!container) return;
-
-  const totalEntries = marketData.length;
-  const verifiedEntries = marketData.filter(m => m.status === 'verified').length;
-  const uniqueCrops = new Set(marketData.map(m => m.crop)).size;
-  const uniqueDistricts = new Set(marketData.map(m => m.district)).size;
-
+  const total = marketData.length;
+  const crops = new Set(marketData.map(m => m.cropKey || m.crop)).size;
+  const districts = new Set(marketData.map(m => m.district)).size;
+  const latest = marketData.map(m => m.dateReported).filter(Boolean).sort().at(-1);
   container.innerHTML = `
-    <div class="market-stat-card">
-      <small>Monitored Crops</small>
-      <strong>${uniqueCrops}</strong>
-      <span>Key agricultural commodities</span>
-    </div>
-    <div class="market-stat-card">
-      <small>Active Markets</small>
-      <strong>${uniqueDistricts} Districts</strong>
-      <span>Trading centres across Malawi</span>
-    </div>
-    <div class="market-stat-card">
-      <small>Price Reports</small>
-      <strong>${totalEntries} Listings</strong>
-      <span>Published source observations</span>
-    </div>
-    <div class="market-stat-card">
-      <small>Data Quality</small>
-      <strong>${Math.round((verifiedEntries / totalEntries) * 100)}% Verified</strong>
-      <span>${verifiedEntries} published by ACE</span>
-    </div>
+    <div class="market-stat-card"><small>Commodities</small><strong>${crops}</strong><span>Published crop types</span></div>
+    <div class="market-stat-card"><small>Markets represented</small><strong>${districts}</strong><span>Districts with observations</span></div>
+    <div class="market-stat-card"><small>Published observations</small><strong>${total}</strong><span>Verified reference records</span></div>
+    <div class="market-stat-card"><small>Latest observation</small><strong style="font-size:18px">${latest || '—'}</strong><span>${dataOrigin === 'database' ? 'Shared market database' : 'Offline reference data'}</span></div>
   `;
 }
 
 export function renderMarketTable() {
   const tbody = document.getElementById('marketTableBody');
-  const cropSelect = document.getElementById('marketCropFilter');
-  const districtSelect = document.getElementById('marketDistrictFilter');
-  const statusSelect = document.getElementById('marketStatusFilter');
-  const searchInput = document.getElementById('marketSearch');
-  const countEl = document.getElementById('marketRecordCount');
-
   if (!tbody) return;
-
-  const selectedCrop = cropSelect?.value || 'all';
-  const selectedDistrict = districtSelect?.value || 'all';
-  const selectedStatus = statusSelect?.value || 'all';
-  const query = (searchInput?.value || '').trim().toLowerCase();
+  const crop = document.getElementById('marketCropFilter')?.value || 'all';
+  const district = document.getElementById('marketDistrictFilter')?.value || 'all';
+  const status = document.getElementById('marketStatusFilter')?.value || 'all';
+  const query = (document.getElementById('marketSearch')?.value || '').trim().toLowerCase();
 
   const filtered = marketData.filter(item => {
-    const matchCrop = selectedCrop === 'all' || item.cropKey === selectedCrop || item.crop.toLowerCase().includes(selectedCrop.toLowerCase());
-    const matchDistrict = selectedDistrict === 'all' || item.district === selectedDistrict;
-    const matchStatus = selectedStatus === 'all' || item.status === selectedStatus;
-    const matchQuery = !query || [
-      item.crop,
-      item.marketName,
-      item.district,
-      item.region,
-      item.notes || '',
-      item.reporter || ''
-    ].join(' ').toLowerCase().includes(query);
-    return matchCrop && matchDistrict && matchStatus && matchQuery;
-  });
+    const cropMatch = crop === 'all' || item.cropKey === crop || item.crop.toLowerCase().includes(crop.toLowerCase());
+    const districtMatch = district === 'all' || item.district === district;
+    const statusMatch = status === 'all' || item.status === status || (status === 'verified' && item.status === 'verified');
+    const textMatch = !query || [item.crop,item.marketName,item.district,item.region,item.notes,item.reporter,item.unit].join(' ').toLowerCase().includes(query);
+    return cropMatch && districtMatch && statusMatch && textMatch;
+  }).sort((a,b) => String(b.dateReported).localeCompare(String(a.dateReported)));
 
-  if (countEl) {
-    countEl.textContent = `${filtered.length} of ${marketData.length} records`;
-  }
-
+  const count = document.getElementById('marketRecordCount');
+  if (count) count.textContent = `${filtered.length} published records • ${dataOrigin === 'database' ? 'shared data' : 'offline reference'}`;
   if (!filtered.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="7" style="text-align:center;padding:36px;color:#718078;">
-          No matching market records found. Try adjusting your filters or search keywords.
-        </td>
-      </tr>
-    `;
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:36px;color:#718078">No published prices match these filters. Try another crop or district.</td></tr>';
     return;
   }
 
-  tbody.innerHTML = filtered.map(item => {
-    const isVerified = item.status === 'verified';
-    const statusBadge = isVerified
-      ? `<span class="badge-verified" title="Published by Agricultural Commodity Exchange (ACE)">✓ Verified</span>`
-      : `<span class="badge-unverified" title="Community submission; awaiting source confirmation">⏳ Unverified</span>`;
+  tbody.innerHTML = filtered.map(item => `
+    <tr>
+      <td class="crop-col"><strong>${escapeHtml(item.crop)}</strong><div style="font-size:11px;color:#617368">${escapeHtml(item.category)}</div></td>
+      <td><strong>${escapeHtml(item.marketName)}</strong><div style="font-size:11px;color:#617368">${escapeHtml(item.district)} (${escapeHtml(item.region)})</div></td>
+      <td>${escapeHtml(item.unit)}</td>
+      <td class="price-val">MWK ${money(item.priceMin)}${Number(item.priceMin) === Number(item.priceMax) ? '' : ' – ' + money(item.priceMax)}</td>
+      <td><span class="badge-verified">✓ Published</span></td>
+      <td style="font-size:12px;color:#52645a">${escapeHtml(item.dateReported)}<div style="font-size:10px;color:#809488">${escapeHtml(item.reporter || 'Source not recorded')}</div></td>
+      <td><button class="btn" style="padding:6px 10px;font-size:11px;background:#edf5ef;color:var(--forest)" data-market-detail="${escapeHtml(item.id)}">Details</button></td>
+    </tr>
+  `).join('');
 
-    return `
-      <tr>
-        <td class="crop-col">
-          <strong>${escapeHtml(item.crop)}</strong>
-          <div style="font-size:11px;color:#617368">${escapeHtml(item.category)}</div>
-        </td>
-        <td>
-          <strong>${escapeHtml(item.marketName)}</strong>
-          <div style="font-size:11px;color:#617368">${escapeHtml(item.district)} (${escapeHtml(item.region)})</div>
-        </td>
-        <td>${escapeHtml(item.unit)}</td>
-        <td class="price-val">
-          ${item.currency} ${Number(item.priceMin).toLocaleString()} ${Number(item.priceMin) === Number(item.priceMax) ? '' : '– ' + Number(item.priceMax).toLocaleString()}
-        </td>
-        <td>${statusBadge}</td>
-        <td style="font-size:12px;color:#52645a">
-          ${escapeHtml(item.dateReported)}
-          <div style="font-size:10px;color:#809488">${escapeHtml(item.reporter || 'Field survey')}</div>
-        </td>
-        <td>
-          <button class="btn" style="padding:6px 10px;font-size:11px;background:#edf5ef;color:var(--forest)" onclick="window.viewMarketDetail('${item.id}')">
-            Details
-          </button>
-        </td>
-      </tr>
-    `;
-  }).join('');
+  tbody.querySelectorAll('[data-market-detail]').forEach(button => {
+    button.addEventListener('click', () => openMarketDetail(button.dataset.marketDetail));
+  });
 }
 
 export function renderPriceComparison() {
   const container = document.getElementById('priceComparisonGrid');
   if (!container) return;
-
-  // Compare only the same named commodity and unit; do not mix crop varieties.
   const groups = new Map();
   marketData.forEach(item => {
-    const key = `${item.crop}|${item.unit}`;
+    const key = `${item.crop}| ${item.unit}`;
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(item);
   });
-
-  const comparable = [...groups.entries()]
-    .filter(([, records]) => records.length > 1)
-    .sort((a, b) => a[0].localeCompare(b[0]));
-
+  const comparable = [...groups.values()].filter(rows => rows.length > 1);
   if (!comparable.length) {
-    container.innerHTML = '<p>More observations are needed before a price comparison can be shown.</p>';
+    container.innerHTML = '<p>More matching observations are needed before a regional comparison can be shown.</p>';
     return;
   }
-
-  container.innerHTML = comparable.map(([key, records]) => {
-    const prices = records.map(r => Number(r.priceMin));
-    const lowest = Math.min(...prices);
-    const highest = Math.max(...prices);
-    const lowestRecord = records.find(r => Number(r.priceMin) === lowest);
-    const highestRecord = [...records].reverse().find(r => Number(r.priceMin) === highest);
-    const formatPrice = value => `MWK ${value.toLocaleString()}`;
-
-    return `
-      <div class="compare-card">
-        <span class="region-tag">Published observations</span>
-        <h4>${escapeHtml(records[0].crop)} (${escapeHtml(records[0].unit)})</h4>
-        <div class="price-spread">${formatPrice(lowest)} – ${formatPrice(highest)}</div>
-        <p style="font-size:12px;margin:6px 0;color:#405247;line-height:1.5">
-          <strong>Lowest:</strong> ${formatPrice(lowest)} in ${escapeHtml(lowestRecord.marketName)} (${escapeHtml(lowestRecord.district)}), ${escapeHtml(lowestRecord.dateReported)}<br>
-          <strong>Highest:</strong> ${formatPrice(highest)} in ${escapeHtml(highestRecord.marketName)} (${escapeHtml(highestRecord.district)}), ${escapeHtml(highestRecord.dateReported)}
-        </p>
-        <div style="font-size:11px;color:#617368;margin-top:6px">
-          Difference: ${formatPrice(highest - lowest)}. Dates may differ; this is not a same-day quote comparison.
-        </div>
-      </div>
-    `;
+  container.innerHTML = comparable.map(rows => {
+    const low = Math.min(...rows.map(r => Number(r.priceMin)));
+    const high = Math.max(...rows.map(r => Number(r.priceMax)));
+    const lowRow = rows.find(r => Number(r.priceMin) === low);
+    const highRow = [...rows].reverse().find(r => Number(r.priceMax) === high);
+    return `<div class="compare-card">
+      <span class="region-tag">Published observations</span>
+      <h4>${escapeHtml(rows[0].crop)} (${escapeHtml(rows[0].unit)})</h4>
+      <div class="price-spread">MWK ${money(low)} – ${money(high)}</div>
+      <p style="font-size:12px;margin:6px 0;color:#405247;line-height:1.5">
+        <strong>Lowest recorded:</strong> ${escapeHtml(lowRow.marketName)} • ${escapeHtml(lowRow.district)} • ${escapeHtml(lowRow.dateReported)}<br>
+        <strong>Highest recorded:</strong> ${escapeHtml(highRow.marketName)} • ${escapeHtml(highRow.district)} • ${escapeHtml(highRow.dateReported)}
+      </p>
+      <div style="font-size:11px;color:#617368;margin-top:6px">Spread: MWK ${money(high-low)}. Observation dates may differ; confirm today's local price before trading.</div>
+    </div>`;
   }).join('');
 }
 
 export function openMarketDetail(id) {
-  const item = marketData.find(m => m.id === id);
+  const item = marketData.find(row => String(row.id) === String(id));
   if (!item) return;
-
-  const isVerified = item.status === 'verified';
-  const statusHtml = isVerified
-    ? `<span class="badge-verified">✓ Published ACE Market Record</span>`
-    : `<span class="badge-unverified">⏳ Unverified Community Submission</span>`;
-
   const bodyHtml = `
-    <div style="margin-bottom:14px">${statusHtml}</div>
+    <div style="margin-bottom:14px"><span class="badge-verified">✓ Published reference observation</span></div>
     <div class="modal-grid" style="margin-bottom:16px">
-      <div class="modal-box">
-        <h4>Commodity & Unit</h4>
-        <p><strong>${escapeHtml(item.crop)}</strong> (${escapeHtml(item.category)})</p>
-        <p>Trading Unit: <strong>${escapeHtml(item.unit)}</strong></p>
-      </div>
-      <div class="modal-box">
-        <h4>Market & District</h4>
-        <p><strong>${escapeHtml(item.marketName)}</strong></p>
-        <p>${escapeHtml(item.district)} District, ${escapeHtml(item.region)} Malawi</p>
-      </div>
+      <div class="modal-box"><h4>Commodity & unit</h4><p><strong>${escapeHtml(item.crop)}</strong> (${escapeHtml(item.category)})</p><p>Trading unit: <strong>${escapeHtml(item.unit)}</strong></p></div>
+      <div class="modal-box"><h4>Market</h4><p><strong>${escapeHtml(item.marketName)}</strong></p><p>${escapeHtml(item.district)} District, ${escapeHtml(item.region)} Region, Malawi</p></div>
     </div>
     <div style="background:#f4f9f5;border:1px solid #dbeae0;border-radius:14px;padding:16px;margin-bottom:16px">
       <div style="font-size:11px;color:#52645a;font-weight:700">PUBLISHED REFERENCE PRICE</div>
-      <div style="font-size:24px;font-weight:900;color:var(--forest);margin:4px 0">
-        ${item.currency} ${Number(item.priceMin).toLocaleString()}${Number(item.priceMin) === Number(item.priceMax) ? '' : ' – ' + Number(item.priceMax).toLocaleString()}
-      </div>
-      <div style="font-size:12px;color:#355340">Unit: ${escapeHtml(item.unit)}</div>
+      <div style="font-size:24px;font-weight:900;color:var(--forest);margin:4px 0">MWK ${money(item.priceMin)}${Number(item.priceMin) === Number(item.priceMax) ? '' : ' – ' + money(item.priceMax)}</div>
+      <div style="font-size:12px;color:#355340">Per ${escapeHtml(item.unit)} • Observed ${escapeHtml(item.dateReported)}</div>
     </div>
-    <h3>Published Observation & Notes</h3>
-    <p>${escapeHtml(item.notes || 'Normal market trading conditions.')}</p>
-    <h3>Source & Verification Audit</h3>
-    <p>
-      <strong>Reporting Source:</strong> ${escapeHtml(item.reporter || 'Source not recorded')}<br>\n      <strong>Price basis:</strong> ${escapeHtml(item.priceBasis || 'Not specified')}<br>\n      ${item.sourceUrl ? `<strong>Source record:</strong> <a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.sourceName || 'View source')}</a><br>` : ''}
-      <strong>Date of Observation:</strong> ${escapeHtml(item.dateReported)}<br>
-      <strong>Verification Status:</strong> ${item.status.toUpperCase()}
-    </p>
-    <div class="notice">
-      <strong>Important Market Notice:</strong> These are dated published reference observations, not live offers. Prices can change with location, quality, grade, season and trading volume. Confirm the current price directly with the market before making a transaction.
-    </div>
+    <h3>Observation notes</h3><p>${escapeHtml(item.notes || 'No additional notes supplied.')}</p>
+    <h3>Source and verification</h3>
+    <p><strong>Source:</strong> ${escapeHtml(item.sourceName || item.reporter || 'Not recorded')}<br>
+    <strong>Price basis:</strong> ${escapeHtml(item.priceBasis || 'Not specified')}<br>
+    <strong>Record reference:</strong> ${escapeHtml(item.sourceReference || 'Not supplied')}<br>
+    ${item.sourceUrl ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Open source record</a><br>` : ''}
+    <strong>Data type:</strong> ${escapeHtml(item.sourceType || 'Published reference')}</p>
+    <div class="notice"><strong>Important:</strong> This is a dated reference observation, not a live offer or guaranteed transaction price. Confirm today's price, quality grade and unit directly with the market before trading.</div>
   `;
-
-  openModal({
-    title: `${item.crop} @ ${item.marketName}`,
-    subtitle: `${item.district} District • ${item.currency} ${item.priceMin.toLocaleString()} – ${item.priceMax.toLocaleString()}`,
-    bodyHtml
-  });
+  openModal({ title: `${item.crop} @ ${item.marketName}`, subtitle: `${item.district} District • MWK ${money(item.priceMin)} – ${money(item.priceMax)}`, bodyHtml });
 }
-
-// Global hook for inline table buttons
-window.viewMarketDetail = openMarketDetail;
-
 
 async function loadWorldBankMarketEstimates() {
   const tbody = document.getElementById('worldBankMarketTableBody');
   const meta = document.getElementById('worldBankMarketMeta');
   if (!tbody) return;
-  try {
-    const basePath = window.location.pathname.includes('/pages/') ? '../data/' : 'data/';
-    const response = await fetch(`${basePath}world-bank-market-estimates.json?refresh=${Date.now()}`, { cache: 'no-store' });
-    if (!response.ok) throw new Error('World Bank estimate file is not available yet');
-    const payload = await response.json();
-    const rows = Array.isArray(payload.data) ? payload.data : [];
-    if (meta) meta.textContent = rows.length
-      ? `${rows.length} latest market/commodity estimates • Dataset sync: ${payload.datasetUpdatedAt ? new Date(payload.datasetUpdatedAt).toLocaleString() : 'date not supplied'}`
-      : 'The weekly data refresh has not produced its first dataset yet.';
-    if (!rows.length) return;
-    tbody.innerHTML = rows.map(item => `
-      <tr>
-        <td><strong>${escapeHtml(item.crop)}</strong></td>
-        <td>${escapeHtml(item.marketName)}<div style="font-size:11px;color:#617368">${escapeHtml(item.district)} • ${escapeHtml(item.region)}</div></td>
-        <td>${escapeHtml(item.unit)}</td>
-        <td class="price-val">MWK ${Number(item.priceMin).toLocaleString()} – ${Number(item.priceMax).toLocaleString()}<div style="font-size:11px;color:#617368">Close estimate: MWK ${Number(item.priceEstimate).toLocaleString()}</div></td>
-        <td>${escapeHtml(item.dateReported)}</td>
-        <td><span class="badge-unverified">Estimated</span>${item.isInterpolated ? '<div style="font-size:11px;color:#805b1b">Spatially interpolated</div>' : ''}</td>
-      </tr>
-    `).join('');
-  } catch (error) {
-    console.warn('World Bank market estimates unavailable:', error);
-    if (meta) meta.textContent = 'World Bank estimates are temporarily unavailable. ACE published observations above remain available.';
-  }
+  if (meta) meta.textContent = 'External modeled estimates are not connected yet. Published market observations are shown above.';
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px">No verified estimate feed is connected. This section will be enabled when a reliable dataset refresh is configured.</td></tr>';
 }
 
 export function initMarketCentre() {
-  const cropSelect = document.getElementById('marketCropFilter');
-  const districtSelect = document.getElementById('marketDistrictFilter');
-  const statusSelect = document.getElementById('marketStatusFilter');
-  const searchInput = document.getElementById('marketSearch');
-  const resetBtn = document.getElementById('resetMarketFilters');
-
-  if (cropSelect) cropSelect.addEventListener('change', renderMarketTable);
-  if (districtSelect) districtSelect.addEventListener('change', renderMarketTable);
-  if (statusSelect) statusSelect.addEventListener('change', renderMarketTable);
-  if (searchInput) searchInput.addEventListener('input', renderMarketTable);
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      if (cropSelect) cropSelect.value = 'all';
-      if (districtSelect) districtSelect.value = 'all';
-      if (statusSelect) statusSelect.value = 'all';
-      if (searchInput) searchInput.value = '';
-      renderMarketTable();
-      showToast('Market filters reset');
-    });
-  }
-
-  // Load data if market elements exist on this page
+  const crop = document.getElementById('marketCropFilter');
+  const district = document.getElementById('marketDistrictFilter');
+  const status = document.getElementById('marketStatusFilter');
+  const search = document.getElementById('marketSearch');
+  const reset = document.getElementById('resetMarketFilters');
+  [crop,district,status].filter(Boolean).forEach(el => el.addEventListener('change', renderMarketTable));
+  if (search) search.addEventListener('input', renderMarketTable);
+  if (reset) reset.addEventListener('click', () => {
+    if (crop) crop.value = 'all';
+    if (district) district.value = 'all';
+    if (status) status.value = 'all';
+    if (search) search.value = '';
+    renderMarketTable();
+    showToast('Market filters reset');
+  });
   if (document.getElementById('marketTableBody')) {
     loadMarketData();
     loadWorldBankMarketEstimates();

@@ -64,7 +64,7 @@
       <!-- Section Header -->
       <div class="section-head">
         <div>
-          <span class="section-kicker">Phase 1 • V5 Upgrade</span>
+          <span class="section-kicker">Phase 1 • V6 Market Intelligence</span>
           <h2>Agricultural Market Information Centre</h2>
           <p>Published commodity price observations from selected markets in Malawi. Compare dated reference prices, check units and source records, and confirm current prices locally before trading.</p>
         </div>
@@ -112,9 +112,8 @@
 
             <label style="font-size:12px;font-weight:800;color:var(--forest)">Status:
               <select id="marketStatusFilter" aria-label="Filter by verification status">
-                <option value="all">All Records</option>
+                <option value="all">All Published Prices</option>
                 <option value="verified">Verified Only (✓)</option>
-                <option value="unverified">Unverified (⏳)</option>
               </select>
             </label>
           </div>
@@ -127,7 +126,7 @@
 
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <span style="font-size:13px;font-weight:800;color:var(--forest)" id="marketRecordCount">Loading records…</span>
-          <span style="font-size:11px;color:var(--muted)">Latest source observations: 9 September 2026 (ACE). Dates vary by commodity.</span>
+          <span id="marketFreshness" style="font-size:11px;color:var(--muted)">Checking latest published observation…</span>
         </div>
 
         <!-- Prices Table -->
