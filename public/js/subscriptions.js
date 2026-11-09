@@ -335,7 +335,7 @@ function handlePlanSelect(planId) {
 }
 
 // Submit a payment reference for administrator review. This does NOT activate access.
-async function confirmPaymentActivation() {
+async function submitPaymentRequest() {
   if (!selectedPlanForPayment) return;
 
   const isNy = currentLang === 'ny';
@@ -369,7 +369,7 @@ async function confirmPaymentActivation() {
   const originalText = confirmBtn ? confirmBtn.textContent : '';
   if (confirmBtn) {
     confirmBtn.disabled = true;
-    confirmBtn.textContent = isNy ? ' ikutumizidwa…' : 'Submitting for review…';
+    confirmBtn.textContent = isNy ? 'Zikutumizidwa…' : 'Submitting for review…';
   }
 
   try {
