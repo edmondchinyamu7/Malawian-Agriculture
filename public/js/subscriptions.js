@@ -312,7 +312,6 @@ function handlePlanSelect(planId) {
   if (planId === 'free') {
     userAccess.plan_id = 'free';
     userAccess.plan_name = 'Free Farmer';
-    localStorage.setItem('ulimi_simulated_plan', 'free');
     showToast(isNy ? 'Mwasankha plan yaulere ya Free Farmer.' : 'Switched to Free Farmer plan.');
     renderCards();
     return;
@@ -335,81 +334,80 @@ function handlePlanSelect(planId) {
   openPaymentModal(plan);
 }
 
-// Confirm Payment & Activate
-async function confirmPaymentActivation() {
+// Submit a payment reference for administrator review. This does NOT activate access.
+async function submitPaymentRequest() {
   if (!selectedPlanForPayment) return;
 
   const isNy = currentLang === 'ny';
   const alertBox = document.getElementById('paymentAlert');
   const refInput = document.getElementById('paymentRefInput');
   const refValue = refInput ? refInput.value.trim() : '';
+  const confirmBtn = document.getElementById('btnConfirmPayment');
+
+  const showAlert = (message, type = 'error') => {
+    if (!alertBox) return;
+    alertBox.textContent = message;
+    alertBox.className = 'payment-alert ' + type;
+    alertBox.style.display = 'block';
+  };
 
   if (!refValue) {
-    if (alertBox) {
-      alertBox.textContent = isNy 
-        ? 'Chonde lembani nambala ya chitupa cha malipiro (Transaction Reference / ID).'
-        : 'Please enter your mobile money transaction ID or deposit reference.';
-      alertBox.className = 'payment-alert error';
-      alertBox.style.display = 'block';
-    }
+    showAlert(isNy
+      ? 'Chonde lembani nambala ya chitupa cha malipiro.'
+      : 'Please enter your transaction reference.');
     return;
   }
 
-  // Visual processing state
-  const confirmBtn = document.getElementById('btnConfirmPayment');
+  const acc = await getAccount().catch(() => null);
+  if (!acc?.user?.id) {
+    showAlert(isNy
+      ? 'Chonde lowani mu akaunti yanu musanatumize malipiro.'
+      : 'Please sign in before submitting a payment reference.');
+    return;
+  }
+
   const originalText = confirmBtn ? confirmBtn.textContent : '';
   if (confirmBtn) {
     confirmBtn.disabled = true;
-    confirmBtn.textContent = isNy ? 'Kutsirikidwa ndi kutsimikiza…' : 'Verifying transaction…';
+    confirmBtn.textContent = isNy ? 'Zikutumizidwa…' : 'Submitting for review…';
   }
 
   try {
-    // 1. Try to record in Supabase subscriptions table if authenticated
-    const acc = await getAccount();
-    if (acc?.user?.id) {
-      try {
-        await supabase.from('subscriptions').insert({
-          user_id: acc.user.id,
-          plan_id: selectedPlanForPayment.id,
-          status: 'active',
-          provider: 'manual',
-          provider_reference: refValue,
-          started_at: new Date().toISOString(),
-          expires_at: new Date(Date.now() + (currentBilling === 'yearly' ? 365 : 30) * 86400000).toISOString()
-        });
-      } catch (err) {
-        console.warn('Subscription insertion note:', err);
-      }
-    }
+    const amount = currentBilling === 'yearly'
+      ? selectedPlanForPayment.yearly_price
+      : selectedPlanForPayment.monthly_price;
 
-    // 2. Set local device access state & sync
-    userAccess.plan_id = selectedPlanForPayment.id;
-    userAccess.plan_name = selectedPlanForPayment.name;
-    localStorage.setItem('ulimi_simulated_plan', selectedPlanForPayment.id);
-    localStorage.setItem('ulimi_plan_ref', refValue);
+    const { error } = await supabase.from('subscriptions').insert({
+      user_id: acc.user.id,
+      plan_id: selectedPlanForPayment.id,
+      status: 'pending',
+      provider: 'manual',
+      provider_reference: refValue,
+      billing_period: currentBilling,
+      amount_mwk: amount,
+      started_at: null,
+      expires_at: null,
+      auto_renewing: false
+    });
 
-    if (alertBox) {
-      alertBox.textContent = isNy
-        ? `🎉 Zikomo! Malipiro atsimikizidwa bwino. Akaunti yanu yakwezedwa kukhala ${selectedPlanForPayment.name_ny || selectedPlanForPayment.name}!`
-        : `🎉 Success! Payment verified. Your account has been upgraded to ${selectedPlanForPayment.name}!`;
-      alertBox.className = 'payment-alert success';
-      alertBox.style.display = 'block';
-    }
+    if (error) throw error;
+
+    showAlert(isNy
+      ? 'Zikomo. Pempho lanu la malipiro latumizidwa kuti liyang’anidwe. Umembala udzatsegulidwa pambuyo potsimikizira malipiro.'
+      : 'Payment reference submitted for review. Your paid membership will remain locked until payment is verified.', 'success');
 
     setTimeout(() => {
       closePaymentModal();
-      showToast(isNy ? `Plan ya ${selectedPlanForPayment.name_ny || selectedPlanForPayment.name} yakhazikitsidwa!` : `${selectedPlanForPayment.name} activated!`);
+      showToast(isNy
+        ? 'Pempho latumizidwa; likuyembekezera kutsimikizidwa.'
+        : 'Payment submitted; awaiting verification.');
       renderCards();
-    }, 1800);
-
-  } catch (ex) {
-    if (alertBox) {
-      alertBox.textContent = isNy
-        ? 'Panali vuto potsimikiza. Chonde yesaninso kapena funsani chithandizo.'
-        : 'An error occurred during verification. Please try again or contact support.';
-      alertBox.className = 'payment-alert error';
-      alertBox.style.display = 'block';
-    }
+    }, 2200);
+  } catch (error) {
+    console.error('Payment submission failed:', error);
+    showAlert(isNy
+      ? 'Sitinathe kutumiza pempho lanu. Chonde yesaninso kapena funsani thandizo.'
+      : 'We could not submit your request. Please try again or contact support.');
   } finally {
     if (confirmBtn) {
       confirmBtn.disabled = false;
@@ -437,13 +435,10 @@ async function initSubscriptions() {
     console.warn('Auth check in subscriptions:', err);
   }
 
-  // Check saved local simulated plan for device continuity
-  const savedLocalPlan = localStorage.getItem('ulimi_simulated_plan');
-  if (savedLocalPlan && (!userAccess.plan_id || userAccess.plan_id === 'free')) {
-    userAccess.plan_id = savedLocalPlan;
-    const match = DEFAULT_PLANS.find(p => p.id === savedLocalPlan);
-    if (match) userAccess.plan_name = match.name;
-  }
+  // Remove legacy browser-only upgrades. Paid access must come from verified database state.
+  localStorage.removeItem('ulimi_simulated_plan');
+  localStorage.removeItem('ulimi_plan_ref');
+
 
   // 2. Fetch any updated dynamic plans from Supabase if online
   try {
@@ -502,6 +497,9 @@ async function initSubscriptions() {
       if (e.target === modalBackdrop) closePaymentModal();
     });
   }
+
+  const confirmPaymentBtn = document.getElementById('btnConfirmPayment');
+  if (confirmPaymentBtn) confirmPaymentBtn.addEventListener('click', submitPaymentRequest);
 
   const payTabs = document.querySelectorAll('.pay-tab');
   payTabs.forEach(tab => {

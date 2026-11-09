@@ -19,15 +19,7 @@ export async function getSubscriptionAccess() {
     console.warn('Subscription RPC notice:', err?.message || err);
   }
 
-  // Check device-local activated subscription continuity
-  const localPlan = localStorage.getItem('ulimi_simulated_plan');
-  if (localPlan && (PLAN_LEVEL[localPlan] || 0) > (PLAN_LEVEL[access.plan_id] || 0)) {
-    access.plan_id = localPlan;
-    access.plan_name = PLAN_LABELS[localPlan] || localPlan;
-    if (localPlan === 'professional' || localPlan === 'agribusiness') {
-      access.ads_enabled = false;
-    }
-  }
+  // Fail closed: browser storage is never proof of a paid subscription.
 
   return access;
 }
