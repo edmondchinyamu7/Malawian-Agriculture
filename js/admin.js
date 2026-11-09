@@ -147,8 +147,9 @@ export async function initAdminPriceManagement() {
   initForm();
   const logoutBtn = document.getElementById('adminLogoutBtn');
   if (logoutBtn) logoutBtn.addEventListener('click', async () => {
+    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
     await supabase.auth.signOut();
-    window.location.assign('../login.html');
+    window.location.assign('../login.html?admin=true');
   });
   const resetBtn = document.getElementById('resetDefaultPricesBtn');
   if (resetBtn) resetBtn.hidden = true; // shared records must never be wiped by a local reset button
