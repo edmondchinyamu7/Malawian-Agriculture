@@ -20,7 +20,8 @@ create table if not exists public.subscription_payment_methods (
   updated_at timestamptz not null default now(),
   updated_by uuid references auth.users(id),
   constraint subscription_payment_method_has_destination check (
-    (merchant_code is not null and length(btrim(merchant_code)) > 0)
+    not enabled
+    or (merchant_code is not null and length(btrim(merchant_code)) > 0)
     or (phone_number is not null and length(btrim(phone_number)) > 0)
     or (account_number is not null and length(btrim(account_number)) > 0)
   )
