@@ -58,7 +58,7 @@
         <div>
           <span class="section-kicker">Administrative Controls</span>
           <h2>Agricultural Market Price Administration</h2>
-          <p>Submit and verify new field price reports, manage verified and unverified status labels, and audit commodity pricing data stored in your local session.</p>
+          <p>Submit and verify new field price reports, manage verified and unverified status labels, and audit commodity pricing data stored in the shared market database with administrator-only controls.</p>
         </div>
         <div>
           <a href="#financeDashboard" class="btn btn-primary">Business &amp; Finance Dashboard ↗</a>
@@ -70,7 +70,7 @@
       <section class="admin-card">
         <div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button type="button" id="adminLogoutBtn" class="btn btn-outline">Sign out</button></div>
         <h3>Submit New Crop Price Record</h3>
-        <p>Enter realistic market observations. All fields will be stored locally on your device and rendered directly in the market directory.</p>
+        <p>Enter realistic market observations. Approved records are published to the shared market directory. Pending records remain private until reviewed.</p>
 
         <form id="addPriceForm" class="admin-form">
           <div class="form-group">
@@ -136,10 +136,10 @@
           </div>
 
           <div class="form-group">
-            <label for="adminStatus">Initial Verification Status</label>
+            <label for="adminStatus">Publication Status</label>
             <select id="adminStatus">
               <option value="verified">Verified (Official Extension Cross-checked)</option>
-              <option value="unverified" selected>Unverified (Local Trader Submission)</option>
+              <option value="pending" selected>Pending review (not public)</option>
             </select>
           </div>
 
