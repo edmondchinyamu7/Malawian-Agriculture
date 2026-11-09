@@ -63,8 +63,7 @@
       line-height: 1.5;
     }
     .auth-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       gap: 6px;
       background: #edf4ef;
       padding: 5px;
@@ -72,20 +71,27 @@
       margin: 20px 0 24px;
     }
     .auth-tab-btn {
+      flex: 1;
       border: 0;
-      padding: 10px 14px;
+      padding: 10px 10px;
       border-radius: 9px;
       background: transparent;
       font-weight: 750;
-      font-size: 14px;
+      font-size: 13.5px;
       color: #315444;
       cursor: pointer;
       transition: all 0.2s ease;
+      white-space: nowrap;
+      text-align: center;
     }
     .auth-tab-btn.active {
       background: #ffffff;
       color: #0b6245;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .auth-tab-btn#adminTab.active {
+      color: #064e3b;
+      font-weight: 850;
     }
     .form-group {
       margin-bottom: 16px;
@@ -256,10 +262,11 @@
             <p id="intro" data-i18n="authSubLogin">Lowani mu akaunti yanu kuti muwone mbiri ya munda, malangizo ndi mitengo yovomerezeka.</p>
           </div>
 
-          <!-- Tabs: Log In / Sign Up -->
+          <!-- Tabs: Log In / Sign Up / Admin -->
           <div class="auth-tabs" role="tablist">
             <button id="loginTab" class="auth-tab-btn active" type="button" role="tab" aria-selected="true" data-i18n="authTabLogin">Lowani</button>
             <button id="signupTab" class="auth-tab-btn" type="button" role="tab" aria-selected="false" data-i18n="authTabSignup">Lembetsani</button>
+            <button id="adminTab" class="auth-tab-btn" type="button" role="tab" aria-selected="false">Admin 🔐</button>
           </div>
 
           <!-- Auth Form -->
@@ -276,13 +283,13 @@
             </div>
 
             <div class="form-group">
-              <label for="email" data-i18n="authLabelEmail">Keyala ya imelo (Email)</label>
+              <label for="email" id="emailLabel" data-i18n="authLabelEmail">Keyala ya imelo (Email)</label>
               <input class="form-control" id="email" type="email" required autocomplete="email" placeholder="alimi@example.mw">
             </div>
 
             <div class="form-group">
-              <label for="password" data-i18n="authLabelPassword">Mawu achinsinsi (Password)</label>
-              <input class="form-control" id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="••••••••">
+              <label for="password" id="passwordLabel" data-i18n="authLabelPassword">Mawu achinsinsi (Password)</label>
+              <input class="form-control" id="password" type="password" minlength="4" required autocomplete="current-password" placeholder="••••••••">
             </div>
 
             <button class="auth-submit-btn" id="submitBtn" type="submit">
@@ -294,6 +301,8 @@
           </form>
 
           <div class="auth-helper-notes">
+            <p id="adminLinkNote">Malo oyang'anira: <a href="login.html?admin=true" id="adminSwitchLink">Lowani ku Admin Portal ↗</a></p>
+            <p id="farmerLinkNote" hidden>Alimi ndi ophunzira: <a href="login.html" id="farmerSwitchLink">← Bwererani pa akaunti ya alimi</a></p>
             <p>Ulimi wa Malawi • <a href="index.html" data-i18n="authReturnHome">Bwererani poyambira</a></p>
           </div>
         </div>
@@ -451,7 +460,13 @@
     function updateLanguageLabels() {
       const lang = getCurrentLang();
       const t = translations[lang] || translations.ny;
-      if (mode === 'login') {
+      if (mode === 'admin') {
+        $('heading').textContent = (lang === 'en') ? 'Administrator Access Portal' : "Malo a Uyang'anire (Admin Portal)";
+        $('intro').textContent = (lang === 'en')
+          ? 'Enter your administrator credentials configured in Vercel environment variables.'
+          : "Lowani ndi dzina ndi mawu achinsinsi a administrator oikidwa m'dongosolo.";
+        $('submitText').textContent = (lang === 'en') ? 'Sign in to Admin Portal 🔐' : 'Lowani mu Admin Portal 🔐';
+      } else if (mode === 'login') {
         $('heading').textContent = t.authWelcomeLogin || 'Welcome back to Ulimi wa Malawi';
         $('intro').textContent = t.authSubLogin || 'Sign in to access your farm records.';
         $('submitText').textContent = t.authBtnLogin || 'Lowani mu Akaunti';
@@ -464,27 +479,51 @@
 
     function setMode(m) {
       mode = m;
+      clearAlert();
+
       $('namesSection').hidden = (m !== 'signup');
       $('first').required = (m === 'signup');
       $('last').required = (m === 'signup');
+
       $('loginTab').classList.toggle('active', m === 'login');
       $('loginTab').setAttribute('aria-selected', String(m === 'login'));
       $('signupTab').classList.toggle('active', m === 'signup');
       $('signupTab').setAttribute('aria-selected', String(m === 'signup'));
-      clearAlert();
+      $('adminTab').classList.toggle('active', m === 'admin');
+      $('adminTab').setAttribute('aria-selected', String(m === 'admin'));
+
+      if (m === 'admin') {
+        $('emailLabel').textContent = 'Dzina la Administrator (Username or Email)';
+        $('email').type = 'text';
+        $('email').placeholder = 'e.g. admin';
+        $('passwordLabel').textContent = 'Mawu achinsinsi a Admin (Password)';
+        if ($('adminLinkNote')) $('adminLinkNote').hidden = true;
+        if ($('farmerLinkNote')) $('farmerLinkNote').hidden = false;
+      } else {
+        $('emailLabel').textContent = 'Keyala ya imelo (Email)';
+        $('email').type = 'email';
+        $('email').placeholder = 'alimi@example.mw';
+        $('passwordLabel').textContent = 'Mawu achinsinsi (Password)';
+        if ($('adminLinkNote')) $('adminLinkNote').hidden = false;
+        if ($('farmerLinkNote')) $('farmerLinkNote').hidden = true;
+      }
+
       updateLanguageLabels();
     }
 
     $('loginTab').addEventListener('click', () => setMode('login'));
     $('signupTab').addEventListener('click', () => setMode('signup'));
+    $('adminTab').addEventListener('click', () => setMode('admin'));
+    $('adminSwitchLink')?.addEventListener('click', (e) => { e.preventDefault(); setMode('admin'); });
+    $('farmerSwitchLink')?.addEventListener('click', (e) => { e.preventDefault(); setMode('login'); });
 
     window.addEventListener('languageChanged', updateLanguageLabels);
 
-    // Check if user is already authenticated
+    // Check if user is already authenticated in Supabase (farmer session)
     async function checkCurrentSession() {
       try {
         const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
+        if (user && mode !== 'admin') {
           $('alreadyLoggedInBox').hidden = false;
           $('sessionUserEmail').textContent = user.email || '';
           const lang = getCurrentLang();
@@ -501,25 +540,26 @@
       location.reload();
     });
 
-    checkCurrentSession();
+    // Check URL parameters for direct admin access
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === 'true' || window.location.hash === '#admin') {
+      setMode('admin');
+    } else {
+      checkCurrentSession();
+    }
 
     // Form Submission
     $('authForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       clearAlert();
 
-      const email = $('email').value.trim();
+      const usernameInput = $('email').value.trim();
       const password = $('password').value;
       const firstName = $('first').value.trim();
       const lastName = $('last').value.trim();
 
-      if (!email || !password) {
-        showAlert('Chonde lembani imelo ndi mawu achinsinsi.', 'error');
-        return;
-      }
-
-      if (mode === 'signup' && (!firstName || !lastName)) {
-        showAlert('Chonde lembani dzina lanu loyamba ndi la banja.', 'error');
+      if (!usernameInput || !password) {
+        showAlert('Chonde lembani zofunika zonse (Username/Email ndi Mawu Achinsinsi).', 'error');
         return;
       }
 
@@ -528,11 +568,47 @@
       const originalText = $('submitText').textContent;
       $('submitText').textContent = 'Chonde dikirani… (Please wait)';
 
-      try {
-        let authResult;
-        if (mode === 'signup') {
-          authResult = await supabase.auth.signUp({
-            email,
+      // 1. ADMINISTRATOR LOGIN (Server-Side Vercel Environment Verification)
+      if (mode === 'admin') {
+        try {
+          const response = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: usernameInput, password }),
+            credentials: 'same-origin'
+          });
+
+          const data = await response.json();
+          if (!response.ok || !data.ok) {
+            throw new Error(data.message || 'Dzina la administrator kapena mawu achinsinsi sizolondola.');
+          }
+
+          showAlert('Mwalowa bwinobwino! Tikukulumikizani ku Admin Dashboard… (Redirecting…)', 'success');
+          const redirectTarget = urlParams.get('redirect') || '/admin';
+          setTimeout(() => {
+            window.location.assign(redirectTarget);
+          }, 350);
+        } catch (adminErr) {
+          console.warn('Admin authentication failed:', adminErr);
+          showAlert(adminErr.message || 'Zalephera kulowa mu admin portal. Yesaninso.', 'error');
+          submitBtn.disabled = false;
+          $('submitText').textContent = originalText;
+        }
+        return;
+      }
+
+      // 2. FARMER REGISTRATION / SIGNUP (Supabase Auth)
+      if (mode === 'signup') {
+        if (!firstName || !lastName) {
+          showAlert('Chonde lembani dzina lanu loyamba ndi la banja.', 'error');
+          submitBtn.disabled = false;
+          $('submitText').textContent = originalText;
+          return;
+        }
+
+        try {
+          const authResult = await supabase.auth.signUp({
+            email: usernameInput,
             password,
             options: {
               data: { first_name: firstName, last_name: lastName },
@@ -548,58 +624,39 @@
             $('submitText').textContent = originalText;
             return;
           }
-        } else {
-          authResult = await supabase.auth.signInWithPassword({
-            email,
-            password
-          });
 
-          if (authResult.error) throw authResult.error;
+          showAlert('Mwalowa bwinobwino! Tikukulumikizani… (Redirecting…)', 'success');
+          setTimeout(() => window.location.assign('/profile.html'), 400);
+        } catch (err) {
+          console.error('Farmer signup error:', err);
+          showAlert(err?.message || 'Zalephera kupanga akaunti. Yesaninso.', 'error');
+          submitBtn.disabled = false;
+          $('submitText').textContent = originalText;
         }
+        return;
+      }
 
-        // Successfully signed in or registered with session
+      // 3. FARMER SIGN IN (Supabase Auth)
+      try {
+        const authResult = await supabase.auth.signInWithPassword({
+          email: usernameInput,
+          password
+        });
+
+        if (authResult.error) throw authResult.error;
+
         showAlert('Mwalowa bwinobwino! Tikukulumikizani… (Redirecting…)', 'success');
-
-        const { data: { user } } = await supabase.auth.getUser();
-        let role = 'farmer';
-
-        if (user) {
-          try {
-            const { data: p } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
-            if (p && p.role) role = p.role;
-          } catch (_) {}
-        }
-
-        if (role === 'admin') {
-          try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.access_token) {
-              const res = await fetch('/api/admin/session', {
-                method: 'POST',
-                headers: { Authorization: 'Bearer ' + session.access_token },
-                credentials: 'same-origin'
-              });
-              if (!res.ok) {
-                console.warn('Admin session API returned non-200, continuing to admin portal.');
-              }
-            }
-          } catch (sessionErr) {
-            console.warn('Session API notice:', sessionErr);
-          }
-          window.location.assign('/admin');
-        } else {
-          const urlParams = new URLSearchParams(window.location.search);
-          const redirectUrl = urlParams.get('redirect');
-          if (redirectUrl && (redirectUrl.startsWith('/') || redirectUrl.startsWith('pages/'))) {
+        const redirectUrl = urlParams.get('redirect');
+        setTimeout(() => {
+          if (redirectUrl && (redirectUrl.startsWith('/') || redirectUrl.startsWith('pages/')) && !redirectUrl.includes('admin')) {
             window.location.assign(redirectUrl);
           } else {
             window.location.assign('/profile.html');
           }
-        }
+        }, 400);
       } catch (err) {
-        console.error('Auth error:', err);
-        const errMsg = err?.message || 'Zalephera kulowa mu akaunti. Yesaninso.';
-        showAlert(errMsg, 'error');
+        console.error('Farmer login error:', err);
+        showAlert(err?.message || 'Zalephera kulowa mu akaunti. Yesaninso kapena dinani Admin ngati muli admin.', 'error');
         submitBtn.disabled = false;
         $('submitText').textContent = originalText;
       }

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/admin", "destination": "/api/index.js" },
+    { "source": "/admin/(.*)", "destination": "/api/index.js" },
+    { "source": "/admin-login", "destination": "/api/index.js" },
+    { "source": "/admin-finance", "destination": "/api/index.js" },
+    { "source": "/pages/admin.html", "destination": "/api/index.js" },
+    { "source": "/pages/admin-finance.html", "destination": "/api/index.js" }
+  ]
+}

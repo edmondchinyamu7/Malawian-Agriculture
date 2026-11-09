@@ -11,11 +11,21 @@ export function initAdminPriceManagement() {
 
   if (!tableBody) return;
 
+  // Verify server-side administrator session
+  fetch('/api/admin/session', { credentials: 'same-origin' })
+    .then(r => {
+      if (!r.ok) {
+        window.location.assign('/login.html?redirect=' + encodeURIComponent(window.location.pathname) + '&admin=true');
+      }
+    })
+    .catch(() => {});
+
   const logoutBtn = document.getElementById('adminLogoutBtn');
   if (logoutBtn) logoutBtn.addEventListener('click', async () => {
-    await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
-    if (window.ulimiSupabase) await window.ulimiSupabase.auth.signOut();
-    window.location.assign('/login.html');
+    try {
+      await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+    } catch (_) {}
+    window.location.assign('/login.html?admin=true');
   });
 
   function renderAdminTable() {
