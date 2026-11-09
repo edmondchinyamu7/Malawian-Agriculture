@@ -1,7 +1,10 @@
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="Ulimi wa Malawi home">
     <span class="brand-mark">🌱</span>
-    <span>ULIMI WA MALAWI<small>AGRICULTURE KNOWLEDGE HUB</small></span>
+    <span>
+      <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+      <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+    </span>
   </a>
   <nav class="nav" id="nav" aria-label="Main navigation">
     <a href="index.html" data-i18n="navHome">Home</a>
@@ -9,9 +12,23 @@
     <a href="pages/crop-calendar.html" data-i18n="navCalendar">Farming calendar</a>
     <a href="modules.html" data-i18n="navModules">All modules</a>
     <a href="pages/subscriptions.html" data-i18n="navSubscriptions">Plans</a>
+    <a href="login.html" class="mobile-account-link" data-i18n="navLogin">Lowani / Lembetsani</a>
   </nav>
   <div class="top-actions">
-    <span class="pill" data-i18n="badgeMadeForMalawi">🇲🇼 MADE FOR MALAWI</span>
-    <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
+      <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
+      <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+    </div>
+    <div class="account-area" id="accountArea">
+      <a class="account-login-link" href="login.html" id="accountLoginLink" data-i18n="navLogin">Lowani / Lembetsani</a>
+      <div class="profile-menu" id="profileMenu" hidden>
+        <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <a href="profile.html" data-i18n="navProfile">Mbiri Yanga</a>
+          <button type="button" id="accountLogoutButton" data-i18n="navLogout">Tulukani</button>
+        </div>
+      </div>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
   </div>
 </header>
