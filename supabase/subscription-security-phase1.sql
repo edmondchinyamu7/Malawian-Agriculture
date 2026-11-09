@@ -29,6 +29,26 @@ begin
       add constraint subscriptions_amount_mwk_check
       check (amount_mwk is null or amount_mwk > 0);
   end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'subscriptions_active_requires_started_at'
+      and conrelid = 'public.subscriptions'::regclass
+  ) then
+    alter table public.subscriptions
+      add constraint subscriptions_active_requires_started_at
+      check (status <> 'active' or started_at is not null);
+  end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'subscriptions_expiry_after_start'
+      and conrelid = 'public.subscriptions'::regclass
+  ) then
+    alter table public.subscriptions
+      add constraint subscriptions_expiry_after_start
+      check (expires_at is null or (started_at is not null and expires_at > started_at));
+  end if;
 end
 $$;
 
