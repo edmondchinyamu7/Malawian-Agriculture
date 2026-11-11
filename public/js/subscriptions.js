@@ -126,6 +126,106 @@ let currentBilling = 'monthly';
 let userAccess = { plan_id: 'free', plan_name: 'Free Farmer', is_authenticated: false };
 let currentLang = localStorage.getItem('ulimi_lang') || 'ny';
 let selectedPlanForPayment = null;
+let paymentMethods = [];
+let selectedPaymentMethodId = null;
+
+function renderPaymentMethods() {
+  const modalContainer = document.getElementById('paymentMethodDetails');
+  const publicContainer = document.getElementById('publicPaymentMethods');
+  const isNy = currentLang === 'ny';
+
+  const makeMethodCard = (method, selectable) => {
+    const card = document.createElement(selectable ? 'button' : 'article');
+    if (selectable) {
+      card.type = 'button';
+      card.className = 'step-box payment-method-option' + (selectedPaymentMethodId === method.id ? ' active' : '');
+      card.setAttribute('aria-pressed', String(selectedPaymentMethodId === method.id));
+      card.addEventListener('click', () => {
+        selectedPaymentMethodId = method.id;
+        renderPaymentMethods();
+      });
+    } else {
+      card.className = 'payment-method-pill';
+    }
+
+    const heading = document.createElement(selectable ? 'strong' : 'span');
+    heading.textContent = method.display_name;
+    card.appendChild(heading);
+
+    const details = [
+      ['Dial code', method.dial_code],
+      ['Merchant code', method.merchant_code],
+      ['Phone number', method.phone_number],
+      ['Bank', method.bank_name],
+      ['Account name', method.account_name],
+      ['Account number', method.account_number],
+      ['Branch', method.branch],
+      ['Instructions', method.instructions]
+    ];
+    details.forEach(([label, value]) => {
+      if (!value) return;
+      const line = document.createElement('p');
+      line.textContent = label + ': ' + value;
+      card.appendChild(line);
+    });
+    return card;
+  };
+
+  if (modalContainer) {
+    modalContainer.replaceChildren();
+    if (!paymentMethods.length) {
+      const empty = document.createElement('p');
+      empty.className = 'step-box';
+      empty.textContent = isNy
+        ? 'Njira zolipirira sizinakonzedwebe. Musatumize ndalama mpaka manambala ovomerezeka aonekere.'
+        : 'Payment methods are not configured yet. Do not send money until verified receiving details appear here.';
+      modalContainer.appendChild(empty);
+    } else {
+      const intro = document.createElement('p');
+      intro.className = 'payment-methods-intro';
+      intro.textContent = isNy ? 'Sankhani njira imene mwagwiritsa ntchito:' : 'Select the payment method you used:';
+      modalContainer.appendChild(intro);
+      paymentMethods.forEach(method => modalContainer.appendChild(makeMethodCard(method, true)));
+    }
+  }
+
+  if (publicContainer) {
+    publicContainer.replaceChildren();
+    if (!paymentMethods.length) {
+      const empty = document.createElement('span');
+      empty.className = 'payment-method-pill';
+      empty.textContent = isNy ? 'Njira zolipirira zikukonzedwa' : 'Payment methods being configured';
+      publicContainer.appendChild(empty);
+    } else {
+      paymentMethods.forEach(method => {
+        const pill = document.createElement('span');
+        pill.className = 'payment-method-pill';
+        pill.textContent = method.display_name;
+        publicContainer.appendChild(pill);
+      });
+    }
+  }
+
+  const confirmBtn = document.getElementById('btnConfirmPayment');
+  if (confirmBtn) confirmBtn.disabled = !selectedPaymentMethodId;
+}
+
+async function loadPaymentMethods() {
+  try {
+    const { data, error } = await supabase
+      .from('subscription_payment_methods')
+      .select('id,display_name,dial_code,merchant_code,phone_number,bank_name,account_name,account_number,branch,instructions,display_order')
+      .eq('enabled', true)
+      .order('display_order');
+    if (error) throw error;
+    paymentMethods = Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.warn('Secure payment methods unavailable:', error);
+    paymentMethods = [];
+  }
+  selectedPaymentMethodId = null;
+  renderPaymentMethods();
+}
 
 const formatMoney = (n) => 'MWK ' + Number(n || 0).toLocaleString('en-MW');
 
@@ -270,6 +370,8 @@ function renderCards() {
 // Open Payment Modal
 function openPaymentModal(plan) {
   selectedPlanForPayment = plan;
+  selectedPaymentMethodId = null;
+  renderPaymentMethods();
   const modal = document.getElementById('paymentModal');
   if (!modal) return;
 
@@ -337,6 +439,11 @@ function handlePlanSelect(planId) {
 // Submit a payment reference for administrator review. This does NOT activate access.
 async function submitPaymentRequest() {
   if (!selectedPlanForPayment) return;
+  if (!selectedPaymentMethodId || !paymentMethods.some(method => method.id === selectedPaymentMethodId)) {
+    const alertBox = document.getElementById('paymentAlert');
+    if (alertBox) { alertBox.textContent = 'Select an available verified payment method before submitting.'; alertBox.className = 'payment-alert error'; alertBox.style.display = 'block'; }
+    return;
+  }
 
   const isNy = currentLang === 'ny';
   const alertBox = document.getElementById('paymentAlert');
@@ -382,6 +489,7 @@ async function submitPaymentRequest() {
       plan_id: selectedPlanForPayment.id,
       status: 'pending',
       provider: 'manual',
+      payment_method_id: selectedPaymentMethodId,
       provider_reference: refValue,
       billing_period: currentBilling,
       amount_mwk: amount,
@@ -460,6 +568,9 @@ async function initSubscriptions() {
   } catch (err) {
     console.warn('Supabase subscription_plans sync:', err);
   }
+
+  // Load payment destinations from the database. If unavailable, fail closed and show no numbers.
+  await loadPaymentMethods();
 
   // 3. Render cards immediately
   renderCards();

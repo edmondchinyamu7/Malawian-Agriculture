@@ -483,13 +483,7 @@
           <strong>Njira Zovomerezeka Zolipirira ku Malawi (Approved Payment Methods)</strong>
         </div>
         <p>Alimi amatha kulipira umembala kudzera m'njira zotsatirazi mosavuta pa foni kapena ku banki. Musatumize ndalama ku akaunti yachinsinsi kapena yosavomerezeka.</p>
-        <div class="payment-methods-strip">
-          <span class="payment-method-pill">📱 Airtel Money (*211#)</span>
-          <span class="payment-method-pill">📱 TNM Mpamba (*444#)</span>
-          <span class="payment-method-pill">🏛️ National Bank of Malawi</span>
-          <span class="payment-method-pill">🏛️ Standard Bank Malawi</span>
-          <span class="payment-method-pill">🛒 Google Play Billing</span>
-        </div>
+        <div class="payment-methods-strip" id="publicPaymentMethods"><span class="payment-method-pill">Payment options are being securely configured.</span></div>
       </section>
 
       <!-- 8. Frequently Asked Questions (FAQ) -->
@@ -502,7 +496,7 @@
         <div class="faq-grid">
           <article class="faq-card">
             <h3><span>❓</span> Kodi ndimalipira bwanji ndi Airtel Money kapena TNM Mpamba?</h3>
-            <p>Mukasankha plan imene mukufuna, dinani batani la planiyo. Paneli ya malipiro idzatseguka ndi nambala ya malonda (Merchant code: 548921 pa Airtel kapena 883100 pa TNM). Tumizani ndalama ndipo lembani nambala ya chitupa (SMS reference) kuti mutsegule umembala nthawi yomweyo.</p>
+            <p>Mukasankha plan, njira zolipirira ndi manambala ovomerezeka zidzawonetsedwa kuchokera ku makina otetezeka. Umembala sudzatsegulidwa mpaka malipiro atsimikizidwe ndi oyang’anira.</p>
           </article>
 
           <article class="faq-card">
@@ -551,59 +545,9 @@
           <!-- Alert feedback box -->
           <div class="payment-alert" id="paymentAlert" role="alert"></div>
 
-          <!-- Payment Tabs -->
-          <div class="pay-tabs" role="tablist">
-            <button class="pay-tab active" data-target="tabAirtel" type="button" role="tab">Airtel Money</button>
-            <button class="pay-tab" data-target="tabMpamba" type="button" role="tab">TNM Mpamba</button>
-            <button class="pay-tab" data-target="tabBank" type="button" role="tab">Bank Transfer</button>
-            <button class="pay-tab" data-target="tabPlay" type="button" role="tab">Google Play</button>
-          </div>
-
-          <!-- Tab: Airtel Money -->
-          <div class="pay-content active" id="tabAirtel">
-            <div class="step-box">
-              <ol>
-                <li>Imbani <strong>*211#</strong> pa foni yanu ya Airtel.</li>
-                <li>Sankhani <strong>Lipirani Ogulitsa (Pay Merchant)</strong>.</li>
-                <li>Lembani Nambala ya Malonda: <strong>548921</strong> (Ulimi wa Malawi).</li>
-                <li>Lembani ndalama zoyenera monga zasonyezedwa pamwambapa.</li>
-                <li>Lembani mawu achinsinsi anu a Airtel Money (PIN) kuti mutsimikize.</li>
-              </ol>
-            </div>
-          </div>
-
-          <!-- Tab: TNM Mpamba -->
-          <div class="pay-content" id="tabMpamba">
-            <div class="step-box">
-              <ol>
-                <li>Imbani <strong>*444#</strong> pa foni yanu ya TNM.</li>
-                <li>Sankhani <strong>Lipirani Katundu (Pay Merchant)</strong>.</li>
-                <li>Lembani Merchant Code: <strong>883100</strong> (Ulimi wa Malawi).</li>
-                <li>Lembani ndalama zoyenera za umembala umene mwasankha.</li>
-                <li>Lembani PIN yanu ya Mpamba kutsimikiza kutumiza.</li>
-              </ol>
-            </div>
-          </div>
-
-          <!-- Tab: Bank Transfer -->
-          <div class="pay-content" id="tabBank">
-            <div class="step-box">
-              <ol>
-                <li>Banki: <strong>National Bank of Malawi</strong></li>
-                <li>Akaunti Name: <strong>Ulimi wa Malawi Agriculture Hub</strong></li>
-                <li>Nambala ya Akaunti: <strong>1004928192</strong> (Victoria Ave Branch)</li>
-                <li>Reference: Lembani nambala yanu ya foni kapena dzina lanu.</li>
-              </ol>
-            </div>
-          </div>
-
-          <!-- Tab: Google Play -->
-          <div class="pay-content" id="tabPlay">
-            <div class="step-box">
-              <p style="margin:0;font-size:13px;color:#314d3e;">
-                Mukamagwiritsa ntchito App ya Android, mutha kulipira mwachindunji kudzera mu Google Play Store kudzera pa kirediti kadi kapena nkhokwe ya Google Play.
-              </p>
-            </div>
+          <!-- Payment methods are loaded from Supabase; only admins can change receiving details. -->
+          <div id="paymentMethodDetails" class="payment-methods-secure" aria-live="polite">
+            <p class="step-box">Payment options are being securely configured. Do not send money until verified details appear here.</p>
           </div>
 
           <!-- Reference Input Form -->
