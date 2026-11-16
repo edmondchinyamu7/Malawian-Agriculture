@@ -188,3 +188,10 @@
 .menu-btn .pro-icon{width:22px;height:22px;vertical-align:middle}
 .upgrade-card-head .pro-icon{width:22px;height:22px}
 .billing-save-tag .pro-icon{width:16px;height:16px}
+
+
+/* Hero category buttons: professional, consistent inline SVG icons */
+.hero-actions .btn-icon{width:17px;height:17px;min-width:17px;display:inline-block;flex:0 0 17px;vertical-align:middle;stroke:currentColor;opacity:.92}
+.hero-actions .btn-label{display:inline}
+.hero-actions .btn{gap:9px;white-space:nowrap}
+@media(max-width:600px){.hero-actions .btn-icon{width:16px;height:16px;min-width:16px;flex-basis:16px}.hero-actions .btn{gap:8px}}
