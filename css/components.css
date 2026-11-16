@@ -179,3 +179,12 @@
   .news-intro { align-items:flex-start; flex-direction:column; padding:23px; }
   .news-grid { grid-template-columns:1fr; }
 }
+
+
+/* Professional inline SVG icon system */
+.pro-icon{width:1.2em;height:1.2em;display:inline-block;vertical-align:-.22em;flex:0 0 auto;stroke:currentColor}
+.brand-mark .pro-icon{width:24px;height:24px;vertical-align:middle}
+.feature-icon .pro-icon,.gicon .pro-icon,.field-point-icon .pro-icon{width:22px;height:22px;vertical-align:middle}
+.menu-btn .pro-icon{width:22px;height:22px;vertical-align:middle}
+.upgrade-card-head .pro-icon{width:22px;height:22px}
+.billing-save-tag .pro-icon{width:16px;height:16px}
