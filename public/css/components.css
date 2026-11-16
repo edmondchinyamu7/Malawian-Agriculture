@@ -179,3 +179,10 @@
   .news-intro { align-items:flex-start; flex-direction:column; padding:23px; }
   .news-grid { grid-template-columns:1fr; }
 }
+
+
+/* Hero category buttons: professional, consistent inline SVG icons */
+.hero-actions .btn-icon{width:17px;height:17px;min-width:17px;display:inline-block;flex:0 0 17px;vertical-align:middle;stroke:currentColor;opacity:.92}
+.hero-actions .btn-label{display:inline}
+.hero-actions .btn{gap:9px;white-space:nowrap}
+@media(max-width:600px){.hero-actions .btn-icon{width:16px;height:16px;min-width:16px;flex-basis:16px}.hero-actions .btn{gap:8px}}
