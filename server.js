@@ -15,9 +15,9 @@ const COOKIE_NAME = 'ulimi_admin_session';
 const SESSION_MAX_AGE_SECONDS = 8 * 60 * 60; // 8 hours
 
 // Server-only administrative credentials from environment
-const getAdminUsername = () => (process.env.ADMIN_USERNAME || 'admin').trim();
-const getAdminPassword = () => (process.env.ADMIN_PASSWORD || 'MalawiAgri2026!');
-const getSessionSecret = () => (process.env.ADMIN_SESSION_SECRET || 'ulimi_malawi_admin_secret_session_key_2026_fallback');
+const getAdminUsername = () => (process.env.ADMIN_USERNAME || '').trim();
+const getAdminPassword = () => process.env.ADMIN_PASSWORD || '';
+const getSessionSecret = () => process.env.ADMIN_SESSION_SECRET || '';
 
 // Timing-safe string comparison to protect against timing attacks
 function timingSafeCompare(a, b) {
@@ -36,40 +36,18 @@ function verifyAdminCredentials(username, password) {
   if (!username || !password) return false;
   const inputUser = username.trim().toLowerCase();
 
-  const envUser = process.env.ADMIN_USERNAME;
-  const envPass = process.env.ADMIN_PASSWORD;
+  const envUser = getAdminUsername().toLowerCase();
+  const envPass = getAdminPassword();
 
-  // 1. If Vercel environment variables are set, check them first
-  if (envUser && envPass) {
-    if (timingSafeCompare(inputUser, envUser.trim().toLowerCase()) && timingSafeCompare(password, envPass)) {
-      return true;
-    }
-  }
-
-  // 2. Also check fallback / standard admin usernames and passwords
-  const validUsers = [
-    (envUser || '').trim().toLowerCase(),
-    'admin',
-    'admin.ulimi',
-    'admin@ulimi.mw'
-  ].filter(Boolean);
-
-  const validPasswords = [
-    envPass,
-    'MalawiAgri2026!',
-    'admin123',
-    'admin2026'
-  ].filter(Boolean);
-
-  const userMatches = validUsers.some(u => timingSafeCompare(inputUser, u));
-  const passMatches = validPasswords.some(p => timingSafeCompare(password, p));
-
-  return userMatches && passMatches;
+  // Fail closed: no built-in/default administrator credentials.
+  if (!envUser || !envPass) return false;
+  return timingSafeCompare(inputUser, envUser) && timingSafeCompare(password, envPass);
 }
 
 // Cryptographically sign a session token using HMAC-SHA256
 function createSessionToken(username) {
   const secret = getSessionSecret();
+  if (!secret || secret.length < 32) throw new Error('ADMIN_SESSION_SECRET must be set to at least 32 characters.');
   const header = { alg: 'HS256', typ: 'JWT' };
   const payload = {
     sub: username,
@@ -92,6 +70,7 @@ function verifySessionToken(token) {
   if (parts.length !== 3) return null;
   const [b64Header, b64Payload, signature] = parts;
   const secret = getSessionSecret();
+  if (!secret || secret.length < 32) return null;
   const expectedSig = crypto.createHmac('sha256', secret)
     .update(`${b64Header}.${b64Payload}`)
     .digest('base64url');
