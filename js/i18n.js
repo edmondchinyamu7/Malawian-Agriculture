@@ -83,10 +83,10 @@ export const translations = {
     heroTitleLine2: "Kokololani zambiri.",
     heroDesc: "Chidziwitso cha ulimi choyenera alimi aang'onoang'ono, ophunzira ndi mabizinesi a zaulimi ku Malawi. Pezani kalendala ya ulimi, njira zothanirana ndi tizilombo, mbewu zosiyanasiyana zoposa 16, mitengo ya pamsika yotsimikizika, ndi zanyengo zatsiku ndi tsiku.",
     btnExploreMethods: "Onani njira za ulimi 🌾",
-    btnCalendarV6: "Kalendala ya ulimi (V6) 📅",
-    btnCropsV7: "Mbewu za m'Malawi (V7) 🌽",
-    btnPestV8: "Tizilombo ndi matenda (V8) 🐛",
-    btnMarketV5: "Mitengo pamsika (V5) 📊",
+    btnCalendarV6: "Kalendala ya ulimi (V6)",
+    btnCropsV7: "Mbewu za m'Malawi (V7)",
+    btnPestV8: "Tizilombo ndi matenda (V8)",
+    btnMarketV5: "Mitengo pamsika (V5)",
 
     // Hero Panel
     panelLabel: "Malo anu ophunzirira",
@@ -314,10 +314,10 @@ export const translations = {
     heroTitleLine2: "Grow better harvests.",
     heroDesc: "Malawi-focused agricultural knowledge for learners, smallholder farmers and growing agribusinesses. Explore seasonal farming calendars, pest diagnostics, 16+ crop guides, verified market prices, and live weather.",
     btnExploreMethods: "Explore farming methods 🌾",
-    btnCalendarV6: "Farming calendar (V6) 📅",
-    btnCropsV7: "Crop library (V7) 🌽",
-    btnPestV8: "Pest & disease (V8) 🐛",
-    btnMarketV5: "Market prices (V5) 📊",
+    btnCalendarV6: "Farming calendar (V6)",
+    btnCropsV7: "Crop library (V7)",
+    btnPestV8: "Pest & disease (V8)",
+    btnMarketV5: "Market prices (V5)",
 
     // Hero Panel
     panelLabel: "Your learning hub",
