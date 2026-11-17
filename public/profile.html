@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#092d22">
-  <title>Mbiri Yanga (My Profile) | Ulimi wa Malawi</title>
-  <meta name="description" content="Mbiri ya mlimi ndi akaunti yanu ya Ulimi wa Malawi.">
+  <title>Mbiri Yanga &amp; Dashboard ya Mlimi | Ulimi wa Malawi</title>
+  <meta name="description" content="Mbiri ya mlimi, umembala, zolemba zosungidwa ndi mapulani a munda pa Ulimi wa Malawi.">
 
   <!-- Modular Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
@@ -20,7 +20,7 @@
       background: #f4f7f4;
     }
     .profile-card {
-      max-width: 760px;
+      max-width: 880px;
       margin: 0 auto;
       background: #ffffff;
       border: 1px solid #dce8df;
@@ -50,32 +50,21 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .profile-hero-info h1 {
-      font-size: 24px;
-      margin: 0 0 6px;
-      color: #ffffff;
-      font-weight: 850;
-    }
-    .profile-hero-info p {
-      margin: 0;
-      color: #bbf7d0;
-      font-size: 14px;
-    }
-    .profile-body {
-      padding: 32px;
-    }
+    .profile-hero-info h1 { font-size: 24px; margin: 0 0 6px; color: #ffffff; font-weight: 850; }
+    .profile-hero-info p { margin: 0; color: #bbf7d0; font-size: 14px; }
+    .profile-body { padding: 32px; }
     .profile-role-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
+      gap: 8px;
+      padding: 6px 14px;
       background: #edf7f1;
       border: 1px solid #c7e3d1;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 800;
       color: #0b6245;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .profile-grid-fields {
       display: grid;
@@ -83,22 +72,70 @@
       gap: 18px;
       margin-bottom: 20px;
     }
-    @media (max-width: 640px) {
-      .profile-grid-fields {
-        grid-template-columns: 1fr;
-      }
-      .profile-hero-bar {
-        flex-direction: column;
-        text-align: center;
-      }
+    .dashboard-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
     }
-    .profile-field label {
-      display: block;
+    .dash-panel {
+      background: #f8fbf9;
+      border: 1px solid #dce8df;
+      border-radius: 16px;
+      padding: 18px 20px;
+    }
+    .dash-panel h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #092d22;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dash-panel p.dash-sub {
+      margin: 0 0 12px;
+      font-size: 12.5px;
+      color: #53695d;
+    }
+    .saved-topic-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #ffffff;
+      border: 1px solid #e2ece5;
+      border-radius: 10px;
+      margin-bottom: 8px;
       font-size: 13px;
-      font-weight: 750;
-      margin-bottom: 6px;
-      color: #193d30;
     }
+    .saved-topic-item a { color: #0b6245; font-weight: 750; text-decoration: none; }
+    .saved-topic-item a:hover { text-decoration: underline; }
+    .btn-remove-saved {
+      border: 1px solid #e2d3d3;
+      background: #fff8f8;
+      color: #991b1b;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .pending-sub-alert {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    @media (max-width: 720px) {
+      .profile-grid-fields, .dashboard-split-grid { grid-template-columns: 1fr; }
+      .profile-hero-bar { flex-direction: column; text-align: center; }
+    }
+    .profile-field label { display: block; font-size: 13px; font-weight: 750; margin-bottom: 6px; color: #193d30; }
     .profile-field input {
       width: 100%;
       padding: 12px 14px;
@@ -109,22 +146,9 @@
       color: #112d22;
       background: #fff;
     }
-    .profile-field input:focus {
-      outline: none;
-      border-color: #0b6245;
-      box-shadow: 0 0 0 3px rgba(11, 98, 69, 0.15);
-    }
-    .profile-field input:disabled {
-      background: #f1f5f2;
-      color: #63776b;
-      cursor: not-allowed;
-    }
-    .profile-status {
-      min-height: 24px;
-      font-size: 13.5px;
-      margin: 14px 0;
-      font-weight: 700;
-    }
+    .profile-field input:focus { outline: none; border-color: #0b6245; box-shadow: 0 0 0 3px rgba(11, 98, 69, 0.15); }
+    .profile-field input:disabled { background: #f1f5f2; color: #63776b; cursor: not-allowed; }
+    .profile-status { min-height: 24px; font-size: 13.5px; margin: 14px 0; font-weight: 700; }
     .profile-status.success { color: #166534; }
     .profile-status.error { color: #991b1b; }
     .profile-actions {
@@ -137,14 +161,10 @@
       border-top: 1px solid #e5eee8;
       margin-top: 24px;
     }
-    .quick-tools-panel {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid #e5eee8;
-    }
+    .quick-tools-panel { margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5eee8; }
     .quick-tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
       gap: 12px;
       margin-top: 14px;
     }
@@ -161,11 +181,8 @@
       font-size: 13px;
       transition: all 0.2s;
     }
-    .quick-tool-card:hover {
-      background: #edf7f1;
-      border-color: #b5deca;
-      transform: translateY(-1px);
-    }
+    .quick-tool-card:hover { background: #edf7f1; border-color: #b5deca; transform: translateY(-1px); }
+    .quick-tool-card .pro-icon { color: #0b6245; width: 18px; height: 18px; }
   </style>
 </head>
 <body id="top">
@@ -173,7 +190,7 @@
     <!-- Topbar Navigation -->
     <header class="topbar">
       <a class="brand" href="index.html" aria-label="Ulimi wa Malawi poyambira">
-        <span class="brand-mark">🌱</span>
+        <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
         <span>
           <span data-i18n="appTitle">ULIMI WA MALAWI</span>
           <small data-i18n="navProfile">MBIRI YANGA</small>
@@ -188,17 +205,16 @@
         <button type="button" id="mobileLogoutBtn" class="mobile-account-link" data-i18n="navLogout" style="border:0;cursor:pointer;text-align:left;width:100%">Tulukani</button>
       </nav>
       <div class="top-actions">
-        <!-- Interactive Bilingual Switcher (Chichewa default / English) -->
         <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
-          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
-          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">English</button>
         </div>
         <button type="button" id="topLogoutBtn" class="account-login-link" style="background:transparent;cursor:pointer" data-i18n="navLogout">Tulukani</button>
-        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false">☰</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Tsegulani mndandanda" aria-expanded="false"><svg class="pro-icon menu-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       </div>
     </header>
 
-    <!-- Main Profile Container -->
+    <!-- Main Profile & Farmer Dashboard Container -->
     <main class="profile-page container">
       <article class="profile-card">
         <div class="profile-hero-bar">
@@ -211,10 +227,11 @@
 
         <div class="profile-body">
           <div class="profile-role-badge" id="roleBadge">
-            <span>🌾</span> <span id="roleText">Mlimi wovomerezeka ku Malawi</span>
+            <svg class="pro-icon" style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span id="roleText">Mlimi wolembetsedwa ku Malawi</span>
           </div>
 
-          <!-- Farmer Membership Status Panel -->
+          <!-- Farmer Membership Status Panel (Server-Verified Only) -->
           <div class="membership-status-panel" id="membershipPanel" style="background:#f4f9f6;border:1.5px solid #d4e8dc;border-radius:16px;padding:18px 20px;margin:20px 0;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
               <div>
@@ -228,6 +245,7 @@
               <span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;">✓ Mbewu 16+</span>
               <span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;">✓ Kalendala Yoyamba</span>
             </div>
+            <div id="pendingSubscriptionNotice" class="pending-sub-alert" hidden></div>
           </div>
 
           <form id="profileForm">
@@ -255,15 +273,59 @@
             </div>
           </form>
 
+          <!-- Farmer Dashboard Workspace Cards -->
+          <div class="dashboard-split-grid">
+            <section class="dash-panel" aria-labelledby="savedTopicsHeading">
+              <h3 id="savedTopicsHeading">
+                <svg class="pro-icon" style="color:#0b6245" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                <span>Zolemba Zosungidwa (Saved Topics)</span>
+              </h3>
+              <p class="dash-sub">Njira za ulimi zimene mwasunga kuchokera pa Tsamba Loyambira.</p>
+              <div id="savedTopicsList">
+                <p style="font-size:13px;color:#617368;margin:0">Ikutsegula zolemba zosungidwa…</p>
+              </div>
+            </section>
+
+            <section class="dash-panel" aria-labelledby="savedFarmPlanHeading">
+              <h3 id="savedFarmPlanHeading">
+                <svg class="pro-icon" style="color:#0b6245" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/></svg>
+                <span>Pulani Yanga ya Munda (Saved Farm Plan)</span>
+              </h3>
+              <p class="dash-sub">Zolinga za mbewu, kukula kwa munda, ndi bajeti ya nyengo.</p>
+              <div id="savedFarmPlanBox">
+                <p style="font-size:13px;color:#617368;margin:0">Palibe pulani ya munda yosungidwa padakali pano.</p>
+              </div>
+            </section>
+          </div>
+
           <div class="quick-tools-panel">
             <h3 style="font-size:16px;color:#092d22;margin:0 0 4px">Zida Zothandiza pa Ulimi (Quick Farm Tools)</h3>
             <p style="font-size:13px;color:#617368;margin:0">Tsegulani zida za ulimi mwachangu:</p>
             <div class="quick-tools-grid">
-              <a href="pages/subscriptions.html" class="quick-tool-card">⭐ Membership Plans &amp; Upgrade</a>
-              <a href="pages/crop-calendar.html" class="quick-tool-card">📅 Kalendala ya Ulimi</a>
-              <a href="pages/crops.html" class="quick-tool-card">🌽 Mbewu za m'Malawi</a>
-              <a href="pages/market-centre.html" class="quick-tool-card">📊 Msika wa Mitengo</a>
-              <a href="pages/farm-planner.html" class="quick-tool-card">📐 Kukonza Munda</a>
+              <a href="pages/subscriptions.html" class="quick-tool-card">
+                <svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>Mapulani a Umembala</span>
+              </a>
+              <a href="pages/crop-calendar.html" class="quick-tool-card">
+                <svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                <span>Kalendala ya Ulimi</span>
+              </a>
+              <a href="pages/crops.html" class="quick-tool-card">
+                <svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 2-4 5-4 9s1 7 4 9c3-2 4-5 4-9s-1-7-4-9Z"/></svg>
+                <span>Mbewu za m'Malawi</span>
+              </a>
+              <a href="pages/market-centre.html" class="quick-tool-card">
+                <svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M8 16V9M13 16V5M18 16v-4"/></svg>
+                <span>Msika wa Mitengo</span>
+              </a>
+              <a href="pages/farm-planner.html" class="quick-tool-card">
+                <svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
+                <span>Kukonza Munda</span>
+              </a>
+              <a href="pages/fertiliser-calculator.html" class="quick-tool-card">
+                <svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-4-7-13-7-13S5 11 5 15a7 7 0 0 0 7 7Z"/></svg>
+                <span>Chowerengera Feteleza</span>
+              </a>
             </div>
           </div>
         </div>
@@ -271,124 +333,86 @@
     </main>
 
     <!-- Master Agricultural Knowledge Hub Footer -->
-<footer class="footer">
-  <div class="container footer-top-bar">
-    <div class="footer-hero-brand">
-      <a class="brand footer-brand" href="index.html" aria-label="Ulimi wa Malawi home">
-        <span class="brand-mark">🌱</span>
-        <span>
-          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
-          <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
-        </span>
-      </a>
-      <p class="footer-mission" data-i18n="footerTagline">Learning for stronger, more resilient agriculture in Malawi. Chidziwitso chothandiza kulimbikitsa ulimi wopindulitsa m'Malawi muno.</p>
-
-      <!-- Social Media Links -->
-      <div class="footer-social-row">
-        <span class="footer-social-label">Titsatireni / Connect:</span>
-        <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp - Gulu la Alimi" title="WhatsApp">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.76-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.3"/></svg>
-        </a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook - Ulimi wa Malawi" title="Facebook">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-        </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube - Ulimi wa Malawi" title="YouTube">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.58 7.19a2.75 2.75 0 0 0-1.94-1.94C17.92 4.75 12 4.75 12 4.75s-5.92 0-7.64.5c-.95.26-1.69 1-1.94 1.94C2 8.92 2 12 2 12s0 3.08.42 4.81c.25.94.99 1.69 1.94 1.94 1.72.5 7.64.5 7.64.5s5.92 0 7.64-.5c.95-.25 1.69-.99 1.94-1.94.42-1.73.42-4.81.42-4.81s0-3.08-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
-        </a>
-        <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="X - Ulimi wa Malawi" title="X (Twitter)">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram - Ulimi wa Malawi" title="Instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="footer-highlights">
-      <div class="footer-stat-badge">
-        <span class="stat-badge-dot"></span>
-        <div>
-          <strong>Toll-Free Hotline: 6166</strong>
-          <span>Malawi Ministry of Agriculture</span>
+    <footer class="footer">
+      <div class="container footer-top-bar">
+        <div class="footer-hero-brand">
+          <a class="brand footer-brand" href="index.html" aria-label="Ulimi wa Malawi home">
+            <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
+            <span>
+              <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+              <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+            </span>
+          </a>
+          <p class="footer-mission" data-i18n="footerTagline">Maphunziro othandiza kulimbikitsa ulimi wopindulitsa ku Malawi.</p>
         </div>
       </div>
-      <div class="footer-stat-badge">
-        <span class="stat-badge-icon">🇲🇼</span>
-        <div>
-          <strong>28 Districts • 8 ADDs</strong>
-          <span>Kufikira alimi m'madera onse</span>
+
+      <div class="container footer-grid">
+        <div class="footer-col">
+          <h4 data-i18n="footerFarming">Mbewu &amp; Ulimi</h4>
+          <ul>
+            <li><a href="pages/crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi</a></li>
+            <li><a href="pages/crops.html" data-i18n="footerCrops">Mbewu za m'Malawi</a></li>
+            <li><a href="pages/pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda</a></li>
+            <li><a href="pages/irrigation.html" data-i18n="navIrrigation">Kuthirira ndi kasamalidwe ka madzi</a></li>
+            <li><a href="pages/soil-centre.html" data-i18n="navSoil">Malo a chidziwitso cha nthaka</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerMarketHeading">Msika &amp; Zanyengo</h4>
+          <ul>
+            <li><a href="pages/market-centre.html" data-i18n="footerMarket">Mitengo pamsika</a></li>
+            <li><a href="pages/weather.html" data-i18n="footerWeather">Zanyengo</a></li>
+            <li><a href="pages/marketplace.html" data-i18n="navMarketplace">Msika wa alimi</a></li>
+            <li><a href="pages/news.html" data-i18n="navNews">Nkhani za ulimi</a></li>
+            <li><a href="pages/livestock.html" data-i18n="navLivestock">Ulimi wa ziweto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerPlatform">Zipangizo za Mlimi</h4>
+          <ul>
+            <li><a href="pages/fertiliser-calculator.html" data-i18n="navFertiliser">Chowerengera feteleza</a></li>
+            <li><a href="pages/farm-planner.html" data-i18n="navFarmPlanner">Kukonza mapulani a munda</a></li>
+            <li><a href="pages/subscriptions.html" data-i18n="footerPlans">Mapulani</a></li>
+            <li><a href="pages/farmer-community.html" data-i18n="navCommunity">Gulu la alimi</a></li>
+            <li><a href="pages/learning-centre.html" data-i18n="navLearning">Malo ophunzirira za ulimi</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerDiscover">Pulatifomu &amp; Thandizo</h4>
+          <ul>
+            <li><a href="index.html" data-i18n="footerHome">Poyambira</a></li>
+            <li><a href="modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi</a></li>
+            <li><a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a></li>
+            <li><a href="pages/admin.html" data-i18n="footerAdmin">Uyang'anire wa msika</a></li>
+            <li><a href="index.html#support" data-i18n="footerSupport">Thandizo la zaulimi</a></li>
+          </ul>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="container footer-grid">
-    <div class="footer-col">
-      <h4 data-i18n="footerFarming">Mbewu &amp; Ulimi</h4>
-      <ul>
-        <li><a href="pages/crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi (V6)</a></li>
-        <li><a href="pages/crops.html" data-i18n="footerCrops">Mbewu za m'Malawi (V7)</a></li>
-        <li><a href="pages/pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda (V8)</a></li>
-        <li><a href="pages/irrigation.html" data-i18n="navIrrigation">Ulimi wa kuthirira</a></li>
-        <li><a href="pages/soil-centre.html" data-i18n="navSoil">Kusamalira nthaka</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-i18n="footerMarket">Msika &amp; Zanyengo</h4>
-      <ul>
-        <li><a href="pages/market-centre.html" data-i18n="footerMarket">Mitengo pamsika (V5)</a></li>
-        <li><a href="pages/weather.html" data-i18n="footerWeather">Zanyengo za m'madera</a></li>
-        <li><a href="pages/marketplace.html" data-i18n="navMarketplace">Malo ogulitsira mbewu</a></li>
-        <li><a href="pages/news.html" data-i18n="navNews">Nkhani zatsopano zaulimi</a></li>
-        <li><a href="pages/livestock.html" data-i18n="navLivestock">Zoweta &amp; Ziweto</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-i18n="footerPlatform">Zipangizo za Mlimi</h4>
-      <ul>
-        <li><a href="pages/fertiliser-calculator.html" data-i18n="navFertiliser">Cholowera feteleza</a></li>
-        <li><a href="pages/farm-planner.html" data-i18n="navFarmPlanner">Dongosolo la munda</a></li>
-        <li><a href="pages/subscriptions.html" data-i18n="footerPlans">Mapulani a umembala</a></li>
-        <li><a href="pages/farmer-community.html" data-i18n="navCommunity">Gulu la alimi</a></li>
-        <li><a href="pages/learning-centre.html" data-i18n="navLearning">Malo ophunzirira</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-i18n="footerDiscover">Pulatifomu &amp; Thandizo</h4>
-      <ul>
-        <li><a href="index.html" data-i18n="footerHome">Poyambira (Home)</a></li>
-        <li><a href="modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi (29)</a></li>
-        <li><a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya mlimi (Lowani)</a></li>
-        <li><a href="pages/admin.html" data-i18n="footerAdmin">Uyang'anire wa msika</a></li>
-        <li><a href="index.html#support" data-i18n="footerSupport">Thandizo la alimi</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container footer-subline">
-    <div class="footer-copy">
-      <span>© 2026 <strong>Ulimi wa Malawi</strong>. Made for Malawi.</span>
-      <div class="footer-powered">
-        <span>Powered by</span>
-        <a href="https://pelc-website.vercel.app/" target="_blank" rel="noopener noreferrer" class="pelc-badge" title="PELC - Practical Education & Learning Consultancy">
-          <span>PELC</span>
-          <span class="pelc-arrow" aria-hidden="true">↗</span>
-        </a>
+      <div class="container footer-subline">
+        <div class="footer-copy">
+          <span>© 2026 <strong>Ulimi wa Malawi</strong>. Made for Malawi.</span>
+          <div class="footer-powered">
+            <span>Powered by</span>
+            <a href="https://pelc-website.vercel.app/" target="_blank" rel="noopener noreferrer" class="pelc-badge" title="PELC - Practical Education & Learning Consultancy">
+              <span>PELC</span>
+              <span class="pelc-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <div class="footer-sub-links">
+          <span class="lang-tag">Chichewa / English</span>
+          <a class="back-to-top" href="#top" aria-label="Bwererani m'mwamba">
+            <span>Bwererani m'mwamba</span>
+            <span aria-hidden="true">↑</span>
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="footer-sub-links">
-      <span class="lang-tag">🇲🇼 Chichewa / English</span>
-      <a class="back-to-top" href="#top" aria-label="Bwererani m'mwamba">
-        <span>Bwererani m'mwamba</span>
-        <span aria-hidden="true">↑</span>
-      </a>
-    </div>
-  </div>
-</footer>
-
+    </footer>
   </div>
 
   <div class="toast" id="toast" role="status"></div>
@@ -399,11 +423,80 @@
   <script type="module" src="js/navigation.js"></script>
   <script type="module">
     import { supabase, logoutUser } from './js/auth.js';
-    const $ = (id) => document.getElementById(id);
+    import { escapeHtml, bookmarks, showToast } from './js/main.js';
+    import { getIconSvg } from './js/icons.js';
 
+    const $ = (id) => document.getElementById(id);
     let currentUser = null;
 
+    const TOPIC_LABELS = {
+      1: 'Ulimi wa Chimanga (Maize)',
+      2: 'Ulimi wa Mtedza (Groundnuts)',
+      3: 'Ulimi wa Soya (Soybeans)',
+      4: 'Ulimi wa Mpunga (Rice)',
+      5: 'Ulimi wa Chinangwa (Cassava)',
+      6: 'Ulimi wa Nyemba (Common Beans)',
+      7: 'Ulimi wa Fodya (Tobacco)',
+      8: 'Ulimi wa Tomato & Masamba',
+      9: 'Ulimi Wosungitsa Nthaka (Conservation Agriculture)',
+      10: 'Manyowa a Mbeya & Kompositi',
+      11: 'Ulimi wa Madambo & Kuthirira (Irrigation)',
+      12: 'Kusamalira Nthaka ndi Madzi (Soil & Water)'
+    };
+
+    function renderSavedTopics() {
+      const container = $('savedTopicsList');
+      if (!container) return;
+      const savedIds = [...bookmarks.getAll()];
+      if (!savedIds.length) {
+        container.innerHTML = `<p style="font-size:13px;color:#617368;margin:0">Palibe zolemba zosungidwa padakali pano. Pitani ku <a href="index.html#methods" style="color:#0b6245;font-weight:750">Njira za Ulimi</a> kuti musunge zomwe mukufuna.</p>`;
+        return;
+      }
+      container.innerHTML = savedIds.map(id => {
+        const label = TOPIC_LABELS[id] || `Njira ya ulimi #${escapeHtml(String(id))}`;
+        return `
+          <div class="saved-topic-item">
+            <a href="index.html#methods">${escapeHtml(label)}</a>
+            <button type="button" class="btn-remove-saved" data-remove-topic="${escapeHtml(String(id))}">Chotsani</button>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('[data-remove-topic]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          bookmarks.toggle(btn.dataset.removeTopic);
+          renderSavedTopics();
+        });
+      });
+    }
+
+    function renderSavedFarmPlan() {
+      const box = $('savedFarmPlanBox');
+      if (!box) return;
+      try {
+        const raw = localStorage.getItem('ulimiFarmPlan');
+        if (!raw) return;
+        const plan = JSON.parse(raw);
+        if (!plan || !plan.cropName) return;
+        box.innerHTML = `
+          <div style="background:#fff;border:1px solid #d5e6db;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.6;">
+            <div style="font-weight:800;color:#092d22">${escapeHtml(plan.cropName)}</div>
+            <div style="color:#456051">Malo: <strong>${escapeHtml(String(plan.area))} ${escapeHtml(String(plan.unit))}</strong> • Kubzala: <strong>${escapeHtml(String(plan.plantingDate || '—'))}</strong></div>
+            <div style="color:#456051">Zokolola zoyembekezeka: <strong>${escapeHtml(String(plan.expectedYield || '—'))} kg</strong> • Bajeti: <strong>MWK ${escapeHtml(String(plan.estimatedBudget || '0'))}</strong></div>
+            <a href="pages/farm-planner.html" style="display:inline-block;margin-top:8px;color:#0b6245;font-weight:800;font-size:12.5px">Tsegulani ndi kusintha pulani →</a>
+          </div>
+        `;
+      } catch (_) {}
+    }
+
     async function loadProfile() {
+      // Remove legacy spoofed browser-only tier key
+      localStorage.removeItem('ulimi_simulated_plan');
+      localStorage.removeItem('ulimi_plan_ref');
+
+      renderSavedTopics();
+      renderSavedFarmPlan();
+
       try {
         const { data: { user }, error: authErr } = await supabase.auth.getUser();
         if (authErr || !user) {
@@ -433,25 +526,42 @@
 
         const fn = profileData.first_name || '';
         const ln = profileData.last_name || '';
-        const fullName = [fn, ln].filter(Boolean).join(' ') || user.email.split('@')[0];
+        const fullName = [fn, ln].filter(Boolean).join(' ') || (user.email ? user.email.split('@')[0] : 'Farmer');
         $('heroFullName').textContent = fullName;
 
         const initials = ((fn[0] || '') + (ln[0] || '')).toUpperCase() || (user.email ? user.email[0].toUpperCase() : 'U');
         $('avatarBox').textContent = initials;
 
         if (profileData.role === 'admin') {
-          $('roleBadge').innerHTML = '<span>🛡️</span> <span>Mtsogoleri wa Pulogalamu (Administrator)</span>';
+          $('roleBadge').innerHTML = `${getIconSvg('shield')} <span>Mtsogoleri wa Pulogalamu (Administrator)</span>`;
           $('roleBadge').style.background = '#fef3c7';
           $('roleBadge').style.borderColor = '#fde68a';
           $('roleBadge').style.color = '#92400e';
         }
 
-        // Query active subscription tier
-        let activePlanId = localStorage.getItem('ulimi_simulated_plan') || 'free';
+        // Fail closed: always derive subscription tier from verified database RPC
+        let activePlanId = 'free';
         try {
           const { data: subData } = await supabase.rpc('get_my_subscription_access');
           if (subData && subData.plan_id) {
             activePlanId = subData.plan_id;
+          }
+        } catch (_) {}
+
+        // Also check latest pending subscription request for transparent status display
+        try {
+          const { data: latestSubs } = await supabase
+            .from('subscriptions')
+            .select('plan_id,status,billing_period,provider_reference,created_at')
+            .eq('user_id', user.id)
+            .eq('status', 'pending')
+            .order('created_at', { ascending: false })
+            .limit(1);
+          const pending = Array.isArray(latestSubs) ? latestSubs[0] : null;
+          const pendingNotice = $('pendingSubscriptionNotice');
+          if (pending && pendingNotice) {
+            pendingNotice.hidden = false;
+            pendingNotice.innerHTML = `<strong>Pempho la malipiro likuyembekezera kutsimikizidwa:</strong> Plan <code>${escapeHtml(pending.plan_id)}</code> (${escapeHtml(pending.billing_period || 'monthly')}) • Reference: <code>${escapeHtml(pending.provider_reference || '—')}</code>. Umembala udzatsegulidwa pamene admin watsimikiza malipiro.`;
           }
         } catch (_) {}
 
@@ -467,7 +577,7 @@
             badges: ["✓ Kalendala ya Mwezi ndi Mwezi", "✓ Malangizo a Zigawo", "✓ Zosungira Zolemba", "✓ Chithandizo cha Matenda"]
           },
           professional: {
-            name: "Professional Farmer (Mlimi Waluso) ⭐",
+            name: "Professional Farmer (Mlimi Waluso)",
             desc: "Chiwerengero cha feteleza, Farm Planner, mabuku a PDF oti mutsitse komanso 100% yopanda zotsatsa.",
             badges: ["✓ Chowerengera Feteleza", "✓ Farm Planner", "✓ Mabuku a PDF Otsitsidwa", "✓ 100% Yopanda Zotsatsa"]
           },
@@ -482,13 +592,13 @@
         if ($('profilePlanName')) $('profilePlanName').textContent = currentPlan.name;
         if ($('profilePlanBenefits')) $('profilePlanBenefits').textContent = currentPlan.desc;
         if ($('unlockedPills')) {
-          $('unlockedPills').innerHTML = currentPlan.badges.map(b => 
-            `<span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;font-weight:600;">${b}</span>`
+          $('unlockedPills').innerHTML = currentPlan.badges.map(b =>
+            `<span style="background:#fff;border:1px solid #cce2d5;padding:4px 10px;border-radius:8px;color:#184c37;font-weight:600;">${escapeHtml(b)}</span>`
           ).join('');
         }
       } catch (err) {
         console.error('Failed to load profile:', err);
-        $('profileStatus').textContent = 'Zalephera kutsegula mbiri: ' + err.message;
+        $('profileStatus').textContent = 'Zalephera kutsegula mbiri: ' + (err?.message || 'Error');
         $('profileStatus').className = 'profile-status error';
       }
     }
@@ -517,14 +627,14 @@
 
         statusEl.textContent = 'Zasungidwa bwinobwino! (Profile updated successfully)';
         statusEl.className = 'profile-status success';
+        showToast('Mbiri yanu yasungidwa');
 
         const fullName = [first_name, last_name].filter(Boolean).join(' ') || currentUser.email;
         $('heroFullName').textContent = fullName;
         const initials = ((first_name[0] || '') + (last_name[0] || '')).toUpperCase() || 'U';
         $('avatarBox').textContent = initials;
       } catch (err) {
-        console.error('Save error:', err);
-        statusEl.textContent = 'Zalephera kusunga: ' + (err.message || 'Error occurred');
+        statusEl.textContent = 'Zalephera kusunga: ' + (err?.message || 'Error occurred');
         statusEl.className = 'profile-status error';
       } finally {
         saveBtn.disabled = false;
@@ -533,6 +643,7 @@
 
     $('topLogoutBtn')?.addEventListener('click', () => logoutUser());
     $('bodyLogoutBtn')?.addEventListener('click', () => logoutUser());
+    $('mobileLogoutBtn')?.addEventListener('click', () => logoutUser());
 
     loadProfile();
   </script>

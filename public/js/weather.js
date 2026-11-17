@@ -2,7 +2,9 @@
  * Ulimi wa Malawi | Live Weather Centre (Open-Meteo Integration)
  * Full Bilingual (Chichewa default / English) Support
  */
+import { escapeHtml } from './main.js';
 import { getCurrentLang } from './i18n.js';
+import { getIconSvg, pickWeatherIconName } from './icons.js';
 
 export const weatherPlaces = {
   Lilongwe: { lat: -13.9626, lon: 33.7741 },
@@ -20,31 +22,31 @@ export const weatherPlaces = {
 };
 
 export function weatherDescription(code, lang = 'ny') {
+  const iconHtml = getIconSvg(pickWeatherIconName(code), 'pro-icon');
   if (lang === 'ny') {
-    if (code === 0) return ['Dzuwa / Thambo loyera', '☀️'];
-    if ([1, 2].includes(code)) return ['Mitambo yapang\'ono', '🌤️'];
-    if (code === 3) return ['Mitambo yambiri', '☁️'];
-    if ([45, 48].includes(code)) return ['Chifunga', '🌫️'];
-    if ([51, 53, 55, 56, 57].includes(code)) return ['Mvula yowaza', '🌦️'];
-    if ([61, 63, 65, 66, 67].includes(code)) return ['Mvula ikugwa', '🌧️'];
-    if ([71, 73, 75, 77].includes(code)) return ['Matalala', '🌨️'];
-    if ([80, 81, 82].includes(code)) return ['Mvula yapang\'ono', '🌧️'];
-    if ([85, 86].includes(code)) return ['Matalala', '🌨️'];
-    if ([95, 96, 99].includes(code)) return ['Mvula ya bingu ndi mphenzi', '⛈️'];
-    return ['Nyengo yosinthasintha', '🌥️'];
-  } else {
-    if (code === 0) return ['Clear sky', '☀️'];
-    if ([1, 2].includes(code)) return ['Mainly clear / partly cloudy', '🌤️'];
-    if (code === 3) return ['Overcast', '☁️'];
-    if ([45, 48].includes(code)) return ['Fog', '🌫️'];
-    if ([51, 53, 55, 56, 57].includes(code)) return ['Drizzle', '🌦️'];
-    if ([61, 63, 65, 66, 67].includes(code)) return ['Rain', '🌧️'];
-    if ([71, 73, 75, 77].includes(code)) return ['Hail / ice pellets', '🌨️'];
-    if ([80, 81, 82].includes(code)) return ['Rain showers', '🌧️'];
-    if ([85, 86].includes(code)) return ['Snow / hail showers', '🌨️'];
-    if ([95, 96, 99].includes(code)) return ['Thunderstorm', '⛈️'];
-    return ['Variable conditions', '🌥️'];
+    if (code === 0) return ['Dzuwa / Thambo loyera', iconHtml];
+    if ([1, 2].includes(code)) return ["Mitambo yapang'ono", iconHtml];
+    if (code === 3) return ['Mitambo yambiri', iconHtml];
+    if ([45, 48].includes(code)) return ['Chifunga', iconHtml];
+    if ([51, 53, 55, 56, 57].includes(code)) return ['Mvula yowaza', iconHtml];
+    if ([61, 63, 65, 66, 67].includes(code)) return ['Mvula ikugwa', iconHtml];
+    if ([71, 73, 75, 77].includes(code)) return ['Matalala', iconHtml];
+    if ([80, 81, 82].includes(code)) return ["Mvula yapang'ono", iconHtml];
+    if ([85, 86].includes(code)) return ['Matalala', iconHtml];
+    if ([95, 96, 99].includes(code)) return ['Mvula ya bingu ndi mphenzi', iconHtml];
+    return ['Nyengo yosinthasintha', iconHtml];
   }
+  if (code === 0) return ['Clear sky', iconHtml];
+  if ([1, 2].includes(code)) return ['Mainly clear / partly cloudy', iconHtml];
+  if (code === 3) return ['Overcast', iconHtml];
+  if ([45, 48].includes(code)) return ['Fog', iconHtml];
+  if ([51, 53, 55, 56, 57].includes(code)) return ['Drizzle', iconHtml];
+  if ([61, 63, 65, 66, 67].includes(code)) return ['Rain', iconHtml];
+  if ([71, 73, 75, 77].includes(code)) return ['Hail / ice pellets', iconHtml];
+  if ([80, 81, 82].includes(code)) return ['Rain showers', iconHtml];
+  if ([85, 86].includes(code)) return ['Hail showers', iconHtml];
+  if ([95, 96, 99].includes(code)) return ['Thunderstorm', iconHtml];
+  return ['Variable conditions', iconHtml];
 }
 
 export function farmWeatherAdvice(current, daily, lang = 'ny') {
@@ -54,27 +56,27 @@ export function farmWeatherAdvice(current, daily, lang = 'ny') {
 
   if (lang === 'ny') {
     if ([95, 96, 99].includes(code) || prob >= 70) {
-      return '<strong>Malangizo a m\'munda:</strong> Pali chiopsezo cha mvula yamphamvu kapena bingu. Pewani kugwira ntchito m\'minda yotseguka ndipo onetsetsani kuti mitsinje ndi mizere yochotsera madzi m\'munda siyadzala komanso chitetezo cha nkhokwe ndi zofolera.';
+      return "<strong>Malangizo a m'munda:</strong> Pali chiopsezo cha mvula yamphamvu kapena bingu. Pewani kugwira ntchito m'minda yotseguka ndipo onetsetsani kuti mitsinje ndi mizere yochotsera madzi m'munda siyadzala komanso chitetezo cha nkhokwe ndi zofolera.";
     }
     if (rain >= 5 || prob >= 40) {
-      return '<strong>Malangizo a m\'munda:</strong> Mvula ikuyembekezeka. Onetsetsani mizere ya munda wanu ndipo musathire feteleza wamadzimadzi kapena mankhwala a tizilombo mvula isanagwe kuti asapite ndi madzi.';
+      return "<strong>Malangizo a m'munda:</strong> Mvula ikuyembekezeka. Onetsetsani mizere ya munda wanu ndipo musathire feteleza wamadzimadzi kapena mankhwala a tizilombo mvula isanagwe kuti asapite ndi madzi.";
     }
     if (Number(current.temperature_2m) >= 32) {
-      return '<strong>Malangizo a m\'munda:</strong> Kutentha kwambiri. Samalani mbewu zazing\'ono ndi ziweto kuti zisamwe madzi okwanira, thirirani m\'mawa kwambiri kapena dzuwa litalowa kuti madzi asaphwe mwamsanga.';
+      return "<strong>Malangizo a m'munda:</strong> Kutentha kwambiri. Samalani mbewu zazing'ono ndi ziweto kuti zisamwe madzi okwanira, thirirani m'mawa kwambiri kapena dzuwa litalowa kuti madzi asaphwe mwamsanga.";
     }
-    return '<strong>Malangizo a m\'munda:</strong> Nyengo yabwino yaulimi. Yenderani munda nthawi zonse, yang\'anani chinyontho cha nthaka musanathirire madzi komanso pitirizani kuyang\'ana kukula kwa mbewu.';
-  } else {
-    if ([95, 96, 99].includes(code) || prob >= 70) {
-      return '<strong>Farm planning note:</strong> Rain or storm risk is elevated. Check local warnings, avoid working in exposed stormy fields, and inspect drainage ditches around your crops and drying structures.';
-    }
-    if (rain >= 5 || prob >= 40) {
-      return '<strong>Farm planning note:</strong> Rain is probable. Review field ridges and plan outdoor operations flexibly. Avoid applying agrochemicals right before heavy rain to prevent runoff.';
-    }
-    if (Number(current.temperature_2m) >= 32) {
-      return '<strong>Farm planning note:</strong> High temperatures forecast. Watch shallow-rooted crops and livestock for moisture stress, inspect irrigation lines, and conduct weeding/spraying in early morning hours.';
-    }
-    return '<strong>Farm planning note:</strong> Favourable conditions. Use this outlook with daily field inspections. Check root-zone soil moisture before watering and keep monitoring crop growth.';
+    return "<strong>Malangizo a m'munda:</strong> Nyengo yabwino yaulimi. Yenderani munda nthawi zonse, yang'anani chinyontho cha nthaka musanathirire madzi komanso pitirizani kuyang'ana kukula kwa mbewu.";
   }
+
+  if ([95, 96, 99].includes(code) || prob >= 70) {
+    return '<strong>Farm planning note:</strong> Rain or storm risk is elevated. Check local warnings, avoid working in exposed stormy fields, and inspect drainage ditches around your crops and drying structures.';
+  }
+  if (rain >= 5 || prob >= 40) {
+    return '<strong>Farm planning note:</strong> Rain is probable. Review field ridges and plan outdoor operations flexibly. Avoid applying agrochemicals right before heavy rain to prevent runoff.';
+  }
+  if (Number(current.temperature_2m) >= 32) {
+    return '<strong>Farm planning note:</strong> High temperatures forecast. Watch shallow-rooted crops and livestock for moisture stress, inspect irrigation lines, and conduct weeding/spraying in early morning hours.';
+  }
+  return '<strong>Farm planning note:</strong> Favourable conditions. Use this outlook with daily field inspections. Check root-zone soil moisture before watering and keep monitoring crop growth.';
 }
 
 export async function loadWeather() {
@@ -101,7 +103,7 @@ export async function loadWeather() {
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&forecast_days=7&timezone=Africa%2FBlantyre`;
 
   try {
-    const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    const response = await fetch(url, { headers: { Accept: 'application/json' } });
     if (!response.ok) throw new Error('Weather service returned an unavailable response.');
 
     const data = await response.json();
@@ -111,19 +113,25 @@ export async function loadWeather() {
     const daily = data.daily;
     const desc = weatherDescription(current.weather_code, lang);
 
-    const humLabel = lang === 'ny' ? '💧 Chinyezi cha mpweya' : '💧 Relative humidity';
-    const rainLabel = lang === 'ny' ? '🌧️ Mvula ya lero' : '🌧️ Current precipitation';
-    const windLabel = lang === 'ny' ? '💨 Liwiro la mphepo' : '💨 Wind speed';
-    const tempLabel = lang === 'ny' ? '🌡️ Kutentha kwake' : '🌡️ Current temperature';
+    const pinSvg = getIconSvg('mapPin', 'pro-icon');
+    const dropSvg = getIconSvg('droplet', 'pro-icon');
+    const rainSvg = getIconSvg('cloudRain', 'pro-icon');
+    const windSvg = getIconSvg('compass', 'pro-icon');
+    const sunSvg = getIconSvg('sun', 'pro-icon');
+
+    const humLabel = lang === 'ny' ? `${dropSvg} Chinyezi cha mpweya` : `${dropSvg} Relative humidity`;
+    const rainLabel = lang === 'ny' ? `${rainSvg} Mvula ya lero` : `${rainSvg} Current precipitation`;
+    const windLabel = lang === 'ny' ? `${windSvg} Liwiro la mphepo` : `${windSvg} Wind speed`;
+    const tempLabel = lang === 'ny' ? `${sunSvg} Kutentha kwake` : `${sunSvg} Current temperature`;
     const updatedLabel = lang === 'ny' ? 'Yasinthidwa:' : 'Updated:';
 
     if (currentBox) {
       currentBox.innerHTML = `
         <div class="weather-now">
-          <div class="place">📍 ${place}, Malawi</div>
+          <div class="place" style="display:flex;align-items:center;gap:6px">${pinSvg} ${escapeHtml(place)}, Malawi</div>
           <div class="temperature">${Math.round(current.temperature_2m)}°C</div>
-          <div class="condition">${desc[1]} ${desc[0]}</div>
-          <div class="updated">${updatedLabel} ${new Date(current.time).toLocaleString(lang === 'ny' ? 'ny-MW' : 'en-GB', { timeZone: 'Africa/Blantyre', dateStyle: 'medium', timeStyle: 'short' })}</div>
+          <div class="condition" style="display:flex;align-items:center;gap:6px">${desc[1]} ${escapeHtml(desc[0])}</div>
+          <div class="updated">${updatedLabel} ${escapeHtml(new Date(current.time).toLocaleString(lang === 'ny' ? 'ny-MW' : 'en-GB', { timeZone: 'Africa/Blantyre', dateStyle: 'medium', timeStyle: 'short' }))}</div>
         </div>
         <div class="weather-metrics">
           <div class="weather-metric"><span>${humLabel}</span><strong>${Math.round(current.relative_humidity_2m)}%</strong></div>
@@ -136,15 +144,15 @@ export async function loadWeather() {
 
     if (grid && daily.time) {
       grid.innerHTML = daily.time.map((date, i) => {
-        const d = new Date(date + 'T12:00:00');
+        const d = new Date(`${date}T12:00:00`);
         const day = i === 0 ? (lang === 'ny' ? 'Lero' : 'Today') : d.toLocaleDateString(lang === 'ny' ? 'ny-MW' : 'en-GB', { weekday: 'short' });
         const w = weatherDescription(Number(daily.weather_code[i]), lang);
         const rain = daily.precipitation_probability_max?.[i];
         const rainText = lang === 'ny' ? 'mvula' : 'rain';
         return `
           <article class="forecast-day">
-            <div class="day">${day}</div>
-            <div class="symbol" aria-label="${w[0]}">${w[1]}</div>
+            <div class="day">${escapeHtml(day)}</div>
+            <div class="symbol" aria-label="${escapeHtml(w[0])}">${w[1]}</div>
             <div class="range">${Math.round(daily.temperature_2m_max[i])}° / ${Math.round(daily.temperature_2m_min[i])}°</div>
             <div class="rain">${rain == null ? '—' : Math.round(rain) + '%'} ${rainText}<br>${Number(daily.precipitation_sum?.[i] || 0).toFixed(1)} mm</div>
           </article>
@@ -161,11 +169,11 @@ export async function loadWeather() {
   } catch (error) {
     status.classList.add('error');
     status.textContent = lang === 'ny'
-      ? 'Sitinathe kutenga zanyengo pakadali pano. Yang\'anani intaneti yanu ndikuyesanso. Palibe zolosera zopeka zomwe zalowetsedwa.'
+      ? "Sitinathe kutenga zanyengo pakadali pano. Yang'anani intaneti yanu ndikuyesanso. Palibe zolosera zopeka zomwe zalowetsedwa."
       : 'Unable to load live weather right now. Check your internet connection and try again. No forecast has been invented or substituted.';
   } finally {
     button.disabled = false;
-    button.textContent = lang === 'ny' ? '↻ Pezani nyengo yatsopano' : '↻ Refresh forecast';
+    button.textContent = lang === 'ny' ? 'Pezani nyengo yatsopano' : 'Refresh forecast';
   }
 }
 
@@ -180,12 +188,10 @@ export function initWeather() {
     refreshBtn.addEventListener('click', loadWeather);
   }
 
-  // Auto-load if weather controls exist on current page
   if (select && refreshBtn) {
     loadWeather();
   }
 
-  // Re-render weather when language changes
   window.addEventListener('languageChanged', () => {
     loadWeather();
   });

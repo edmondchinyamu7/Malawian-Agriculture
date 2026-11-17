@@ -45,6 +45,17 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 2px solid #16734d;
+  outline-offset: 2px;
+}
+
+.topbar :focus-visible,
+.footer :focus-visible,
+.hero :focus-visible {
+  outline-color: #a8e4b8;
+}
+
 .shell {
   min-height: 100vh;
   display: flex;

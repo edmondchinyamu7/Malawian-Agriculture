@@ -4,26 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#092d22">
-  <meta name="description" content="Agricultural Market Information Centre for Malawi. Real-time crop prices directory, market comparison, and price verification.">
+  <meta name="description" content="Agricultural Market Information Centre for Malawi. Verified crop prices directory, regional market comparison, and farmer price reporting.">
   <meta property="og:title" content="Market Centre | Ulimi wa Malawi">
   <meta property="og:description" content="Check crop prices, compare markets across Malawi, and view verified price updates.">
   <title>Market Centre | Ulimi wa Malawi</title>
 
-  <!-- Modular Stylesheets with Relative Paths -->
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
-<body>
+<body id="top">
   <div class="shell">
-    <!-- Topbar Navigation -->
     <header class="topbar">
       <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
-        <span class="brand-mark">🌱</span>
+        <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
         <span>ULIMI WA MALAWI<small>MARKET INFORMATION CENTRE</small></span>
       </a>
-            <nav class="nav" id="nav">
+      <nav class="nav" id="nav">
         <a href="../index.html" data-i18n="navHome">Poyambira</a>
         <a href="crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
         <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
@@ -33,8 +32,8 @@
       </nav>
       <div class="top-actions">
         <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
-          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
-          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
+          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">Chichewa</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">English</button>
         </div>
         <div class="account-area" id="accountArea">
           <a class="account-login-link" href="/login.html" id="accountLoginLink" data-i18n="navLogin">Lowani / Lembetsani</a>
@@ -46,39 +45,34 @@
             </div>
           </div>
         </div>
-        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false"><svg class="pro-icon menu-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       </div>
     </header>
 
-    <!-- Main Container -->
     <main class="main container">
-      <!-- Real Agricultural Photography Banner -->
       <div class="page-photo-banner">
         <img src="../assets/images/market_grain.jpg" alt="Msika wa zaulimi ndi mbewu ku Malawi" loading="eager" referrerpolicy="no-referrer">
         <div class="page-photo-overlay">
-          <h2>📊 Msika wa Zaulimi ndi Mitengo • V5 Market Centre</h2>
+          <h2>Msika wa Zaulimi ndi Mitengo</h2>
           <p>Mitengo ya pamsika yotsimikizika ya chimanga, mtedza, soya, ndi mpunga m'misika ya ku midzi ndi m'matauni a Malawi.</p>
         </div>
       </div>
 
-      <!-- Section Header -->
       <div class="section-head">
         <div>
-          <span class="section-kicker">Phase 1 • V5 Upgrade</span>
+          <span class="section-kicker">Malawi Market Intelligence</span>
           <h2>Agricultural Market Information Centre</h2>
-          <p>Published commodity price observations from selected markets in Malawi. Compare dated reference prices, check units and source records, and confirm current prices locally before trading.</p>
+          <p>Admin-verified commodity price observations across Malawi. Compare dated reference prices in MWK, inspect units and sources, and submit local market observations for moderation.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a href="admin.html" class="btn btn-primary" style="padding:10px 16px">Admin Price Desk ⚙️</a>
+          <a href="#submit-price" class="btn btn-outline" style="padding:10px 16px">Submit Local Observation</a>
+          <a href="admin.html" class="btn btn-primary" style="padding:10px 16px">Admin Price Desk</a>
         </div>
       </div>
 
-      <!-- Market Centre Dashboard -->
       <div class="market-dashboard">
-        <!-- Live Metric Overview -->
         <div class="market-stats-row" id="marketStatsRow"></div>
 
-        <!-- Filter Controls -->
         <div class="market-controls">
           <div class="market-filters-group">
             <label style="font-size:12px;font-weight:800;color:var(--forest)">Filter by Commodity:
@@ -107,30 +101,40 @@
                 <option value="Salima">Salima</option>
                 <option value="Thyolo">Thyolo</option>
                 <option value="Karonga">Karonga</option>
+                <option value="Dedza">Dedza</option>
+                <option value="Zomba">Zomba</option>
+                <option value="Mangochi">Mangochi</option>
+              </select>
+            </label>
+
+            <label style="font-size:12px;font-weight:800;color:var(--forest)">Sort By:
+              <select id="marketSortOrder" aria-label="Sort market observations">
+                <option value="newest">Newest Observation</option>
+                <option value="priceAsc">Lowest Price (MWK)</option>
+                <option value="priceDesc">Highest Price (MWK)</option>
+                <option value="cropAsc">Crop Name (A–Z)</option>
               </select>
             </label>
 
             <label style="font-size:12px;font-weight:800;color:var(--forest)">Status:
               <select id="marketStatusFilter" aria-label="Filter by verification status">
-                <option value="all">All Records</option>
-                <option value="verified">Verified Only (✓)</option>
-                <option value="unverified">Unverified (⏳)</option>
+                <option value="all">All Published Prices</option>
+                <option value="verified">Verified Only</option>
               </select>
             </label>
           </div>
 
           <div style="display:flex;gap:10px;align-items:center;flex:1;max-width:320px">
-            <input type="search" id="marketSearch" placeholder="Search market, crop or trader…" style="height:46px;width:100%;border:1px solid #cbd9ce;border-radius:12px;padding:0 12px;background:#fff;font-size:13px;outline:none" aria-label="Search market prices">
-            <button class="btn btn-ghost" id="resetMarketFilters" style="background:#edf5ee;color:var(--forest);border-color:#d5e5da;white-space:nowrap;padding:10px 14px" title="Reset all filters">Reset</button>
+            <input type="search" id="marketSearch" placeholder="Search market, crop or source…" style="height:46px;width:100%;border:1px solid #cbd9ce;border-radius:12px;padding:0 12px;background:#fff;font-size:13px;outline:none" aria-label="Search market prices">
+            <button class="btn btn-ghost" id="resetMarketFilters" style="background:#edf5ee;color:var(--forest);border-color:#d5e5da;white-space:nowrap;padding:10px 14px" type="button" title="Reset all filters">Reset</button>
           </div>
         </div>
 
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
           <span style="font-size:13px;font-weight:800;color:var(--forest)" id="marketRecordCount">Loading records…</span>
-          <span style="font-size:11px;color:var(--muted)">Latest source observations: 9 September 2026 (ACE). Dates vary by commodity.</span>
+          <span id="marketFreshness" style="font-size:11px;color:var(--muted)">Checking latest published observation…</span>
         </div>
 
-        <!-- Prices Table -->
         <div class="market-table-wrap">
           <table class="market-table">
             <thead>
@@ -140,7 +144,7 @@
                 <th>Standard Unit</th>
                 <th>Price Range (MWK)</th>
                 <th>Status</th>
-                <th>Reported Date</th>
+                <th>Observed &amp; Source</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -148,33 +152,149 @@
           </table>
         </div>
 
-        <!-- World Bank modeled estimates: separate from published ACE observations -->
+        <!-- World Bank modeled estimates -->
         <section class="market-compare-box" style="margin-top:24px">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
-            <div><h3>World Bank Market Estimates</h3><p style="font-size:13px;color:#405247;margin:0">Monthly modeled estimates for Malawi markets. These are estimates, not live buying or selling offers.</p></div>
+            <div><h3>World Bank Market Estimates</h3><p style="font-size:13px;color:#405247;margin:0">Monthly modeled estimates for Malawi markets. These are separate from verified spot market observations.</p></div>
             <span class="badge-unverified">Modeled estimates</span>
           </div>
           <p id="worldBankMarketMeta" style="font-size:12px;color:var(--muted);margin:12px 0">Checking for the latest published dataset…</p>
           <div class="market-table-wrap">
             <table class="market-table">
               <thead><tr><th>Commodity</th><th>Market</th><th>Unit</th><th>Estimated range (MWK)</th><th>Estimate date</th><th>Data note</th></tr></thead>
-              <tbody id="worldBankMarketTableBody"><tr><td colspan="6" style="text-align:center;padding:24px">World Bank estimates will appear after the first scheduled data refresh.</td></tr></tbody>
+              <tbody id="worldBankMarketTableBody"><tr><td colspan="6" style="text-align:center;padding:24px">Checking World Bank market estimates dataset…</td></tr></tbody>
             </table>
           </div>
-          <p style="font-size:11px;color:var(--muted);margin-top:10px">Source: <a href="https://microdata.worldbank.org/catalog/6171" target="_blank" rel="noopener noreferrer">World Bank Real Time Food Prices</a>. The dataset uses direct observations and statistical estimates, and may include interpolated values.</p>
+          <p style="font-size:11px;color:var(--muted);margin-top:10px">Source: <a href="https://microdata.worldbank.org/catalog/6171" target="_blank" rel="noopener noreferrer">World Bank Real Time Food Prices</a>.</p>
         </section>
 
-        <!-- Price Comparison Section -->
+        <!-- Regional Price Comparison -->
         <div class="market-compare-box">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
             <div>
-              <h3>Regional Price Comparison & Arbitrage Insights</h3>
-              <p style="font-size:13px;color:#405247;margin:0">Compare matching commodities using dated published observations. Dates and varieties may differ.</p>
+              <h3>Regional Price Comparison</h3>
+              <p style="font-size:13px;color:#405247;margin:0">Compare matching commodities and identical trading units using dated verified observations.</p>
             </div>
-            <span class="badge-verified">Published Market Price Comparison</span>
+            <span class="badge-verified">Unit-Matched Comparison</span>
           </div>
           <div class="compare-cards-grid" id="priceComparisonGrid"></div>
         </div>
+
+        <!-- Farmer Market Price Submission Workflow -->
+        <section id="submit-price" class="admin-card" style="margin-top:28px">
+          <h3>Submit a Local Market Price Observation</h3>
+          <p>Signed-in farmers can report prices observed at their local market. All community submissions stay marked as <strong>Pending Review</strong> and are published publicly only after administrator verification.</p>
+
+          <div id="farmerSubmitAuthPrompt" style="background:#f4f9f5;border:1px solid #d5e5da;border-radius:14px;padding:18px;margin-top:14px" hidden>
+            <p style="margin:0 0 12px;font-size:13.5px;color:var(--forest);font-weight:700">Sign in with your farmer account to submit local market prices for verification.</p>
+            <a href="../login.html?redirect=/pages/market-centre.html" class="btn btn-primary">Lowani / Sign In to Submit Observation →</a>
+          </div>
+
+          <form id="farmerPriceForm" class="admin-form" hidden>
+            <div class="form-group">
+              <label for="subCropName">Commodity *</label>
+              <select id="subCropName" required>
+                <option value="maize" data-crop-label="Chimanga (Maize)" data-category="Cereals">Chimanga (Maize)</option>
+                <option value="groundnut" data-crop-label="Mtedza (Groundnuts)" data-category="Legumes">Mtedza (Groundnuts)</option>
+                <option value="soybean" data-crop-label="Soya (Soybean)" data-category="Legumes">Soya (Soybean)</option>
+                <option value="rice" data-crop-label="Mpunga (Rice)" data-category="Cereals">Mpunga (Rice)</option>
+                <option value="beans" data-crop-label="Nyemba (Sugar Beans)" data-category="Legumes">Nyemba (Sugar Beans)</option>
+                <option value="pigeonpea" data-crop-label="Nandolo (Pigeon Pea)" data-category="Legumes">Nandolo (Pigeon Pea)</option>
+                <option value="cassava" data-crop-label="Chinangwa (Cassava)" data-category="Root crops">Chinangwa (Cassava)</option>
+                <option value="tomato" data-crop-label="Tomato (Fresh)" data-category="Vegetables">Tomato (Fresh)</option>
+                <option value="sunflower" data-crop-label="Mpendadzuwa (Sunflower)" data-category="Cash crops">Mpendadzuwa (Sunflower)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="subMarketName">Market Name *</label>
+              <input type="text" id="subMarketName" placeholder="e.g. Mitundu Market" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subDistrict">District *</label>
+              <select id="subDistrict" required>
+                <option value="Lilongwe">Lilongwe</option>
+                <option value="Blantyre">Blantyre</option>
+                <option value="Mzuzu">Mzuzu</option>
+                <option value="Zomba">Zomba</option>
+                <option value="Kasungu">Kasungu</option>
+                <option value="Salima">Salima</option>
+                <option value="Dedza">Dedza</option>
+                <option value="Thyolo">Thyolo</option>
+                <option value="Karonga">Karonga</option>
+                <option value="Mangochi">Mangochi</option>
+                <option value="Balaka">Balaka</option>
+                <option value="Mchinji">Mchinji</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="subRegion">Region *</label>
+              <select id="subRegion" required>
+                <option value="Central">Central</option>
+                <option value="Southern">Southern</option>
+                <option value="Northern">Northern</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="subUnit">Trading Unit *</label>
+              <select id="subUnit" required>
+                <option value="50 kg bag">50 kg bag</option>
+                <option value="1 kg">1 kg</option>
+                <option value="90 kg bag">90 kg bag</option>
+                <option value="Crate">Crate</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="subPriceMin">Observed Low Price (MWK) *</label>
+              <input type="number" id="subPriceMin" min="1" step="1" placeholder="e.g. 42000" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subPriceMax">Observed High Price (MWK)</label>
+              <input type="number" id="subPriceMax" min="1" step="1" placeholder="Optional if single price">
+            </div>
+
+            <div class="form-group">
+              <label for="subDateObserved">Observation Date *</label>
+              <input type="date" id="subDateObserved" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subPriceBasis">Price Basis</label>
+              <select id="subPriceBasis">
+                <option value="Wholesale spot price">Wholesale spot price</option>
+                <option value="Retail market stall">Retail market stall</option>
+                <option value="Farmgate buyer offer">Farmgate buyer offer</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="subNotes">Quality, Grade &amp; Moisture Notes</label>
+              <textarea id="subNotes" placeholder="e.g. Clean dry grain, unsorted local market price."></textarea>
+            </div>
+
+            <div class="admin-actions">
+              <button type="submit" class="btn-admin">Submit Pending Price Report</button>
+              <span id="farmerPriceStatus" style="font-size:13px;font-weight:750"></span>
+            </div>
+          </form>
+
+          <div id="myMarketSubmissionsWrap" style="margin-top:22px" hidden>
+            <h4 style="font-size:15px;color:var(--forest);margin:0 0 10px">Your Recent Price Submissions</h4>
+            <div class="market-table-wrap">
+              <table class="market-table">
+                <thead>
+                  <tr><th>Commodity</th><th>Market</th><th>Unit</th><th>Price (MWK)</th><th>Date</th><th>Review Status</th></tr>
+                </thead>
+                <tbody id="myMarketSubmissionsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
         <div class="notice" style="margin-top:24px">
           <strong>Market Data Integrity Notice:</strong> Prices are dated published reference observations from the named source, not live quotes or guaranteed transaction prices. Confirm today's price, quality grade and unit directly with the market before trading.
@@ -182,128 +302,86 @@
       </div>
     </main>
 
-    <!-- Global Footer -->
-    <!-- Master Agricultural Knowledge Hub Footer -->
-<footer class="footer">
-  <div class="container footer-top-bar">
-    <div class="footer-hero-brand">
-      <a class="brand footer-brand" href="../index.html" aria-label="Ulimi wa Malawi home">
-        <span class="brand-mark">🌱</span>
-        <span>
-          <span data-i18n="appTitle">ULIMI WA MALAWI</span>
-          <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
-        </span>
-      </a>
-      <p class="footer-mission" data-i18n="footerTagline">Learning for stronger, more resilient agriculture in Malawi. Chidziwitso chothandiza kulimbikitsa ulimi wopindulitsa m'Malawi muno.</p>
-
-      <!-- Social Media Links -->
-      <div class="footer-social-row">
-        <span class="footer-social-label">Titsatireni / Connect:</span>
-        <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp - Gulu la Alimi" title="WhatsApp">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.76-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.12-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.3"/></svg>
-        </a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook - Ulimi wa Malawi" title="Facebook">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-        </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube - Ulimi wa Malawi" title="YouTube">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.58 7.19a2.75 2.75 0 0 0-1.94-1.94C17.92 4.75 12 4.75 12 4.75s-5.92 0-7.64.5c-.95.26-1.69 1-1.94 1.94C2 8.92 2 12 2 12s0 3.08.42 4.81c.25.94.99 1.69 1.94 1.94 1.72.5 7.64.5 7.64.5s5.92 0 7.64-.5c.95-.25 1.69-.99 1.94-1.94.42-1.73.42-4.81.42-4.81s0-3.08-.42-4.81zM9.75 15.02V8.98L15 12l-5.25 3.02z"/></svg>
-        </a>
-        <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="X - Ulimi wa Malawi" title="X (Twitter)">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram - Ulimi wa Malawi" title="Instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="footer-highlights">
-      <div class="footer-stat-badge">
-        <span class="stat-badge-dot"></span>
-        <div>
-          <strong>Toll-Free Hotline: 6166</strong>
-          <span>Malawi Ministry of Agriculture</span>
+    <footer class="footer">
+      <div class="container footer-top-bar">
+        <div class="footer-hero-brand">
+          <a class="brand footer-brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+            <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
+            <span>
+              <span data-i18n="appTitle">ULIMI WA MALAWI</span>
+              <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
+            </span>
+          </a>
+          <p class="footer-mission" data-i18n="footerTagline">Learning for stronger, more resilient agriculture in Malawi. Chidziwitso chothandiza kulimbikitsa ulimi wopindulitsa m'Malawi muno.</p>
+        </div>
+        <div class="footer-highlights">
+          <div class="footer-stat-badge"><span class="stat-badge-dot"></span><div><strong>Toll-Free Hotline: 6166</strong><span>Malawi Ministry of Agriculture</span></div></div>
+          <div class="footer-stat-badge"><div><strong>28 Districts • 8 ADDs</strong><span>Kufikira alimi m'madera onse</span></div></div>
         </div>
       </div>
-      <div class="footer-stat-badge">
-        <span class="stat-badge-icon">🇲🇼</span>
-        <div>
-          <strong>28 Districts • 8 ADDs</strong>
-          <span>Kufikira alimi m'madera onse</span>
+
+      <div class="container footer-grid">
+        <div class="footer-col">
+          <h4 data-i18n="footerFarming">Mbewu &amp; Ulimi</h4>
+          <ul>
+            <li><a href="crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi</a></li>
+            <li><a href="crops.html" data-i18n="footerCrops">Mbewu za m'Malawi</a></li>
+            <li><a href="pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda</a></li>
+            <li><a href="irrigation.html" data-i18n="navIrrigation">Ulimi wa kuthirira</a></li>
+            <li><a href="soil-centre.html" data-i18n="navSoil">Kusamalira nthaka</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerMarketHeading">Msika &amp; Zanyengo</h4>
+          <ul>
+            <li><a href="market-centre.html" data-i18n="footerMarket">Mitengo pamsika</a></li>
+            <li><a href="weather.html" data-i18n="footerWeather">Zanyengo za m'madera</a></li>
+            <li><a href="marketplace.html" data-i18n="navMarketplace">Malo ogulitsira mbewu</a></li>
+            <li><a href="news.html" data-i18n="navNews">Nkhani zatsopano zaulimi</a></li>
+            <li><a href="livestock.html" data-i18n="navLivestock">Zoweta &amp; Ziweto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerPlatform">Zipangizo za Mlimi</h4>
+          <ul>
+            <li><a href="fertiliser-calculator.html" data-i18n="navFertiliser">Cholowera feteleza</a></li>
+            <li><a href="farm-planner.html" data-i18n="navFarmPlanner">Dongosolo la munda</a></li>
+            <li><a href="subscriptions.html" data-i18n="footerPlans">Mapulani a umembala</a></li>
+            <li><a href="farmer-community.html" data-i18n="navCommunity">Gulu la alimi</a></li>
+            <li><a href="learning-centre.html" data-i18n="navLearning">Malo ophunzirira</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footerDiscover">Pulatifomu &amp; Thandizo</h4>
+          <ul>
+            <li><a href="../index.html" data-i18n="footerHome">Poyambira (Home)</a></li>
+            <li><a href="../modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi</a></li>
+            <li><a href="../login.html" data-i18n="footerFarmerLogin">Akaunti ya mlimi (Lowani)</a></li>
+            <li><a href="admin.html" data-i18n="footerAdmin">Uyang'anire wa msika</a></li>
+            <li><a href="../index.html#support" data-i18n="footerSupport">Thandizo la alimi</a></li>
+          </ul>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="container footer-grid">
-    <div class="footer-col">
-      <h4 data-i18n="footerFarming">Mbewu &amp; Ulimi</h4>
-      <ul>
-        <li><a href="crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi (V6)</a></li>
-        <li><a href="crops.html" data-i18n="footerCrops">Mbewu za m'Malawi (V7)</a></li>
-        <li><a href="pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda (V8)</a></li>
-        <li><a href="irrigation.html" data-i18n="navIrrigation">Ulimi wa kuthirira</a></li>
-        <li><a href="soil-centre.html" data-i18n="navSoil">Kusamalira nthaka</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-i18n="footerMarket">Msika &amp; Zanyengo</h4>
-      <ul>
-        <li><a href="market-centre.html" data-i18n="footerMarket">Mitengo pamsika (V5)</a></li>
-        <li><a href="weather.html" data-i18n="footerWeather">Zanyengo za m'madera</a></li>
-        <li><a href="marketplace.html" data-i18n="navMarketplace">Malo ogulitsira mbewu</a></li>
-        <li><a href="news.html" data-i18n="navNews">Nkhani zatsopano zaulimi</a></li>
-        <li><a href="livestock.html" data-i18n="navLivestock">Zoweta &amp; Ziweto</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-i18n="footerPlatform">Zipangizo za Mlimi</h4>
-      <ul>
-        <li><a href="fertiliser-calculator.html" data-i18n="navFertiliser">Cholowera feteleza</a></li>
-        <li><a href="farm-planner.html" data-i18n="navFarmPlanner">Dongosolo la munda</a></li>
-        <li><a href="subscriptions.html" data-i18n="footerPlans">Mapulani a umembala</a></li>
-        <li><a href="farmer-community.html" data-i18n="navCommunity">Gulu la alimi</a></li>
-        <li><a href="learning-centre.html" data-i18n="navLearning">Malo ophunzirira</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-i18n="footerDiscover">Pulatifomu &amp; Thandizo</h4>
-      <ul>
-        <li><a href="../index.html" data-i18n="footerHome">Poyambira (Home)</a></li>
-        <li><a href="../modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi (29)</a></li>
-        <li><a href="../login.html" data-i18n="footerFarmerLogin">Akaunti ya mlimi (Lowani)</a></li>
-        <li><a href="admin.html" data-i18n="footerAdmin">Uyang'anire wa msika</a></li>
-        <li><a href="../index.html#support" data-i18n="footerSupport">Thandizo la alimi</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container footer-subline">
-    <div class="footer-copy">
-      <span>© 2026 <strong>Ulimi wa Malawi</strong>. Made for Malawi.</span>
-      <div class="footer-powered">
-        <span>Powered by</span>
-        <a href="https://pelc-website.vercel.app/" target="_blank" rel="noopener noreferrer" class="pelc-badge" title="PELC - Practical Education & Learning Consultancy">
-          <span>PELC</span>
-          <span class="pelc-arrow" aria-hidden="true">↗</span>
-        </a>
+      <div class="container footer-subline">
+        <div class="footer-copy">
+          <span>© 2026 <strong>Ulimi wa Malawi</strong>. Made for Malawi.</span>
+          <div class="footer-powered">
+            <span>Powered by</span>
+            <a href="https://pelc-website.vercel.app/" target="_blank" rel="noopener noreferrer" class="pelc-badge" title="PELC - Practical Education &amp; Learning Consultancy"><span>PELC</span><span class="pelc-arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="footer-sub-links">
+          <span class="lang-tag">Chichewa / English</span>
+          <a class="back-to-top" href="#top" aria-label="Bwererani m'mwamba"><span>Bwererani m'mwamba</span><span aria-hidden="true">↑</span></a>
+        </div>
       </div>
-    </div>
-    <div class="footer-sub-links">
-      <span class="lang-tag">🇲🇼 Chichewa / English</span>
-      <a class="back-to-top" href="#top" aria-label="Bwererani m'mwamba">
-        <span>Bwererani m'mwamba</span>
-        <span aria-hidden="true">↑</span>
-      </a>
-    </div>
-  </div>
-</footer>
+    </footer>
   </div>
 
-  <!-- Reusable Modal Backdrop -->
   <div class="modal-backdrop" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <article class="modal">
       <div class="modal-head">
@@ -317,10 +395,8 @@
     </article>
   </div>
 
-  <!-- Toast Alert -->
   <div class="toast" id="toast" role="status"></div>
 
-  <!-- Modular Scripts -->
   <script type="module" src="../js/main.js"></script>
   <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>

@@ -432,5 +432,59 @@
     "plantingWindow": "Year-round in dambo wetlands and irrigated home gardens",
     "harvestWindow": "Continuous picking from 4 weeks after transplanting for up to 3 months",
     "ecologicalSuitability": "Cultivated across all districts of Malawi."
+  },
+  {
+    "id": "sorghum",
+    "ch": "Mapira",
+    "en": "Sorghum",
+    "emoji": "🌾",
+    "group": "Cereals",
+    "summary": "Drought-resilient cereal staple suited to low-rainfall districts and dry upland soils across Malawi.",
+    "uses": [
+      "Nsima and stiff porridge (thobwa / mgaiwa) for household food security",
+      "Traditional malt brewing and commercial grain processing",
+      "Dry-season crop residue for ruminant livestock fodder"
+    ],
+    "field": [
+      "Select recommended improved varieties such as Pilira 1, Pilira 2, or Kudzima matching your local season length.",
+      "Prepare 75cm ridges or conservation agriculture basins before the first effective rains.",
+      "Plant 3–5 seeds per station at 25cm–30cm spacing, thinning to 2 healthy seedlings at 2–3 weeks after emergence.",
+      "Weed early within the first 3 weeks and watch closely for Striga (witchweed) emergence.",
+      "Protect maturing grain heads from quelea and weaver birds, and harvest once grain turns hard and dry."
+    ],
+    "watch": "Striga (kaufiti / witchweed) infestation, shoot fly on late-planted crops, stem borers, and bird damage at milk-to-dough grain stage.",
+    "soilRequirements": "Performs well on a wide range of soils including sandy loams and heavy Shire Valley clays (makande); tolerates temporary waterlogging and dry spells better than maize (pH 5.5 – 7.5).",
+    "fertiliserRecommendations": "Basal: 100 kg/ha 23:10:5+6S or organic compost in low-fertility soils. Top-dress: 50–100 kg/ha Urea at 3–4 weeks where rainfall is adequate.",
+    "pestsAndDiseases": ["Sorghum Shoot Fly", "Stem Borers", "Covered Smut", "Striga (Witchweed)", "Quelea Birds"],
+    "plantingWindow": "Late November to Mid-December (early rains in dry areas)",
+    "harvestWindow": "April to May",
+    "ecologicalSuitability": "Lower Shire Valley (Chikwawa, Nsanje), Balaka, Mangochi, Salima, and dry rain-shadow areas."
+  },
+  {
+    "id": "millet",
+    "ch": "Mchewere / Mawere",
+    "en": "Millet (Pearl & Finger)",
+    "emoji": "🌾",
+    "group": "Cereals",
+    "summary": "Nutritious, climate-resilient small-grain cereals: Pearl millet (Mchewere) for hot dry lowlands and Finger millet (Mawere) for higher-altitude soils.",
+    "uses": [
+      "Mineral-rich household porridge, nsima, and nutritious infant complementary foods",
+      "Traditional thobwa sweet beverage and malt fermentation",
+      "Long-term household grain reserve resistant to many storage weevils when kept dry"
+    ],
+    "field": [
+      "Choose Pearl millet (e.g. Nyankhombo / Okashana-type) for hot dry lowlands, or Finger millet for mid-to-high-altitude uplands.",
+      "Prepare a fine, firm seedbed because small millet seeds require shallow sowing (1.5cm–2cm depth).",
+      "Sow in rows 60cm–75cm apart for ease of weeding, thinning Pearl millet to 15cm–20cm between plants.",
+      "Perform careful hand weeding 2–3 weeks after emergence before seedlings are shaded out.",
+      "Harvest mature panicles/heads by hand as they ripen, dry thoroughly on clean mats or tarpaulins, and thresh."
+    ],
+    "watch": "Head caterpillars, downy mildew, blast disease (on finger millet), and bird feeding during grain filling.",
+    "soilRequirements": "Pearl millet thrives on light, well-drained sandy soils with low moisture; Finger millet prefers fertile well-drained loams (pH 5.5 – 7.0).",
+    "fertiliserRecommendations": "Incorporate decomposed farmyard manure or compost at land preparation; modest nitrogen top-dressing (50 kg/ha CAN or Urea) boosts grain fill where moisture allows.",
+    "pestsAndDiseases": ["Millet Head Miner", "Downy Mildew", "Finger Millet Blast", "Striga", "Birds"],
+    "plantingWindow": "December to early January",
+    "harvestWindow": "April to May",
+    "ecologicalSuitability": "Pearl millet: Chikwawa, Nsanje, Balaka, Karonga dry belts. Finger millet: Chitipa, Rumphi, Mzimba, Dedza uplands."
   }
 ]

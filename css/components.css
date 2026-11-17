@@ -42,6 +42,7 @@
 
 /* Method cards */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:13px}
+.cards-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:13px}
 .farm-card{
   background:white;border:1px solid var(--line);border-radius:19px;
   padding:22px;box-shadow:0 8px 24px #0b35200a;
@@ -136,7 +137,7 @@
 @media(max-width:700px){
   .toolbar{align-items:stretch;flex-direction:column}
   .search-wrap{max-width:none}
-  .cards{grid-template-columns:1fr}
+  .cards,.cards-2{grid-template-columns:1fr}
   .modal-grid{grid-template-columns:1fr}
   .modal-head,.modal-body{padding:18px}
 }

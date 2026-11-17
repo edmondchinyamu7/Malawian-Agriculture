@@ -4,6 +4,7 @@
  */
 import { escapeHtml, openModal, bookmarks } from './main.js';
 import { getCurrentLang } from './i18n.js';
+import { getIconSvg } from './icons.js';
 
 let farmingData = [];
 let activeCategory = 'Zonse';
@@ -16,7 +17,15 @@ const categoryMeta = [
   { id: 'Zachikhalidwe', ny: 'Zachikhalidwe', en: 'Traditional' }
 ];
 
+function pickMethodIcon(category) {
+  if (category === 'Chakudya') return 'wheat';
+  if (category === 'Zamalonda') return 'trendingUp';
+  if (category === 'Zamakono') return 'sprout';
+  return 'layers';
+}
+
 export async function loadFarmingData() {
+  const container = document.getElementById('cards');
   try {
     const basePath = window.location.pathname.includes('/pages/') ? '../data/' : 'data/';
     const response = await fetch(`${basePath}farming-guides.json`);
@@ -26,6 +35,9 @@ export async function loadFarmingData() {
     renderFarmingCards();
   } catch (err) {
     console.error('Error loading farming data:', err);
+    if (container) {
+      container.innerHTML = `<div class="empty">Unable to load farming guides right now. Please refresh or check your connection.</div>`;
+    }
   }
 }
 
@@ -39,7 +51,7 @@ export function renderCategories() {
     const label = lang === 'ny' ? cat.ny : cat.en;
     const isActive = cat.id === activeCategory;
     return `
-      <button class="filter ${isActive ? 'active' : ''}" data-category="${escapeHtml(cat.id)}">
+      <button class="filter ${isActive ? 'active' : ''}" type="button" data-category="${escapeHtml(cat.id)}">
         ${escapeHtml(label)}
       </button>
     `;
@@ -71,11 +83,9 @@ export function renderFarmingCards() {
   });
 
   if (resultCount) {
-    if (lang === 'ny') {
-      resultCount.textContent = `Mitu ${filtered.length}`;
-    } else {
-      resultCount.textContent = `${filtered.length} ${filtered.length === 1 ? 'topic' : 'topics'}`;
-    }
+    resultCount.textContent = lang === 'ny'
+      ? `Mitu ${filtered.length}`
+      : `${filtered.length} ${filtered.length === 1 ? 'topic' : 'topics'}`;
   }
   if (methodCount) {
     methodCount.textContent = farmingData.length;
@@ -91,6 +101,9 @@ export function renderFarmingCards() {
     return;
   }
 
+  const bookmarkSvg = getIconSvg('bookmark', 'pro-icon');
+  const starSvg = getIconSvg('star', 'pro-icon');
+
   container.innerHTML = filtered.map(item => {
     const isSaved = bookmarks.has(item.id);
     const title = lang === 'ny' ? item.nameCh : item.nameEn;
@@ -98,11 +111,12 @@ export function renderFarmingCards() {
     const catMeta = categoryMeta.find(c => c.id === item.category);
     const catLabel = lang === 'ny' ? (catMeta?.ny || item.category) : (catMeta?.en || item.category);
     const readText = lang === 'ny' ? 'Werengani zonse →' : 'Read full guide →';
+    const iconSvg = getIconSvg(pickMethodIcon(item.category), 'pro-icon');
 
     return `
       <article class="farm-card" tabindex="0" role="button" data-id="${item.id}" aria-label="${escapeHtml(title)}">
         <div class="card-top">
-          <div class="crop-icon">${item.emoji}</div>
+          <div class="crop-icon">${iconSvg}</div>
           <span class="category">${escapeHtml(catLabel)}</span>
         </div>
         <h3>${escapeHtml(title)}</h3>
@@ -113,8 +127,8 @@ export function renderFarmingCards() {
         </div>
         <div class="card-foot">
           <span>${escapeHtml(readText)}</span>
-          <button class="save ${isSaved ? 'saved' : ''}" data-save="${item.id}" aria-label="${isSaved ? 'Remove saved topic' : 'Save topic'}">
-            ${isSaved ? '★' : '☆'}
+          <button class="save ${isSaved ? 'saved' : ''}" type="button" data-save="${item.id}" aria-label="${isSaved ? 'Remove saved topic' : 'Save topic'}" title="${isSaved ? 'Saved' : 'Save topic'}">
+            ${isSaved ? starSvg : bookmarkSvg}
           </button>
         </div>
       </article>
@@ -191,7 +205,7 @@ export function openFarmingDetails(id) {
   `;
 
   openModal({
-    title: `${item.emoji} ${title}`,
+    title,
     subtitle,
     bodyHtml
   });
@@ -242,7 +256,6 @@ export function initFarmingMethods() {
     loadFarmingData();
   }
 
-  // Listen to language switch event
   window.addEventListener('languageChanged', () => {
     renderCategories();
     renderFarmingCards();

@@ -91,20 +91,22 @@ export function closeModal() {
 
 
 // Attach global modal listeners
-document.addEventListener('DOMContentLoaded', () => {
-  const closeBtn = document.getElementById('closeModal');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('closeModal');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
 
-  const modal = document.getElementById('modal');
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
     });
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
   });
-});
+}

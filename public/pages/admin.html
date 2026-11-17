@@ -21,7 +21,7 @@
     <!-- Topbar Navigation -->
     <header class="topbar">
       <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
-        <span class="brand-mark">🌱</span>
+        <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
         <span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span>
       </a>
             <nav class="nav" id="nav">
@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false"><svg class="pro-icon menu-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       </div>
     </header>
 
@@ -58,7 +58,7 @@
         <div>
           <span class="section-kicker">Administrative Controls</span>
           <h2>Agricultural Market Price Administration</h2>
-          <p>Submit and verify new field price reports, manage verified and unverified status labels, and audit commodity pricing data stored in your local session.</p>
+          <p>Submit and verify new field price reports, manage verified and unverified status labels, and audit commodity pricing data stored in the shared market database with administrator-only controls.</p>
         </div>
         <div>
           <a href="#financeDashboard" class="btn btn-primary">Business &amp; Finance Dashboard ↗</a>
@@ -66,11 +66,13 @@
         </div>
       </div>
 
+      <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
+
       <!-- Add Price Form Card -->
       <section class="admin-card">
         <div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button type="button" id="adminLogoutBtn" class="btn btn-outline">Sign out</button></div>
         <h3>Submit New Crop Price Record</h3>
-        <p>Enter realistic market observations. All fields will be stored locally on your device and rendered directly in the market directory.</p>
+        <p>Enter verified market observations. Approved records are published to the shared market directory. Pending farmer and admin records remain private until reviewed.</p>
 
         <form id="addPriceForm" class="admin-form">
           <div class="form-group">
@@ -136,10 +138,10 @@
           </div>
 
           <div class="form-group">
-            <label for="adminStatus">Initial Verification Status</label>
+            <label for="adminStatus">Publication Status</label>
             <select id="adminStatus">
               <option value="verified">Verified (Official Extension Cross-checked)</option>
-              <option value="unverified" selected>Unverified (Local Trader Submission)</option>
+              <option value="pending" selected>Pending review (not public)</option>
             </select>
           </div>
 
@@ -180,12 +182,37 @@
                 <th>Market Location</th>
                 <th>Unit</th>
                 <th>Price Range</th>
-                <th>Status (Click to toggle)</th>
+                <th>Status</th>
                 <th>Reported</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody id="adminPriceTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Subscription Payment Review & Approval -->
+      <section class="admin-card" id="subscriptionApprovals">
+        <div>
+          <h3>Pending Subscription Payment Approvals</h3>
+          <p>Verify farmer mobile money / bank references before activating paid membership plans.</p>
+        </div>
+        <div style="overflow-x:auto;margin-top:12px">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Farmer ID</th>
+                <th>Plan &amp; Cycle</th>
+                <th>Amount</th>
+                <th>Transaction Ref</th>
+                <th>Status</th>
+                <th>Review Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminSubscriptionsTableBody">
+              <tr><td colspan="6" style="text-align:center;padding:18px">Loading subscription requests…</td></tr>
+            </tbody>
           </table>
         </div>
       </section>
@@ -246,7 +273,7 @@
   <div class="container footer-top-bar">
     <div class="footer-hero-brand">
       <a class="brand footer-brand" href="../index.html" aria-label="Ulimi wa Malawi home">
-        <span class="brand-mark">🌱</span>
+        <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
         <span>
           <span data-i18n="appTitle">ULIMI WA MALAWI</span>
           <small data-i18n="appSubtitle">MALO OPHUNZIRIRA ZA ULIMI</small>
@@ -297,44 +324,44 @@
     <div class="footer-col">
       <h4 data-i18n="footerFarming">Mbewu &amp; Ulimi</h4>
       <ul>
-        <li><a href="crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi (V6)</a></li>
-        <li><a href="crops.html" data-i18n="footerCrops">Mbewu za m'Malawi (V7)</a></li>
-        <li><a href="pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda (V8)</a></li>
-        <li><a href="irrigation.html" data-i18n="navIrrigation">Ulimi wa kuthirira</a></li>
-        <li><a href="soil-centre.html" data-i18n="navSoil">Kusamalira nthaka</a></li>
+        <li><a href="crop-calendar.html" data-i18n="footerCalendar">Kalendala ya ulimi</a></li>
+        <li><a href="crops.html" data-i18n="footerCrops">Mbewu za m'Malawi</a></li>
+        <li><a href="pest-disease.html" data-i18n="footerPest">Tizilombo ndi matenda</a></li>
+        <li><a href="irrigation.html" data-i18n="navIrrigation">Kuthirira ndi kasamalidwe ka madzi</a></li>
+        <li><a href="soil-centre.html" data-i18n="navSoil">Malo a chidziwitso cha nthaka</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
-      <h4 data-i18n="footerMarket">Msika &amp; Zanyengo</h4>
+      <h4 data-i18n="footerMarketHeading">Msika &amp; Zanyengo</h4>
       <ul>
-        <li><a href="market-centre.html" data-i18n="footerMarket">Mitengo pamsika (V5)</a></li>
-        <li><a href="weather.html" data-i18n="footerWeather">Zanyengo za m'madera</a></li>
-        <li><a href="marketplace.html" data-i18n="navMarketplace">Malo ogulitsira mbewu</a></li>
-        <li><a href="news.html" data-i18n="navNews">Nkhani zatsopano zaulimi</a></li>
-        <li><a href="livestock.html" data-i18n="navLivestock">Zoweta &amp; Ziweto</a></li>
+        <li><a href="market-centre.html" data-i18n="footerMarket">Mitengo pamsika</a></li>
+        <li><a href="weather.html" data-i18n="footerWeather">Zanyengo</a></li>
+        <li><a href="marketplace.html" data-i18n="navMarketplace">Msika wa alimi</a></li>
+        <li><a href="news.html" data-i18n="navNews">Nkhani za ulimi</a></li>
+        <li><a href="livestock.html" data-i18n="navLivestock">Ulimi wa ziweto</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
       <h4 data-i18n="footerPlatform">Zipangizo za Mlimi</h4>
       <ul>
-        <li><a href="fertiliser-calculator.html" data-i18n="navFertiliser">Cholowera feteleza</a></li>
-        <li><a href="farm-planner.html" data-i18n="navFarmPlanner">Dongosolo la munda</a></li>
-        <li><a href="subscriptions.html" data-i18n="footerPlans">Mapulani a umembala</a></li>
+        <li><a href="fertiliser-calculator.html" data-i18n="navFertiliser">Chowerengera feteleza</a></li>
+        <li><a href="farm-planner.html" data-i18n="navFarmPlanner">Kukonza mapulani a munda</a></li>
+        <li><a href="subscriptions.html" data-i18n="footerPlans">Mapulani</a></li>
         <li><a href="farmer-community.html" data-i18n="navCommunity">Gulu la alimi</a></li>
-        <li><a href="learning-centre.html" data-i18n="navLearning">Malo ophunzirira</a></li>
+        <li><a href="learning-centre.html" data-i18n="navLearning">Malo ophunzirira za ulimi</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
       <h4 data-i18n="footerDiscover">Pulatifomu &amp; Thandizo</h4>
       <ul>
-        <li><a href="../index.html" data-i18n="footerHome">Poyambira (Home)</a></li>
-        <li><a href="../modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi (29)</a></li>
-        <li><a href="../login.html" data-i18n="footerFarmerLogin">Akaunti ya mlimi (Lowani)</a></li>
+        <li><a href="../index.html" data-i18n="footerHome">Poyambira</a></li>
+        <li><a href="../modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi</a></li>
+        <li><a href="../login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a></li>
         <li><a href="admin.html" data-i18n="footerAdmin">Uyang'anire wa msika</a></li>
-        <li><a href="../index.html#support" data-i18n="footerSupport">Thandizo la alimi</a></li>
+        <li><a href="../index.html#support" data-i18n="footerSupport">Thandizo la zaulimi</a></li>
       </ul>
     </div>
   </div>

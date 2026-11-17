@@ -1,14 +1,16 @@
 /**
- * Ulimi wa Malawi | V6 Interactive Farming & Cropping Calendar
+ * Ulimi wa Malawi | Interactive Farming & Cropping Calendar
  */
 import { escapeHtml, showToast } from './main.js';
+import { getIconSvg, pickCropIconName } from './icons.js';
 
 let calendarData = null;
-let selectedMonthId = new Date().getMonth() + 1; // 1-12 based on current real-world month
+let selectedMonthId = new Date().getMonth() + 1;
 let selectedRegion = 'Central';
 let selectedCropKey = 'maize';
 
 export async function loadCalendarData() {
+  const details = document.getElementById('monthDetailsCard');
   try {
     const basePath = window.location.pathname.includes('/pages/') ? '../data/' : 'data/';
     const response = await fetch(`${basePath}farming-calendar.json`);
@@ -20,6 +22,9 @@ export async function loadCalendarData() {
     renderCropTimeline(selectedCropKey);
   } catch (err) {
     console.error('Error loading calendar data:', err);
+    if (details) {
+      details.innerHTML = `<div class="empty">Unable to load the farming calendar right now. Please refresh the page or check your connection.</div>`;
+    }
   }
 }
 
@@ -31,7 +36,7 @@ export function renderMonthButtons() {
     const isCurrent = m.id === selectedMonthId;
     return `
       <button class="filter ${isCurrent ? 'active' : ''}" data-month-id="${m.id}" type="button">
-        ${m.name} (${escapeHtml(m.nameCh)})
+        ${escapeHtml(m.name)} (${escapeHtml(m.nameCh)})
       </button>
     `;
   }).join('');
@@ -46,6 +51,7 @@ export function renderMonthDetails(monthId) {
   renderMonthButtons();
 
   const regionalAdvice = month.districtAdvisories?.[selectedRegion] || 'Maintain continuous field monitoring.';
+  const calSvg = getIconSvg('calendar', 'pro-icon');
 
   container.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:18px">
@@ -68,13 +74,12 @@ export function renderMonthDetails(monthId) {
       </div>
     </div>
 
-    <!-- Priority Reminders Checklist -->
     <div style="background:#f4f9f5;border:1px solid #d4e8db;border-radius:16px;padding:18px;margin-bottom:18px">
-      <h4 style="font-size:14px;font-weight:850;color:var(--forest);margin:0 0 10px;display:flex;align-items:center;gap:6px">
-        <span>✅</span> Priority Seasonal Reminders for ${escapeHtml(month.name)}:
+      <h4 style="font-size:14px;font-weight:850;color:var(--forest);margin:0 0 10px;display:flex;align-items:center;gap:8px">
+        <span>${calSvg}</span> Priority Seasonal Reminders for ${escapeHtml(month.name)}:
       </h4>
       <ul style="padding-left:20px;margin:0;font-size:13px;line-height:1.75;color:#30493b">
-        ${month.reminders.map(r => `<li>${escapeHtml(r)}</li>`).join('')}
+        ${(month.reminders || []).map(r => `<li>${escapeHtml(r)}</li>`).join('')}
       </ul>
     </div>
 
@@ -82,11 +87,11 @@ export function renderMonthDetails(monthId) {
       <div class="modal-box">
         <h4>Crops in Active Focus</h4>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
-          ${month.cropsInFocus.map(c => `<span class="tag" style="background:#fff;border-color:#cbdad0">${escapeHtml(c)}</span>`).join('')}
+          ${(month.cropsInFocus || []).map(c => `<span class="tag" style="background:#fff;border-color:#cbdad0">${escapeHtml(c)}</span>`).join('')}
         </div>
       </div>
       <div class="modal-box">
-        <h4>${selectedRegion} Region Ecological Advisory</h4>
+        <h4>${escapeHtml(selectedRegion)} Region Ecological Advisory</h4>
         <p style="font-size:13px;line-height:1.65;color:#355342;margin:4px 0 0">
           ${escapeHtml(regionalAdvice)}
         </p>
@@ -94,7 +99,6 @@ export function renderMonthDetails(monthId) {
     </div>
   `;
 
-  // Attach region listener
   const regSelect = document.getElementById('calendarRegionSelect');
   if (regSelect) {
     regSelect.addEventListener('change', (e) => {
@@ -109,11 +113,14 @@ export function renderCropTimelineSelector() {
   const container = document.getElementById('cropTimelineButtons');
   if (!container || !calendarData?.cropTimelines) return;
 
-  container.innerHTML = calendarData.cropTimelines.map(c => `
-    <button class="filter ${c.cropKey === selectedCropKey ? 'active' : ''}" data-crop-key="${c.cropKey}" type="button">
-      ${c.emoji} ${escapeHtml(c.name.split(' (')[0])}
-    </button>
-  `).join('');
+  container.innerHTML = calendarData.cropTimelines.map(c => {
+    const iconSvg = getIconSvg(pickCropIconName(c.name, c.cropKey), 'pro-icon');
+    return `
+      <button class="filter ${c.cropKey === selectedCropKey ? 'active' : ''}" data-crop-key="${escapeHtml(c.cropKey)}" type="button" style="display:inline-flex;align-items:center;gap:6px">
+        ${iconSvg} ${escapeHtml(c.name.split(' (')[0])}
+      </button>
+    `;
+  }).join('');
 }
 
 export function renderCropTimeline(cropKey) {
@@ -123,22 +130,22 @@ export function renderCropTimeline(cropKey) {
   if (!container || !crop) return;
 
   renderCropTimelineSelector();
+  const iconSvg = getIconSvg(pickCropIconName(crop.name, crop.cropKey), 'pro-icon');
 
   container.innerHTML = `
     <div style="background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 24px rgba(11,53,32,0.04)">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;border-bottom:1px solid #edf2ee;padding-bottom:14px">
         <div>
-          <h3 style="font-size:20px;font-weight:900;color:var(--forest);margin:0">
-            ${crop.emoji} ${escapeHtml(crop.name)}
+          <h3 style="font-size:20px;font-weight:900;color:var(--forest);margin:0;display:flex;align-items:center;gap:8px">
+            ${iconSvg} ${escapeHtml(crop.name)}
           </h3>
           <span style="font-size:12px;color:var(--muted);font-weight:600">Maturity Window: <strong>${escapeHtml(crop.durationDays)}</strong></span>
         </div>
         <span class="badge-verified">${escapeHtml(crop.ecology)}</span>
       </div>
 
-      <!-- Gantt Stage Timeline Cards -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px">
-        ${crop.stages.map((st, idx) => `
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px">
+        ${(crop.stages || []).map((st, idx) => `
           <div style="background:#f7faf8;border:1px solid #e1ebe3;border-radius:14px;padding:16px;position:relative">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
               <span style="font-size:10px;font-weight:850;color:var(--green);text-transform:uppercase;letter-spacing:0.08em">Phase ${idx + 1}</span>

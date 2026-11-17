@@ -1,144 +1,379 @@
 /**
- * Ulimi wa Malawi | Admin Management System (V5 Price Management)
+ * Ulimi wa Malawi | Administration Portal
+ * Coordinates server admin cookie + Supabase admin_access RLS verification,
+ * market price moderation, and pending subscription approvals.
  */
 import { escapeHtml, showToast } from './main.js';
-import { getMarketData, saveMarketData, loadMarketData } from './market-centre.js';
+import { supabase } from './auth.js';
+import { getIconSvg } from './icons.js';
 
-export function initAdminPriceManagement() {
-  const form = document.getElementById('addPriceForm');
-  const tableBody = document.getElementById('adminPriceTableBody');
-  const resetBtn = document.getElementById('resetDefaultPricesBtn');
+let rows = [];
+let pendingSubs = [];
+let adminUser = null; // Supabase auth user in admin_access (if signed in)
+let serverAdminSession = null;
+let pendingDeleteId = null;
 
-  if (!tableBody) return;
+const toUi = row => ({
+  id: row.id,
+  crop: row.crop_name,
+  marketName: row.market_name,
+  district: row.district,
+  unit: row.unit,
+  priceMin: Number(row.price_min),
+  priceMax: Number(row.price_max),
+  currency: row.currency || 'MWK',
+  status: row.status,
+  dateReported: row.date_observed,
+  sourceType: row.source_type || 'admin',
+  reporter: row.reporter_name || row.source_name || 'Admin'
+});
 
-  // Verify server-side administrator session
-  fetch('/api/admin/session', { credentials: 'same-origin' })
-    .then(r => {
-      if (!r.ok) {
-        window.location.assign('/login.html?redirect=' + encodeURIComponent(window.location.pathname) + '&admin=true');
-      }
-    })
-    .catch(() => {});
+function money(value) {
+  return new Intl.NumberFormat('en-MW', { maximumFractionDigits: 2 }).format(Number(value) || 0);
+}
 
-  const logoutBtn = document.getElementById('adminLogoutBtn');
-  if (logoutBtn) logoutBtn.addEventListener('click', async () => {
-    try {
-      await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
-    } catch (_) {}
-    window.location.assign('/login.html?admin=true');
-  });
+async function checkServerAdminSession() {
+  try {
+    const res = await fetch('/api/admin/session', { credentials: 'same-origin' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.authenticated ? data.user : null;
+  } catch {
+    return null;
+  }
+}
 
-  function renderAdminTable() {
-    const data = getMarketData();
-    if (!data.length) {
-      tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:20px;">No price records found.</td></tr>`;
-      return;
-    }
+async function checkSupabaseAdmin() {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) return null;
+    const { data, error: aaErr } = await supabase
+      .from('admin_access')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    if (aaErr || !data) return null;
+    return user;
+  } catch {
+    return null;
+  }
+}
 
-    tableBody.innerHTML = data.map(item => `
-      <tr>
-        <td><strong>${escapeHtml(item.crop)}</strong></td>
-        <td>${escapeHtml(item.marketName)} (${escapeHtml(item.district)})</td>
-        <td>${escapeHtml(item.unit)}</td>
-        <td>${item.currency} ${Number(item.priceMin).toLocaleString()} – ${Number(item.priceMax).toLocaleString()}</td>
-        <td>
-          <button class="action-btn ${item.status === 'verified' ? 'action-verify' : ''}" style="${item.status === 'unverified' ? 'background:#fff3d6;color:#8f5300' : ''}" onclick="window.togglePriceVerification('${item.id}')">
-            ${item.status === 'verified' ? '✓ Verified' : '⏳ Mark Verified'}
-          </button>
-        </td>
-        <td style="font-size:11px;color:#617268">${escapeHtml(item.dateReported)}</td>
-        <td>
-          <button class="action-btn action-delete" onclick="window.deletePriceRecord('${item.id}')">
-            Delete
-          </button>
-        </td>
-      </tr>
-    `).join('');
+async function requireAdmin() {
+  const [srvSession, sbAdmin] = await Promise.all([
+    checkServerAdminSession(),
+    checkSupabaseAdmin()
+  ]);
+
+  serverAdminSession = srvSession;
+  adminUser = sbAdmin;
+
+  if (!serverAdminSession && !adminUser) {
+    window.location.assign('../login.html?redirect=' + encodeURIComponent('/pages/admin.html') + '&admin=true');
+    return false;
   }
 
-  // Handle form submission
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const crop = document.getElementById('adminCropName')?.value.trim();
-      const category = document.getElementById('adminCropCategory')?.value;
-      const marketName = document.getElementById('adminMarketName')?.value.trim();
-      const district = document.getElementById('adminDistrict')?.value;
-      const region = document.getElementById('adminRegion')?.value;
-      const unit = document.getElementById('adminUnit')?.value.trim();
-      const priceMin = Number(document.getElementById('adminPriceMin')?.value);
-      const priceMax = Number(document.getElementById('adminPriceMax')?.value);
-      const status = document.getElementById('adminStatus')?.value || 'unverified';
-      const reporter = document.getElementById('adminReporter')?.value.trim();
-      const notes = document.getElementById('adminNotes')?.value.trim();
+  renderSupabaseAdminLinkNotice();
+  return true;
+}
 
-      if (!crop || !marketName || !unit || isNaN(priceMin) || isNaN(priceMax) || priceMin <= 0 || priceMax < priceMin) {
-        showToast('Please provide valid crop, market, and price values (Max >= Min).');
+function renderSupabaseAdminLinkNotice() {
+  const banner = document.getElementById('adminRlsBanner');
+  if (!banner) return;
+
+  if (adminUser) {
+    banner.hidden = true;
+    return;
+  }
+
+  banner.hidden = false;
+  banner.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+      <div>
+        <strong>${getIconSvg('shield')} Server Admin Session Active (${escapeHtml(serverAdminSession?.username || 'admin')})</strong>
+        <p style="margin:4px 0 0;font-size:13px;color:#4e5f55">
+          Writing market prices or approving subscriptions in Supabase requires an active Supabase Auth user listed in <code>admin_access</code> under Row-Level Security (RLS). Sign in below to enable database writes in this session:
+        </p>
+      </div>
+      <form id="inlineSupabaseAdminForm" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input id="inlineSbEmail" type="email" placeholder="Admin Supabase email" required style="padding:8px 10px;border:1px solid #cbd9cf;border-radius:8px;font-size:13px">
+        <input id="inlineSbPassword" type="password" placeholder="Password" required style="padding:8px 10px;border:1px solid #cbd9cf;border-radius:8px;font-size:13px">
+        <button type="submit" class="btn btn-primary" style="padding:8px 14px;font-size:13px">Connect Supabase Admin</button>
+      </form>
+    </div>
+  `;
+
+  const inlineForm = document.getElementById('inlineSupabaseAdminForm');
+  if (inlineForm) {
+    inlineForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('inlineSbEmail')?.value?.trim();
+      const password = document.getElementById('inlineSbPassword')?.value;
+      if (!email || !password) return;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        showToast('Supabase sign-in failed: ' + error.message);
         return;
       }
-
-      const newEntry = {
-        id: `mkt-custom-${Date.now()}`,
-        crop,
-        cropKey: crop.toLowerCase().split(' ')[0],
-        category,
-        marketName,
-        district,
-        region,
-        unit,
-        priceMin,
-        priceMax,
-        currency: 'MWK',
-        dateReported: new Date().toISOString().split('T')[0],
-        status,
-        reporter: reporter || 'Admin submission',
-        notes: notes || 'Submitted through administrative portal.'
-      };
-
-      const current = getMarketData();
-      saveMarketData([newEntry, ...current]);
-      form.reset();
-      renderAdminTable();
-      showToast('New market price entry saved successfully.');
-    });
-  }
-
-  // Global actions for inline buttons
-  window.togglePriceVerification = function(id) {
-    const current = getMarketData();
-    const updated = current.map(item => {
-      if (item.id === id) {
-        const nextStatus = item.status === 'verified' ? 'unverified' : 'verified';
-        return { ...item, status: nextStatus };
+      adminUser = await checkSupabaseAdmin();
+      if (!adminUser) {
+        showToast('Signed in, but this user is not listed in public.admin_access.');
+        return;
       }
-      return item;
-    });
-    saveMarketData(updated);
-    renderAdminTable();
-    showToast('Verification label updated.');
-  };
-
-  window.deletePriceRecord = function(id) {
-    if (!confirm('Are you sure you want to delete this price record?')) return;
-    const current = getMarketData();
-    const updated = current.filter(item => item.id !== id);
-    saveMarketData(updated);
-    renderAdminTable();
-    showToast('Price record deleted.');
-  };
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', async () => {
-      if (!confirm('Reset market data back to official baseline records? Custom entries will be cleared.')) return;
-      localStorage.removeItem('ulimi_markets_v5');
-      await loadMarketData();
-      renderAdminTable();
-      showToast('Market records reset to baseline.');
+      showToast('Supabase admin RLS access connected.');
+      renderSupabaseAdminLinkNotice();
+      await Promise.all([loadRows(), loadPendingSubscriptions()]);
     });
   }
+}
 
-  // Initial load
-  loadMarketData().then(renderAdminTable);
+async function loadRows() {
+  const body = document.getElementById('adminPriceTableBody');
+  if (!body) return;
+  const { data, error } = await supabase
+    .from('market_price_reports')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  rows = data || [];
+  renderAdminTable();
+}
+
+function renderAdminTable() {
+  const body = document.getElementById('adminPriceTableBody');
+  if (!body) return;
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px">No market price records found.</td></tr>';
+    return;
+  }
+  body.innerHTML = rows.map(raw => {
+    const item = toUi(raw);
+    const statusLabel = item.status === 'verified'
+      ? '✓ Verified'
+      : item.status === 'rejected'
+        ? 'Rejected'
+        : 'Pending review';
+    const confirming = pendingDeleteId === String(item.id);
+    return `<tr>
+      <td><strong>${escapeHtml(item.crop)}</strong><div style="font-size:11px;color:#617268">${escapeHtml(item.sourceType === 'farmer' ? 'Farmer report' : 'Admin desk')}</div></td>
+      <td>${escapeHtml(item.marketName)} (${escapeHtml(item.district)})</td>
+      <td>${escapeHtml(item.unit)}</td>
+      <td>MWK ${money(item.priceMin)} – ${money(item.priceMax)}</td>
+      <td><span class="${item.status === 'verified' ? 'badge-verified' : 'badge-unverified'}">${escapeHtml(statusLabel)}</span></td>
+      <td style="font-size:11px;color:#617268">${escapeHtml(item.dateReported)}<br>${escapeHtml(item.reporter)}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        ${item.status !== 'verified'
+          ? `<button class="action-btn action-verify" type="button" data-verify="${escapeHtml(item.id)}">Approve</button>`
+          : `<button class="action-btn" type="button" data-pend="${escapeHtml(item.id)}">Unpublish</button>`}
+        ${item.status === 'pending'
+          ? `<button class="action-btn" type="button" data-reject-price="${escapeHtml(item.id)}">Reject</button>`
+          : ''}
+        ${confirming
+          ? `<button class="action-btn action-delete" type="button" data-confirm-delete="${escapeHtml(item.id)}">Confirm Delete</button>
+             <button class="action-btn" type="button" data-cancel-delete="1">Cancel</button>`
+          : `<button class="action-btn action-delete" type="button" data-ask-delete="${escapeHtml(item.id)}">Delete</button>`}
+      </td>
+    </tr>`;
+  }).join('');
+
+  body.querySelectorAll('[data-verify]').forEach(btn => btn.addEventListener('click', () => updateStatus(btn.dataset.verify, 'verified')));
+  body.querySelectorAll('[data-pend]').forEach(btn => btn.addEventListener('click', () => updateStatus(btn.dataset.pend, 'pending')));
+  body.querySelectorAll('[data-reject-price]').forEach(btn => btn.addEventListener('click', () => updateStatus(btn.dataset.rejectPrice, 'rejected')));
+  body.querySelectorAll('[data-ask-delete]').forEach(btn => btn.addEventListener('click', () => {
+    pendingDeleteId = btn.dataset.askDelete;
+    renderAdminTable();
+  }));
+  body.querySelectorAll('[data-cancel-delete]').forEach(btn => btn.addEventListener('click', () => {
+    pendingDeleteId = null;
+    renderAdminTable();
+  }));
+  body.querySelectorAll('[data-confirm-delete]').forEach(btn => btn.addEventListener('click', () => deleteRow(btn.dataset.confirmDelete)));
+}
+
+async function updateStatus(id, status) {
+  if (!adminUser) {
+    showToast('Connect your Supabase admin account in the banner above to update records.');
+    return;
+  }
+  const patch = {
+    status,
+    verified_by: status === 'verified' ? adminUser.id : null,
+    verified_at: status === 'verified' ? new Date().toISOString() : null,
+    updated_at: new Date().toISOString()
+  };
+  const { error } = await supabase.from('market_price_reports').update(patch).eq('id', id);
+  if (error) {
+    showToast('Could not update the market record: ' + error.message);
+    return;
+  }
+  await loadRows();
+  showToast(status === 'verified' ? 'Price approved and published.' : status === 'rejected' ? 'Price report rejected.' : 'Price unpublished.');
+}
+
+async function deleteRow(id) {
+  if (!adminUser) {
+    showToast('Connect your Supabase admin account in the banner above to delete records.');
+    return;
+  }
+  const { error } = await supabase.from('market_price_reports').delete().eq('id', id);
+  pendingDeleteId = null;
+  if (error) {
+    showToast('Could not delete this record: ' + error.message);
+    return;
+  }
+  await loadRows();
+  showToast('Market price record deleted.');
+}
+
+async function loadPendingSubscriptions() {
+  const tbody = document.getElementById('adminSubscriptionsTableBody');
+  if (!tbody) return;
+  try {
+    const { data, error } = await supabase
+      .from('subscriptions')
+      .select('id,user_id,plan_id,status,provider_reference,billing_period,amount_mwk,created_at,expires_at')
+      .order('created_at', { ascending: false })
+      .limit(40);
+    if (error) throw error;
+    pendingSubs = data || [];
+    renderSubscriptionsTable();
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:18px;color:#617268">${escapeHtml(adminUser ? ('Unable to load subscription requests: ' + err.message) : 'Connect a Supabase admin account above to inspect and approve pending membership payments.')}</td></tr>`;
+  }
+}
+
+function renderSubscriptionsTable() {
+  const tbody = document.getElementById('adminSubscriptionsTableBody');
+  if (!tbody) return;
+  if (!pendingSubs.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:18px;color:#617268">No subscription payment requests found.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = pendingSubs.map(sub => {
+    const isPending = sub.status === 'pending';
+    return `
+      <tr>
+        <td style="font-family:monospace;font-size:11.5px">${escapeHtml(String(sub.user_id).slice(0, 12))}…</td>
+        <td><strong>${escapeHtml(sub.plan_id)}</strong><div style="font-size:11px;color:#617268">${escapeHtml(sub.billing_period || 'monthly')}</div></td>
+        <td>MWK ${money(sub.amount_mwk || 0)}</td>
+        <td><code>${escapeHtml(sub.provider_reference || '—')}</code></td>
+        <td><span class="${sub.status === 'active' ? 'badge-verified' : 'badge-unverified'}">${escapeHtml(sub.status)}</span></td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap">
+          ${isPending ? `
+            <button type="button" class="action-btn action-verify" data-sub-approve="${escapeHtml(sub.id)}" data-sub-period="${escapeHtml(sub.billing_period || 'monthly')}">Verify &amp; Activate</button>
+            <button type="button" class="action-btn action-delete" data-sub-reject="${escapeHtml(sub.id)}">Reject</button>
+          ` : `<span style="font-size:11px;color:#617268">${sub.expires_at ? 'Exp: ' + escapeHtml(String(sub.expires_at).slice(0, 10)) : 'Reviewed'}</span>`}
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  tbody.querySelectorAll('[data-sub-approve]').forEach(btn => {
+    btn.addEventListener('click', () => handleSubscriptionReview(btn.dataset.subApprove, 'active', btn.dataset.subPeriod));
+  });
+  tbody.querySelectorAll('[data-sub-reject]').forEach(btn => {
+    btn.addEventListener('click', () => handleSubscriptionReview(btn.dataset.subReject, 'cancelled', 'monthly'));
+  });
+}
+
+async function handleSubscriptionReview(subId, nextStatus, billingPeriod) {
+  if (!adminUser) {
+    showToast('Connect your Supabase admin account above to verify payments.');
+    return;
+  }
+  const now = new Date();
+  const patch = {
+    status: nextStatus,
+    updated_at: now.toISOString()
+  };
+  if (nextStatus === 'active') {
+    const days = billingPeriod === 'yearly' ? 365 : 30;
+    const expires = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+    patch.started_at = now.toISOString();
+    patch.expires_at = expires.toISOString();
+  }
+  const { error } = await supabase.from('subscriptions').update(patch).eq('id', subId);
+  if (error) {
+    showToast('Could not update subscription: ' + error.message);
+    return;
+  }
+  showToast(nextStatus === 'active' ? 'Subscription payment verified and activated.' : 'Subscription payment request rejected.');
+  await loadPendingSubscriptions();
+}
+
+function initForm() {
+  const form = document.getElementById('addPriceForm');
+  if (!form) return;
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!adminUser) {
+      showToast('Connect your Supabase admin account in the banner above to publish records.');
+      return;
+    }
+    const value = id => document.getElementById(id)?.value?.trim() || '';
+    const crop = value('adminCropName');
+    const market = value('adminMarketName');
+    const unit = value('adminUnit');
+    const min = Number(value('adminPriceMin'));
+    const max = Number(value('adminPriceMax'));
+    if (!crop || !market || !unit || !Number.isFinite(min) || !Number.isFinite(max) || min <= 0 || max < min) {
+      showToast('Enter a crop, market, unit and valid price range (maximum must be at least minimum).');
+      return;
+    }
+    const requestedStatus = value('adminStatus');
+    const status = requestedStatus === 'verified' ? 'verified' : 'pending';
+    const { error } = await supabase.from('market_price_reports').insert({
+      crop_name: crop,
+      crop_key: crop.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      category: value('adminCropCategory') || 'Other',
+      market_name: market,
+      district: value('adminDistrict'),
+      region: value('adminRegion'),
+      unit,
+      price_min: min,
+      price_max: max,
+      currency: 'MWK',
+      date_observed: new Date().toISOString().slice(0, 10),
+      status,
+      source_type: 'admin',
+      source_name: 'Ulimi wa Malawi Admin Desk',
+      price_basis: 'Admin-entered market observation',
+      reporter_name: value('adminReporter') || 'Ulimi market team',
+      notes: value('adminNotes') || null,
+      reporter_user_id: adminUser.id,
+      verified_by: status === 'verified' ? adminUser.id : null,
+      verified_at: status === 'verified' ? new Date().toISOString() : null
+    });
+    if (error) {
+      showToast('Price could not be saved: ' + error.message);
+      return;
+    }
+    form.reset();
+    await loadRows();
+    showToast(status === 'verified' ? 'Price saved and published.' : 'Price saved for review.');
+  });
+}
+
+export async function initAdminPriceManagement() {
+  const body = document.getElementById('adminPriceTableBody');
+  if (!body) return;
+  const allowed = await requireAdmin();
+  if (!allowed) return;
+  initForm();
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+  if (logoutBtn) logoutBtn.addEventListener('click', async () => {
+    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
+    await supabase.auth.signOut();
+    window.location.assign('../login.html?admin=true');
+  });
+  const resetBtn = document.getElementById('resetDefaultPricesBtn');
+  if (resetBtn) resetBtn.hidden = true;
+  try {
+    await Promise.all([loadRows(), loadPendingSubscriptions()]);
+  } catch (error) {
+    console.error('Unable to load market price admin records:', error);
+    body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px">Unable to load shared market records. Connect Supabase admin credentials above if needed.</td></tr>';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initAdminPriceManagement);

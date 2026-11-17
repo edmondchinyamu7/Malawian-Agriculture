@@ -1,11 +1,19 @@
 /**
  * Ulimi wa Malawi | Farmer Memberships & Subscriptions Engine
- * Connects with Supabase, auth session, mobile money payments & bilingual i18n
+ * Connects with Supabase, auth session, mobile money payments & bilingual i18n.
+ * Preserves all 4 existing plans, pricing, benefits, and payment methods.
  */
 
 import { supabase, getAccount } from './auth.js';
+import { getIconSvg } from './icons.js';
 
-// Plan configurations & bilingual content
+function esc(value = '') {
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// Plan configurations & bilingual content (Preserved verbatim prices & benefits)
 const DEFAULT_PLANS = [
   {
     id: 'free',
@@ -155,19 +163,17 @@ function renderCards() {
   container.innerHTML = DEFAULT_PLANS.map(plan => {
     const isCurrent = userAccess.plan_id === plan.id;
     const price = isYearly ? plan.yearly_price : plan.monthly_price;
-    const freq = isYearly 
-      ? (isNy ? '/ chaka' : '/ year') 
-      : (isNy ? '/ mwezi' : '/ month');
-    const name = isNy ? (plan.name_ny || plan.name) : plan.name;
-    const kicker = isNy ? (plan.kicker || '') : (plan.kicker_en || plan.kicker || '');
-    const description = isNy ? plan.description : plan.description_en;
+    const freq = isYearly ? (isNy ? '/ chaka' : '/ year') : (isNy ? '/ mwezi' : '/ month');
+    const name = esc(isNy ? (plan.name_ny || plan.name) : plan.name);
+    const kicker = esc(isNy ? (plan.kicker || '') : (plan.kicker_en || plan.kicker || ''));
+    const description = esc(isNy ? plan.description : plan.description_en);
     const features = isNy ? plan.features_ny : plan.features_en;
 
     let buttonHtml = '';
     if (isCurrent) {
       buttonHtml = `
         <button class="plan-btn plan-btn-current" type="button" disabled>
-          <span class="icon">✓</span>
+          <span class="icon">${getIconSvg('check')}</span>
           <span>${isNy ? 'Muli Pa Plan Iyi' : 'Current Plan'}</span>
         </button>
       `;
@@ -179,14 +185,14 @@ function renderCards() {
       `;
     } else if (plan.featured) {
       buttonHtml = `
-        <button class="plan-btn plan-btn-featured" type="button" data-plan="${plan.id}">
+        <button class="plan-btn plan-btn-featured" type="button" data-plan="${esc(plan.id)}">
           <span>${isNy ? `Sankhani ${name}` : `Select ${name}`}</span>
           <span aria-hidden="true">→</span>
         </button>
       `;
     } else {
       buttonHtml = `
-        <button class="plan-btn plan-btn-upgrade" type="button" data-plan="${plan.id}">
+        <button class="plan-btn plan-btn-upgrade" type="button" data-plan="${esc(plan.id)}">
           <span>${isNy ? `Sankhani ${name}` : `Select ${name}`}</span>
           <span aria-hidden="true">→</span>
         </button>
@@ -194,9 +200,9 @@ function renderCards() {
     }
 
     return `
-      <article class="plan-card ${plan.featured ? 'featured' : ''}" data-plan-id="${plan.id}">
+      <article class="plan-card ${plan.featured ? 'featured' : ''}" data-plan-id="${esc(plan.id)}">
         ${plan.featured ? `
-          <div class="plan-top-ribbon">${isNy ? '⭐ YOTCHUKA KWAMBIRI' : '⭐ MOST POPULAR'}</div>
+          <div class="plan-top-ribbon">${getIconSvg('star')} ${isNy ? 'YOTCHUKA KWAMBIRI' : 'MOST POPULAR'}</div>
         ` : ''}
         <div class="plan-header">
           <span class="plan-kicker">${kicker}</span>
@@ -213,7 +219,7 @@ function renderCards() {
             ` : ''}
           </div>
           <div class="plan-subtext">
-            ${isYearly && plan.yearly_original ? (isNy ? '🎉 Mwasunga 15% (Miyezi 2 Yaulere)' : '🎉 Save 15% (2 Months Free)') : ''}
+            ${isYearly && plan.yearly_original ? (isNy ? 'Mwasunga 15% (Miyezi 2 Yaulere)' : 'Save 15% (2 Months Free)') : ''}
           </div>
         </div>
 
@@ -222,17 +228,17 @@ function renderCards() {
             const isHighlight = idx === features.length - 1 && !plan.ads_enabled;
             return `
               <li class="${isHighlight ? 'premium-highlight' : ''}">
-                <span class="check-icon">✓</span>
-                <span>${f}</span>
+                <span class="check-icon">${getIconSvg('check')}</span>
+                <span>${esc(f)}</span>
               </li>
             `;
           }).join('')}
         </ul>
 
         <div class="plan-ad-note">
-          <span class="icon">${plan.ads_enabled ? 'ℹ️' : '🛡️'}</span>
-          <span>${plan.ads_enabled 
-            ? (isNy ? 'Zotsatsa zitha kuonekera mwaulere' : 'Advertisements may appear') 
+          <span class="icon">${getIconSvg(plan.ads_enabled ? 'info' : 'shield')}</span>
+          <span>${plan.ads_enabled
+            ? (isNy ? 'Zotsatsa zitha kuonekera mwaulere' : 'Advertisements may appear')
             : (isNy ? '100% Yopanda zotsatsa' : '100% Ad-free experience')}</span>
         </div>
 
@@ -243,31 +249,29 @@ function renderCards() {
     `;
   }).join('');
 
-  // Attach button event listeners
   container.querySelectorAll('button[data-plan]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const planId = btn.getAttribute('data-plan');
-      handlePlanSelect(planId);
+      handlePlanSelect(btn.getAttribute('data-plan'));
     });
   });
 
   const status = document.getElementById('plansStatus');
   if (status) {
     if (userAccess.is_authenticated) {
-      status.textContent = isNy 
+      status.textContent = isNy
         ? `Mwalandiridwa! Muli ndi akaunti yovomerezeka. Umembala wanu wapano ndi: ${userAccess.plan_name || 'Free Farmer'}.`
         : `Welcome! You are signed in. Your active membership is: ${userAccess.plan_name || 'Free Farmer'}.`;
       status.classList.remove('error');
     } else {
       status.textContent = isNy
         ? 'Mitengo yonse 4 ili yokonzeka. Lowani kapena lembetsani kuti mukonzekere umembala wanu.'
-        : 'All four membership tiers are active. Sign in or register to manage your subscription.';
+        : 'All four membership tiers are ready. Sign in or register to manage your subscription.';
     }
   }
 }
 
-// Open Payment Modal
+// Open Payment Modal (handles both authenticated submission and clear sign-in prompt without window.confirm)
 function openPaymentModal(plan) {
   selectedPlanForPayment = plan;
   const modal = document.getElementById('paymentModal');
@@ -282,13 +286,33 @@ function openPaymentModal(plan) {
   document.getElementById('modalPlanPeriod').textContent = freq;
   document.getElementById('modalPlanAmount').textContent = formatMoney(price);
 
-  // Reset inputs & alerts
   const refInput = document.getElementById('paymentRefInput');
-  if (refInput) refInput.value = '';
+  const confirmBtn = document.getElementById('btnConfirmPayment');
   const alertBox = document.getElementById('paymentAlert');
+
+  if (refInput) {
+    refInput.value = '';
+    refInput.disabled = !userAccess.is_authenticated;
+  }
+
+  if (confirmBtn) {
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = userAccess.is_authenticated
+      ? (isNy ? 'Tumizani Chitupa Chotsimikizira' : 'Submit Payment Reference')
+      : (isNy ? 'Lowani / Lembetsani Kuti Mupitirize →' : 'Sign In / Register to Continue →');
+  }
+
   if (alertBox) {
-    alertBox.style.display = 'none';
-    alertBox.className = 'payment-alert';
+    if (!userAccess.is_authenticated) {
+      alertBox.textContent = isNy
+        ? 'Chonde lowani mu akaunti yanu ya Ulimi wa Malawi musanatumize nambala ya malipiro.'
+        : 'Please sign in to your Ulimi wa Malawi account before submitting a mobile money reference.';
+      alertBox.className = 'payment-alert error';
+      alertBox.style.display = 'block';
+    } else {
+      alertBox.style.display = 'none';
+      alertBox.className = 'payment-alert';
+    }
   }
 
   modal.classList.add('open');
@@ -302,7 +326,7 @@ function closePaymentModal() {
   modal.setAttribute('aria-hidden', 'true');
 }
 
-// Plan selection handler
+// Plan selection handler (no browser window.confirm)
 function handlePlanSelect(planId) {
   const plan = DEFAULT_PLANS.find(p => p.id === planId);
   if (!plan) return;
@@ -310,33 +334,28 @@ function handlePlanSelect(planId) {
   const isNy = currentLang === 'ny';
 
   if (planId === 'free') {
-    userAccess.plan_id = 'free';
-    userAccess.plan_name = 'Free Farmer';
-    showToast(isNy ? 'Mwasankha plan yaulere ya Free Farmer.' : 'Switched to Free Farmer plan.');
-    renderCards();
+    showToast(isNy
+      ? 'Free Farmer ndi plan yoyambira yaulere kwa aliyense wolembetsedwa.'
+      : 'Free Farmer is active by default for all visitors and free accounts.');
     return;
   }
 
-  // Check login state
   if (!userAccess.is_authenticated) {
-    const shouldLogin = confirm(
-      isNy
-        ? `Kuti mulembetsedwe pa ${plan.name_ny || plan.name}, muyenera kukhala ndi akaunti ya Ulimi wa Malawi. Mukufuna kulowa tsopano?`
-        : `To subscribe to ${plan.name}, you need an active Ulimi wa Malawi account. Would you like to log in or register now?`
-    );
-    if (shouldLogin) {
-      window.location.assign(`/login.html?redirect=${encodeURIComponent('/pages/subscriptions.html')}&plan=${planId}`);
-      return;
-    }
+    openPaymentModal(plan);
+    return;
   }
 
-  // Open real payment modal
   openPaymentModal(plan);
 }
 
-// Submit a payment reference for administrator review. This does NOT activate access.
+// Submit a payment reference for administrator review. Does NOT self-activate paid access.
 async function submitPaymentRequest() {
   if (!selectedPlanForPayment) return;
+
+  if (!userAccess.is_authenticated) {
+    window.location.assign(`/login.html?redirect=${encodeURIComponent('/pages/subscriptions.html')}&plan=${encodeURIComponent(selectedPlanForPayment.id)}`);
+    return;
+  }
 
   const isNy = currentLang === 'ny';
   const alertBox = document.getElementById('paymentAlert');
@@ -351,10 +370,10 @@ async function submitPaymentRequest() {
     alertBox.style.display = 'block';
   };
 
-  if (!refValue) {
+  if (!refValue || refValue.length < 3) {
     showAlert(isNy
-      ? 'Chonde lembani nambala ya chitupa cha malipiro.'
-      : 'Please enter your transaction reference.');
+      ? 'Chonde lembani nambala yolondola ya chitupa cha malipiro (osachepera zilembo 3).'
+      : 'Please enter a valid transaction reference (at least 3 characters).');
     return;
   }
 
@@ -416,9 +435,7 @@ async function submitPaymentRequest() {
   }
 }
 
-// Initialise Subscriptions Page
 async function initSubscriptions() {
-  // 1. Check account & live subscription access
   try {
     const acc = await getAccount();
     if (acc?.user?.id) {
@@ -435,12 +452,9 @@ async function initSubscriptions() {
     console.warn('Auth check in subscriptions:', err);
   }
 
-  // Remove legacy browser-only upgrades. Paid access must come from verified database state.
   localStorage.removeItem('ulimi_simulated_plan');
   localStorage.removeItem('ulimi_plan_ref');
 
-
-  // 2. Fetch any updated dynamic plans from Supabase if online
   try {
     const { data, error } = await supabase
       .from('subscription_plans')
@@ -461,10 +475,13 @@ async function initSubscriptions() {
     console.warn('Supabase subscription_plans sync:', err);
   }
 
-  // 3. Render cards immediately
   renderCards();
 
-  // 4. Billing cycle toggle listeners
+  window.addEventListener('languageChanged', (e) => {
+    currentLang = e?.detail?.lang || localStorage.getItem('ulimi_lang') || 'ny';
+    renderCards();
+  });
+
   const monthlyBtn = document.getElementById('billingMonthly');
   const yearlyBtn = document.getElementById('billingYearly');
 
@@ -488,7 +505,6 @@ async function initSubscriptions() {
     });
   }
 
-  // 5. Payment Modal tabs & actions
   const modalClose = document.getElementById('paymentModalClose');
   const modalBackdrop = document.getElementById('paymentModal');
   if (modalClose) modalClose.addEventListener('click', closePaymentModal);
@@ -513,7 +529,6 @@ async function initSubscriptions() {
     });
   });
 
-  // 7. Manuals Download & Reading Handler (Professional & Agribusiness)
   const manuals = {
     maize: {
       title: "Buku la Ulimi wa Chimanga ku Malawi",
@@ -523,18 +538,14 @@ async function initSubscriptions() {
         <div style="font-size:13px;line-height:1.7;color:#284234;">
           <h4 style="color:#092d22;margin:12px 0 6px;">1. Kukonzekera Munda ndi Kubzala</h4>
           <p>Konzani mizere ya 75cm. Dzalanani mbewu imodzi pa dzenje lililonse pa mtunda wa 25cm. Izi zimapereka mbewu zokwana 53,333 pa hekitala imodzi (pafupifupi 21,500 pa ekala).</p>
-          
           <h4 style="color:#092d22;margin:12px 0 6px;">2. Kuthira Feteleza Woyambira (Basal Dressing)</h4>
-          <p>Gwiritsani ntchito feteleza wa <strong>23:10:5 + 6S + 1Zn</strong>. Thirani feteleza pobzala kapena pasanathe masiku 7 mbewu zitamera. Mlingo: Chivundikiro chimodzi cha botolo la mowa kapena kwasakwasa (chigubu) pambali pa dzenje la mbewu, pafupifupi 5cm kuchokera pa mtengo.</p>
-
+          <p>Gwiritsani ntchito feteleza wa <strong>23:10:5 + 6S + 1Zn</strong>. Thirani feteleza pobzala kapena pasanathe masiku 7 mbewu zitamera. Mlingo: Chivundikiro chimodzi cha botolo pambali pa dzenje la mbewu, pafupifupi 5cm kuchokera pa mtengo.</p>
           <h4 style="color:#092d22;margin:12px 0 6px;">3. Feteleza wa Pamwamba (Top Dressing - Urea)</h4>
           <p>Thirani <strong>Urea (46% N)</strong> pamene chimanga chafika m'mawondo (masabata 3 mpaka 4 mutabzala). Feteleza aziyikidwa pa nthaka yonyowa ndipo muphimbe nthawi yomweyo kuti mpweya wa nayitrojeni usapite m'mwamba.</p>
-
           <h4 style="color:#092d22;margin:12px 0 6px;">4. Kuthana ndi Mbozi ya Kasikisi (Fall Armyworm)</h4>
-          <p>Fufuzani m'munda kawiri pa sabata. Ngati mwaona mbozi pa mitengo 10 pa 100 iliyonse, tsirani mankhwala ovomerezeka monga Emamectin Benzoate (Proclaim) m'mawa kwambiri kapena madzulo. Mutha kuthiranso phulusa kapena mchenga m'mitima ya chimanga.</p>
-
+          <p>Fufuzani m'munda kawiri pa sabata. Ngati mwaona mbozi pa mitengo 10 pa 100 iliyonse, tsirani mankhwala ovomerezeka monga Emamectin Benzoate m'mawa kwambiri kapena madzulo. Mutha kuthiranso phulusa kapena mchenga m'mitima ya chimanga.</p>
           <h4 style="color:#092d22;margin:12px 0 6px;">5. Kukolola ndi Kusunga Zokolola</h4>
-          <p>Kololani chimanga chikauma bwino pa chinyezi chosapitirira 12.5%. Gwiritsani ntchito matumba a <strong>PICS (Purdue Improved Crop Storage)</strong> amene alibe mpweya kuti muteteze zokolola popanda mankhwala owopsa a kachasu kapena fumbi.</p>
+          <p>Kololani chimanga chikauma bwino pa chinyezi chosapitirira 12.5%. Gwiritsani ntchito matumba a <strong>PICS (Purdue Improved Crop Storage)</strong> amene alibe mpweya kuti muteteze zokolola.</p>
         </div>
       `
     },
@@ -545,16 +556,13 @@ async function initSubscriptions() {
       content: `
         <div style="font-size:13px;line-height:1.7;color:#284234;">
           <h4 style="color:#092d22;margin:12px 0 6px;">1. Mitundu ya Mtedza Yovomerezeka</h4>
-          <p><strong>CG7:</strong> Mtundu wabwino wopatsa mafuta ambiri komanso wogulitsidwa pamitengo yabwino. <strong>Nsinjiro & Chitala:</strong> Zosachedwa kucha komanso zopirira chilala m'maboma a m'mbali mwa nyanja ndi m'zigwa.</p>
-          
+          <p><strong>CG7:</strong> Mtundu wabwino wopatsa mafuta ambiri komanso wogulitsidwa pamitengo yabwino. <strong>Nsinjiro &amp; Chitala:</strong> Zosachedwa kucha komanso zopirira chilala.</p>
           <h4 style="color:#092d22;margin:12px 0 6px;">2. Makulidwe a Mizere ndi Kubzala</h4>
-          <p>Dzalanani mtedza mizere iwiri pa mzere umodzi wa 75cm, pa mtunda wa 15cm pakati pa mbewu. Izi zimateteza mtedza ku matenda a Chikasu (Groundnut Rosette Virus) chifukwa kafadala sangathe kulowa mosavuta pa munda wophimbidwa.</p>
-
+          <p>Dzalanani mtedza mizere iwiri pa mzere umodzi wa 75cm, pa mtunda wa 15cm pakati pa mbewu. Izi zimateteza mtedza ku matenda a Chikasu (Groundnut Rosette Virus).</p>
           <h4 style="color:#092d22;margin:12px 0 6px;">3. Ulimi wa Soya ndi Inoculant</h4>
-          <p>Mukadzala soya, sakanizani mbewu ndi mankhwala opatsa tizilombo tachilengedwe ta <em>Rhizobium Inoculant</em>. Izi zimathandiza kuti mtedza ndi soya zizidzitengera zokha nayitrojeni m'mpweya popanda kufunika feteleza wambiri wogula.</p>
-
-          <h4 style="color:#092d22;margin:12px 0 6px;">4. Kupewa Chenzi la Aflatoxin</h4>
-          <p>Osasiya mtedza pansi pamtunda utakolola. Yanikani mtedza pa machira kapena zikwa pamtunda kuti uume mwamsanga komanso kupewa bowa wowopsa wa aflatoxin umene ungakanidwe pamsika wa kunja.</p>
+          <p>Mukadzala soya, sakanizani mbewu ndi <em>Rhizobium Inoculant</em>. Izi zimathandiza kuti soya azidzitengera yekha nayitrojeni m'mpweya.</p>
+          <h4 style="color:#092d22;margin:12px 0 6px;">4. Kupewa Aflatoxin</h4>
+          <p>Osasiya mtedza pansi pamtunda utakolola. Yanikani pa machira kapena zikwa pamtunda kuti uume mwamsanga ndikupewa bowa wa aflatoxin.</p>
         </div>
       `
     },
@@ -572,32 +580,23 @@ async function initSubscriptions() {
             <li>Feteleza wa m'fakitale (23:10:5 kapena CAN): <strong>Makilogalamu 5 okha</strong></li>
             <li>Madzi abwino aukhondo: <strong>Malita 20</strong></li>
           </ul>
-          
-          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kusakaniza ndi Kuwundika</h4>
-          <p>Thirani manyowa, madeya, phulusa ndi feteleza wa makilogalamu 5 pa malo amthunzi. Sakanizani bwinobwino pamene mukuwaza madzi pang'onopang'ono. Kani nthaka ndi dzanja lanu: madzi sayenera kudontha koma azingokhala onyowa chabe.</p>
-
-          <h4 style="color:#092d22;margin:12px 0 6px;">3. Nthawi ya Kuwundika (Masiku 21)</h4>
-          <p>Phimbani hepiyo ndi pulasitiki yakuda mwamphamvu kuti mpweya usalowe. Tembenuzani fetelezayo sabata iliyonse. Pakatha masiku 21, fetelezayo amakhala wozizira, wakuda ndipo wokonzeka kugwiritsidwa ntchito m'munda.</p>
-
-          <h4 style="color:#092d22;margin:12px 0 6px;">4. Mlingo m'Munda</h4>
-          <p>Thirani dzanja limodzi modzaza pa dzenje lililonse la chimanga pobzala. Feteleza wa Mbeya amakhalitsa m'nthaka zaka ziwiri mpaka zitatu ndipo amasunga chinyezi.</p>
+          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kusakaniza ndi Kuwundika (Masiku 21)</h4>
+          <p>Sakanizani zipangizozo pamthunzi ndipo muwaze madzi pang'onopang'ono. Phimbani ndi pulasitiki yakuda, mutembenuze sabata iliyonse. Pakatha masiku 21 fetelezayo amakhala wokonzeka.</p>
+          <h4 style="color:#092d22;margin:12px 0 6px;">3. Mlingo m'Munda</h4>
+          <p>Thirani dzanja limodzi modzaza pa dzenje lililonse la chimanga pobzala.</p>
         </div>
       `
     },
     soil: {
       title: "Kusamalira Nthaka ndi Madzi m'Munda",
-      title_en: "Soil & Water Conservation Field Guide",
+      title_en: "Soil &amp; Water Conservation Field Guide",
       subtitle: "Kupanga Mipanda ndi Kusunga Chinyezi m'Madambo ndi m'Mapiri",
       content: `
         <div style="font-size:13px;line-height:1.7;color:#284234;">
           <h4 style="color:#092d22;margin:12px 0 6px;">1. Kupanga Mipanda ya Nthaka ndi A-Frame</h4>
-          <p>Gwiritsani ntchito chipangizo cha A-frame kuti mupeze mzere wolunjika pa mapiri. Pangani mipanda yotchinga madzi (contour ridges) kuti madzi a mvula asakokolole dothi lonona.</p>
-          
-          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kubzala Msipu wa Vetiver</h4>
-          <p>Bzalani msipu wakuya wa Vetiver pambali pa mipanda. Muzu wa vetiver umalowa pansi kwambiri (mpaka mamita 3) ndipo umalimbitsa nthaka kuti madzi asagwetse mizere panthawi ya mphepo ndi mikunzo.</p>
-
-          <h4 style="color:#092d22;margin:12px 0 6px;">3. Manyowa Obisa (Mulching)</h4>
-          <p>Phimbani munda ndi udzu wouma, masamba kapena zotsala za chimanga. Izi zimachepetsa kutentha kwa nthaka ndi kupewa kuti madzi asamweke ndi dzuwa panthawi ya chilala.</p>
+          <p>Gwiritsani ntchito chipangizo cha A-frame kuti mupeze mzere wolunjika pa mapiri ndikupanga mipanda yotchinga madzi (contour ridges).</p>
+          <h4 style="color:#092d22;margin:12px 0 6px;">2. Kubzala Msipu wa Vetiver &amp; Mulching</h4>
+          <p>Bzalani msipu wa Vetiver pambali pa mipanda ndikuphimba munda ndi udzu wouma kapena zotsala za chimanga kuti nthaka isataye chinyezi.</p>
         </div>
       `
     }
@@ -614,19 +613,14 @@ async function initSubscriptions() {
       const hasProAccess = userAccess.plan_id === 'professional' || userAccess.plan_id === 'agribusiness';
 
       if (!hasProAccess) {
-        const proceedUpgrade = confirm(
-          isNy
-            ? `Buku ili ("${manual.title}") likupezeka pa umembala wa Professional Farmer kapena Agribusiness Premium. Mukufuna kukweza plan yanu kuti mutsegule mabuku onse a m'munda?`
-            : `This field guide ("${manual.title_en}") requires Professional Farmer or Agribusiness Premium. Would you like to upgrade your membership to unlock all downloadable guides?`
-        );
-        if (proceedUpgrade) {
-          const proPlan = DEFAULT_PLANS.find(p => p.id === 'professional');
-          if (proPlan) openPaymentModal(proPlan);
-        }
+        const proPlan = DEFAULT_PLANS.find(p => p.id === 'professional');
+        showToast(isNy
+          ? 'Buku ili likusowa umembala wa Professional Farmer kapena Agribusiness.'
+          : 'This downloadable guide requires Professional Farmer or Agribusiness Premium.');
+        if (proPlan) openPaymentModal(proPlan);
         return;
       }
 
-      // Open formatted manual modal for reading & printing
       const modal = document.getElementById('manualModal');
       const titleEl = document.getElementById('manualModalTitle');
       const subtitleEl = document.getElementById('manualModalSubtitle');
@@ -637,8 +631,8 @@ async function initSubscriptions() {
         subtitleEl.textContent = manual.subtitle;
         bodyEl.innerHTML = `
           <div style="background:#f4f9f6;border:1px solid #d8e8dd;border-radius:12px;padding:14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-            <span style="font-size:12px;font-weight:700;color:#134b34;">📄 Ulimi wa Malawi • Buku Lotsimikizika la Alimi</span>
-            <button id="btnPrintManual" type="button" class="btn btn-primary" style="padding:7px 14px;font-size:12px;">🖨️ Sindikizani / Print PDF</button>
+            <span style="font-size:12px;font-weight:700;color:#134b34;display:inline-flex;align-items:center;gap:6px;">${getIconSvg('book')} Ulimi wa Malawi • Buku Lotsimikizika la Alimi</span>
+            <button id="btnPrintManual" type="button" class="btn btn-primary" style="padding:7px 14px;font-size:12px;">${getIconSvg('printer')} Sindikizani / Print PDF</button>
           </div>
           ${manual.content}
         `;
@@ -647,9 +641,7 @@ async function initSubscriptions() {
 
         const printBtn = document.getElementById('btnPrintManual');
         if (printBtn) {
-          printBtn.addEventListener('click', () => {
-            window.print();
-          });
+          printBtn.addEventListener('click', () => window.print());
         }
       }
     });
@@ -670,4 +662,3 @@ if (document.readyState === 'loading') {
 } else {
   initSubscriptions();
 }
-
