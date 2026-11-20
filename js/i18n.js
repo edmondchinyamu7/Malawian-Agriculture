@@ -32,6 +32,8 @@ export const translations = {
     navProfile: "Mbiri Yanga",
     navLogout: "Tulukani",
     footerFarmerLogin: "Akaunti ya Mlimi (Lowani)",
+    footerPrivacy: "Mfundo za Zinsinsi",
+    footerTerms: "Migwirizano Yogwiritsira Ntchito",
     authKicker: "AKAUNTI YA MLIMI",
     authWelcomeLogin: "Takulandirani ku Ulimi wa Malawi",
     authSubLogin: "Lowani mu akaunti yanu kuti muwone mbiri ya munda, malangizo ndi mitengo yovomerezeka.",
@@ -267,6 +269,8 @@ export const translations = {
     navProfile: "My Profile",
     navLogout: "Log Out",
     footerFarmerLogin: "Farmer Account (Log In)",
+    footerPrivacy: "Privacy Policy",
+    footerTerms: "Terms & Conditions",
     authKicker: "FARMER ACCOUNTS",
     authWelcomeLogin: "Welcome back to Ulimi wa Malawi",
     authSubLogin: "Sign in to access your farm records, crop guidance, and verified market prices.",
@@ -543,6 +547,26 @@ export function setLanguage(lang) {
   window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
 }
 
+function ensureLegalFooterLinks(dict) {
+  document.querySelectorAll(".footer-sub-links").forEach(container => {
+    const backToTop = container.querySelector(".back-to-top");
+    if (!container.querySelector('[data-legal-link="privacy"]')) {
+      const privacy = document.createElement("a");
+      privacy.href = "/pages/privacy-policy.html";
+      privacy.dataset.legalLink = "privacy";
+      privacy.textContent = dict.footerPrivacy || "Privacy Policy";
+      container.insertBefore(privacy, backToTop || null);
+    }
+    if (!container.querySelector('[data-legal-link="terms"]')) {
+      const terms = document.createElement("a");
+      terms.href = "/pages/terms.html";
+      terms.dataset.legalLink = "terms";
+      terms.textContent = dict.footerTerms || "Terms & Conditions";
+      container.insertBefore(terms, backToTop || null);
+    }
+  });
+}
+
 export function applyTranslations() {
   const lang = getCurrentLang();
   const dict = translations[lang] || translations.ny;
@@ -616,6 +640,7 @@ export function applyTranslations() {
   // Translate remaining shared page copy and dynamic labels.
   translateUnkeyedContent(lang);
   observeDynamicTranslations();
+  ensureLegalFooterLinks(dict);
 
   // Title / aria-label translation
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {
