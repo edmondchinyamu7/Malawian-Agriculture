@@ -17,7 +17,27 @@
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body id="top">
-  <div class="shell">
+  <div class="shell admin-shell">\n    <aside class="admin-sidebar" aria-label="Administration navigation">
+      <a class="admin-sidebar-brand" href="../index.html">
+        <span class="admin-brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span>
+      </a>
+      <div class="admin-sidebar-label">WORKSPACE</div>
+      <nav class="admin-side-nav">
+        <a class="active" href="#adminOverview"><span>▦</span> Overview</a>
+        <a href="#priceManagement"><span>▤</span> Market prices</a>
+        <a href="#subscriptionApprovals"><span>✓</span> Submissions &amp; approvals</a>
+        <a href="#financeDashboard"><span>▥</span> Analytics &amp; finance</a>
+      </nav>
+      <div class="admin-sidebar-label">WEBSITE</div>
+      <nav class="admin-side-nav">
+        <a href="../index.html" target="_blank" rel="noopener"><span>↗</span> View live website</a>
+        <a href="market-centre.html" target="_blank" rel="noopener"><span>⌖</span> Public market centre</a>
+      </nav>
+      <div class="admin-sidebar-bottom">
+        <div class="admin-online-dot"></div><span>Administrator workspace</span>
+      </div>
+    </aside>
+
     <!-- Topbar Navigation -->
     <header class="topbar">
       <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
@@ -52,13 +72,13 @@
     </header>
 
     <!-- Main Container -->
-    <main class="main container">
+    <main class="main container">\n      <section class="admin-welcome" id="adminOverview">\n        <div><span class="section-kicker">ULIMI WA MALAWI · CONTROL CENTRE</span><h1>Good day, Administrator</h1><p>Manage agricultural information, market updates and platform operations from one workspace.</p></div>\n        <div class="admin-welcome-actions"><a class="btn btn-primary" href="#priceManagement">＋ Update market prices</a><a class="btn btn-outline" href="#financeDashboard">View reports ↗</a></div>\n      </section>
       <!-- Section Header -->
-      <div class="section-head">
+      <div class="section-head admin-page-heading">
         <div>
           <span class="section-kicker">Administrative Controls</span>
-          <h2>Agricultural Market Price Administration</h2>
-          <p>Submit and verify new field price reports, manage verified and unverified status labels, and audit commodity pricing data stored in the shared market database with administrator-only controls.</p>
+          <h2>Administration overview</h2>
+          <p>Use the workspace to maintain trusted agricultural data, review submissions and monitor platform performance.</p>
         </div>
         <div>
           <a href="#financeDashboard" class="btn btn-primary">Business &amp; Finance Dashboard ↗</a>
