@@ -230,15 +230,22 @@ app.get('/api/admin/session', (req, res) => {
 // Protected Admin Page Routes
 // ==========================================
 
-// Block direct access to admin pages before static middleware runs
+// Block direct access to admin pages (including extensionless /pages/admin*) before static middleware runs
 app.use((req, res, next) => {
   const p = req.path.toLowerCase();
+  if (p === '/admin/login') return next();
+
   const isAdminPage = (
     p === '/admin' ||
     p === '/admin/' ||
     p.startsWith('/admin/') ||
     p === '/admin-finance' ||
+    p === '/admin-finance/' ||
     p === '/admin-finance.html' ||
+    p === '/pages/admin' ||
+    p === '/pages/admin/' ||
+    p === '/pages/admin-finance' ||
+    p === '/pages/admin-finance/' ||
     p.includes('/admin.html') ||
     p.includes('/admin-finance.html')
   );
@@ -249,12 +256,35 @@ app.use((req, res, next) => {
   next();
 });
 
+// Prevent static middleware from exposing server code, config, or raw API source files
+app.use((req, res, next) => {
+  const p = req.path.toLowerCase();
+  const isInternalFile = (
+    p === '/server.js' ||
+    p === '/package.json' ||
+    p === '/package-lock.json' ||
+    p === '/bun.lock' ||
+    p === '/vercel.json' ||
+    p === '/metadata.json' ||
+    p === '/.env' ||
+    p === '/.env.example' ||
+    p.startsWith('/api/') ||
+    p.startsWith('/scripts/') ||
+    p.startsWith('/supabase/') ||
+    p.startsWith('/workspace/')
+  );
+  if (isInternalFile) {
+    return res.status(404).type('text/plain').send('Requested file was not found.');
+  }
+  next();
+});
+
 // Route handlers for protected admin views
-app.get(['/admin', '/admin/', '/pages/admin.html'], requireAdminAuth, (_req, res) => {
+app.get(['/admin', '/admin/', '/pages/admin', '/pages/admin/', '/pages/admin.html'], requireAdminAuth, (_req, res) => {
   return res.sendFile(path.join(__dirname, 'pages', 'admin.html'));
 });
 
-app.get(['/admin-finance', '/admin-finance.html', '/pages/admin-finance.html'], requireAdminAuth, (_req, res) => {
+app.get(['/admin-finance', '/admin-finance/', '/admin-finance.html', '/pages/admin-finance', '/pages/admin-finance/', '/pages/admin-finance.html'], requireAdminAuth, (_req, res) => {
   return res.sendFile(path.join(__dirname, 'pages', 'admin-finance.html'));
 });
 

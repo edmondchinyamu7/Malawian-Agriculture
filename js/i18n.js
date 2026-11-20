@@ -596,7 +596,11 @@ export function applyTranslations() {
     "login.html": "navLogin",
     "profile.html": "navProfile",
     "subscriptions.html": "navSubscriptions",
-    "subscriptions": "navSubscriptions"
+    "subscriptions": "navSubscriptions",
+    "privacy-policy.html": "footerPrivacy",
+    "privacy-policy": "footerPrivacy",
+    "terms.html": "footerTerms",
+    "terms": "footerTerms"
   };
 
   document.querySelectorAll(".nav a").forEach(link => {
@@ -607,6 +611,7 @@ export function applyTranslations() {
       const file = target.pathname.split("/").filter(Boolean).pop() || "index.html";
       if (target.hash === "#methods") key = "navFarmMethods";
       else if (target.hash === "#guides") key = "navGuides";
+      else if (target.hash === "#support") key = "footerSupport";
       else key = navRouteKeys[file] || "";
     } catch (_) {}
 

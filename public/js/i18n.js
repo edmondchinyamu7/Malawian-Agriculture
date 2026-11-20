@@ -32,6 +32,8 @@ export const translations = {
     navProfile: "Mbiri Yanga",
     navLogout: "Tulukani",
     footerFarmerLogin: "Akaunti ya Mlimi (Lowani)",
+    footerPrivacy: "Mfundo za Zinsinsi",
+    footerTerms: "Migwirizano Yogwiritsira Ntchito",
     authKicker: "AKAUNTI YA MLIMI",
     authWelcomeLogin: "Takulandirani ku Ulimi wa Malawi",
     authSubLogin: "Lowani mu akaunti yanu kuti muwone mbiri ya munda, malangizo ndi mitengo yovomerezeka.",
@@ -267,6 +269,8 @@ export const translations = {
     navProfile: "My Profile",
     navLogout: "Log Out",
     footerFarmerLogin: "Farmer Account (Log In)",
+    footerPrivacy: "Privacy Policy",
+    footerTerms: "Terms & Conditions",
     authKicker: "FARMER ACCOUNTS",
     authWelcomeLogin: "Welcome back to Ulimi wa Malawi",
     authSubLogin: "Sign in to access your farm records, crop guidance, and verified market prices.",
@@ -543,6 +547,29 @@ export function setLanguage(lang) {
   window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
 }
 
+function ensureLegalFooterLinks(dict) {
+  document.querySelectorAll(".footer-sub-links").forEach(container => {
+    const backToTop = container.querySelector(".back-to-top");
+    let privacy = container.querySelector('[data-legal-link="privacy"]');
+    if (!privacy) {
+      privacy = document.createElement("a");
+      privacy.href = "/pages/privacy-policy.html";
+      privacy.dataset.legalLink = "privacy";
+      container.insertBefore(privacy, backToTop || null);
+    }
+    privacy.textContent = dict.footerPrivacy || "Privacy Policy";
+
+    let terms = container.querySelector('[data-legal-link="terms"]');
+    if (!terms) {
+      terms = document.createElement("a");
+      terms.href = "/pages/terms.html";
+      terms.dataset.legalLink = "terms";
+      container.insertBefore(terms, backToTop || null);
+    }
+    terms.textContent = dict.footerTerms || "Terms & Conditions";
+  });
+}
+
 export function applyTranslations() {
   const lang = getCurrentLang();
   const dict = translations[lang] || translations.ny;
@@ -569,7 +596,11 @@ export function applyTranslations() {
     "login.html": "navLogin",
     "profile.html": "navProfile",
     "subscriptions.html": "navSubscriptions",
-    "subscriptions": "navSubscriptions"
+    "subscriptions": "navSubscriptions",
+    "privacy-policy.html": "footerPrivacy",
+    "privacy-policy": "footerPrivacy",
+    "terms.html": "footerTerms",
+    "terms": "footerTerms"
   };
 
   document.querySelectorAll(".nav a").forEach(link => {
@@ -580,6 +611,7 @@ export function applyTranslations() {
       const file = target.pathname.split("/").filter(Boolean).pop() || "index.html";
       if (target.hash === "#methods") key = "navFarmMethods";
       else if (target.hash === "#guides") key = "navGuides";
+      else if (target.hash === "#support") key = "footerSupport";
       else key = navRouteKeys[file] || "";
     } catch (_) {}
 
@@ -616,6 +648,7 @@ export function applyTranslations() {
   // Translate remaining shared page copy and dynamic labels.
   translateUnkeyedContent(lang);
   observeDynamicTranslations();
+  ensureLegalFooterLinks(dict);
 
   // Title / aria-label translation
   document.querySelectorAll('[data-i18n-aria]').forEach(el => {

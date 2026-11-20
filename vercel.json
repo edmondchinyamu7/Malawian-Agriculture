@@ -1,9 +1,4 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/admin", "destination": "/pages/admin.html" },
-    { "source": "/admin-login", "destination": "/login.html?admin=true" },
-    { "source": "/admin-finance", "destination": "/pages/admin-finance.html" }
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2
 }
