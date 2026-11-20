@@ -453,10 +453,10 @@
       if (mode === 'admin') {
         $('heading').textContent = (lang === 'en') ? 'Administrator Access Portal' : "Malo a Uyang'anire (Admin Portal)";
         $('intro').textContent = (lang === 'en')
-          ? 'Enter your administrator credentials configured on the server.'
-          : "Lowani ndi dzina ndi mawu achinsinsi a administrator oikidwa m'dongosolo.";
+          ? 'Sign in with your authorized administrator email and password.'
+          : "Lowani ndi imelo ndi mawu achinsinsi a administrator ovomerezeka.";
         $('submitText').textContent = (lang === 'en') ? 'Sign in to Admin Portal' : 'Lowani mu Admin Portal';
-        $('emailLabel').textContent = (lang === 'en') ? 'Administrator Username or Email' : 'Dzina la Administrator (Username or Email)';
+        $('emailLabel').textContent = (lang === 'en') ? 'Administrator Email' : 'Imelo ya Administrator';
         $('passwordLabel').textContent = (lang === 'en') ? 'Admin Password' : 'Mawu achinsinsi a Admin (Password)';
       } else if (mode === 'forgot') {
         $('heading').textContent = (lang === 'en') ? 'Reset your password' : 'Bwezeretsani mawu achinsinsi';
@@ -505,8 +505,8 @@
       $('adminTab').setAttribute('aria-selected', String(isAdmin));
 
       if (isAdmin) {
-        $('email').type = 'text';
-        $('email').placeholder = 'admin';
+        $('email').type = 'email';
+        $('email').placeholder = 'popeeadlegacycompany@gmail.com';
         if ($('adminLinkNote')) $('adminLinkNote').hidden = true;
         if ($('farmerLinkNote')) $('farmerLinkNote').hidden = false;
         if ($('resetBackNote')) $('resetBackNote').hidden = true;
@@ -617,34 +617,43 @@
       const originalText = $('submitText').textContent;
       $('submitText').textContent = lang === 'en' ? 'Please wait…' : 'Chonde dikirani…';
 
-      // 1. ADMINISTRATOR LOGIN
+      // 1. ADMINISTRATOR LOGIN (Supabase Auth + admin_access authorization)
       if (mode === 'admin') {
         try {
-          const response = await fetch('/api/admin/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({ username: usernameInput, password }),
-            credentials: 'same-origin'
+          if (!usernameInput || !usernameInput.includes('@') || !password) {
+            throw new Error(lang === 'en' ? 'Enter your administrator email and password.' : 'Lembani imelo ndi mawu achinsinsi a administrator.');
+          }
+
+          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+            email: usernameInput,
+            password
           });
+          if (signInError) throw signInError;
 
-          const text = await response.text();
-          let data = {};
-          try {
-            data = text ? JSON.parse(text) : {};
-          } catch (_) {
-            throw new Error(`Server returned status ${response.status}`);
+          const user = signInData?.user;
+          if (!user) throw new Error(lang === 'en' ? 'Sign-in could not be verified.' : 'Tinalephera kutsimikiza kulowa kwanu.');
+
+          const { data: accessRow, error: accessError } = await supabase
+            .from('admin_access')
+            .select('user_id')
+            .eq('user_id', user.id)
+            .maybeSingle();
+
+          if (accessError || !accessRow) {
+            await supabase.auth.signOut();
+            throw new Error(lang === 'en'
+              ? 'This account is not authorized for the administrator dashboard.'
+              : 'Akauntiyi ilibe chilolezo cholowa mu dashboard ya administrator.');
           }
 
-          if (!response.ok || !data.ok) {
-            throw new Error(data.message || 'Dzina la administrator kapena mawu achinsinsi sizolondola.');
-          }
-
-          showAlert(lang === 'en' ? 'Authenticated! Redirecting to Admin Dashboard…' : 'Mwalowa bwinobwino! Tikukulumikizani ku Admin Dashboard…', 'success');
+          showAlert(lang === 'en' ? 'Administrator verified. Opening dashboard…' : 'Administrator watsimikizidwa. Tikutsegula dashboard…', 'success');
           const redirectTarget = urlParams.get('redirect');
-          const safeTarget = (redirectTarget && redirectTarget.startsWith('/') && !redirectTarget.startsWith('//')) ? redirectTarget : '/admin';
-          setTimeout(() => window.location.assign(safeTarget), 350);
+          const safeTarget = (redirectTarget && redirectTarget.startsWith('/') && !redirectTarget.startsWith('//'))
+            ? redirectTarget
+            : '/pages/admin.html';
+          setTimeout(() => window.location.assign(safeTarget), 400);
         } catch (adminErr) {
-          showAlert(adminErr.message || 'Zalephera kulowa mu admin portal. Yesaninso.', 'error');
+          showAlert(adminErr.message || (lang === 'en' ? 'Administrator sign-in failed.' : 'Zalephera kulowa mu admin portal.'), 'error');
           submitBtn.disabled = false;
           $('submitText').textContent = originalText;
         }
