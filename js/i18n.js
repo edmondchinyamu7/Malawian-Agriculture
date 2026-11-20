@@ -550,20 +550,23 @@ export function setLanguage(lang) {
 function ensureLegalFooterLinks(dict) {
   document.querySelectorAll(".footer-sub-links").forEach(container => {
     const backToTop = container.querySelector(".back-to-top");
-    if (!container.querySelector('[data-legal-link="privacy"]')) {
-      const privacy = document.createElement("a");
+    let privacy = container.querySelector('[data-legal-link="privacy"]');
+    if (!privacy) {
+      privacy = document.createElement("a");
       privacy.href = "/pages/privacy-policy.html";
       privacy.dataset.legalLink = "privacy";
-      privacy.textContent = dict.footerPrivacy || "Privacy Policy";
       container.insertBefore(privacy, backToTop || null);
     }
-    if (!container.querySelector('[data-legal-link="terms"]')) {
-      const terms = document.createElement("a");
+    privacy.textContent = dict.footerPrivacy || "Privacy Policy";
+
+    let terms = container.querySelector('[data-legal-link="terms"]');
+    if (!terms) {
+      terms = document.createElement("a");
       terms.href = "/pages/terms.html";
       terms.dataset.legalLink = "terms";
-      terms.textContent = dict.footerTerms || "Terms & Conditions";
       container.insertBefore(terms, backToTop || null);
     }
+    terms.textContent = dict.footerTerms || "Terms & Conditions";
   });
 }
 
