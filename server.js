@@ -268,6 +268,7 @@ app.use((req, res, next) => {
     p === '/metadata.json' ||
     p === '/.env' ||
     p === '/.env.example' ||
+    p === '/.npmrc' ||
     p.startsWith('/api/') ||
     p.startsWith('/scripts/') ||
     p.startsWith('/supabase/') ||
