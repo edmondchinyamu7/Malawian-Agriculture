@@ -147,3 +147,66 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Dedicated administration workspace */
+.admin-shell{min-height:100vh;background:#f3f6f2;padding-left:258px}
+.admin-sidebar{position:fixed;inset:0 auto 0 0;width:258px;background:#123d2c;color:#eaf4ed;padding:26px 18px;display:flex;flex-direction:column;z-index:1000;box-shadow:8px 0 28px rgba(10,40,25,.08)}
+.admin-sidebar-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-size:13px;font-weight:900;letter-spacing:.04em;padding:4px 8px 30px}
+.admin-sidebar-brand small{display:block;color:#a9c8b5;font-size:9px;letter-spacing:.13em;margin-top:5px}
+.admin-brand-mark{width:40px;height:40px;border-radius:13px;background:#e5f1e8;color:#174a32;display:grid;place-items:center;font-size:21px}
+.admin-sidebar-label{font-size:9px;font-weight:900;letter-spacing:.16em;color:#91b39e;padding:14px 10px 9px}
+.admin-side-nav{display:grid;gap:5px}
+.admin-side-nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:11px;color:#d8e8dd;text-decoration:none;font-size:12px;font-weight:750;transition:.18s}
+.admin-side-nav a span{width:20px;text-align:center;font-size:16px;color:#a8d3b5}
+.admin-side-nav a:hover,.admin-side-nav a.active{background:#285941;color:#fff}
+.admin-side-nav a.active{box-shadow:inset 3px 0 #a5d6a7}
+.admin-sidebar-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,.13);padding:18px 8px 4px;display:flex;align-items:center;gap:9px;color:#b7d1c0;font-size:10px}
+.admin-online-dot{width:8px;height:8px;border-radius:50%;background:#73d69a;box-shadow:0 0 0 4px rgba(115,214,154,.12)}
+.admin-shell>.topbar{position:sticky;top:0;z-index:900;margin:0 -0px 22px;padding:14px 28px;background:rgba(255,255,255,.94);border-bottom:1px solid #e5ece6;box-shadow:0 4px 18px rgba(24,55,35,.035);min-height:72px}
+.admin-shell>.topbar .nav{display:none}
+.admin-shell>.topbar .brand{font-size:13px}
+.admin-shell>.topbar .top-actions{margin-left:auto}
+.admin-shell>.main{max-width:1440px;padding:0 28px 34px}
+.admin-welcome{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:26px 28px;margin:0 0 22px;border-radius:20px;background:linear-gradient(115deg,#e4f0e6,#f5f8f1 70%,#e9f2e9);border:1px solid #dce9dd}
+.admin-welcome h1{font-size:27px;line-height:1.2;color:#173e2c;margin:7px 0}
+.admin-welcome p{margin:0;color:#627468;font-size:13px}
+.admin-welcome-actions{display:flex;gap:9px;flex-wrap:wrap}
+.admin-page-heading{background:#fff;border:1px solid #e5ece6;border-radius:18px;padding:22px 24px;margin-bottom:20px}
+.admin-page-heading h2{font-size:22px}
+.admin-card{border-radius:17px;border-color:#e5ece6;box-shadow:0 8px 26px rgba(21,55,34,.045)}
+.admin-card h3{font-size:16px}
+.finance-page{margin:0 28px 34px 286px;padding:24px!important;border:1px solid #e5ece6;border-radius:18px}
+.finance-page>.finance-kpis{gap:13px}
+.finance-kpi{border-radius:14px}
+.finance-grid{gap:18px}
+.admin-table th{white-space:nowrap}
+.admin-table td{vertical-align:middle}
+@media(max-width:900px){
+ .admin-shell{padding-left:0}
+ .admin-sidebar{width:76px;padding:20px 10px}
+ .admin-sidebar-brand{justify-content:center;padding:4px 0 26px}
+ .admin-sidebar-brand>span:last-child,.admin-sidebar-label,.admin-side-nav a:not(.active){font-size:0}
+ .admin-sidebar-brand small{display:none}
+ .admin-side-nav a{justify-content:center;padding:13px 8px;font-size:0}
+ .admin-side-nav a span{font-size:18px}
+ .admin-sidebar-bottom{justify-content:center;font-size:0;padding:16px 0}
+ .admin-shell>.topbar{margin-left:76px;padding:12px 16px}
+ .admin-shell>.main{padding:0 16px 28px}
+ .finance-page{margin:0 16px 28px 92px}
+}
+@media(max-width:600px){
+ .admin-sidebar{width:58px;padding:16px 6px}
+ .admin-sidebar-brand{padding-bottom:18px}
+ .admin-brand-mark{width:36px;height:36px}
+ .admin-side-nav a{padding:12px 5px}
+ .admin-shell>.topbar{margin-left:58px;padding:10px}
+ .admin-shell>.topbar .lang-switch{display:none}
+ .admin-welcome{display:block;padding:20px}
+ .admin-welcome h1{font-size:22px}
+ .admin-welcome-actions{margin-top:16px}
+ .admin-welcome-actions .btn{font-size:11px;padding:9px 11px}
+ .admin-shell>.main{padding:0 10px 24px}
+ .finance-page{margin:0 10px 24px 68px;padding:14px!important}
+ .admin-page-heading{padding:18px}
+}
