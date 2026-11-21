@@ -210,3 +210,116 @@
  .finance-page{margin:0 10px 24px 68px;padding:14px!important}
  .admin-page-heading{padding:18px}
 }
+
+
+/* Mobile admin workspace: keep page content beside the fixed icon rail. */
+.admin-shell>.topbar .brand{color:var(--forest)}
+.admin-shell>.topbar .brand small{color:var(--muted)}
+
+@media(max-width:900px){
+  .admin-shell>.main{
+    box-sizing:border-box;
+    width:calc(100% - 76px);
+    max-width:none;
+    margin-left:76px;
+    margin-right:0;
+  }
+  .admin-shell>.main.container{
+    width:calc(100% - 76px);
+  }
+  .admin-shell>.main>*{
+    min-width:0;
+    max-width:100%;
+  }
+}
+
+@media(max-width:600px){
+  .admin-shell>.main,
+  .admin-shell>.main.container{
+    box-sizing:border-box;
+    width:calc(100% - 58px);
+    max-width:none;
+    margin-left:58px;
+    margin-right:0;
+    padding:0 10px 24px;
+  }
+  .admin-welcome{
+    width:100%;
+    box-sizing:border-box;
+    padding:18px 16px;
+    border-radius:16px;
+  }
+  .admin-welcome h1{
+    font-size:clamp(19px,5vw,22px);
+    overflow-wrap:anywhere;
+  }
+  .admin-welcome p,
+  .admin-page-heading p{
+    font-size:13px;
+    line-height:1.55;
+  }
+  .admin-welcome-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    width:100%;
+  }
+  .admin-welcome-actions .btn{
+    width:100%;
+    box-sizing:border-box;
+    justify-content:center;
+    text-align:center;
+    white-space:normal;
+  }
+  .admin-page-heading{
+    display:block;
+    box-sizing:border-box;
+    width:100%;
+    padding:16px;
+  }
+  .admin-page-heading>div+div{
+    display:grid;
+    gap:9px;
+    margin-top:14px;
+  }
+  .admin-page-heading .btn{
+    width:100%;
+    box-sizing:border-box;
+    justify-content:center;
+    text-align:center;
+    white-space:normal;
+  }
+  .admin-card{
+    box-sizing:border-box;
+    width:100%;
+    padding:16px;
+    overflow:hidden;
+  }
+  .admin-form{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .admin-form .form-group,
+  .admin-form input,
+  .admin-form select,
+  .admin-form textarea{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  .admin-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .admin-actions button{
+    width:100%;
+  }
+  .finance-page{
+    box-sizing:border-box;
+    width:auto;
+    margin:0 10px 24px 68px;
+    max-width:calc(100% - 78px);
+    padding:14px!important;
+  }
+  .admin-table{
+    min-width:620px;
+  }
+}
