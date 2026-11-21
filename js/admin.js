@@ -32,6 +32,56 @@ function money(value) {
   return new Intl.NumberFormat('en-MW', { maximumFractionDigits: 2 }).format(Number(value) || 0);
 }
 
+function updateOverviewSummary() {
+  const counts = {
+    total: rows.length,
+    verified: rows.filter(row => row.status === 'verified').length,
+    pending: rows.filter(row => row.status === 'pending').length,
+    rejected: rows.filter(row => row.status === 'rejected').length,
+    subscriptions: pendingSubs.length,
+    active: pendingSubs.filter(sub => sub.status === 'active').length
+  };
+  const values = {
+    overviewPriceTotal: counts.total,
+    overviewPriceVerified: counts.verified,
+    overviewPricePending: counts.pending,
+    overviewPriceRejected: counts.rejected,
+    overviewSubscriptionTotal: counts.subscriptions,
+    overviewSubscriptionActive: counts.active
+  };
+  Object.entries(values).forEach(([id, value]) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = money(value);
+  });
+  const updated = document.getElementById('adminSummaryUpdated');
+  if (updated) updated.textContent = 'Updated ' + new Intl.DateTimeFormat('en-MW', {
+    dateStyle: 'medium', timeStyle: 'short'
+  }).format(new Date());
+}
+
+function initAdminSidebarNavigation() {
+  const links = [...document.querySelectorAll('.admin-side-nav a[href^="#"]')];
+  if (!links.length) return;
+  const activate = link => {
+    links.forEach(item => {
+      const active = item === link;
+      item.classList.toggle('active', active);
+      if (active) item.setAttribute('aria-current', 'page');
+      else item.removeAttribute('aria-current');
+    });
+  };
+  links.forEach(link => link.addEventListener('click', event => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    event.preventDefault();
+    activate(link);
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    history.replaceState(null, '', link.getAttribute('href'));
+  }));
+  const initial = links.find(link => link.getAttribute('href') === window.location.hash) || links[0];
+  activate(initial);
+}
+
 async function checkServerAdminSession() {
   try {
     const res = await fetch('/api/admin/session', { credentials: 'same-origin' });
@@ -171,6 +221,7 @@ async function loadRows() {
   if (error) throw error;
   rows = data || [];
   renderAdminTable();
+  updateOverviewSummary();
 }
 
 function renderAdminTable() {
@@ -271,6 +322,7 @@ async function loadPendingSubscriptions() {
     if (error) throw error;
     pendingSubs = data || [];
     renderSubscriptionsTable();
+    updateOverviewSummary();
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:18px;color:#617268">${escapeHtml(adminUser ? ('Unable to load subscription requests: ' + err.message) : 'Connect a Supabase admin account above to inspect and approve pending membership payments.')}</td></tr>`;
   }
@@ -410,4 +462,4 @@ export async function initAdminPriceManagement() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', initAdminPriceManagement);
+document.addEventListener('DOMContentLoaded', () => {\n  initAdminSidebarNavigation();\n  initAdminPriceManagement();\n});

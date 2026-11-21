@@ -91,6 +91,21 @@
         </div>
       </div>
 
+      <section class="admin-overview-summary" aria-label="Live website overview">
+        <div class="admin-summary-heading">
+          <div><span class="section-kicker">LIVE WEBSITE SUMMARY</span><h2>Platform at a glance</h2><p>Live totals from the market price and membership records currently available to this admin workspace.</p></div>
+          <span class="admin-summary-updated" id="adminSummaryUpdated">Loading website records…</span>
+        </div>
+        <div class="admin-summary-grid">
+          <article class="admin-summary-stat"><span>Market price records</span><strong id="overviewPriceTotal">—</strong><small>All recorded market observations</small></article>
+          <article class="admin-summary-stat"><span>Verified prices</span><strong id="overviewPriceVerified">—</strong><small>Approved for the public directory</small></article>
+          <article class="admin-summary-stat"><span>Awaiting review</span><strong id="overviewPricePending">—</strong><small>Market records pending review</small></article>
+          <article class="admin-summary-stat"><span>Rejected records</span><strong id="overviewPriceRejected">—</strong><small>Not published to the public directory</small></article>
+          <article class="admin-summary-stat"><span>Membership requests</span><strong id="overviewSubscriptionTotal">—</strong><small>Subscription records in the system</small></article>
+          <article class="admin-summary-stat"><span>Active memberships</span><strong id="overviewSubscriptionActive">—</strong><small>Currently marked active</small></article>
+        </div>
+      </section>
+
       <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
 
       <!-- Add Price Form Card -->
@@ -188,7 +203,7 @@
       </section>
 
       <!-- Manage Existing Records -->
-      <section class="admin-card">
+      <section class="admin-card" id="marketPriceDirectory">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
           <div>
             <h3>Active Market Price Directory Management</h3>
