@@ -57,6 +57,7 @@ function updateOverviewSummary() {
   if (updated) updated.textContent = 'Updated ' + new Intl.DateTimeFormat('en-MW', {
     dateStyle: 'medium', timeStyle: 'short'
   }).format(new Date());
+  renderOverviewVisuals();
 }
 
 function renderOverviewVisuals() {
