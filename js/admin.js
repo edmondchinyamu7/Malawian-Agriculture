@@ -224,7 +224,7 @@ async function requireAdmin() {
   renderAdminSettings();
 
   if (!serverAdminSession) {
-    window.location.replace('../login.html?redirect=' + encodeURIComponent('/pages/admin.html') + '&admin=true');
+    window.location.replace('../login.html?redirect=' + encodeURIComponent(window.location.pathname) + '&admin=true');
     return false;
   }
 
@@ -303,7 +303,6 @@ function renderSupabaseAdminLinkNotice() {
 
 async function loadRows() {
   const body = document.getElementById('adminPriceTableBody');
-  if (!body) return;
   const { data, error } = await supabase
     .from('market_price_reports')
     .select('*')
@@ -562,31 +561,42 @@ function initForm() {
 }
 
 export async function initAdminPriceManagement() {
-  const body = document.getElementById('adminPriceTableBody');
-  if (!body) return;
   const allowed = await requireAdmin();
   if (!allowed) return;
-  initForm();
+
+  const body = document.getElementById('adminPriceTableBody');
+  const logout = async (button) => {
+    if (button) button.disabled = true;
+    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
+    try { await supabase.auth.signOut(); } catch (_) {}
+    window.location.assign('../login.html?admin=true');
+  };
   const logoutBtn = document.getElementById('adminLogoutBtn');
-  if (logoutBtn) logoutBtn.addEventListener('click', async () => {
-    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
-    await supabase.auth.signOut();
-    window.location.assign('../login.html?admin=true');
-  });
+  if (logoutBtn) logoutBtn.addEventListener('click', () => logout(logoutBtn));
   const settingsLogout = document.getElementById('adminSettingsLogout');
-  if (settingsLogout) settingsLogout.addEventListener('click', async () => {
-    settingsLogout.disabled = true;
-    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
-    await supabase.auth.signOut();
-    window.location.assign('../login.html?admin=true');
-  });
+  if (settingsLogout) settingsLogout.addEventListener('click', () => logout(settingsLogout));
   const resetBtn = document.getElementById('resetDefaultPricesBtn');
   if (resetBtn) resetBtn.hidden = true;
+
+  const needsMarketRows = Boolean(
+    body ||
+    document.getElementById('adminFarmerTableBody') ||
+    document.getElementById('overviewPriceTotal')
+  );
+  const needsSubscriptions = Boolean(
+    document.getElementById('adminSubscriptionsTableBody') ||
+    document.getElementById('overviewSubscriptionTotal') ||
+    body
+  );
+  if (document.getElementById('addPriceForm')) initForm();
   try {
-    await Promise.all([loadRows(), loadPendingSubscriptions()]);
+    const tasks = [];
+    if (needsMarketRows) tasks.push(loadRows());
+    if (needsSubscriptions) tasks.push(loadPendingSubscriptions());
+    await Promise.all(tasks);
   } catch (error) {
-    console.error('Unable to load market price admin records:', error);
-    body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px">Unable to load shared market records. Connect Supabase admin credentials above if needed.</td></tr>';
+    console.error('Unable to load admin records:', error);
+    if (body) body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px">Unable to load shared market records. Please refresh or contact the administrator.</td></tr>';
   }
 }
 
