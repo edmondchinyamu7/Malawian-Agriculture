@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#092d22"><title>Submissions & approvals | Ulimi wa Malawi Admin</title>
+<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/admin.css"><link rel="stylesheet" href="../css/monetization.css"><link rel="stylesheet" href="../css/responsive.css"></head>
+<body id="top"><div class="shell admin-shell">
+<aside class="admin-sidebar" aria-label="Administration navigation"><a class="admin-sidebar-brand" href="../index.html"><span class="admin-brand-mark" aria-hidden="true">🌱</span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span></a>
+<div class="admin-sidebar-label">MAIN MENU</div><nav class="admin-side-nav" aria-label="Admin pages"><a  href="admin.html"><span>⌂</span> Overview</a>
+<a  href="admin-farmers.html"><span>♙</span> Farmers</a>
+<a  href="admin-crops-prices.html"><span>♧</span> Crops & Prices</a>
+<a  href="admin-content.html"><span>▤</span> Website Content</a>
+<a  href="admin-bot.html"><span>✧</span> Bot Knowledge</a>
+<a  href="admin-messages.html"><span>▣</span> Messages</a>
+<a  href="admin-settings.html"><span>⚙</span> Settings</a>
+<a class="active" aria-current="page" href="admin-submissions.html"><span>✓</span> Submissions & approvals</a>
+<a  href="admin-finance.html"><span>▥</span> Analytics & finance</a></nav>
+<div class="admin-sidebar-label">WEBSITE</div><nav class="admin-side-nav"><a href="../index.html" target="_blank" rel="noopener"><span>↗</span> View live website</a><a href="market-centre.html" target="_blank" rel="noopener"><span>⌖</span> Public market centre</a></nav>
+<div class="admin-sidebar-bottom"><div class="admin-online-dot"></div><span>Administrator workspace</span></div></aside>
+<header class="topbar"><a class="brand" href="admin.html"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span></a><div class="top-actions"><button id="adminLogoutBtn" class="btn btn-outline" type="button">Sign out</button></div></header>
+<main class="main container admin-page-content"><section class="admin-dashboard-heading"><div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Submissions & approvals</h1><p>Manage the submissions & approvals workspace.</p></div></section><section class="admin-card" id="subscriptionApprovals">
+        <div>
+          <h3>Pending Subscription Payment Approvals</h3>
+          <p>Verify farmer mobile money / bank references before activating paid membership plans.</p>
+        </div>
+        <div style="overflow-x:auto;margin-top:12px">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Farmer ID</th>
+                <th>Plan &amp; Cycle</th>
+                <th>Amount</th>
+                <th>Transaction Ref</th>
+                <th>Status</th>
+                <th>Review Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminSubscriptionsTableBody">
+              <tr><td colspan="6" style="text-align:center;padding:18px">Loading subscription requests…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section></main></div><div class="toast" id="toast" role="status"></div>
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/navigation.js"></script>
+<script type="module" src="../js/admin.js"></script></body></html>

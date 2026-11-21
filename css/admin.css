@@ -1248,3 +1248,42 @@
   .admin-shell .finance-kpis{grid-template-columns:1fr}
   .admin-shell .finance-kpi{min-height:100px}
 }
+
+
+/* Dedicated admin pages and overview navigation */
+.admin-overview-shortcuts{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:22px 0 30px;
+}
+.admin-overview-shortcuts a{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  min-width:0;
+  padding:18px;
+  border:1px solid #dce9df;
+  border-radius:15px;
+  background:#fff;
+  color:#173e2c;
+  text-decoration:none;
+  box-shadow:0 7px 20px rgba(20,67,42,.045);
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+}
+.admin-overview-shortcuts a:hover{
+  transform:translateY(-2px);
+  border-color:#8ebc9a;
+  box-shadow:0 12px 25px rgba(20,67,42,.09);
+}
+.admin-overview-shortcuts strong{font-size:14px;color:#124b32}
+.admin-overview-shortcuts span{font-size:11px;line-height:1.55;color:#6c7e70}
+.admin-overview-shortcuts b{margin-top:auto;font-size:11px;color:#087653}
+.admin-page-content{min-height:calc(100vh - 180px)}
+.admin-page-content>.admin-card{margin-top:8px}
+@media(max-width:1050px){.admin-overview-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+ .admin-overview-shortcuts{grid-template-columns:1fr;gap:10px;margin:16px 0 24px}
+ .admin-overview-shortcuts a{padding:15px}
+ .admin-page-content{padding-left:12px;padding-right:12px}
+}

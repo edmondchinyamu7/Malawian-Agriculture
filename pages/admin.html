@@ -24,18 +24,18 @@
       </a>
       <div class="admin-sidebar-label">MAIN MENU</div>
       <nav class="admin-side-nav" aria-label="Main admin pages">
-        <a class="active" href="#adminOverview"><span>⌂</span> Overview</a>
-        <a href="#farmerManagement"><span>♙</span> Farmers</a>
-        <a href="#priceManagement"><span>♧</span> Crops &amp; Prices</a>
-        <a href="#websiteContent"><span>▤</span> Website Content</a>
-        <a href="#botKnowledge"><span>✧</span> Bot Knowledge <em class="admin-nav-soon">Soon</em></a>
-        <a href="#adminMessages"><span>▣</span> Messages <em class="admin-nav-soon">Soon</em></a>
-        <a href="#adminSettings"><span>⚙</span> Settings</a>
+        <a class="active" href="admin.html"><span>⌂</span> Overview</a>
+        <a href="admin-farmers.html"><span>♙</span> Farmers</a>
+        <a href="admin-crops-prices.html"><span>♧</span> Crops &amp; Prices</a>
+        <a href="admin-content.html"><span>▤</span> Website Content</a>
+        <a href="admin-bot.html"><span>✧</span> Bot Knowledge <em class="admin-nav-soon">Soon</em></a>
+        <a href="admin-messages.html"><span>▣</span> Messages <em class="admin-nav-soon">Soon</em></a>
+        <a href="admin-settings.html"><span>⚙</span> Settings</a>
       </nav>
       <div class="admin-sidebar-label">REPORTING</div>
       <nav class="admin-side-nav" aria-label="Reporting">
-        <a href="#subscriptionApprovals"><span>✓</span> Submissions &amp; approvals</a>
-        <a href="#financeDashboard"><span>▥</span> Analytics &amp; finance</a>
+        <a href="admin-submissions.html"><span>✓</span> Submissions &amp; approvals</a>
+        <a href="admin-finance.html"><span>▥</span> Analytics &amp; finance</a>
       </nav>
       <div class="admin-sidebar-label">WEBSITE</div>
       <nav class="admin-side-nav">
@@ -84,7 +84,7 @@
     <main class="main container">
       <section class="admin-dashboard-heading" id="adminOverview">
         <div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Dashboard</h1><p>Welcome back, Administrator <span aria-hidden="true">✦</span></p></div>
-        <div class="admin-dashboard-heading-actions"><a class="admin-action-link" href="#priceManagement">＋ Add market price</a><a class="admin-action-link admin-action-secondary" href="#financeDashboard">Open analytics ↗</a></div>
+        <div class="admin-dashboard-heading-actions"><a class="admin-action-link" href="admin-crops-prices.html">＋ Add market price</a><a class="admin-action-link admin-action-secondary" href="admin-finance.html">Open analytics ↗</a></div>
       </section>
 
       <section class="admin-overview-summary" aria-label="Live website overview">
@@ -104,7 +104,7 @@
 
       <section class="admin-insights-grid" aria-label="Agricultural platform analytics">
         <article class="admin-visual-card admin-trend-card">
-          <div class="admin-visual-head"><div><span class="admin-eyebrow">MARKET INTELLIGENCE</span><h2>Market price activity</h2><p>Market observations grouped by month from available records</p></div><a href="#marketPriceDirectory">View records ↗</a></div>
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">MARKET INTELLIGENCE</span><h2>Market price activity</h2><p>Market observations grouped by month from available records</p></div><a href="admin-crops-prices.html">View records ↗</a></div>
           <div id="adminPriceTrend" class="admin-price-trend"><p class="admin-empty-state">Loading market activity…</p></div>
         </article>
         <article class="admin-visual-card admin-category-card">
@@ -112,281 +112,29 @@
           <div id="adminStatusDistribution" class="admin-status-distribution"><p class="admin-empty-state">Loading record status…</p></div>
         </article>
         <article class="admin-visual-card admin-recent-card">
-          <div class="admin-visual-head"><div><span class="admin-eyebrow">LATEST UPDATES</span><h2>Recent market submissions</h2><p>Most recently reported crop prices</p></div><a href="#marketPriceDirectory">View all ↗</a></div>
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">LATEST UPDATES</span><h2>Recent market submissions</h2><p>Most recently reported crop prices</p></div><a href="admin-crops-prices.html">View all ↗</a></div>
           <div id="adminRecentMarketActivity" class="admin-recent-activity"><p class="admin-empty-state">Loading recent records…</p></div>
         </article>
         <article class="admin-visual-card admin-membership-card">
-          <div class="admin-visual-head"><div><span class="admin-eyebrow">FARMER MEMBERSHIP</span><h2>Membership snapshot</h2><p>Subscription records available to this workspace</p></div><a href="#subscriptionApprovals">Review ↗</a></div>
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">FARMER MEMBERSHIP</span><h2>Membership snapshot</h2><p>Subscription records available to this workspace</p></div><a href="admin-submissions.html">Review ↗</a></div>
           <div class="admin-membership-metrics"><div><span>All records</span><strong id="overviewSubscriptionTotalVisual">—</strong></div><div><span>Active</span><strong id="overviewSubscriptionActiveVisual">—</strong></div><div><span>Pending</span><strong id="overviewSubscriptionPendingVisual">—</strong></div></div>
         </article>
       </section>
 
       <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
 
-      <section class="admin-card admin-portal-section" id="farmerManagement">
-        <div class="admin-portal-section-head">
-          <div><span class="admin-eyebrow">FARMER CONTRIBUTIONS</span><h2>Farmer submissions</h2><p>Farmer-submitted market observations available in the existing market records. This is not a count of all registered farmer accounts.</p></div>
-          <a class="admin-action-link admin-action-secondary" href="#marketPriceDirectory">Review market records ↗</a>
-        </div>
-        <div class="admin-farmer-stats">
-          <article><span>Farmer price reports</span><strong id="farmerReportCount">—</strong></article>
-          <article><span>Identified contributors</span><strong id="farmerContributorCount">—</strong></article>
-          <article><span>Awaiting review</span><strong id="farmerPendingCount">—</strong></article>
-        </div>
-        <div class="table-scroll">
-          <table class="admin-table">
-            <thead><tr><th>Contributor</th><th>Crop</th><th>Market / District</th><th>Price range</th><th>Reported</th><th>Status</th></tr></thead>
-            <tbody id="adminFarmerTableBody"><tr><td colspan="6" class="admin-empty-cell">Loading farmer submissions…</td></tr></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Add Price Form Card -->
-      <section class="admin-card" id="priceManagement">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button type="button" id="adminLogoutBtn" class="btn btn-outline">Sign out</button></div>
-        <h3>Submit New Crop Price Record</h3>
-        <p>Enter verified market observations. Approved records are published to the shared market directory. Pending farmer and admin records remain private until reviewed.</p>
-
-        <form id="addPriceForm" class="admin-form">
-          <div class="form-group">
-            <label for="adminCropName">Commodity Name *</label>
-            <input type="text" id="adminCropName" placeholder="e.g. Chimanga (Maize)" required>
-          </div>
-
-          <div class="form-group">
-            <label for="adminCropCategory">Category *</label>
-            <select id="adminCropCategory" required>
-              <option value="Cereals">Cereals</option>
-              <option value="Legumes">Legumes</option>
-              <option value="Vegetables">Vegetables</option>
-              <option value="Root crops">Root crops</option>
-              <option value="Cash crops">Cash crops</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="adminMarketName">Market Name *</label>
-            <input type="text" id="adminMarketName" placeholder="e.g. Mitundu Market" required>
-          </div>
-
-          <div class="form-group">
-            <label for="adminDistrict">District *</label>
-            <select id="adminDistrict" required>
-              <option value="Lilongwe">Lilongwe</option>
-              <option value="Blantyre">Blantyre</option>
-              <option value="Mzuzu">Mzuzu</option>
-              <option value="Kasungu">Kasungu</option>
-              <option value="Salima">Salima</option>
-              <option value="Dedza">Dedza</option>
-              <option value="Thyolo">Thyolo</option>
-              <option value="Zomba">Zomba</option>
-              <option value="Karonga">Karonga</option>
-              <option value="Nsanje">Nsanje</option>
-              <option value="Chitipa">Chitipa</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="adminRegion">Region *</label>
-            <select id="adminRegion" required>
-              <option value="Central">Central</option>
-              <option value="Southern">Southern</option>
-              <option value="Northern">Northern</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="adminUnit">Trading Unit *</label>
-            <input type="text" id="adminUnit" placeholder="e.g. 50 kg bag, 1 kg, wooden crate" required>
-          </div>
-
-          <div class="form-group">
-            <label for="adminPriceMin">Minimum Price (MWK) *</label>
-            <input type="number" id="adminPriceMin" placeholder="35000" min="1" step="50" required>
-          </div>
-
-          <div class="form-group">
-            <label for="adminPriceMax">Maximum Price (MWK) *</label>
-            <input type="number" id="adminPriceMax" placeholder="42000" min="1" step="50" required>
-          </div>
-
-          <div class="form-group">
-            <label for="adminStatus">Publication Status</label>
-            <select id="adminStatus">
-              <option value="verified">Verified (Official Extension Cross-checked)</option>
-              <option value="pending" selected>Pending review (not public)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="adminReporter">Reporter / Data Source</label>
-            <input type="text" id="adminReporter" placeholder="e.g. District Trade Officer / Cooperative Desk">
-          </div>
-
-          <div class="form-group full-width">
-            <label for="adminNotes">Market Notes / Quality Factors</label>
-            <textarea id="adminNotes" rows="2" placeholder="e.g. Dry white grain, high moisture risk, heavy buyer turnout"></textarea>
-          </div>
-
-          <div class="admin-actions">
-            <button type="submit" class="btn-admin">Save Market Record</button>
-            <button type="reset" class="btn-outline">Clear Fields</button>
-          </div>
-        </form>
-      </section>
-
-      <!-- Manage Existing Records -->
-      <section class="admin-card" id="marketPriceDirectory">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-          <div>
-            <h3>Active Market Price Directory Management</h3>
-            <p>Toggle verification statuses, review submitted prices, or delete outdated records.</p>
-          </div>
-          <button id="resetDefaultPricesBtn" class="btn btn-ghost" style="color:#b3261e;border-color:#fad2cf;background:#fff5f5">
-            Reset to Baseline Data ↺
-          </button>
-        </div>
-
-        <div style="overflow-x:auto">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Crop</th>
-                <th>Market Location</th>
-                <th>Unit</th>
-                <th>Price Range</th>
-                <th>Status</th>
-                <th>Reported</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="adminPriceTableBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- Subscription Payment Review & Approval -->
-      <section class="admin-card" id="subscriptionApprovals">
-        <div>
-          <h3>Pending Subscription Payment Approvals</h3>
-          <p>Verify farmer mobile money / bank references before activating paid membership plans.</p>
-        </div>
-        <div style="overflow-x:auto;margin-top:12px">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Farmer ID</th>
-                <th>Plan &amp; Cycle</th>
-                <th>Amount</th>
-                <th>Transaction Ref</th>
-                <th>Status</th>
-                <th>Review Action</th>
-              </tr>
-            </thead>
-            <tbody id="adminSubscriptionsTableBody">
-              <tr><td colspan="6" style="text-align:center;padding:18px">Loading subscription requests…</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-
-
-      <section class="admin-card admin-portal-section" id="websiteContent">
-        <div class="admin-portal-section-head">
-          <div><span class="admin-eyebrow">PUBLIC WEBSITE</span><h2>Website content</h2><p>Preview the public sections currently present on the website. Editing and publishing directly from this portal requires a content-management database, which is not connected yet.</p></div>
-          <a class="admin-action-link admin-action-secondary" href="../index.html" target="_blank" rel="noopener">Open website ↗</a>
-        </div>
-        <div class="admin-content-grid">
-          <a class="admin-content-link" href="../index.html" target="_blank" rel="noopener"><strong>Home page</strong><span>Public landing page and platform introduction</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="crops.html" target="_blank" rel="noopener"><strong>Crop library</strong><span>Crop information and growing guidance</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="market-centre.html" target="_blank" rel="noopener"><strong>Market centre</strong><span>Published market prices and observations</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="weather.html" target="_blank" rel="noopener"><strong>Weather centre</strong><span>Weather information and agricultural context</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="learning-centre.html" target="_blank" rel="noopener"><strong>Learning centre</strong><span>Farming guides and learning resources</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="news.html" target="_blank" rel="noopener"><strong>Agriculture news</strong><span>News and platform updates</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="pest-disease.html" target="_blank" rel="noopener"><strong>Pest &amp; disease centre</strong><span>Crop protection information</span><small>Preview page ↗</small></a>
-          <a class="admin-content-link" href="soil-centre.html" target="_blank" rel="noopener"><strong>Soil centre</strong><span>Soil management information</span><small>Preview page ↗</small></a>
-        </div>
-        <div class="admin-notice"><strong>Content editing is not connected yet.</strong> These are real page links for preview only; no sample visit counts, draft statuses or pretend edit controls are shown.</div>
-      </section>
-
-      <section class="admin-card admin-portal-section admin-coming-soon" id="botKnowledge">
-        <div class="admin-coming-icon" aria-hidden="true">✧</div>
-        <span class="admin-eyebrow">PLANNED FEATURE</span>
-        <h2>Bot Knowledge</h2>
-        <p>The agriculture assistant will be built in a later phase. We plan to connect it to approved farming guides, crop information and verified market prices after the admin portal is ready.</p>
-        <span class="admin-coming-label">Coming soon — bot not connected</span>
-      </section>
-
-      <section class="admin-card admin-portal-section admin-coming-soon" id="adminMessages">
-        <div class="admin-coming-icon" aria-hidden="true">▣</div>
-        <span class="admin-eyebrow">COMMUNICATIONS</span>
-        <h2>Messages</h2>
-        <p>WhatsApp and Facebook conversations are not connected to this admin portal yet. This section will become an inbox after the messaging providers and secure webhook handling are configured.</p>
-        <span class="admin-coming-label">Not connected yet</span>
-      </section>
-
-      <section class="admin-card admin-portal-section" id="adminSettings">
-        <div class="admin-portal-section-head">
-          <div><span class="admin-eyebrow">ACCOUNT &amp; SECURITY</span><h2>Admin settings</h2><p>Review the administrator account and current session. Sensitive credentials are never displayed here.</p></div>
-        </div>
-        <div class="admin-settings-grid">
-          <article><span>Signed-in administrator</span><strong id="adminAccountEmail">Checking account…</strong><small id="adminAccountMethod">Verifying secure session</small></article>
-          <article><span>Session status</span><strong id="adminSessionState">Checking…</strong><small>Protected server-side administrator session</small></article>
-        </div>
-        <div class="admin-settings-actions"><button type="button" id="adminSettingsLogout" class="btn-outline">Sign out securely</button></div>
-      </section>
-
-      <section id="financeDashboard" class="admin-card finance-page">
-        <div class="finance-card-head">
-          <div><span class="section-kicker">BUSINESS PERFORMANCE</span><h2>Business &amp; Finance Dashboard</h2><p>Track users, four membership levels, revenue and operating costs. All financial amounts are in MWK.</p></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-outline" href="../pages/subscriptions.html">View membership plans ↗</a><button id="financeLogout" class="btn btn-ghost" type="button">Sign out</button></div>
-        </div>
-        <div id="financeStatus" class="finance-status" role="status">Checking administrator access…</div>
-        <label class="finance-month">Reporting month<input id="reportMonth" type="month"></label>
-        <div class="finance-kpis">
-          <article class="finance-kpi"><span>Registered accounts</span><strong id="totalUsers">—</strong><small id="userBreakdown">Free and premium users</small></article>
-          <article class="finance-kpi"><span>Monthly active users</span><strong id="activeUsers">—</strong><small>Unique users active this month</small></article>
-          <article class="finance-kpi"><span>Active subscribers</span><strong id="activeSubs">—</strong><small id="tierBreakdown">Across paid plans</small></article>
-          <article class="finance-kpi"><span>Active subscription MRR</span><strong id="activeMrr">—</strong><small>Estimated recurring value, not cash received</small></article>
-          <article class="finance-kpi"><span>Recorded revenue</span><strong id="totalRevenue">—</strong><small>Current reporting month</small></article>
-          <article class="finance-kpi"><span>Operating expenses</span><strong id="totalExpenses">—</strong><small>Current reporting month</small></article>
-          <article class="finance-kpi finance-kpi-highlight"><span>Operating result</span><strong id="operatingResult">—</strong><small>Recorded revenue less recorded expenses</small></article>
-        </div>
-        <div class="finance-grid">
-          <article class="admin-card"><h3>Revenue breakdown</h3><p>Actual receipts recorded for the selected month.</p><div id="revenueBreakdown" class="finance-breakdown"></div></article>
-          <article class="admin-card"><h3>Subscription performance</h3><p>Current subscription status and new records this month.</p><div id="subscriptionBreakdown" class="finance-breakdown"></div></article>
-        </div>
-        <article class="admin-card">
-          <h3>Record revenue</h3><p>Enter actual advertising, subscription or partnership income. Do not enter projections as actual receipts.</p>
-          <form id="revenueForm" class="finance-form">
-            <label>Revenue source<select id="revenueSource" required><option value="advertising">Advertising</option><option value="subscription">Subscriptions</option><option value="partnership">Business partnerships</option><option value="other">Other</option></select></label>
-            <label>Amount (MWK)<input id="revenueAmount" type="number" min="1" step="0.01" required></label>
-            <label>Received date<input id="revenueDate" type="date" required></label>
-            <label>Reference / notes<input id="revenueNote" maxlength="180" placeholder="e.g. AdMob monthly payout"></label>
-            <button class="btn-admin" type="submit">Save revenue</button>
-          </form>
-        </article>
-        <article class="admin-card">
-          <h3>Record operating expense</h3><p>Track hosting, domain, marketing, content and maintenance costs.</p>
-          <form id="expenseForm" class="finance-form">
-            <label>Expense category<select id="expenseCategory" required><option>Hosting &amp; database</option><option>Domain</option><option>Marketing</option><option>Content creation</option><option>Maintenance</option><option>Payment fees</option><option>Other</option></select></label>
-            <label>Amount (MWK)<input id="expenseAmount" type="number" min="1" step="0.01" required></label>
-            <label>Expense date<input id="expenseDate" type="date" required></label>
-            <label>Description<input id="expenseDescription" maxlength="180" required></label>
-            <button class="btn-admin" type="submit">Save expense</button>
-          </form>
-        </article>
-        <div class="finance-grid">
-          <article class="admin-card"><h3>Recent revenue entries</h3><div class="table-scroll"><table class="admin-table"><thead><tr><th>Date</th><th>Source</th><th>Amount</th><th>Reference</th></tr></thead><tbody id="revenueRows"></tbody></table></div></article>
-          <article class="admin-card"><h3>Recent expenses</h3><div class="table-scroll"><table class="admin-table"><thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Description</th></tr></thead><tbody id="expenseRows"></tbody></table></div></article>
-        </div>
-        <article class="admin-card"><h3>Four-level subscription catalogue</h3><div class="table-scroll"><table class="admin-table"><thead><tr><th>Plan</th><th>Monthly price</th><th>Ads</th><th>Status</th></tr></thead><tbody id="planRows"></tbody></table></div></article>
-        <p class="finance-footnote">Only records entered or integrated into Supabase are included in actual revenue and expenses. An active subscription is not proof of payment received. Google Play Billing and AdMob payout integrations still need to be configured separately.</p>
-      </section>
-
-    <!-- Global Footer -->
+      <!-- Global Footer -->
     <!-- Master Agricultural Knowledge Hub Footer -->
+<section class="admin-overview-shortcuts" aria-label="Admin workspace pages">
+<a href="admin-farmers.html"><strong>Farmers</strong><span>Review farmer-submitted reports and contributors</span><b>Open page ↗</b></a>
+<a href="admin-crops-prices.html"><strong>Crops &amp; Prices</strong><span>Add, verify and manage market price records</span><b>Open page ↗</b></a>
+<a href="admin-content.html"><strong>Website Content</strong><span>Preview published public website sections</span><b>Open page ↗</b></a>
+<a href="admin-submissions.html"><strong>Submissions &amp; approvals</strong><span>Review pending membership payment requests</span><b>Open page ↗</b></a>
+<a href="admin-finance.html"><strong>Analytics &amp; finance</strong><span>View account, subscription and financial records</span><b>Open page ↗</b></a>
+<a href="admin-settings.html"><strong>Settings</strong><span>Check administrator account and session</span><b>Open page ↗</b></a>
+<a href="admin-bot.html"><strong>Bot Knowledge</strong><span>Planned feature — not connected yet</span><b>Open page ↗</b></a>
+<a href="admin-messages.html"><strong>Messages</strong><span>Messaging integrations are not connected yet</span><b>Open page ↗</b></a>
+</section>
 <footer class="footer">
   <div class="container footer-top-bar">
     <div class="footer-hero-brand">
@@ -516,7 +264,6 @@
   <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/admin.js"></script>
-  <script type="module" src="../js/admin-finance.js"></script>
   <script type="module" src="../js/auth.js"></script>
 </body>
 </html>
