@@ -20,12 +20,20 @@
   <div class="shell admin-shell">
     <aside class="admin-sidebar" aria-label="Administration navigation">
       <a class="admin-sidebar-brand" href="../index.html">
-        <span class="admin-brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span>
+        <span class="admin-brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 13C5.5 13 3 9 3 3c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span>
       </a>
-      <div class="admin-sidebar-label">WORKSPACE</div>
-      <nav class="admin-side-nav">
-        <a class="active" href="#adminOverview"><span>▦</span> Overview</a>
-        <a href="#priceManagement"><span>▤</span> Market prices</a>
+      <div class="admin-sidebar-label">MAIN MENU</div>
+      <nav class="admin-side-nav" aria-label="Main admin pages">
+        <a class="active" href="#adminOverview"><span>⌂</span> Overview</a>
+        <a href="#farmerManagement"><span>♙</span> Farmers</a>
+        <a href="#priceManagement"><span>♧</span> Crops &amp; Prices</a>
+        <a href="#websiteContent"><span>▤</span> Website Content</a>
+        <a href="#botKnowledge"><span>✧</span> Bot Knowledge <em class="admin-nav-soon">Soon</em></a>
+        <a href="#adminMessages"><span>▣</span> Messages <em class="admin-nav-soon">Soon</em></a>
+        <a href="#adminSettings"><span>⚙</span> Settings</a>
+      </nav>
+      <div class="admin-sidebar-label">REPORTING</div>
+      <nav class="admin-side-nav" aria-label="Reporting">
         <a href="#subscriptionApprovals"><span>✓</span> Submissions &amp; approvals</a>
         <a href="#financeDashboard"><span>▥</span> Analytics &amp; finance</a>
       </nav>
@@ -114,6 +122,24 @@
       </section>
 
       <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
+
+      <section class="admin-card admin-portal-section" id="farmerManagement">
+        <div class="admin-portal-section-head">
+          <div><span class="admin-eyebrow">FARMER CONTRIBUTIONS</span><h2>Farmer submissions</h2><p>Farmer-submitted market observations available in the existing market records. This is not a count of all registered farmer accounts.</p></div>
+          <a class="admin-action-link admin-action-secondary" href="#marketPriceDirectory">Review market records ↗</a>
+        </div>
+        <div class="admin-farmer-stats">
+          <article><span>Farmer price reports</span><strong id="farmerReportCount">—</strong></article>
+          <article><span>Identified contributors</span><strong id="farmerContributorCount">—</strong></article>
+          <article><span>Awaiting review</span><strong id="farmerPendingCount">—</strong></article>
+        </div>
+        <div class="table-scroll">
+          <table class="admin-table">
+            <thead><tr><th>Contributor</th><th>Crop</th><th>Market / District</th><th>Price range</th><th>Reported</th><th>Status</th></tr></thead>
+            <tbody id="adminFarmerTableBody"><tr><td colspan="6" class="admin-empty-cell">Loading farmer submissions…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
 
       <!-- Add Price Form Card -->
       <section class="admin-card" id="priceManagement">
@@ -265,6 +291,51 @@
       </section>
     </main>
 
+
+      <section class="admin-card admin-portal-section" id="websiteContent">
+        <div class="admin-portal-section-head">
+          <div><span class="admin-eyebrow">PUBLIC WEBSITE</span><h2>Website content</h2><p>Preview the public sections currently present on the website. Editing and publishing directly from this portal requires a content-management database, which is not connected yet.</p></div>
+          <a class="admin-action-link admin-action-secondary" href="../index.html" target="_blank" rel="noopener">Open website ↗</a>
+        </div>
+        <div class="admin-content-grid">
+          <a class="admin-content-link" href="../index.html" target="_blank" rel="noopener"><strong>Home page</strong><span>Public landing page and platform introduction</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="crops.html" target="_blank" rel="noopener"><strong>Crop library</strong><span>Crop information and growing guidance</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="market-centre.html" target="_blank" rel="noopener"><strong>Market centre</strong><span>Published market prices and observations</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="weather.html" target="_blank" rel="noopener"><strong>Weather centre</strong><span>Weather information and agricultural context</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="learning-centre.html" target="_blank" rel="noopener"><strong>Learning centre</strong><span>Farming guides and learning resources</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="news.html" target="_blank" rel="noopener"><strong>Agriculture news</strong><span>News and platform updates</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="pest-disease.html" target="_blank" rel="noopener"><strong>Pest &amp; disease centre</strong><span>Crop protection information</span><small>Preview page ↗</small></a>
+          <a class="admin-content-link" href="soil-centre.html" target="_blank" rel="noopener"><strong>Soil centre</strong><span>Soil management information</span><small>Preview page ↗</small></a>
+        </div>
+        <div class="admin-notice"><strong>Content editing is not connected yet.</strong> These are real page links for preview only; no sample visit counts, draft statuses or pretend edit controls are shown.</div>
+      </section>
+
+      <section class="admin-card admin-portal-section admin-coming-soon" id="botKnowledge">
+        <div class="admin-coming-icon" aria-hidden="true">✧</div>
+        <span class="admin-eyebrow">PLANNED FEATURE</span>
+        <h2>Bot Knowledge</h2>
+        <p>The agriculture assistant will be built in a later phase. We plan to connect it to approved farming guides, crop information and verified market prices after the admin portal is ready.</p>
+        <span class="admin-coming-label">Coming soon — bot not connected</span>
+      </section>
+
+      <section class="admin-card admin-portal-section admin-coming-soon" id="adminMessages">
+        <div class="admin-coming-icon" aria-hidden="true">▣</div>
+        <span class="admin-eyebrow">COMMUNICATIONS</span>
+        <h2>Messages</h2>
+        <p>WhatsApp and Facebook conversations are not connected to this admin portal yet. This section will become an inbox after the messaging providers and secure webhook handling are configured.</p>
+        <span class="admin-coming-label">Not connected yet</span>
+      </section>
+
+      <section class="admin-card admin-portal-section" id="adminSettings">
+        <div class="admin-portal-section-head">
+          <div><span class="admin-eyebrow">ACCOUNT &amp; SECURITY</span><h2>Admin settings</h2><p>Review the administrator account and current session. Sensitive credentials are never displayed here.</p></div>
+        </div>
+        <div class="admin-settings-grid">
+          <article><span>Signed-in administrator</span><strong id="adminAccountEmail">Checking account…</strong><small id="adminAccountMethod">Verifying secure session</small></article>
+          <article><span>Session status</span><strong id="adminSessionState">Checking…</strong><small>Protected server-side administrator session</small></article>
+        </div>
+        <div class="admin-settings-actions"><button type="button" id="adminSettingsLogout" class="btn-outline">Sign out securely</button></div>
+      </section>
 
       <section id="financeDashboard" class="admin-card finance-page">
         <div class="finance-card-head">
