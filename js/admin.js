@@ -43,6 +43,27 @@ async function checkServerAdminSession() {
   }
 }
 
+async function syncServerAdminSessionFromSupabase() {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.access_token) return null;
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify({ accessToken: session.access_token })
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.authenticated ? data.user : null;
+  } catch {
+    return null;
+  }
+}
+
 async function checkSupabaseAdmin() {
   try {
     const { data: { user }, error } = await supabase.auth.getUser();
@@ -60,16 +81,26 @@ async function checkSupabaseAdmin() {
 }
 
 async function requireAdmin() {
-  const [srvSession, sbAdmin] = await Promise.all([
+  let [srvSession, sbAdmin] = await Promise.all([
     checkServerAdminSession(),
     checkSupabaseAdmin()
   ]);
 
+  if (!srvSession && sbAdmin) {
+    srvSession = await syncServerAdminSessionFromSupabase();
+  }
+
   serverAdminSession = srvSession;
   adminUser = sbAdmin;
 
-  if (!serverAdminSession && !adminUser) {
-    window.location.assign('../login.html?redirect=' + encodeURIComponent('/pages/admin.html') + '&admin=true');
+  if (!serverAdminSession) {
+    window.location.replace('../login.html?redirect=' + encodeURIComponent('/pages/admin.html') + '&admin=true');
+    return false;
+  }
+
+  if (serverAdminSession.authMethod === 'supabase' && !adminUser) {
+    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
+    window.location.replace('../login.html?redirect=' + encodeURIComponent('/pages/admin.html') + '&admin=true');
     return false;
   }
 
@@ -117,9 +148,12 @@ function renderSupabaseAdminLinkNotice() {
       }
       adminUser = await checkSupabaseAdmin();
       if (!adminUser) {
+        await supabase.auth.signOut();
         showToast('Signed in, but this user is not listed in public.admin_access.');
         return;
       }
+      const synced = await syncServerAdminSessionFromSupabase();
+      if (synced) serverAdminSession = synced;
       showToast('Supabase admin RLS access connected.');
       renderSupabaseAdminLinkNotice();
       await Promise.all([loadRows(), loadPendingSubscriptions()]);

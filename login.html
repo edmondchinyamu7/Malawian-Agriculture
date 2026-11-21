@@ -537,9 +537,76 @@
 
     window.addEventListener('languageChanged', updateLanguageLabels);
 
-    // Check if user is already authenticated in Supabase (farmer session)
+    async function establishServerAdminSession(accessToken) {
+      const loginRes = await fetch('/api/admin/login', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({ accessToken })
+      });
+      const loginData = await loginRes.json().catch(() => ({}));
+      if (!loginRes.ok || !loginData.ok) {
+        const err = new Error(loginData.message || 'Unable to create server administrator session.');
+        err.status = loginRes.status;
+        err.code = loginData.code || '';
+        throw err;
+      }
+
+      const sessionRes = await fetch('/api/admin/session', { credentials: 'same-origin' });
+      const sessionData = await sessionRes.json().catch(() => ({}));
+      if (!sessionRes.ok || !sessionData.authenticated) {
+        const err = new Error('Administrator session cookie was not persisted by the browser. Ensure cookies are enabled and reload.');
+        err.status = sessionRes.status;
+        throw err;
+      }
+      return sessionData;
+    }
+
+    function getSafeAdminRedirect() {
+      const target = urlParams.get('redirect');
+      if (target && target.startsWith('/') && !target.startsWith('//') && !target.includes('login')) {
+        return target;
+      }
+      return '/pages/admin.html';
+    }
+
+    // Check if user is already authenticated (farmer or admin)
     async function checkCurrentSession() {
       try {
+        if (mode === 'admin') {
+          const srvRes = await fetch('/api/admin/session', { credentials: 'same-origin' });
+          if (srvRes.ok) {
+            const srvData = await srvRes.json().catch(() => ({}));
+            if (srvData.authenticated) {
+              window.location.replace(getSafeAdminRedirect());
+              return;
+            }
+          }
+
+          // If Supabase admin is already signed in, bridge cleanly to a server session cookie
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.access_token && session.user?.id) {
+            const { data: accessRow } = await supabase
+              .from('admin_access')
+              .select('user_id')
+              .eq('user_id', session.user.id)
+              .maybeSingle();
+            if (accessRow) {
+              try {
+                await establishServerAdminSession(session.access_token);
+                window.location.replace(getSafeAdminRedirect());
+                return;
+              } catch (bridgeErr) {
+                showAlert(bridgeErr.message, 'error');
+              }
+            }
+          }
+          return;
+        }
+
         const { data: { user } } = await supabase.auth.getUser();
         if (user && mode !== 'admin') {
           $('alreadyLoggedInBox').hidden = false;
@@ -560,6 +627,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('admin') === 'true' || window.location.hash === '#admin') {
       setMode('admin');
+      checkCurrentSession();
     } else if (urlParams.get('mode') === 'forgot') {
       setMode('forgot');
     } else {
@@ -617,41 +685,57 @@
       const originalText = $('submitText').textContent;
       $('submitText').textContent = lang === 'en' ? 'Please wait…' : 'Chonde dikirani…';
 
-      // 1. ADMINISTRATOR LOGIN (Supabase Auth + admin_access authorization)
+      // 1. ADMINISTRATOR LOGIN (Supabase Auth + server-side admin_access & session cookie)
       if (mode === 'admin') {
         try {
-          if (!usernameInput || !usernameInput.includes('@') || !password) {
+          if (!usernameInput || !password) {
             throw new Error(lang === 'en' ? 'Enter your administrator email and password.' : 'Lembani imelo ndi mawu achinsinsi a administrator.');
           }
 
-          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-            email: usernameInput,
-            password
-          });
-          if (signInError) throw signInError;
+          if (usernameInput.includes('@')) {
+            const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+              email: usernameInput,
+              password
+            });
+            if (signInError) throw signInError;
 
-          const user = signInData?.user;
-          if (!user) throw new Error(lang === 'en' ? 'Sign-in could not be verified.' : 'Tinalephera kutsimikiza kulowa kwanu.');
+            let session = signInData?.session || null;
+            if (!session?.access_token) {
+              const { data: sessWrap } = await supabase.auth.getSession();
+              session = sessWrap?.session || null;
+            }
+            if (!signInData?.user || !session?.access_token) {
+              throw new Error(lang === 'en' ? 'Sign-in could not be verified.' : 'Tinalephera kutsimikiza kulowa kwanu.');
+            }
 
-          const { data: accessRow, error: accessError } = await supabase
-            .from('admin_access')
-            .select('user_id')
-            .eq('user_id', user.id)
-            .maybeSingle();
-
-          if (accessError || !accessRow) {
-            await supabase.auth.signOut();
-            throw new Error(lang === 'en'
-              ? 'This account is not authorized for the administrator dashboard.'
-              : 'Akauntiyi ilibe chilolezo cholowa mu dashboard ya administrator.');
+            try {
+              await establishServerAdminSession(session.access_token);
+            } catch (srvErr) {
+              if (srvErr.status === 403) {
+                await supabase.auth.signOut();
+                throw new Error(lang === 'en'
+                  ? 'This account is not authorized for the administrator dashboard.'
+                  : 'Akauntiyi ilibe chilolezo cholowa mu dashboard ya administrator.');
+              }
+              throw srvErr;
+            }
+          } else {
+            // Optional server-env username/password admin fallback
+            const res = await fetch('/api/admin/login', {
+              method: 'POST',
+              credentials: 'same-origin',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: usernameInput, password })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.ok) {
+              throw new Error(data.message || (lang === 'en' ? 'Administrator sign-in failed.' : 'Zalephera kulowa mu admin portal.'));
+            }
           }
 
           showAlert(lang === 'en' ? 'Administrator verified. Opening dashboard…' : 'Administrator watsimikizidwa. Tikutsegula dashboard…', 'success');
-          const redirectTarget = urlParams.get('redirect');
-          const safeTarget = (redirectTarget && redirectTarget.startsWith('/') && !redirectTarget.startsWith('//'))
-            ? redirectTarget
-            : '/pages/admin.html';
-          setTimeout(() => window.location.assign(safeTarget), 400);
+          const safeTarget = getSafeAdminRedirect();
+          setTimeout(() => window.location.assign(safeTarget), 250);
         } catch (adminErr) {
           showAlert(adminErr.message || (lang === 'en' ? 'Administrator sign-in failed.' : 'Zalephera kulowa mu admin portal.'), 'error');
           submitBtn.disabled = false;

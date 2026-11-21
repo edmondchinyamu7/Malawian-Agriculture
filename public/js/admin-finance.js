@@ -26,7 +26,7 @@ function setText(id, value) {
   if (el) el.textContent = value;
 }
 
-// Unified admin check: accepts server admin cookie OR Supabase admin_access session
+// Unified admin check: requires server admin session (auto-synced from verified Supabase admin_access if needed)
 async function requireAdmin() {
   let serverAdmin = null;
   try {
@@ -45,7 +45,28 @@ async function requireAdmin() {
     }
   } catch (_) {}
 
-  if (!serverAdmin && !activeSupabaseAdmin) {
+  if (!serverAdmin && activeSupabaseAdmin) {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`
+          },
+          body: JSON.stringify({ accessToken: session.access_token })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.authenticated) serverAdmin = data.user;
+        }
+      }
+    } catch (_) {}
+  }
+
+  if (!serverAdmin || (serverAdmin.authMethod === 'supabase' && !activeSupabaseAdmin)) {
     location.replace('/login.html?redirect=' + encodeURIComponent(location.pathname) + '&admin=true');
     return null;
   }

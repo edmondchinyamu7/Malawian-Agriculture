@@ -49,58 +49,102 @@ export async function logoutUser() {
   window.location.assign('/login.html');
 }
 
-export async function initAuth() {
-  const login = document.getElementById('accountLoginLink');
-  const menu = document.getElementById('profileMenu');
-  const button = document.getElementById('profileMenuButton');
-  const drop = document.getElementById('profileDropdown');
+const recordedDailyActivity = new Set();
+let initAuthInFlight = null;
 
+async function recordDailyActivity(userId) {
+  if (!userId) return;
+  const today = new Date().toISOString().slice(0, 10);
+  const cacheKey = `ulimi_activity_${userId}_${today}`;
+
+  if (recordedDailyActivity.has(cacheKey)) return;
   try {
-    const a = await getAccount();
-    if (a?.user?.id) {
-      const { error: activityError } = await supabase.from('app_activity_events').insert({ user_id: a.user.id, event_name: 'app_open' });
-      if (activityError && activityError.code !== '23505') console.warn('Activity tracking notice:', activityError.message);
+    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(cacheKey) === '1') {
+      recordedDailyActivity.add(cacheKey);
+      return;
     }
-    if (login) login.hidden = !!a;
-    if (menu) menu.hidden = !a;
+  } catch (_) {}
 
-    if (a && button) {
-      const fn = a.profile?.first_name || '';
-      const ln = a.profile?.last_name || '';
-      const emailInitial = a.user?.email ? a.user.email[0].toUpperCase() : 'U';
-      button.textContent = initials(fn, ln, emailInitial);
-      const fullName = [fn, ln].filter(Boolean).join(' ') || a.user.email;
-      button.title = `${fullName} (${a.profile?.role === 'admin' ? 'Admin' : 'Farmer'})`;
+  recordedDailyActivity.add(cacheKey);
+  try {
+    const { error: activityError } = await supabase
+      .from('app_activity_events')
+      .upsert(
+        { user_id: userId, activity_date: today, event_name: 'app_open' },
+        { onConflict: 'user_id,activity_date', ignoreDuplicates: true }
+      );
+    if (!activityError || activityError.code === '23505') {
+      try {
+        if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(cacheKey, '1');
+      } catch (_) {}
+    } else {
+      recordedDailyActivity.delete(cacheKey);
     }
-  } catch (e) {
-    console.warn('Auth init check notice:', e?.message || e);
+  } catch (_) {
+    recordedDailyActivity.delete(cacheKey);
   }
+}
 
-  if (button && drop && !button.dataset.bound) {
-    button.dataset.bound = 'true';
-    button.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isHidden = drop.hidden;
-      drop.hidden = !isHidden;
-      button.setAttribute('aria-expanded', String(isHidden));
-    });
+export async function initAuth() {
+  if (initAuthInFlight) return initAuthInFlight;
 
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('#profileMenu')) {
-        drop.hidden = true;
-        button.setAttribute('aria-expanded', 'false');
+  initAuthInFlight = (async () => {
+    const login = document.getElementById('accountLoginLink');
+    const menu = document.getElementById('profileMenu');
+    const button = document.getElementById('profileMenuButton');
+    const drop = document.getElementById('profileDropdown');
+
+    try {
+      const a = await getAccount();
+      if (a?.user?.id) {
+        // Non-blocking activity log: never blocks auth or dashboard initialization
+        void recordDailyActivity(a.user.id);
       }
-    });
-  }
+      if (login) login.hidden = !!a;
+      if (menu) menu.hidden = !a;
 
-  const logout = document.getElementById('accountLogoutButton');
-  if (logout && !logout.dataset.bound) {
-    logout.dataset.bound = 'true';
-    logout.addEventListener('click', (e) => {
-      e.preventDefault();
-      logoutUser();
-    });
-  }
+      if (a && button) {
+        const fn = a.profile?.first_name || '';
+        const ln = a.profile?.last_name || '';
+        const emailInitial = a.user?.email ? a.user.email[0].toUpperCase() : 'U';
+        button.textContent = initials(fn, ln, emailInitial);
+        const fullName = [fn, ln].filter(Boolean).join(' ') || a.user.email;
+        button.title = `${fullName} (${a.profile?.role === 'admin' ? 'Admin' : 'Farmer'})`;
+      }
+    } catch (e) {
+      console.warn('Auth init check notice:', e?.message || e);
+    }
+
+    if (button && drop && !button.dataset.bound) {
+      button.dataset.bound = 'true';
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = drop.hidden;
+        drop.hidden = !isHidden;
+        button.setAttribute('aria-expanded', String(isHidden));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#profileMenu')) {
+          drop.hidden = true;
+          button.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    const logout = document.getElementById('accountLogoutButton');
+    if (logout && !logout.dataset.bound) {
+      logout.dataset.bound = 'true';
+      logout.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutUser();
+      });
+    }
+  })().finally(() => {
+    initAuthInFlight = null;
+  });
+
+  return initAuthInFlight;
 }
 
 if (document.readyState === 'loading') {
@@ -115,7 +159,7 @@ supabase.auth.onAuthStateChange((event, session) => {
     const m = document.getElementById('profileMenu');
     if (l) l.hidden = false;
     if (m) m.hidden = true;
-  } else if (session) {
-    setTimeout(initAuth, 10);
+  } else if ((event === 'SIGNED_IN' || event === 'USER_UPDATED') && session) {
+    setTimeout(() => { void initAuth(); }, 10);
   }
 });
