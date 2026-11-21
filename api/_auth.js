@@ -393,7 +393,15 @@ export async function verifySupabaseAdminAccessToken(accessToken) {
 
 export async function verifyActiveAdminRecordById(userId) {
   const serviceRoleKey = getSupabaseServiceRoleKey();
-  if (!serviceRoleKey || !userId || !UUID_REGEX.test(userId)) return true;
+
+  // A signed browser session must never remain authorized when the server
+  // cannot independently re-check the administrator allow-list.
+  if (!serviceRoleKey) {
+    return { ok: false, unavailable: true };
+  }
+  if (!userId || !UUID_REGEX.test(userId)) {
+    return { ok: false, unavailable: false };
+  }
 
   try {
     const supabaseUrl = getSupabaseUrl();
@@ -409,11 +417,18 @@ export async function verifyActiveAdminRecordById(userId) {
         signal: AbortSignal.timeout(6000)
       }
     );
-    if (!resp.ok) return true; // Avoid false lockouts on transient upstream errors
+
+    if (!resp.ok) {
+      return { ok: false, unavailable: true };
+    }
+
     const rows = await resp.json();
-    return Array.isArray(rows) && rows.length === 1 && rows[0]?.user_id === userId;
+    return {
+      ok: Array.isArray(rows) && rows.length === 1 && rows[0]?.user_id === userId,
+      unavailable: false
+    };
   } catch {
-    return true;
+    return { ok: false, unavailable: true };
   }
 }
 
@@ -485,6 +500,35 @@ export async function handleAdminLogin(req, res) {
         authenticated: false,
         code: verified.code,
         message: verified.message
+      });
+    }
+
+    if (!getSupabaseServiceRoleKey()) {
+      return res.status(503).json({
+        ok: false,
+        authenticated: false,
+        code: 'SUPABASE_SERVICE_ROLE_KEY_MISSING',
+        message: 'Server administrator authorization verification is not configured. Set SUPABASE_SERVICE_ROLE_KEY in the server environment.'
+      });
+    }
+
+    const activeAdmin = await verifyActiveAdminRecordById(verified.user.id);
+    if (activeAdmin.unavailable) {
+      return res.status(503).json({
+        ok: false,
+        authenticated: false,
+        code: 'ADMIN_ACCESS_CHECK_UNAVAILABLE',
+        message: 'Unable to verify administrator access on the server. Please try again later.'
+      });
+    }
+    if (!activeAdmin.ok) {
+      recordLoginFailure(req);
+      res.setHeader('Set-Cookie', buildClearCookie(isSecure));
+      return res.status(403).json({
+        ok: false,
+        authenticated: false,
+        code: 'NOT_AUTHORIZED',
+        message: 'This account is not authorized for the administrator dashboard.'
       });
     }
 
@@ -582,12 +626,20 @@ export async function handleAdminSession(req, res) {
   }
 
   if (session.authMethod === 'supabase' && session.uid) {
-    const stillAdmin = await verifyActiveAdminRecordById(session.uid);
-    if (!stillAdmin) {
+    const adminCheck = await verifyActiveAdminRecordById(session.uid);
+    if (adminCheck.unavailable) {
+      return res.status(503).json({
+        authenticated: false,
+        code: 'ADMIN_ACCESS_CHECK_UNAVAILABLE',
+        message: 'Unable to verify administrator authorization right now. Please try again later.'
+      });
+    }
+    if (!adminCheck.ok) {
       revokeSessionToken(token);
       res.setHeader('Set-Cookie', buildClearCookie(isSecure));
       return res.status(403).json({
         authenticated: false,
+        code: 'ADMIN_ACCESS_REVOKED',
         message: 'Administrator access has been revoked.'
       });
     }
@@ -683,13 +735,22 @@ export async function handleAdminRefresh(req, res) {
   }
 
   if (session.authMethod === 'supabase' && session.uid) {
-    const stillAdmin = await verifyActiveAdminRecordById(session.uid);
-    if (!stillAdmin) {
+    const adminCheck = await verifyActiveAdminRecordById(session.uid);
+    if (adminCheck.unavailable) {
+      return res.status(503).json({
+        ok: false,
+        authenticated: false,
+        code: 'ADMIN_ACCESS_CHECK_UNAVAILABLE',
+        message: 'Unable to verify administrator authorization right now. Please try again later.'
+      });
+    }
+    if (!adminCheck.ok) {
       revokeSessionToken(oldToken);
       res.setHeader('Set-Cookie', buildClearCookie(isSecure));
       return res.status(403).json({
         ok: false,
         authenticated: false,
+        code: 'ADMIN_ACCESS_REVOKED',
         message: 'Administrator access has been revoked.'
       });
     }
