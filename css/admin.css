@@ -652,3 +652,149 @@
   .admin-membership-metrics strong{font-size:19px}
   .admin-shell .finance-page{width:auto;max-width:calc(100% - 78px);margin:0 10px 24px 68px;padding:14px!important}
 }
+
+
+/* ===== Restore Ulimi wa Malawi's original green brand palette =====
+   Keep the newer dashboard layout and charts, but return the workspace
+   surfaces, navigation, charts and controls to the agriculture-green theme. */
+.admin-shell{
+  --admin-bg:#f3f7f3;
+  --admin-panel:#ffffff;
+  --admin-panel-2:#eaf3ec;
+  --admin-line:#dce9df;
+  --admin-text:#173e2c;
+  --admin-muted:#627468;
+  --admin-blue:#176b4a;
+  --admin-cyan:#2f9b70;
+  color:#173e2c;
+  background:linear-gradient(135deg,#f3f7f3 0%,#edf5ee 58%,#f7faf6 100%);
+}
+.admin-sidebar{
+  color:#eaf4ed;
+  background:linear-gradient(180deg,#164b35 0%,#123d2c 62%,#0f3527 100%);
+  border-right:1px solid rgba(15,65,42,.14);
+  box-shadow:8px 0 28px rgba(10,40,25,.08);
+}
+.admin-sidebar-brand{color:#fff}
+.admin-sidebar-brand small{color:#a9c8b5}
+.admin-brand-mark{
+  color:#174a32;
+  background:linear-gradient(145deg,#e8f4eb,#cfe8d6);
+  box-shadow:0 4px 16px rgba(8,57,34,.12);
+}
+.admin-sidebar-label{color:#a6c8b2}
+.admin-side-nav a{color:#d8e8dd;border-color:transparent}
+.admin-side-nav a span{color:#a8d3b5}
+.admin-side-nav a:hover,.admin-side-nav a.active{
+  color:#fff;
+  background:linear-gradient(100deg,#285941,#1f6848);
+  border-color:rgba(190,226,201,.16);
+  box-shadow:inset 3px 0 #a5d6a7;
+}
+.admin-sidebar-bottom{border-color:rgba(255,255,255,.13);color:#b7d1c0}
+.admin-shell>.topbar{
+  color:#173e2c;
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid #e2ebe4;
+  box-shadow:0 4px 18px rgba(24,55,35,.035);
+}
+.admin-shell>.topbar .brand{color:#174a32}
+.admin-shell>.topbar .brand small{color:#6c8173}
+.admin-shell>.topbar .brand-mark{
+  color:#174a32;background:linear-gradient(145deg,#dcefe1,#b9dfc6);
+  box-shadow:0 3px 14px rgba(23,107,74,.12);
+}
+.admin-shell>.topbar .lang-btn,
+.admin-shell>.topbar .account-login-link,
+.admin-shell>.topbar .profile-avatar{
+  color:#174a32;border-color:#dce9df;background:#f5faf6;
+}
+.admin-dashboard-heading h1{color:#173e2c}
+.admin-dashboard-heading p{color:#627468}
+.admin-eyebrow,.admin-dashboard-heading .admin-eyebrow{color:#267451}
+.admin-action-link{
+  color:#fff;background:linear-gradient(105deg,#087653,#176b4a);
+  border-color:#176b4a;box-shadow:0 6px 18px rgba(23,107,74,.15);
+}
+.admin-action-link.admin-action-secondary{
+  color:#176b4a;background:#fff;border-color:#cfe0d3;box-shadow:none;
+}
+.admin-overview-summary,.admin-visual-card,.admin-page-heading,.admin-card{
+  color:#173e2c;background:#fff;border-color:#dfeae1;
+  box-shadow:0 8px 26px rgba(21,55,34,.045);
+}
+.admin-summary-heading h2,.admin-visual-head h2{color:#174a32}
+.admin-summary-heading p,.admin-visual-head p{color:#627468}
+.admin-summary-updated{color:#527661}
+.admin-summary-stat{
+  border-color:#dce9df;
+  background:linear-gradient(145deg,#f8fbf8,#edf5ef);
+}
+.admin-summary-stat span,.admin-summary-stat small{color:#627468}
+.admin-summary-stat strong{color:#174a32}
+.admin-summary-stat:nth-child(1) strong{color:#176b4a}
+.admin-summary-stat:nth-child(2) strong{color:#16845a}
+.admin-summary-stat:nth-child(3) strong{color:#a56b16}
+.admin-summary-stat:nth-child(4) strong{color:#b64b4b}
+.admin-summary-stat:nth-child(5) strong,.admin-shell .admin-summary-stat:nth-child(6) strong{color:#397b55}
+.admin-visual-head>a{color:#176b4a}
+.admin-price-trend{
+  border-bottom-color:#e1ebe3;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 43px,#edf3ee 44px,transparent 45px);
+}
+.admin-trend-value{color:#397b55}
+.admin-trend-bar-track{background:rgba(23,107,74,.08)}
+.admin-trend-bar-track span{
+  background:linear-gradient(180deg,#65bd8b,#176b4a);
+  box-shadow:0 0 14px rgba(23,107,74,.16);
+}
+.admin-trend-label{color:#6c8173}
+.admin-donut{box-shadow:0 0 20px rgba(23,107,74,.08)}
+.admin-donut:before{background:#fff}
+.admin-donut strong{color:#174a32}
+.admin-donut span{color:#6c8173}
+.admin-donut-legend>div{color:#526b5b}
+.admin-donut-legend strong{color:#174a32}
+.admin-recent-row{border-bottom-color:#e8f0e9}
+.admin-recent-icon{color:#176b4a;background:#e7f3ea}
+.admin-recent-copy strong{color:#174a32}
+.admin-recent-copy small{color:#6c8173}
+.admin-status-pill{background:#edf3ee;color:#526b5b}
+.admin-status-pill.is-verified{background:#e3f5e9;color:#176b4a}
+.admin-status-pill.is-pending{background:#fff3dc;color:#94600e}
+.admin-status-pill.is-rejected{background:#fdebea;color:#ad3434}
+.admin-membership-metrics>div{background:#f3f8f4;border-color:#dce9df}
+.admin-membership-metrics span{color:#627468}
+.admin-membership-metrics strong{color:#174a32}
+.admin-empty-state{color:#6c8173}
+.admin-shell .admin-card{
+  background:#fff;border-color:#dfeae1;color:#173e2c;
+}
+.admin-shell .admin-card h3,.admin-shell .admin-card h2{color:#174a32}
+.admin-shell .admin-card p{color:#627468}
+.admin-shell .admin-form label,.admin-shell .form-group label{color:#174a32}
+.admin-shell .admin-form input,.admin-shell .admin-form select,.admin-shell .admin-form textarea,
+.admin-shell .finance-form input,.admin-shell .finance-form select{
+  color:#173e2c;background:#fbfdfb;border:1px solid #cbdad0;
+}
+.admin-shell .admin-table{color:#294b38}
+.admin-shell .admin-table th{background:#f1f7f2;color:#174a32;border-color:#e2ece4}
+.admin-shell .admin-table td{border-color:#e8f0e9}
+.admin-shell .btn-outline{color:#176b4a;border-color:#176b4a}
+.admin-shell .btn-outline:hover{background:#edf6ef}
+.admin-shell .btn-admin{background:linear-gradient(100deg,#087653,#176b4a)}
+.admin-shell .finance-page{background:#f8fbf8!important;border-color:#dfeae1}
+.admin-shell .finance-kpi,.admin-shell .finance-grid>.admin-card{
+  background:#fff;border-color:#dfeae1;color:#173e2c;
+}
+.admin-shell .finance-kpi span,.admin-shell .finance-kpi small{color:#627468}
+.admin-shell .finance-kpi strong{color:#174a32}
+.admin-shell .finance-breakdown-row{border-color:#e2ece4;color:#294b38}
+.admin-shell .finance-status{color:#176b4a}
+.admin-shell .finance-month{color:#527661}
+.admin-shell .finance-footnote{color:#6c8173}
+.admin-shell .footer{background:#123d2c;color:#d8e8dd}
+.admin-shell .footer a{color:#b9dfc6}
+@media(max-width:900px){
+  .admin-sidebar{background:linear-gradient(180deg,#164b35 0%,#123d2c 62%,#0f3527 100%)}
+}
