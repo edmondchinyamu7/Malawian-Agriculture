@@ -798,3 +798,88 @@
 @media(max-width:900px){
   .admin-sidebar{background:linear-gradient(180deg,#164b35 0%,#123d2c 62%,#0f3527 100%)}
 }
+
+
+/* ===== Ulimi admin portal: section navigation and content panels ===== */
+.admin-sidebar{overflow-y:auto;overscroll-behavior:contain}
+.admin-sidebar::-webkit-scrollbar{width:5px}
+.admin-sidebar::-webkit-scrollbar-thumb{background:rgba(210,238,218,.25);border-radius:8px}
+.admin-nav-soon{
+  margin-left:auto;padding:3px 6px;border-radius:999px;
+  color:#d9eadf;background:rgba(210,238,218,.13);
+  font-size:8px;font-style:normal;font-weight:800;letter-spacing:.04em;
+}
+.admin-side-nav a[aria-current="page"]{background:linear-gradient(100deg,#2d704c,#286342);color:#fff}
+.admin-portal-section{scroll-margin-top:96px;margin:0 28px 24px}
+.admin-portal-section-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
+  margin-bottom:18px;
+}
+.admin-portal-section-head h2{margin:5px 0 7px;color:#174a32;font-size:23px;line-height:1.2}
+.admin-portal-section-head p{max-width:720px;margin:0;color:#627468;font-size:13px;line-height:1.65}
+.admin-farmer-stats,.admin-settings-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 20px;
+}
+.admin-farmer-stats article,.admin-settings-grid article{
+  padding:16px;border:1px solid #dce9df;border-radius:13px;background:linear-gradient(145deg,#f8fbf8,#edf5ef);
+}
+.admin-farmer-stats span,.admin-settings-grid span{display:block;color:#627468;font-size:12px}
+.admin-farmer-stats strong,.admin-settings-grid strong{display:block;margin:7px 0 4px;color:#174a32;font-size:25px;font-weight:900;overflow-wrap:anywhere}
+.admin-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.admin-settings-grid small{display:block;color:#6c8173;font-size:11px;line-height:1.5}
+.admin-settings-actions{display:flex;justify-content:flex-end;margin-top:16px}
+.admin-table-subtext{display:block;margin-top:4px;color:#718277;font-size:10px}
+.admin-empty-cell{padding:22px!important;text-align:center;color:#718277;font-size:13px}
+.admin-content-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.admin-content-link{
+  display:flex;flex-direction:column;gap:8px;min-height:128px;padding:16px;
+  border:1px solid #dce9df;border-radius:14px;background:#fbfdfb;
+  color:#174a32;text-decoration:none;transition:transform .18s,border-color .18s,box-shadow .18s;
+}
+.admin-content-link:hover{transform:translateY(-2px);border-color:#8fbea0;box-shadow:0 8px 20px rgba(23,107,74,.09)}
+.admin-content-link strong{font-size:14px}
+.admin-content-link span{color:#627468;font-size:12px;line-height:1.5}
+.admin-content-link small{margin-top:auto;color:#176b4a;font-size:11px;font-weight:800}
+.admin-notice{
+  margin-top:16px;padding:13px 15px;border:1px solid #cfe2d3;border-radius:12px;
+  background:#eff7f0;color:#486653;font-size:12px;line-height:1.6;
+}
+.admin-notice strong{color:#174a32}
+.admin-coming-soon{position:relative;overflow:hidden;padding:26px!important}
+.admin-coming-icon{
+  display:grid;place-items:center;width:46px;height:46px;margin-bottom:14px;
+  border-radius:14px;background:#e5f2e8;color:#176b4a;font-size:23px;
+}
+.admin-coming-soon h2{margin:5px 0 8px;color:#174a32;font-size:22px}
+.admin-coming-soon p{max-width:740px;color:#627468;font-size:13px;line-height:1.7}
+.admin-coming-label{
+  display:inline-flex;margin-top:5px;padding:7px 11px;border-radius:999px;
+  background:#edf5ef;color:#397b55;font-size:11px;font-weight:850;
+}
+.admin-shell .finance-page{margin:0 28px 34px 28px;width:auto;max-width:none}
+.admin-shell .finance-page .finance-card-head h2{color:#174a32}
+.admin-shell .finance-page .finance-card-head p{color:#627468}
+@media(max-width:1100px){
+  .admin-content-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  .admin-portal-section{margin:0 16px 20px}
+  .admin-portal-section-head{display:block}
+  .admin-portal-section-head>.admin-action-link{display:inline-flex;margin-top:13px}
+  .admin-farmer-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .admin-shell .finance-page{margin:0 16px 28px 92px;width:calc(100% - 108px)}
+  .admin-nav-soon{display:none}
+}
+@media(max-width:600px){
+  .admin-portal-section{margin:0 10px 16px;padding:15px!important}
+  .admin-portal-section-head h2{font-size:19px}
+  .admin-portal-section-head p{font-size:12px}
+  .admin-farmer-stats{grid-template-columns:1fr 1fr;gap:8px}
+  .admin-farmer-stats article{padding:12px}
+  .admin-farmer-stats strong{font-size:21px}
+  .admin-settings-grid{grid-template-columns:1fr}
+  .admin-content-grid{grid-template-columns:1fr}
+  .admin-content-link{min-height:0}
+  .admin-coming-soon{padding:18px!important}
+  .admin-shell .finance-page{margin:0 10px 24px 68px;width:calc(100% - 78px)}
+}
