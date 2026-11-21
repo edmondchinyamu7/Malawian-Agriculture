@@ -221,6 +221,7 @@ async function loadRows() {
   if (error) throw error;
   rows = data || [];
   renderAdminTable();
+  updateOverviewSummary();
 }
 
 function renderAdminTable() {
@@ -321,6 +322,7 @@ async function loadPendingSubscriptions() {
     if (error) throw error;
     pendingSubs = data || [];
     renderSubscriptionsTable();
+    updateOverviewSummary();
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:18px;color:#617268">${escapeHtml(adminUser ? ('Unable to load subscription requests: ' + err.message) : 'Connect a Supabase admin account above to inspect and approve pending membership payments.')}</td></tr>`;
   }
