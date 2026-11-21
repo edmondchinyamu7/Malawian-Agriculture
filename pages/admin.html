@@ -74,22 +74,10 @@
 
     <!-- Main Container -->
     <main class="main container">
-      <section class="admin-welcome" id="adminOverview">
-        <div><span class="section-kicker">ULIMI WA MALAWI · CONTROL CENTRE</span><h1>Good day, Administrator</h1><p>Manage agricultural information, market updates and platform operations from one workspace.</p></div>
-        <div class="admin-welcome-actions"><a class="btn btn-primary" href="#priceManagement">＋ Update market prices</a><a class="btn btn-outline" href="#financeDashboard">View reports ↗</a></div>
+      <section class="admin-dashboard-heading" id="adminOverview">
+        <div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Dashboard</h1><p>Welcome back, Administrator <span aria-hidden="true">✦</span></p></div>
+        <div class="admin-dashboard-heading-actions"><a class="admin-action-link" href="#priceManagement">＋ Add market price</a><a class="admin-action-link admin-action-secondary" href="#financeDashboard">Open analytics ↗</a></div>
       </section>
-      <!-- Section Header -->
-      <div class="section-head admin-page-heading">
-        <div>
-          <span class="section-kicker">Administrative Controls</span>
-          <h2>Administration overview</h2>
-          <p>Use the workspace to maintain trusted agricultural data, review submissions and monitor platform performance.</p>
-        </div>
-        <div>
-          <a href="#financeDashboard" class="btn btn-primary">Business &amp; Finance Dashboard ↗</a>
-          <a href="market-centre.html" class="btn btn-outline">View Public Market Centre ↗</a>
-        </div>
-      </div>
 
       <section class="admin-overview-summary" aria-label="Live website overview">
         <div class="admin-summary-heading">
@@ -104,6 +92,25 @@
           <article class="admin-summary-stat"><span>Membership requests</span><strong id="overviewSubscriptionTotal">—</strong><small>Subscription records in the system</small></article>
           <article class="admin-summary-stat"><span>Active memberships</span><strong id="overviewSubscriptionActive">—</strong><small>Currently marked active</small></article>
         </div>
+      </section>
+
+      <section class="admin-insights-grid" aria-label="Agricultural platform analytics">
+        <article class="admin-visual-card admin-trend-card">
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">MARKET INTELLIGENCE</span><h2>Market price activity</h2><p>Market observations grouped by month from available records</p></div><a href="#marketPriceDirectory">View records ↗</a></div>
+          <div id="adminPriceTrend" class="admin-price-trend"><p class="admin-empty-state">Loading market activity…</p></div>
+        </article>
+        <article class="admin-visual-card admin-category-card">
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">RECORD QUALITY</span><h2>Verification status</h2><p>Distribution of current market price records</p></div></div>
+          <div id="adminStatusDistribution" class="admin-status-distribution"><p class="admin-empty-state">Loading record status…</p></div>
+        </article>
+        <article class="admin-visual-card admin-recent-card">
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">LATEST UPDATES</span><h2>Recent market submissions</h2><p>Most recently reported crop prices</p></div><a href="#marketPriceDirectory">View all ↗</a></div>
+          <div id="adminRecentMarketActivity" class="admin-recent-activity"><p class="admin-empty-state">Loading recent records…</p></div>
+        </article>
+        <article class="admin-visual-card admin-membership-card">
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">FARMER MEMBERSHIP</span><h2>Membership snapshot</h2><p>Subscription records available to this workspace</p></div><a href="#subscriptionApprovals">Review ↗</a></div>
+          <div class="admin-membership-metrics"><div><span>All records</span><strong id="overviewSubscriptionTotalVisual">—</strong></div><div><span>Active</span><strong id="overviewSubscriptionActiveVisual">—</strong></div><div><span>Pending</span><strong id="overviewSubscriptionPendingVisual">—</strong></div></div>
+        </article>
       </section>
 
       <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
