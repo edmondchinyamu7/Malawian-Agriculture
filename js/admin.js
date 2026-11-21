@@ -221,6 +221,7 @@ async function requireAdmin() {
 
   serverAdminSession = srvSession;
   adminUser = sbAdmin;
+  renderAdminSettings();
 
   if (!serverAdminSession) {
     window.location.replace('../login.html?redirect=' + encodeURIComponent('/pages/admin.html') + '&admin=true');
@@ -235,6 +236,16 @@ async function requireAdmin() {
 
   renderSupabaseAdminLinkNotice();
   return true;
+}
+
+function renderAdminSettings() {
+  const email = adminUser?.email || serverAdminSession?.email || serverAdminSession?.username || 'Administrator account';
+  const account = document.getElementById('adminAccountEmail');
+  const method = document.getElementById('adminAccountMethod');
+  const session = document.getElementById('adminSessionState');
+  if (account) account.textContent = email;
+  if (method) method.textContent = adminUser ? 'Supabase Auth account linked to admin_access' : 'Server administrator session';
+  if (session) session.textContent = serverAdminSession ? 'Active and verified' : 'Not verified';
 }
 
 function renderSupabaseAdminLinkNotice() {
@@ -300,7 +311,38 @@ async function loadRows() {
   if (error) throw error;
   rows = data || [];
   renderAdminTable();
+  renderFarmerSubmissions();
   updateOverviewSummary();
+}
+
+function renderFarmerSubmissions() {
+  const body = document.getElementById('adminFarmerTableBody');
+  if (!body) return;
+  const reports = rows.filter(row => row.source_type === 'farmer');
+  const contributors = new Set(reports.map(row => row.reporter_user_id).filter(Boolean));
+  const pending = reports.filter(row => row.status === 'pending').length;
+  const count = document.getElementById('farmerReportCount');
+  const people = document.getElementById('farmerContributorCount');
+  const pendingCount = document.getElementById('farmerPendingCount');
+  if (count) count.textContent = money(reports.length);
+  if (people) people.textContent = money(contributors.size);
+  if (pendingCount) pendingCount.textContent = money(pending);
+  if (!reports.length) {
+    body.innerHTML = '<tr><td colspan="6" class="admin-empty-cell">No farmer-submitted market reports are available yet. Farmer records will appear here when submitted through the platform.</td></tr>';
+    return;
+  }
+  body.innerHTML = reports.map(row => {
+    const status = row.status === 'verified' ? 'Verified' : row.status === 'rejected' ? 'Rejected' : 'Pending review';
+    const statusClass = row.status === 'verified' ? 'is-verified' : row.status === 'rejected' ? 'is-rejected' : 'is-pending';
+    return `<tr>
+      <td><strong>${escapeHtml(row.reporter_name || 'Farmer contributor')}</strong><small class="admin-table-subtext">${escapeHtml(row.reporter_user_id ? 'Account-linked submission' : 'Unlinked report')}</small></td>
+      <td>${escapeHtml(row.crop_name || '—')}</td>
+      <td>${escapeHtml(row.market_name || '—')}<small class="admin-table-subtext">${escapeHtml(row.district || '—')}</small></td>
+      <td>MWK ${money(row.price_min)} – ${money(row.price_max)}</td>
+      <td>${escapeHtml(row.date_observed || '—')}</td>
+      <td><span class="admin-status-pill ${statusClass}">${escapeHtml(status)}</span></td>
+    </tr>`;
+  }).join('');
 }
 
 function renderAdminTable() {
@@ -531,6 +573,13 @@ export async function initAdminPriceManagement() {
     await supabase.auth.signOut();
     window.location.assign('../login.html?admin=true');
   });
+  const settingsLogout = document.getElementById('adminSettingsLogout');
+  if (settingsLogout) settingsLogout.addEventListener('click', async () => {
+    settingsLogout.disabled = true;
+    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
+    await supabase.auth.signOut();
+    window.location.assign('../login.html?admin=true');
+  });
   const resetBtn = document.getElementById('resetDefaultPricesBtn');
   if (resetBtn) resetBtn.hidden = true;
   try {
@@ -541,4 +590,7 @@ export async function initAdminPriceManagement() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {\n  initAdminSidebarNavigation();\n  initAdminPriceManagement();\n});
+document.addEventListener('DOMContentLoaded', () => {
+  initAdminSidebarNavigation();
+  initAdminPriceManagement();
+});
