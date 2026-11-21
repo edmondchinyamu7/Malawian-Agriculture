@@ -301,7 +301,7 @@
 
             <div class="form-group">
               <label for="email" id="emailLabel" data-i18n="authLabelEmail">Keyala ya imelo (Email)</label>
-              <input class="form-control" id="email" type="email" required autocomplete="email" placeholder="alimi@example.mw">
+              <input class="form-control" id="email" type="email" required autocomplete="email" placeholder="name@example.com">
             </div>
 
             <div class="form-group" id="passwordGroup">
@@ -506,7 +506,7 @@
 
       if (isAdmin) {
         $('email').type = 'email';
-        $('email').placeholder = 'popeeadlegacycompany@gmail.com';
+        $('email').placeholder = 'admin@example.com';
         if ($('adminLinkNote')) $('adminLinkNote').hidden = true;
         if ($('farmerLinkNote')) $('farmerLinkNote').hidden = false;
         if ($('resetBackNote')) $('resetBackNote').hidden = true;
@@ -586,24 +586,10 @@
             }
           }
 
-          // If Supabase admin is already signed in, bridge cleanly to a server session cookie
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.access_token && session.user?.id) {
-            const { data: accessRow } = await supabase
-              .from('admin_access')
-              .select('user_id')
-              .eq('user_id', session.user.id)
-              .maybeSingle();
-            if (accessRow) {
-              try {
-                await establishServerAdminSession(session.access_token);
-                window.location.replace(getSafeAdminRedirect());
-                return;
-              } catch (bridgeErr) {
-                showAlert(bridgeErr.message, 'error');
-              }
-            }
-          }
+          // Do not automatically exchange a previously stored Supabase browser
+          // session for an administrator session while the login form is open.
+          // Admin access is established only after the user submits this form
+          // and the server verifies the credentials and admin_access record.
           return;
         }
 
