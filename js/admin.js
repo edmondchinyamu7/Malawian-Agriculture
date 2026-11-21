@@ -59,6 +59,84 @@ function updateOverviewSummary() {
   }).format(new Date());
 }
 
+function renderOverviewVisuals() {
+  const trend = document.getElementById('adminPriceTrend');
+  if (trend) {
+    const now = new Date();
+    const months = Array.from({ length: 6 }, (_, index) => {
+      const date = new Date(now.getFullYear(), now.getMonth() - (5 - index), 1);
+      const key = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+      const label = date.toLocaleDateString('en-MW', { month: 'short' });
+      const count = rows.filter(row => String(row.date_observed || row.created_at || '').slice(0, 7) === key).length;
+      return { key, label, count };
+    });
+    const max = Math.max(1, ...months.map(item => item.count));
+    trend.innerHTML = months.map(item => {
+      const height = Math.max(5, Math.round((item.count / max) * 100));
+      return '<div class="admin-trend-column" title="' + escapeHtml(item.label + ': ' + item.count + ' records') + '">' +
+        '<span class="admin-trend-value">' + money(item.count) + '</span>' +
+        '<div class="admin-trend-bar-track"><span style="height:' + height + '%"></span></div>' +
+        '<span class="admin-trend-label">' + escapeHtml(item.label) + '</span></div>';
+    }).join('');
+  }
+
+  const distribution = document.getElementById('adminStatusDistribution');
+  if (distribution) {
+    const statuses = [
+      { key: 'verified', label: 'Verified', color: '#35c78a' },
+      { key: 'pending', label: 'Pending review', color: '#f4b44e' },
+      { key: 'rejected', label: 'Rejected', color: '#f06b76' },
+      { key: 'other', label: 'Other', color: '#7886a8' }
+    ];
+    const total = rows.length;
+    let cursor = 0;
+    const segments = statuses.map(item => {
+      const count = item.key === 'other'
+        ? rows.filter(row => !['verified', 'pending', 'rejected'].includes(row.status)).length
+        : rows.filter(row => row.status === item.key).length;
+      const start = cursor;
+      cursor += total ? count / total * 100 : 0;
+      return { ...item, count, start, end: cursor };
+    });
+    const gradient = total
+      ? 'conic-gradient(' + segments.map(item => item.color + ' ' + item.start + '% ' + item.end + '%').join(',') + ')'
+      : 'conic-gradient(#34415f 0% 100%)';
+    distribution.innerHTML = '<div class="admin-donut" style="--admin-donut:' + gradient + '"><div><strong>' + money(total) + '</strong><span>Records</span></div></div>' +
+      '<div class="admin-donut-legend">' + segments.map(item =>
+        '<div><i style="--legend-color:' + item.color + '"></i><span>' + item.label + '</span><strong>' + money(item.count) + '</strong></div>'
+      ).join('') + '</div>';
+  }
+
+  const recent = document.getElementById('adminRecentMarketActivity');
+  if (recent) {
+    const latest = [...rows].sort((a, b) =>
+      String(b.created_at || b.date_observed || '').localeCompare(String(a.created_at || a.date_observed || ''))
+    ).slice(0, 5);
+    recent.innerHTML = latest.length ? latest.map(row => {
+      const status = row.status || 'unknown';
+      const crop = escapeHtml(row.crop_name || 'Unnamed crop');
+      const market = escapeHtml([row.market_name, row.district].filter(Boolean).join(', ') || 'Market not specified');
+      const date = escapeHtml(row.date_observed || 'Date not recorded');
+      return '<div class="admin-recent-row"><span class="admin-recent-icon">' + getIconSvg('wheat') + '</span><div class="admin-recent-copy"><strong>' + crop + '</strong><small>' + market + ' · ' + date + '</small></div><span class="admin-status-pill is-' + escapeHtml(status) + '">' + escapeHtml(status.replace('_', ' ')) + '</span></div>';
+    }).join('') : '<p class="admin-empty-state">No market price records are available yet.</p>';
+  }
+
+  const subscriptionCounts = {
+    total: pendingSubs.length,
+    active: pendingSubs.filter(item => item.status === 'active').length,
+    pending: pendingSubs.filter(item => item.status === 'pending').length
+  };
+  const visualValues = {
+    overviewSubscriptionTotalVisual: subscriptionCounts.total,
+    overviewSubscriptionActiveVisual: subscriptionCounts.active,
+    overviewSubscriptionPendingVisual: subscriptionCounts.pending
+  };
+  Object.entries(visualValues).forEach(([id, value]) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = money(value);
+  });
+}
+
 function initAdminSidebarNavigation() {
   const links = [...document.querySelectorAll('.admin-side-nav a[href^="#"]')];
   if (!links.length) return;
