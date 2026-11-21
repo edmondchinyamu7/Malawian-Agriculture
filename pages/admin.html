@@ -22,17 +22,21 @@
       <a class="admin-sidebar-brand" href="../index.html">
         <span class="admin-brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span>
       </a>
-      <div class="admin-sidebar-label">WORKSPACE</div>
-      <nav class="admin-side-nav">
-        <a class="active" href="#adminOverview"><span>▦</span> Overview</a>
-        <a href="#priceManagement"><span>▤</span> Market prices</a>
-        <a href="#subscriptionApprovals"><span>✓</span> Submissions &amp; approvals</a>
-        <a href="#financeDashboard"><span>▥</span> Analytics &amp; finance</a>
+      <div class="admin-sidebar-label">MAIN MENU</div>
+      <nav class="admin-side-nav admin-primary-nav" aria-label="Admin sections">
+        <a class="active" href="#adminOverview" data-admin-view="overview"><span>▦</span> Overview</a>
+        <a href="#farmersView" data-admin-view="farmers"><span>♧</span> Farmers</a>
+        <a href="#priceManagement" data-admin-view="prices"><span>❧</span> Crops &amp; Prices</a>
+        <a href="#websiteContentView" data-admin-view="content"><span>▤</span> Website Content</a>
+        <a href="#botKnowledgeView" data-admin-view="knowledge"><span>✧</span> Bot Knowledge</a>
+        <a href="#messagesView" data-admin-view="messages"><span>▣</span> Messages</a>
+        <a href="#settingsView" data-admin-view="settings"><span>⚙</span> Settings</a>
       </nav>
-      <div class="admin-sidebar-label">WEBSITE</div>
+      <div class="admin-sidebar-label">MANAGEMENT</div>
       <nav class="admin-side-nav">
+        <a href="#subscriptionApprovals" data-admin-view="approvals"><span>✓</span> Submissions &amp; approvals</a>
+        <a href="#financeDashboard" data-admin-view="finance"><span>▥</span> Analytics &amp; finance</a>
         <a href="../index.html" target="_blank" rel="noopener"><span>↗</span> View live website</a>
-        <a href="market-centre.html" target="_blank" rel="noopener"><span>⌖</span> Public market centre</a>
       </nav>
       <div class="admin-sidebar-bottom">
         <div class="admin-online-dot"></div><span>Administrator workspace</span>
@@ -74,12 +78,12 @@
 
     <!-- Main Container -->
     <main class="main container">
-      <section class="admin-dashboard-heading" id="adminOverview">
+      <section class="admin-dashboard-heading" id="adminOverview" data-admin-view-section="overview">
         <div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Dashboard</h1><p>Welcome back, Administrator <span aria-hidden="true">✦</span></p></div>
         <div class="admin-dashboard-heading-actions"><a class="admin-action-link" href="#priceManagement">＋ Add market price</a><a class="admin-action-link admin-action-secondary" href="#financeDashboard">Open analytics ↗</a></div>
       </section>
 
-      <section class="admin-overview-summary" aria-label="Live website overview">
+      <section class="admin-overview-summary" aria-label="Live website overview" data-admin-view-section="overview">
         <div class="admin-summary-heading">
           <div><span class="section-kicker">LIVE WEBSITE SUMMARY</span><h2>Platform at a glance</h2><p>Live totals from the market price and membership records currently available to this admin workspace.</p></div>
           <span class="admin-summary-updated" id="adminSummaryUpdated">Loading website records…</span>
@@ -94,7 +98,7 @@
         </div>
       </section>
 
-      <section class="admin-insights-grid" aria-label="Agricultural platform analytics">
+      <section class="admin-insights-grid" aria-label="Agricultural platform analytics" data-admin-view-section="overview">
         <article class="admin-visual-card admin-trend-card">
           <div class="admin-visual-head"><div><span class="admin-eyebrow">MARKET INTELLIGENCE</span><h2>Market price activity</h2><p>Market observations grouped by month from available records</p></div><a href="#marketPriceDirectory">View records ↗</a></div>
           <div id="adminPriceTrend" class="admin-price-trend"><p class="admin-empty-state">Loading market activity…</p></div>
@@ -113,10 +117,10 @@
         </article>
       </section>
 
-      <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
+      <div id="adminRlsBanner" data-admin-global-notice class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
 
       <!-- Add Price Form Card -->
-      <section class="admin-card" id="priceManagement">
+      <section class="admin-card" id="priceManagement" data-admin-view-section="prices">
         <div style="display:flex;justify-content:flex-end;margin-bottom:12px"><button type="button" id="adminLogoutBtn" class="btn btn-outline">Sign out</button></div>
         <h3>Submit New Crop Price Record</h3>
         <p>Enter verified market observations. Approved records are published to the shared market directory. Pending farmer and admin records remain private until reviewed.</p>
@@ -210,7 +214,7 @@
       </section>
 
       <!-- Manage Existing Records -->
-      <section class="admin-card" id="marketPriceDirectory">
+      <section class="admin-card" id="marketPriceDirectory" data-admin-view-section="prices">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
           <div>
             <h3>Active Market Price Directory Management</h3>
@@ -240,7 +244,7 @@
       </section>
 
       <!-- Subscription Payment Review & Approval -->
-      <section class="admin-card" id="subscriptionApprovals">
+      <section class="admin-card" id="subscriptionApprovals" data-admin-view-section="approvals">
         <div>
           <h3>Pending Subscription Payment Approvals</h3>
           <p>Verify farmer mobile money / bank references before activating paid membership plans.</p>
@@ -263,10 +267,76 @@
           </table>
         </div>
       </section>
-    </main>
+      
+      <!-- Farmers management: uses existing Supabase profiles, never demo records -->
+      <section id="farmersView" class="admin-card admin-view-panel" data-admin-view-section="farmers" hidden>
+        <div class="admin-view-heading">
+          <div><span class="admin-eyebrow">FARMER DIRECTORY</span><h1>Farmers</h1><p>Registered farmer accounts available in the platform database.</p></div>
+          <button type="button" class="admin-action-link admin-action-secondary" id="farmersRefreshBtn">↻ Refresh</button>
+        </div>
+        <div class="admin-view-stat-grid">
+          <article class="admin-summary-stat"><span>Registered farmer accounts</span><strong id="farmersTotal">—</strong><small>Non-administrator profiles</small></article>
+          <article class="admin-summary-stat"><span>New this week</span><strong id="farmersNewWeek">—</strong><small>Based on profile registration dates</small></article>
+          <article class="admin-summary-stat"><span>Records displayed</span><strong id="farmersDisplayed">—</strong><small>Latest 100 profile records maximum</small></article>
+        </div>
+        <div class="admin-view-toolbar"><input id="farmersSearch" type="search" placeholder="Search name, email, phone or district…" aria-label="Search farmers"><select id="farmersDistrictFilter" aria-label="Filter farmers by district"><option value="">All districts</option></select></div>
+        <div class="table-scroll"><table class="admin-table"><thead><tr><th>Farmer</th><th>Contact</th><th>District</th><th>Account role</th><th>Registered</th></tr></thead><tbody id="farmersTableBody"><tr><td colspan="5">Loading farmer records…</td></tr></tbody></table></div>
+        <p class="admin-data-note" id="farmersDataNote">Farmer details are loaded from available profile fields. Fields not stored in the database are not invented.</p>
+      </section>
+
+      <!-- Website content directory: links to real project pages -->
+      <section id="websiteContentView" class="admin-card admin-view-panel" data-admin-view-section="content" hidden>
+        <div class="admin-view-heading"><div><span class="admin-eyebrow">PUBLIC WEBSITE</span><h1>Website Content</h1><p>Browse the actual public pages and content areas in Ulimi wa Malawi.</p></div><a class="admin-action-link" href="../index.html" target="_blank" rel="noopener">Open website ↗</a></div>
+        <div class="admin-content-grid">
+          <a class="admin-content-item" href="crops.html" target="_blank"><span>🌱</span><div><strong>Crop Library</strong><small>Crop profiles and growing information</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="market-centre.html" target="_blank"><span>📈</span><div><strong>Market Centre</strong><small>Public market prices and market information</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="weather.html" target="_blank"><span>☁</span><div><strong>Weather Centre</strong><small>Weather information and farming guidance</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="learning-centre.html" target="_blank"><span>📚</span><div><strong>Learning Centre</strong><small>Farmer education and learning resources</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="crop-calendar.html" target="_blank"><span>🗓</span><div><strong>Crop Calendar</strong><small>Seasonal planting and farming calendar</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="farmer-community.html" target="_blank"><span>👥</span><div><strong>Farmer Community</strong><small>Community information and participation</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="news.html" target="_blank"><span>📰</span><div><strong>Agriculture News</strong><small>Published agricultural updates</small></div><b>Open ↗</b></a>
+          <a class="admin-content-item" href="subscriptions.html" target="_blank"><span>◇</span><div><strong>Membership Plans</strong><small>Existing subscription plan information</small></div><b>Open ↗</b></a>
+        </div>
+        <div class="admin-info-panel"><strong>Content editing status</strong><p>The current website pages are maintained as project files. This directory opens the real pages; it does not pretend that a database content editor exists.</p></div>
+      </section>
+
+      <!-- Bot knowledge: transparent about what is and is not integrated -->
+      <section id="botKnowledgeView" class="admin-card admin-view-panel" data-admin-view-section="knowledge" hidden>
+        <div class="admin-view-heading"><div><span class="admin-eyebrow">AGRICULTURAL ASSISTANT</span><h1>Bot Knowledge</h1><p>Review the public information areas that can support farmer guidance.</p></div></div>
+        <div class="admin-info-panel"><strong>Knowledge management connection</strong><p>No separate editable bot-knowledge table or synchronization control is currently exposed in this admin workspace. The links below are existing website resources, not a claim that a live AI knowledge sync has completed.</p></div>
+        <div class="admin-content-grid">
+          <a class="admin-content-item" href="crops.html" target="_blank"><span>🌱</span><div><strong>Crop information</strong><small>Published crop library</small></div><b>View ↗</b></a>
+          <a class="admin-content-item" href="market-centre.html" target="_blank"><span>📈</span><div><strong>Market prices</strong><small>Public market-price information</small></div><b>View ↗</b></a>
+          <a class="admin-content-item" href="weather.html" target="_blank"><span>☁</span><div><strong>Weather guidance</strong><small>Weather centre</small></div><b>View ↗</b></a>
+          <a class="admin-content-item" href="pest-disease.html" target="_blank"><span>🍃</span><div><strong>Pest &amp; disease guidance</strong><small>Crop protection resources</small></div><b>View ↗</b></a>
+          <a class="admin-content-item" href="fertiliser-calculator.html" target="_blank"><span>🧪</span><div><strong>Fertiliser calculator</strong><small>Fertiliser planning tool</small></div><b>View ↗</b></a>
+          <a class="admin-content-item" href="learning-centre.html" target="_blank"><span>📚</span><div><strong>Learning resources</strong><small>Farmer learning centre</small></div><b>View ↗</b></a>
+        </div>
+      </section>
+
+      <!-- Messaging status: do not display fabricated conversations -->
+      <section id="messagesView" class="admin-card admin-view-panel" data-admin-view-section="messages" hidden>
+        <div class="admin-view-heading"><div><span class="admin-eyebrow">FARMER COMMUNICATIONS</span><h1>Messages</h1><p>WhatsApp and Facebook conversations for farmer support.</p></div></div>
+        <div class="admin-message-empty"><span>▣</span><h2>No connected inbox yet</h2><p>This project does not currently expose a verified WhatsApp or Facebook inbox connection to the admin dashboard. No sample conversations or unread counts are shown.</p><div class="admin-integration-status"><span></span> Messaging integration: not configured in this workspace</div></div>
+      </section>
+
+      <!-- Settings: display session details, do not expose environment secrets -->
+      <section id="settingsView" class="admin-card admin-view-panel" data-admin-view-section="settings" hidden>
+        <div class="admin-view-heading"><div><span class="admin-eyebrow">WORKSPACE CONFIGURATION</span><h1>Settings</h1><p>Administrator account and workspace security information.</p></div></div>
+        <div class="admin-settings-grid">
+          <article class="admin-settings-item"><span>Signed-in administrator</span><strong id="settingsAdminEmail">Loading account…</strong><small>Identity from the verified admin session</small></article>
+          <article class="admin-settings-item"><span>Admin session</span><strong id="settingsSessionStatus">Checking…</strong><small>Server-side administrator authorization</small></article>
+          <article class="admin-settings-item"><span>Database connection</span><strong id="settingsDatabaseStatus">Checking…</strong><small>Supabase session and admin access</small></article>
+          <article class="admin-settings-item"><span>Website</span><strong>Ulimi wa Malawi</strong><small>Production site · Vercel</small></article>
+        </div>
+        <div class="admin-info-panel"><strong>Security reminder</strong><p>Never place service-role keys, session secrets or payment credentials in browser code. Manage private environment variables through the hosting provider.</p></div>
+        <button type="button" class="btn btn-outline" id="settingsLogoutBtn">Sign out of admin</button>
+      </section>
+      
+          </main>
 
 
-      <section id="financeDashboard" class="admin-card finance-page">
+      <section id="financeDashboard" class="admin-card finance-page" data-admin-view-section="finance" hidden>
         <div class="finance-card-head">
           <div><span class="section-kicker">BUSINESS PERFORMANCE</span><h2>Business &amp; Finance Dashboard</h2><p>Track users, four membership levels, revenue and operating costs. All financial amounts are in MWK.</p></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-outline" href="../pages/subscriptions.html">View membership plans ↗</a><button id="financeLogout" class="btn btn-ghost" type="button">Sign out</button></div>
