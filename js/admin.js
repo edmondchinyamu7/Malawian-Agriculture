@@ -138,27 +138,138 @@ function renderOverviewVisuals() {
   });
 }
 
+function showAdminView(view) {
+  const sections = [...document.querySelectorAll('[data-admin-view-section]')];
+  sections.forEach(section => {
+    section.hidden = section.dataset.adminViewSection !== view;
+  });
+  const links = [...document.querySelectorAll('[data-admin-view]')];
+  links.forEach(link => {
+    const active = link.dataset.adminView === view;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+  const target = document.querySelector('[data-admin-view-section="' + view + '"]');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (view === 'farmers') loadFarmersView();
+  if (view === 'settings') renderAdminSettings();
+}
+
 function initAdminSidebarNavigation() {
-  const links = [...document.querySelectorAll('.admin-side-nav a[href^="#"]')];
+  const links = [...document.querySelectorAll('[data-admin-view]')];
   if (!links.length) return;
-  const activate = link => {
-    links.forEach(item => {
-      const active = item === link;
-      item.classList.toggle('active', active);
-      if (active) item.setAttribute('aria-current', 'page');
-      else item.removeAttribute('aria-current');
-    });
+  const hashToView = {
+    '#adminOverview': 'overview',
+    '#farmersView': 'farmers',
+    '#priceManagement': 'prices',
+    '#marketPriceDirectory': 'prices',
+    '#websiteContentView': 'content',
+    '#botKnowledgeView': 'knowledge',
+    '#messagesView': 'messages',
+    '#settingsView': 'settings',
+    '#subscriptionApprovals': 'approvals',
+    '#financeDashboard': 'finance'
   };
   links.forEach(link => link.addEventListener('click', event => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
     event.preventDefault();
-    activate(link);
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const view = link.dataset.adminView;
+    showAdminView(view);
     history.replaceState(null, '', link.getAttribute('href'));
   }));
-  const initial = links.find(link => link.getAttribute('href') === window.location.hash) || links[0];
-  activate(initial);
+  const initialView = hashToView[window.location.hash] || 'overview';
+  showAdminView(initialView);
+}
+
+let farmerProfiles = [];
+let farmersLoaded = false;
+
+const safeField = (record, names) => {
+  for (const name of names) {
+    const value = record?.[name];
+    if (value !== undefined && value !== null && String(value).trim()) return String(value).trim();
+  }
+  return '';
+};
+
+function renderFarmersTable() {
+  const tbody = document.getElementById('farmersTableBody');
+  if (!tbody) return;
+  const query = (document.getElementById('farmersSearch')?.value || '').trim().toLowerCase();
+  const districtFilter = document.getElementById('farmersDistrictFilter')?.value || '';
+  const filtered = farmerProfiles.filter(profile => {
+    const name = safeField(profile, ['full_name', 'name', 'display_name', 'first_name']);
+    const email = safeField(profile, ['email']);
+    const phone = safeField(profile, ['phone', 'phone_number', 'mobile']);
+    const district = safeField(profile, ['district', 'home_district', 'location']);
+    const matchesQuery = !query || [name, email, phone, district, profile.id, profile.role].join(' ').toLowerCase().includes(query);
+    return matchesQuery && (!districtFilter || district === districtFilter);
+  });
+  tbody.innerHTML = filtered.length ? filtered.map(profile => {
+    const name = safeField(profile, ['full_name', 'name', 'display_name']) || 'Farmer account';
+    const contact = safeField(profile, ['email', 'phone', 'phone_number', 'mobile']) || 'Not provided in profile';
+    const district = safeField(profile, ['district', 'home_district', 'location']) || 'Not provided';
+    const role = safeField(profile, ['role']) || 'farmer';
+    const created = profile.created_at ? new Date(profile.created_at).toLocaleDateString('en-MW') : 'Not recorded';
+    return '<tr><td><strong>' + escapeHtml(name) + '</strong><div class="admin-table-subtext">' + escapeHtml(String(profile.id || '').slice(0, 12)) + '</div></td><td>' + escapeHtml(contact) + '</td><td>' + escapeHtml(district) + '</td><td>' + escapeHtml(role) + '</td><td>' + escapeHtml(created) + '</td></tr>';
+  }).join('') : '<tr><td colspan="5">No matching farmer profile records.</td></tr>';
+  const displayed = document.getElementById('farmersDisplayed');
+  if (displayed) displayed.textContent = filtered.length.toLocaleString('en-MW');
+}
+
+async function loadFarmersView(force = false) {
+  const tbody = document.getElementById('farmersTableBody');
+  if (!tbody || (farmersLoaded && !force)) return;
+  tbody.innerHTML = '<tr><td colspan="5">Loading farmer records…</td></tr>';
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .neq('role', 'admin')
+    .order('created_at', { ascending: false })
+    .limit(100);
+  if (error) {
+    tbody.innerHTML = '<tr><td colspan="5">Unable to load farmer profiles: ' + escapeHtml(error.message) + '</td></tr>';
+    const note = document.getElementById('farmersDataNote');
+    if (note) note.textContent = 'The profile query failed. Check Supabase table access and Row Level Security policies.';
+    return;
+  }
+  farmerProfiles = data || [];
+  farmersLoaded = true;
+  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const newThisWeek = farmerProfiles.filter(profile => profile.created_at && new Date(profile.created_at).getTime() >= weekAgo).length;
+  const total = document.getElementById('farmersTotal');
+  const fresh = document.getElementById('farmersNewWeek');
+  if (total) total.textContent = farmerProfiles.length.toLocaleString('en-MW') + (farmerProfiles.length === 100 ? '+' : '');
+  if (fresh) fresh.textContent = newThisWeek.toLocaleString('en-MW');
+  const districts = [...new Set(farmerProfiles.map(profile => safeField(profile, ['district', 'home_district', 'location'])).filter(Boolean))].sort();
+  const select = document.getElementById('farmersDistrictFilter');
+  if (select) select.innerHTML = '<option value="">All districts</option>' + districts.map(d => '<option value="' + escapeHtml(d) + '">' + escapeHtml(d) + '</option>').join('');
+  const note = document.getElementById('farmersDataNote');
+  if (note) note.textContent = farmerProfiles.length === 100
+    ? 'Showing the latest 100 non-admin profiles. The full profile count is not inferred from this limited list.'
+    : 'Showing all non-admin profile records returned by Supabase. Missing profile fields are not invented.';
+  renderFarmersTable();
+}
+
+function renderAdminSettings() {
+  const email = document.getElementById('settingsAdminEmail');
+  const session = document.getElementById('settingsSessionStatus');
+  const database = document.getElementById('settingsDatabaseStatus');
+  if (email) email.textContent = adminUser?.email || serverAdminSession?.username || 'Verified admin session';
+  if (session) session.textContent = serverAdminSession ? 'Active' : 'Not verified';
+  if (database) database.textContent = adminUser ? 'Supabase admin access verified' : 'Supabase admin link required for database changes';
+}
+
+function initAdminViewControls() {
+  document.getElementById('farmersSearch')?.addEventListener('input', renderFarmersTable);
+  document.getElementById('farmersDistrictFilter')?.addEventListener('change', renderFarmersTable);
+  document.getElementById('farmersRefreshBtn')?.addEventListener('click', () => loadFarmersView(true));
+  const logout = async () => {
+    try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
+    await supabase.auth.signOut();
+    window.location.assign('../login.html?admin=true');
+  };
+  document.getElementById('settingsLogoutBtn')?.addEventListener('click', logout);
 }
 
 async function checkServerAdminSession() {
@@ -525,6 +636,7 @@ export async function initAdminPriceManagement() {
   const allowed = await requireAdmin();
   if (!allowed) return;
   initForm();
+  initAdminViewControls();
   const logoutBtn = document.getElementById('adminLogoutBtn');
   if (logoutBtn) logoutBtn.addEventListener('click', async () => {
     try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
