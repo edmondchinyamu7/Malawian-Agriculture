@@ -112,6 +112,14 @@ list?.addEventListener('click', async event => {
 
 filter?.addEventListener('change', loadSuggestions);
 
+document.getElementById('adminLogoutBtn')?.addEventListener('click', async event => {
+  const button = event.currentTarget;
+  button.disabled = true;
+  try { await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' }); } catch (_) {}
+  try { await supabase.auth.signOut(); } catch (_) {}
+  window.location.assign('../login.html?admin=true');
+});
+
 (async () => {
   if (await verifyAdmin()) await loadSuggestions();
 })();
