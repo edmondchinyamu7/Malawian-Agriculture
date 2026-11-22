@@ -183,6 +183,11 @@
     }
     .quick-tool-card:hover { background: #edf7f1; border-color: #b5deca; transform: translateY(-1px); }
     .quick-tool-card .pro-icon { color: #0b6245; width: 18px; height: 18px; }
+  
+    .suggestion-feedback{margin:12px 0;font-size:13px;color:#53695d}.suggestion-feedback.error{color:#a12d2d}.suggestion-feedback.success{color:#176b4a}
+    .farmer-suggestions-dashboard input,.farmer-suggestions-dashboard select,.farmer-suggestions-dashboard textarea{width:100%;padding:11px 12px;border:1px solid #cbdad0;border-radius:10px;background:#fff;color:#173e2c;font:inherit}
+    .suggestion-history-item{padding:13px 0;border-bottom:1px solid #e2ece5}.suggestion-history-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.suggestion-history-item p{white-space:pre-wrap;color:#53695d;font-size:13px}.suggestion-history-item small,.suggestion-muted{color:#718176;font-size:12px}.suggestion-admin-reply{margin-top:10px;padding:10px 12px;background:#edf7f0;border-left:3px solid #238454;border-radius:8px}.suggestion-admin-reply p{margin-bottom:0}
+    .suggestion-status{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;text-transform:capitalize;background:#edf3ee;color:#526b5b}.suggestion-status-new{background:#fff3dc;color:#94600e}.suggestion-status-reviewing{background:#e8f1ff;color:#285c9a}.suggestion-status-responded{background:#e3f5e9;color:#176b4a}.suggestion-status-closed{background:#edf0ed;color:#637168}
   </style>
 </head>
 <body id="top">
@@ -202,6 +207,7 @@
         <a href="pages/crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
         <a href="modules.html" data-i18n="navModules">Mitu yonse</a>
         <a href="pages/subscriptions.html" data-i18n="navSubscriptions">Mapulani</a>
+        <a href="pages/suggestions.html">Suggestions</a>
         <button type="button" id="mobileLogoutBtn" class="mobile-account-link" data-i18n="navLogout" style="border:0;cursor:pointer;text-align:left;width:100%">Tulukani</button>
       </nav>
       <div class="top-actions">
@@ -297,6 +303,22 @@
               </div>
             </section>
           </div>
+
+
+          <section class="dash-panel farmer-suggestions-dashboard" aria-labelledby="farmerSuggestionsHeading" style="margin-top:22px;grid-column:1/-1">
+            <h3 id="farmerSuggestionsHeading">💡 Share a suggestion</h3>
+            <p class="dash-sub">Tell the Ulimi wa Malawi team what we can improve. Your suggestion goes directly to the admin dashboard.</p>
+            <form id="farmerSuggestionForm">
+              <div class="profile-grid-fields">
+                <div class="profile-field"><label for="suggestionCategory">Category</label><select id="suggestionCategory" name="category" required><option value="website">Website experience</option><option value="market_prices">Market prices</option><option value="crops_and_farming">Crops and farming information</option><option value="farmer_support">Farmer support</option><option value="other">Other</option></select></div>
+                <div class="profile-field"><label for="suggestionSubject">Subject</label><input id="suggestionSubject" name="subject" minlength="4" maxlength="120" required placeholder="What should we improve?"></div>
+              </div>
+              <div class="profile-field"><label for="suggestionMessage">Your suggestion</label><textarea id="suggestionMessage" name="message" minlength="10" maxlength="3000" required rows="4" placeholder="Describe your idea or the problem you experienced…"></textarea></div>
+              <div id="farmerSuggestionStatus" class="suggestion-feedback" role="status" aria-live="polite"></div>
+              <button class="btn btn-primary" type="submit">Send suggestion to admin</button>
+            </form>
+            <div class="suggestion-history"><h3 style="margin-top:22px">My suggestions and admin replies</h3><div id="farmerSuggestionHistory"><p class="suggestion-muted">Your previous suggestions will appear here.</p></div></div>
+          </section>
 
           <div class="quick-tools-panel">
             <h3 style="font-size:16px;color:#092d22;margin:0 0 4px">Zida Zothandiza pa Ulimi (Quick Farm Tools)</h3>
