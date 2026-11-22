@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <title>Send a Suggestion | Ulimi wa Malawi</title>
+  <meta name="description" content="Share an idea to improve Ulimi wa Malawi for farmers across Malawi.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    .suggestions-page{max-width:920px;margin:0 auto;padding:44px 16px 80px}
+    .suggestions-hero{padding:30px;border-radius:22px;background:linear-gradient(135deg,#092d22,#176547);color:#fff;margin-bottom:22px}
+    .suggestions-hero h1{margin:0 0 10px;font-size:clamp(26px,4vw,38px)}
+    .suggestions-hero p{margin:0;color:#d9eee1;line-height:1.6}
+    .suggestions-card{background:#fff;border:1px solid #dce8df;border-radius:20px;padding:26px;box-shadow:0 12px 34px rgba(9,45,34,.06)}
+    .suggestions-card h2{margin:0 0 8px;color:#092d22}
+    .suggestions-card>p{margin:0 0 20px;color:#617368;line-height:1.6}
+    .suggestion-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .suggestion-field{display:grid;gap:7px;margin-bottom:16px}
+    .suggestion-field label{font-weight:750;color:#174a32;font-size:13px}
+    .suggestion-field input,.suggestion-field select,.suggestion-field textarea{width:100%;padding:12px 13px;border:1px solid #cbdad0;border-radius:11px;background:#fbfdfb;color:#173e2c;font:inherit}
+    .suggestion-field textarea{min-height:150px;resize:vertical}
+    .suggestion-field input:focus,.suggestion-field select:focus,.suggestion-field textarea:focus{outline:3px solid #d7efdf;border-color:#238454}
+    .suggestion-feedback{margin:14px 0;color:#526b5b;font-size:13px}
+    .suggestion-feedback.error{color:#a12d2d}.suggestion-feedback.success{color:#176b4a}
+    .suggestion-history{margin-top:24px}.suggestion-history-item{padding:15px 0;border-bottom:1px solid #e4eee6}
+    .suggestion-history-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.suggestion-history-item p{margin:8px 0;color:#526b5b;white-space:pre-wrap}.suggestion-history-item small,.suggestion-muted{color:#718176}
+    .suggestion-admin-reply{margin-top:10px;padding:12px;background:#eef7f0;border-left:3px solid #238454;border-radius:8px}.suggestion-admin-reply p{margin-bottom:0}
+    .suggestion-status{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800;text-transform:capitalize;background:#edf3ee;color:#526b5b}
+    .suggestion-status-new{background:#fff3dc;color:#94600e}.suggestion-status-reviewing{background:#e8f1ff;color:#285c9a}.suggestion-status-responded{background:#e3f5e9;color:#176b4a}.suggestion-status-closed{background:#edf0ed;color:#637168}
+    @media(max-width:620px){.suggestions-page{padding:24px 12px 60px}.suggestions-hero,.suggestions-card{padding:20px}.suggestion-form-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:12px;padding-bottom:12px">
+      <a class="brand" href="../index.html"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>FARMER SUGGESTIONS</small></span></a>
+      <nav style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><a href="../index.html">Home</a><a href="../profile.html">Farmer dashboard</a><a href="../login.html">Sign in</a></nav>
+    </div>
+  </header>
+  <main class="suggestions-page">
+    <section class="suggestions-hero"><span style="font-size:12px;font-weight:800;letter-spacing:.12em">YOUR VOICE MATTERS</span><h1>Help us improve Ulimi wa Malawi</h1><p>Share an idea, report a problem or suggest a feature that could make farming information more useful to communities across Malawi. Suggestions go directly to our admin team.</p></section>
+    <section class="suggestions-card">
+      <h2>Send your suggestion</h2><p>Please sign in first so the team can follow up with you if more details are needed.</p>
+      <form id="farmerSuggestionForm">
+        <div class="suggestion-form-grid">
+          <div class="suggestion-field"><label for="suggestionCategory">Suggestion category</label><select id="suggestionCategory" name="category" required><option value="website">Website experience</option><option value="market_prices">Market prices</option><option value="crops_and_farming">Crops and farming information</option><option value="farmer_support">Farmer support</option><option value="other">Other</option></select></div>
+          <div class="suggestion-field"><label for="suggestionSubject">Subject</label><input id="suggestionSubject" name="subject" minlength="4" maxlength="120" required placeholder="What would you like us to improve?"></div>
+        </div>
+        <div class="suggestion-field"><label for="suggestionMessage">Your suggestion</label><textarea id="suggestionMessage" name="message" minlength="10" maxlength="3000" required placeholder="Describe your idea or the problem you experienced…"></textarea></div>
+        <div id="farmerSuggestionStatus" class="suggestion-feedback" role="status" aria-live="polite"></div>
+        <button class="btn btn-primary" type="submit">Send suggestion</button>
+      </form>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="../js/main.js"></script>
+  <script type="module" src="../js/farmer-suggestions.js"></script>
+</body>
+</html>

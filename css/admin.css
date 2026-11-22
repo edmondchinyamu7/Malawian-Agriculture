@@ -1287,3 +1287,26 @@
  .admin-overview-shortcuts a{padding:15px}
  .admin-page-content{padding-left:12px;padding-right:12px}
 }
+
+
+/* Farmer suggestions inbox */
+.admin-suggestions-panel{padding:24px}
+.admin-suggestions-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.admin-suggestions-toolbar h2{margin:5px 0 0;color:#174a32}
+.admin-suggestions-toolbar h2 span{display:inline-flex;min-width:27px;height:27px;align-items:center;justify-content:center;border-radius:99px;background:#e8f3ea;color:#176b4a;font-size:13px}
+.admin-suggestions-toolbar label{display:flex;align-items:center;gap:9px;color:#526b5b;font-size:13px;font-weight:700}
+.admin-suggestions-toolbar select,.admin-suggestion-item select,.admin-suggestion-item textarea{padding:10px 12px;border:1px solid #cbdad0;border-radius:10px;background:#fbfdfb;color:#173e2c;font:inherit}
+.admin-suggestion-notice{padding:11px 14px;margin-bottom:16px;border-radius:10px;background:#edf7f0;color:#176b4a;font-size:13px}
+.admin-suggestion-notice.is-error{background:#fff1f0;color:#a12d2d}
+.admin-suggestions-list{display:grid;gap:14px}
+.admin-suggestion-item{padding:18px;border:1px solid #dfeae1;border-radius:14px;background:#fff}
+.admin-suggestion-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.admin-suggestion-item h3{margin:6px 0 0;color:#174a32;font-size:18px}
+.admin-suggestion-message{white-space:pre-wrap;line-height:1.6;color:#526b5b}
+.admin-suggestion-meta{font-size:11px;color:#718176;margin:10px 0 14px;overflow-wrap:anywhere}
+.admin-suggestion-item>label{display:block;margin-bottom:7px;color:#174a32;font-size:12px;font-weight:800}
+.admin-suggestion-item textarea{display:block;width:100%;resize:vertical}
+.admin-suggestion-actions{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px}
+.admin-suggestion-status-label{display:grid;gap:6px;color:#174a32;font-size:12px;font-weight:800}
+.admin-suggestion-empty{padding:28px;text-align:center;color:#718176;background:#f7faf7;border:1px dashed #cbdad0;border-radius:12px}
+@media(max-width:600px){.admin-suggestions-panel{padding:14px}.admin-suggestion-item{padding:14px}.admin-suggestion-item-head{display:block}.admin-suggestion-item-head .suggestion-status{margin-top:8px}.admin-suggestion-actions .btn{width:100%}}
