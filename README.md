@@ -113,6 +113,15 @@ ulimi-wa-malawi/
 - Build and linting verify clean.
 
 
+## Daily Agriculture Updates & Market Information
+
+- The public news page reads approved items from `data/agri-updates.json`.
+- `scripts/collect-agri-updates.mjs` checks configured publisher RSS feeds daily and adds new discoveries as `pending`.
+- GitHub Actions runs the collector daily at 06:00 Malawi time and opens a draft pull request for administrator/maintainer review. A candidate is not displayed publicly until its `reviewStatus` is changed to `approved`.
+- The daily collector never turns a news headline into a crop-price quotation. Crop prices continue to come from the existing `market_price_reports` Supabase table and are shown only when their status is `verified`.
+- Market observations must retain their observation date, district/market, unit, source and verification status. Old observations must not be labelled as today's prices.
+- The Market Centre links to IFPRI's 11 November 2026 October maize market report as a dated market bulletin, not a live quotation.
+
 ## Monetisation & Business Dashboard
 
 - Four membership plans are stored in Supabase: Free (MWK 0), Standard (MWK 2,000/month), Professional (MWK 5,000/month), and Agribusiness Premium (MWK 10,000/month).
