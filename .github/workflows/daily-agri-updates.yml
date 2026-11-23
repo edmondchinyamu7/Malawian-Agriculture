@@ -1,0 +1,49 @@
+name: Daily Malawi agriculture updates
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: daily-malawi-agriculture-updates
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collect agriculture news candidates
+        run: node scripts/collect-agri-updates.mjs
+      - name: Open review pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/daily-agriculture-updates
+          delete-branch: true
+          commit-message: 'chore(news): collect daily Malawi agriculture updates'
+          title: 'Daily agriculture updates — review before publishing'
+          body: |
+            Automated daily collection from the configured agriculture news feeds.
+
+            **Review required before publishing**
+            - Open every original source link and confirm the report is relevant to Malawi agriculture.
+            - Check the title, summary, source and publication date.
+            - Change `reviewStatus` from `pending` to `approved` only for items that pass review.
+            - Remove irrelevant, duplicated, misleading or unverified items.
+            - Keep market prices in the market-price workflow; do not convert news summaries into price quotations.
+
+            Only entries marked `approved` are shown on the public news page.
+          draft: true
