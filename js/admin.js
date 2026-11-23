@@ -12,6 +12,7 @@ let pendingSubs = [];
 let adminUser = null; // Supabase auth user in admin_access (if signed in)
 let serverAdminSession = null;
 let pendingDeleteId = null;
+let overviewPlatformStats = { farmers: null, activeFarmers: null, suggestions: null, openSuggestions: null, subscriptions: null, activeSubscriptions: null, pendingSubscriptions: null };
 
 const toUi = row => ({
   id: row.id,
@@ -46,8 +47,12 @@ function updateOverviewSummary() {
     overviewPriceVerified: counts.verified,
     overviewPricePending: counts.pending,
     overviewPriceRejected: counts.rejected,
-    overviewSubscriptionTotal: counts.subscriptions,
-    overviewSubscriptionActive: counts.active
+    overviewSubscriptionTotal: overviewPlatformStats.subscriptions ?? counts.subscriptions,
+    overviewSubscriptionActive: overviewPlatformStats.activeSubscriptions ?? counts.active,
+    overviewRegisteredFarmers: overviewPlatformStats.farmers ?? '—',
+    overviewActiveFarmers: overviewPlatformStats.activeFarmers ?? '—',
+    overviewSuggestionsTotal: overviewPlatformStats.suggestions ?? '—',
+    overviewSuggestionsOpen: overviewPlatformStats.openSuggestions ?? '—'
   };
   Object.entries(values).forEach(([id, value]) => {
     const node = document.getElementById(id);
@@ -58,6 +63,62 @@ function updateOverviewSummary() {
     dateStyle: 'medium', timeStyle: 'short'
   }).format(new Date());
   renderOverviewVisuals();
+}
+
+async function loadOverviewPlatformStats() {
+  const setUnavailable = (ids) => ids.forEach(id => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = 'Unavailable';
+  });
+  const setValue = (id, value) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = value === null || value === undefined ? 'Unavailable' : money(value);
+  };
+
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString();
+
+  const results = await Promise.all([
+    supabase.from('profiles').select('id', { count: 'exact', head: true }).neq('role', 'admin'),
+    supabase.from('app_activity_events').select('user_id,activity_date').gte('activity_date', monthStart.slice(0, 10)).lt('activity_date', nextMonth.slice(0, 10)),
+    supabase.from('farmer_suggestions').select('id', { count: 'exact', head: true }),
+    supabase.from('farmer_suggestions').select('id', { count: 'exact', head: true }).in('status', ['new', 'reviewing']),
+    supabase.from('subscriptions').select('id', { count: 'exact', head: true }),
+    supabase.from('subscriptions').select('id', { count: 'exact', head: true }).eq('status', 'active'),
+    supabase.from('subscriptions').select('id', { count: 'exact', head: true }).eq('status', 'pending')
+  ]);
+
+  const [profiles, activity, suggestions, openSuggestions, subscriptions, activeSubscriptions, pendingSubscriptions] = results;
+  overviewPlatformStats.farmers = profiles.error ? null : (profiles.count ?? 0);
+  overviewPlatformStats.activeFarmers = activity.error ? null : new Set((activity.data || []).map(item => item.user_id).filter(Boolean)).size;
+  overviewPlatformStats.suggestions = suggestions.error ? null : (suggestions.count ?? 0);
+  overviewPlatformStats.openSuggestions = openSuggestions.error ? null : (openSuggestions.count ?? 0);
+  overviewPlatformStats.subscriptions = subscriptions.error ? null : (subscriptions.count ?? 0);
+  overviewPlatformStats.activeSubscriptions = activeSubscriptions.error ? null : (activeSubscriptions.count ?? 0);
+  overviewPlatformStats.pendingSubscriptions = pendingSubscriptions.error ? null : (pendingSubscriptions.count ?? 0);
+
+  setValue('overviewRegisteredFarmers', overviewPlatformStats.farmers);
+  setValue('overviewActiveFarmers', overviewPlatformStats.activeFarmers);
+  setValue('overviewSuggestionsTotal', overviewPlatformStats.suggestions);
+  setValue('overviewSuggestionsOpen', overviewPlatformStats.openSuggestions);
+  setValue('overviewSubscriptionTotal', overviewPlatformStats.subscriptions);
+  setValue('overviewSubscriptionActive', overviewPlatformStats.activeSubscriptions);
+  setValue('overviewSubscriptionTotalVisual', overviewPlatformStats.subscriptions);
+  setValue('overviewSubscriptionActiveVisual', overviewPlatformStats.activeSubscriptions);
+  setValue('overviewSubscriptionPendingVisual', overviewPlatformStats.pendingSubscriptions);
+
+  const updated = document.getElementById('adminSummaryUpdated');
+  if (updated) updated.textContent = 'Updated ' + new Intl.DateTimeFormat('en-MW', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date());
+
+  const errors = results.filter(result => result.error);
+  const note = document.getElementById('adminOverviewDataNote');
+  if (note) {
+    note.textContent = errors.length
+      ? 'Some figures are unavailable because the current admin account cannot read one or more reporting tables. Check database permissions and RLS.'
+      : 'Figures are live database totals. Active farmers are unique accounts with recorded activity this calendar month.';
+    note.classList.toggle('is-warning', errors.length > 0);
+  }
 }
 
 function renderOverviewVisuals() {
@@ -128,9 +189,9 @@ function renderOverviewVisuals() {
     pending: pendingSubs.filter(item => item.status === 'pending').length
   };
   const visualValues = {
-    overviewSubscriptionTotalVisual: subscriptionCounts.total,
-    overviewSubscriptionActiveVisual: subscriptionCounts.active,
-    overviewSubscriptionPendingVisual: subscriptionCounts.pending
+    overviewSubscriptionTotalVisual: overviewPlatformStats.subscriptions ?? subscriptionCounts.total,
+    overviewSubscriptionActiveVisual: overviewPlatformStats.activeSubscriptions ?? subscriptionCounts.active,
+    overviewSubscriptionPendingVisual: overviewPlatformStats.pendingSubscriptions ?? subscriptionCounts.pending
   };
   Object.entries(visualValues).forEach(([id, value]) => {
     const node = document.getElementById(id);
@@ -593,6 +654,7 @@ export async function initAdminPriceManagement() {
     const tasks = [];
     if (needsMarketRows) tasks.push(loadRows());
     if (needsSubscriptions) tasks.push(loadPendingSubscriptions());
+    if (document.getElementById('overviewRegisteredFarmers')) tasks.push(loadOverviewPlatformStats());
     await Promise.all(tasks);
   } catch (error) {
     console.error('Unable to load admin records:', error);
