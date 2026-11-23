@@ -13,6 +13,7 @@ let adminUser = null; // Supabase auth user in admin_access (if signed in)
 let serverAdminSession = null;
 let pendingDeleteId = null;
 let overviewPlatformStats = {};
+let registeredFarmers = [];
 
 const toUi = row => ({
   id: row.id,
@@ -371,6 +372,75 @@ async function loadRows() {
   updateOverviewSummary();
 }
 
+function renderRegisteredFarmers() {
+  const body = document.getElementById('registeredFarmerTableBody');
+  if (!body) return;
+  const search = (document.getElementById('farmerDirectorySearch')?.value || '').trim().toLowerCase();
+  const roleFilter = document.getElementById('farmerDirectoryRole')?.value || '';
+  const filtered = registeredFarmers.filter(profile => {
+    const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ').toLowerCase();
+    const role = String(profile.role || 'unspecified');
+    return (!search || name.includes(search) || role.toLowerCase().includes(search) || String(profile.id).toLowerCase().includes(search))
+      && (!roleFilter || role === roleFilter);
+  });
+
+  const total = document.getElementById('registeredProfileCount');
+  const farmers = document.getElementById('registeredFarmerCount');
+  if (total) total.textContent = money(registeredFarmers.length);
+  if (farmers) farmers.textContent = money(registeredFarmers.filter(profile => profile.role === 'farmer').length);
+
+  const roleSelect = document.getElementById('farmerDirectoryRole');
+  if (roleSelect) {
+    const selected = roleSelect.value;
+    const roles = [...new Set(registeredFarmers.map(profile => String(profile.role || 'unspecified')))].sort();
+    roleSelect.innerHTML = '<option value="">All roles</option>' + roles.map(role =>
+      '<option value="' + escapeHtml(role) + '">' + escapeHtml(role.replace(/_/g, ' ')) + '</option>'
+    ).join('');
+    if (roles.includes(selected)) roleSelect.value = selected;
+  }
+
+  if (!filtered.length) {
+    body.innerHTML = '<tr><td colspan="4" class="admin-empty-cell">' +
+      (registeredFarmers.length ? 'No profiles match your search or role filter.' : 'No registered profiles were returned.') +
+      '</td></tr>';
+    return;
+  }
+
+  body.innerHTML = filtered.map(profile => {
+    const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ') || 'Name not provided';
+    const role = String(profile.role || 'unspecified');
+    const joined = profile.created_at
+      ? new Intl.DateTimeFormat('en-MW', { dateStyle: 'medium' }).format(new Date(profile.created_at))
+      : '—';
+    return '<tr><td><strong>' + escapeHtml(name) + '</strong></td>' +
+      '<td><span class="admin-status-pill">' + escapeHtml(role.replace(/_/g, ' ')) + '</span></td>' +
+      '<td>' + escapeHtml(joined) + '</td>' +
+      '<td><code>' + escapeHtml(String(profile.id).slice(0, 8)) + '…</code></td></tr>';
+  }).join('');
+}
+
+async function loadRegisteredFarmers() {
+  const body = document.getElementById('registeredFarmerTableBody');
+  if (!body) return;
+  body.innerHTML = '<tr><td colspan="4" class="admin-empty-cell">Loading registered profiles…</td></tr>';
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id,first_name,last_name,role,created_at')
+    .order('created_at', { ascending: false })
+    .limit(500);
+  if (error) {
+    body.innerHTML = '<tr><td colspan="4" class="admin-empty-cell">Unable to load profiles. Confirm that the signed-in admin account has Supabase admin access and that the profiles SELECT policy is active.</td></tr>';
+    const total = document.getElementById('registeredProfileCount');
+    const farmers = document.getElementById('registeredFarmerCount');
+    if (total) total.textContent = 'Unavailable';
+    if (farmers) farmers.textContent = 'Unavailable';
+    console.error('Unable to load registered farmer profiles:', error);
+    return;
+  }
+  registeredFarmers = data || [];
+  renderRegisteredFarmers();
+}
+
 function renderFarmerSubmissions() {
   const body = document.getElementById('adminFarmerTableBody');
   if (!body) return;
@@ -646,11 +716,16 @@ export async function initAdminPriceManagement() {
     body
   );
   if (document.getElementById('addPriceForm')) initForm();
+  const directorySearch = document.getElementById('farmerDirectorySearch');
+  const directoryRole = document.getElementById('farmerDirectoryRole');
+  if (directorySearch) directorySearch.addEventListener('input', renderRegisteredFarmers);
+  if (directoryRole) directoryRole.addEventListener('change', renderRegisteredFarmers);
   try {
     const tasks = [];
     if (needsMarketRows) tasks.push(loadRows());
     if (needsSubscriptions) tasks.push(loadPendingSubscriptions());
     if (document.getElementById('overviewRegisteredFarmers')) tasks.push(loadOverviewPlatformStats());
+    if (document.getElementById('registeredFarmerTableBody')) tasks.push(loadRegisteredFarmers());
     await Promise.all(tasks);
   } catch (error) {
     console.error('Unable to load admin records:', error);

@@ -1310,3 +1310,10 @@
 .admin-suggestion-status-label{display:grid;gap:6px;color:#174a32;font-size:12px;font-weight:800}
 .admin-suggestion-empty{padding:28px;text-align:center;color:#718176;background:#f7faf7;border:1px dashed #cbdad0;border-radius:12px}
 @media(max-width:600px){.admin-suggestions-panel{padding:14px}.admin-suggestion-item{padding:14px}.admin-suggestion-item-head{display:block}.admin-suggestion-item-head .suggestion-status{margin-top:8px}.admin-suggestion-actions .btn{width:100%}}
+
+
+.admin-directory-controls{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+.admin-directory-controls input,.admin-directory-controls select{min-width:220px;max-width:100%;padding:11px 13px;border:1px solid #d5e1d8;border-radius:9px;background:#fff;color:#173c2b;font:inherit}
+.admin-directory-controls input{flex:1}
+.admin-directory-controls input:focus,.admin-directory-controls select:focus{outline:2px solid #74b98a;outline-offset:2px}
+@media(max-width:600px){.admin-directory-controls{display:grid}.admin-directory-controls input,.admin-directory-controls select{width:100%;min-width:0}}

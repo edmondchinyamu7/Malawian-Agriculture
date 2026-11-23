@@ -15,10 +15,31 @@
 <div class="admin-sidebar-label">WEBSITE</div><nav class="admin-side-nav"><a href="../index.html" target="_blank" rel="noopener"><span>↗</span> View live website</a><a href="market-centre.html" target="_blank" rel="noopener"><span>⌖</span> Public market centre</a></nav>
 <div class="admin-sidebar-bottom"><div class="admin-online-dot"></div><span>Administrator workspace</span></div></aside>
 <header class="topbar"><a class="brand" href="admin.html"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span></a><div class="top-actions"><button id="adminLogoutBtn" class="btn btn-outline" type="button">Sign out</button></div></header>
-<main class="main container admin-page-content"><section class="admin-dashboard-heading"><div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Farmers</h1><p>Manage the farmers workspace.</p></div></section><section class="admin-card admin-portal-section" id="farmerManagement">
+<main class="main container admin-page-content"><section class="admin-dashboard-heading"><div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Farmers</h1><p>Manage the farmers workspace.</p></div></section><section class="admin-card admin-portal-section" id="registeredFarmerDirectory">
         <div class="admin-portal-section-head">
-          <div><span class="admin-eyebrow">FARMER CONTRIBUTIONS</span><h2>Farmer submissions</h2><p>Farmer-submitted market observations available in the existing market records. This is not a count of all registered farmer accounts.</p></div>
-          <a class="admin-action-link admin-action-secondary" href="#marketPriceDirectory">Review market records ↗</a>
+          <div><span class="admin-eyebrow">ACCOUNT DIRECTORY</span><h2>Registered profiles</h2><p>Read-only directory using verified profile fields. Email addresses, phone numbers and account controls are not exposed here.</p></div>
+        </div>
+        <div class="admin-farmer-stats">
+          <article><span>Registered profiles</span><strong id="registeredProfileCount">—</strong></article>
+          <article><span>Farmer accounts</span><strong id="registeredFarmerCount">—</strong></article>
+        </div>
+        <div class="admin-directory-controls">
+          <label class="sr-only" for="farmerDirectorySearch">Search profiles</label>
+          <input id="farmerDirectorySearch" type="search" placeholder="Search name, role or profile ID" autocomplete="off">
+          <label class="sr-only" for="farmerDirectoryRole">Filter by role</label>
+          <select id="farmerDirectoryRole"><option value="">All roles</option></select>
+        </div>
+        <div class="table-scroll">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Role</th><th>Joined</th><th>Profile ID</th></tr></thead>
+            <tbody id="registeredFarmerTableBody"><tr><td colspan="4" class="admin-empty-cell">Loading registered profiles…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="admin-card admin-portal-section" id="farmerManagement">
+        <div class="admin-portal-section-head">
+          <div><span class="admin-eyebrow">FARMER CONTRIBUTIONS</span><h2>Farmer submissions</h2><p>Review farmer-submitted market price observations. Registered accounts are listed separately above.</p></div>
+          
         </div>
         <div class="admin-farmer-stats">
           <article><span>Farmer price reports</span><strong id="farmerReportCount">—</strong></article>
