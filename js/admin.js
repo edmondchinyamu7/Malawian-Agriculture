@@ -12,7 +12,7 @@ let pendingSubs = [];
 let adminUser = null; // Supabase auth user in admin_access (if signed in)
 let serverAdminSession = null;
 let pendingDeleteId = null;
-let overviewPlatformStats = { farmers: null, activeFarmers: null, suggestions: null, openSuggestions: null, subscriptions: null, activeSubscriptions: null, pendingSubscriptions: null };
+let overviewPlatformStats = {};
 
 const toUi = row => ({
   id: row.id,
@@ -66,22 +66,18 @@ function updateOverviewSummary() {
 }
 
 async function loadOverviewPlatformStats() {
-  const setUnavailable = (ids) => ids.forEach(id => {
-    const node = document.getElementById(id);
-    if (node) node.textContent = 'Unavailable';
-  });
   const setValue = (id, value) => {
     const node = document.getElementById(id);
     if (node) node.textContent = value === null || value === undefined ? 'Unavailable' : money(value);
   };
 
   const now = new Date();
-  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString();
+  const monthStart = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1)).toISOString().slice(0, 10);
+  const nextMonth = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1)).toISOString().slice(0, 10);
 
   const results = await Promise.all([
     supabase.from('profiles').select('id', { count: 'exact', head: true }).neq('role', 'admin'),
-    supabase.from('app_activity_events').select('user_id,activity_date').gte('activity_date', monthStart.slice(0, 10)).lt('activity_date', nextMonth.slice(0, 10)),
+    supabase.from('app_activity_events').select('user_id,activity_date').gte('activity_date', monthStart).lt('activity_date', nextMonth),
     supabase.from('farmer_suggestions').select('id', { count: 'exact', head: true }),
     supabase.from('farmer_suggestions').select('id', { count: 'exact', head: true }).in('status', ['new', 'reviewing']),
     supabase.from('subscriptions').select('id', { count: 'exact', head: true }),
