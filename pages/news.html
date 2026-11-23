@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/news-feed.css">
 </head>
 <body id="top">
   <div class="shell">
@@ -57,6 +58,20 @@
         <div class="news-update">
           <span class="news-live-dot"></span>
           <span data-i18n="newsUpdated">Curated updates • 6 November 2026</span>
+        </div>
+      </section>
+
+      <section class="news-feed-panel" aria-labelledby="freshAgriNewsTitle">
+        <div class="news-feed-head">
+          <div>
+            <span class="section-kicker">DAILY SOURCE CHECK • ADMIN REVIEW</span>
+            <h2 id="freshAgriNewsTitle">Latest approved agriculture updates</h2>
+            <p>News and research updates collected from agriculture publishers. New automated discoveries stay unpublished until a maintainer checks the original source and approves them.</p>
+          </div>
+          <span class="news-feed-updated" id="agriNewsUpdated">Loading approved updates…</span>
+        </div>
+        <div class="agri-feed-grid" id="agriNewsFeed" aria-live="polite">
+          <p class="agri-feed-empty">Loading the latest approved updates…</p>
         </div>
       </section>
 
@@ -242,5 +257,6 @@
   <script type="module" src="../js/i18n.js"></script>
   <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/news-feed.js"></script>
 </body>
 </html>
