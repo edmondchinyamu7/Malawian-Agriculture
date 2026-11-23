@@ -1,4 +1,5 @@
 import { supabase } from './auth.js';
+import { hasAdminPreviewAccess } from './admin-preview.js';
 import { getIconSvg } from './icons.js';
 
 const PLAN_LEVEL = { free: 0, standard: 1, professional: 2, agribusiness: 3 };
@@ -59,8 +60,9 @@ async function initialiseFeatureAccess() {
   const requiredPlan = main.dataset.requiresPlan;
   if (!(requiredPlan in PLAN_LEVEL)) return;
 
+  const adminPreview = await hasAdminPreviewAccess();
   const access = await getSubscriptionAccess();
-  const currentLevel = PLAN_LEVEL[access.plan_id] ?? 0;
+  const currentLevel = adminPreview ? PLAN_LEVEL.agribusiness : (PLAN_LEVEL[access.plan_id] ?? 0);
   const requiredLevel = PLAN_LEVEL[requiredPlan];
 
   if (currentLevel < requiredLevel) {
@@ -70,6 +72,10 @@ async function initialiseFeatureAccess() {
 
   main.dataset.accessGranted = 'true';
   main.dataset.currentPlan = access.plan_id;
+  if (adminPreview) {
+    access.is_admin_preview = true;
+    access.access_label = 'Administrator full-access preview';
+  }
   document.dispatchEvent(new CustomEvent('ulimi:subscription-access', { detail: access }));
 }
 
