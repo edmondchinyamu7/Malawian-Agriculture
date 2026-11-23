@@ -6,6 +6,7 @@
 
 import { supabase, getAccount } from './auth.js';
 import { getIconSvg } from './icons.js';
+import { hasAdminPreviewAccess } from './admin-preview.js';
 
 function esc(value = '') {
   return String(value ?? '').replace(/[&<>"']/g, c => ({
@@ -437,6 +438,7 @@ async function submitPaymentRequest() {
 
 async function initSubscriptions() {
   try {
+    userAccess.is_admin_preview = await hasAdminPreviewAccess();
     const acc = await getAccount();
     if (acc?.user?.id) {
       userAccess.is_authenticated = true;
@@ -610,7 +612,7 @@ async function initSubscriptions() {
       if (!manual) return;
 
       const isNy = currentLang === 'ny';
-      const hasProAccess = userAccess.plan_id === 'professional' || userAccess.plan_id === 'agribusiness';
+      const hasProAccess = userAccess.is_admin_preview === true || userAccess.plan_id === 'professional' || userAccess.plan_id === 'agribusiness';
 
       if (!hasProAccess) {
         const proPlan = DEFAULT_PLANS.find(p => p.id === 'professional');
