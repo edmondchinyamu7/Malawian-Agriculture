@@ -47,8 +47,8 @@ function updateOverviewSummary() {
     overviewPriceVerified: counts.verified,
     overviewPricePending: counts.pending,
     overviewPriceRejected: counts.rejected,
-    overviewSubscriptionTotal: overviewPlatformStats.subscriptions ?? counts.subscriptions,
-    overviewSubscriptionActive: overviewPlatformStats.activeSubscriptions ?? counts.active,
+    overviewSubscriptionTotal: overviewPlatformStats.subscriptions === undefined ? counts.subscriptions : (overviewPlatformStats.subscriptions ?? 'Unavailable'),
+    overviewSubscriptionActive: overviewPlatformStats.activeSubscriptions === undefined ? counts.active : (overviewPlatformStats.activeSubscriptions ?? 'Unavailable'),
     overviewRegisteredFarmers: overviewPlatformStats.farmers ?? '—',
     overviewActiveFarmers: overviewPlatformStats.activeFarmers ?? '—',
     overviewSuggestionsTotal: overviewPlatformStats.suggestions ?? '—',
@@ -56,7 +56,7 @@ function updateOverviewSummary() {
   };
   Object.entries(values).forEach(([id, value]) => {
     const node = document.getElementById(id);
-    if (node) node.textContent = money(value);
+    if (node) node.textContent = typeof value === 'number' ? money(value) : String(value);
   });
   const updated = document.getElementById('adminSummaryUpdated');
   if (updated) updated.textContent = 'Updated ' + new Intl.DateTimeFormat('en-MW', {
@@ -189,13 +189,13 @@ function renderOverviewVisuals() {
     pending: pendingSubs.filter(item => item.status === 'pending').length
   };
   const visualValues = {
-    overviewSubscriptionTotalVisual: overviewPlatformStats.subscriptions ?? subscriptionCounts.total,
-    overviewSubscriptionActiveVisual: overviewPlatformStats.activeSubscriptions ?? subscriptionCounts.active,
-    overviewSubscriptionPendingVisual: overviewPlatformStats.pendingSubscriptions ?? subscriptionCounts.pending
+    overviewSubscriptionTotalVisual: overviewPlatformStats.subscriptions === undefined ? subscriptionCounts.total : (overviewPlatformStats.subscriptions ?? 'Unavailable'),
+    overviewSubscriptionActiveVisual: overviewPlatformStats.activeSubscriptions === undefined ? subscriptionCounts.active : (overviewPlatformStats.activeSubscriptions ?? 'Unavailable'),
+    overviewSubscriptionPendingVisual: overviewPlatformStats.pendingSubscriptions === undefined ? subscriptionCounts.pending : (overviewPlatformStats.pendingSubscriptions ?? 'Unavailable')
   };
   Object.entries(visualValues).forEach(([id, value]) => {
     const node = document.getElementById(id);
-    if (node) node.textContent = money(value);
+    if (node) node.textContent = typeof value === 'number' ? money(value) : String(value);
   });
 }
 
