@@ -1,0 +1,16 @@
+.news-feed-panel{margin:0 0 30px;padding:22px;background:#f2f7f3;border:1px solid #dce9df;border-radius:20px}
+.news-feed-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.news-feed-head h2{margin:5px 0;color:#092d22;font-size:clamp(20px,3vw,27px);letter-spacing:-.025em}
+.news-feed-head p{margin:0;color:#53665a;font-size:13px;line-height:1.65;max-width:680px}
+.news-feed-updated{font-size:11px;color:#52665a;font-weight:750}
+.agri-feed-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.agri-feed-card{background:#fff;border:1px solid #e0eae2;border-radius:15px;padding:17px;display:flex;flex-direction:column;min-width:0}
+.agri-feed-meta,.agri-feed-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.agri-feed-category{font-size:10px;font-weight:850;color:#176b4a;background:#eaf5ee;border-radius:999px;padding:5px 9px}
+.agri-feed-date,.agri-feed-source{font-size:11px;color:#68796e;font-weight:700}
+.agri-feed-card h3{font-size:16px;line-height:1.45;color:#123c2b;margin:13px 0 7px}
+.agri-feed-card p{font-size:13px;line-height:1.7;color:#4b5d52;margin:0 0 15px}
+.agri-feed-footer{border-top:1px solid #edf1ed;padding-top:12px;margin-top:auto}
+.agri-feed-link{font-size:12px;color:#176b4a;font-weight:850;text-decoration:underline;text-underline-offset:3px}
+.agri-feed-empty{grid-column:1/-1;margin:0;padding:18px;background:#fff;border:1px dashed #cbd9ce;border-radius:12px;color:#52665a;font-size:13px}
+@media(max-width:680px){.news-feed-panel{padding:16px}.agri-feed-grid{grid-template-columns:1fr}.agri-feed-card{padding:15px}}
