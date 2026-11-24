@@ -1703,3 +1703,18 @@
   }
   .admin-card .admin-table table{min-width:0}
 }
+
+
+/* Farmer management directory and contribution filters */
+.admin-directory-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+.admin-directory-toolbar .admin-directory-controls{flex:1;margin:0}
+.admin-directory-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.admin-directory-result{color:#587061;font-size:12px;font-weight:700}
+.admin-directory-actions .btn{min-height:42px;padding:9px 15px}
+.admin-submission-toolbar{margin-top:18px}
+.admin-submission-toolbar .admin-directory-controls input{flex:1}
+@media(max-width:600px){
+ .admin-directory-toolbar,.admin-directory-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
+ .admin-directory-actions .btn{width:100%}
+ .admin-directory-result{line-height:1.5}
+}
