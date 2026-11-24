@@ -23,11 +23,17 @@
           <article><span>Registered profiles</span><strong id="registeredProfileCount">—</strong></article>
           <article><span>Farmer accounts</span><strong id="registeredFarmerCount">—</strong></article>
         </div>
-        <div class="admin-directory-controls">
-          <label class="sr-only" for="farmerDirectorySearch">Search profiles</label>
-          <input id="farmerDirectorySearch" type="search" placeholder="Search name, role or profile ID" autocomplete="off">
-          <label class="sr-only" for="farmerDirectoryRole">Filter by role</label>
-          <select id="farmerDirectoryRole"><option value="">All roles</option></select>
+        <div class="admin-directory-toolbar">
+          <div class="admin-directory-controls">
+            <label class="sr-only" for="farmerDirectorySearch">Search profiles</label>
+            <input id="farmerDirectorySearch" type="search" placeholder="Search name, role or profile ID" autocomplete="off">
+            <label class="sr-only" for="farmerDirectoryRole">Filter by role</label>
+            <select id="farmerDirectoryRole"><option value="">All roles</option></select>
+          </div>
+          <div class="admin-directory-actions">
+            <span id="farmerDirectoryResultCount" class="admin-directory-result" role="status" aria-live="polite">Loading profiles…</span>
+            <button id="refreshFarmerDirectory" class="btn btn-outline" type="button">Refresh</button>
+          </div>
         </div>
         <div class="table-scroll">
           <table class="admin-table">
@@ -45,6 +51,20 @@
           <article><span>Farmer price reports</span><strong id="farmerReportCount">—</strong></article>
           <article><span>Identified contributors</span><strong id="farmerContributorCount">—</strong></article>
           <article><span>Awaiting review</span><strong id="farmerPendingCount">—</strong></article>
+        </div>
+        <div class="admin-directory-toolbar admin-submission-toolbar">
+          <div class="admin-directory-controls">
+            <label class="sr-only" for="farmerSubmissionSearch">Search farmer submissions</label>
+            <input id="farmerSubmissionSearch" type="search" placeholder="Search contributor, crop, market or district" autocomplete="off">
+            <label class="sr-only" for="farmerSubmissionStatus">Filter submissions by status</label>
+            <select id="farmerSubmissionStatus">
+              <option value="">All statuses</option>
+              <option value="pending">Pending review</option>
+              <option value="verified">Verified</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <span id="farmerSubmissionResultCount" class="admin-directory-result" role="status" aria-live="polite">Loading submissions…</span>
         </div>
         <div class="table-scroll">
           <table class="admin-table">
