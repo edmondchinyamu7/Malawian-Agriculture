@@ -1,20 +1,80 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#092d22"><title>Farmer Suggestions | Ulimi wa Malawi Admin</title>
-<link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/components.css"><link rel="stylesheet" href="../css/admin.css"><link rel="stylesheet" href="../css/monetization.css"><link rel="stylesheet" href="../css/responsive.css"></head>
-<body id="top"><div class="shell admin-shell">
-<aside class="admin-sidebar" aria-label="Administration navigation"><a class="admin-sidebar-brand" href="../index.html"><span class="admin-brand-mark" aria-hidden="true">🌱</span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span></a>
-<div class="admin-sidebar-label">MAIN MENU</div><nav class="admin-side-nav" aria-label="Admin pages">
-<a href="admin.html"><span>⌂</span> Overview</a><a href="admin-farmers.html"><span>♙</span> Farmers</a><a href="admin-crops-prices.html"><span>♧</span> Crops &amp; Prices</a><a href="admin-content.html"><span>▤</span> Website Content</a><a href="admin-bot.html"><span>✧</span> Bot Knowledge <em class="admin-nav-soon">Soon</em></a><a href="admin-messages.html"><span>▣</span> Messages <em class="admin-nav-soon">Soon</em></a><a class="active" aria-current="page" href="admin-suggestions.html"><span>✎</span> Farmer Suggestions</a><a href="admin-settings.html"><span>⚙</span> Settings</a></nav>
-<div class="admin-sidebar-label">REPORTING</div><nav class="admin-side-nav"><a href="admin-submissions.html"><span>✓</span> Submissions &amp; approvals</a><a href="admin-finance.html"><span>▥</span> Analytics &amp; finance</a></nav>
-<div class="admin-sidebar-bottom"><div class="admin-online-dot"></div><span>Administrator workspace</span></div></aside>
-<header class="topbar"><a class="brand" href="admin.html"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span></a><div class="top-actions"><button id="adminLogoutBtn" class="btn btn-outline" type="button">Sign out</button></div></header>
-<main class="main container admin-page-content">
-<section class="admin-dashboard-heading"><div><span class="admin-eyebrow">ULIMI WA MALAWI / FARMER FEEDBACK</span><h1>Farmer Suggestions</h1><p>Review ideas and problems submitted by farmers, then send a response from the admin dashboard.</p></div></section>
-<section class="admin-card admin-suggestions-panel">
-<div class="admin-suggestions-toolbar"><div><span class="admin-eyebrow">INCOMING FEEDBACK</span><h2>Suggestions inbox <span id="adminSuggestionsCount">0</span></h2></div><label for="suggestionStatusFilter">Filter by status <select id="suggestionStatusFilter"><option value="all">All suggestions</option><option value="new">New</option><option value="reviewing">Reviewing</option><option value="responded">Responded</option><option value="closed">Closed</option></select></label></div>
-<div id="adminSuggestionsNotice" class="admin-suggestion-notice" role="status">Checking administrator access…</div><div id="adminSuggestionsList" class="admin-suggestions-list"><div class="admin-suggestion-empty">Loading suggestions…</div></div>
-</section></main></div><div class="toast" id="toast" role="status"></div>
-<script type="module" src="../js/main.js"></script><script type="module" src="../js/admin-suggestions.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#092d22">
+  <title>Farmer Suggestions | Ulimi wa Malawi Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/monetization.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body id="top">
+<div class="shell admin-shell">
+  <aside class="admin-sidebar" aria-label="Administration navigation">
+    <a class="admin-sidebar-brand" href="../index.html"><span class="admin-brand-mark" aria-hidden="true">🌱</span><span>ULIMI WA MALAWI<small>ADMIN CONTROL CENTRE</small></span></a>
+    <div class="admin-sidebar-label">MAIN MENU</div>
+    <nav class="admin-side-nav" aria-label="Admin pages">
+      <a href="admin.html"><span>⌂</span> Overview</a>
+      <a href="admin-farmers.html"><span>♙</span> Farmers</a>
+      <a href="admin-crops-prices.html"><span>♧</span> Crops &amp; Prices</a>
+      <a href="admin-content.html"><span>▤</span> Website Content</a>
+      <a href="admin-bot.html"><span>✧</span> Bot Knowledge <em class="admin-nav-soon">Soon</em></a>
+      <a href="admin-messages.html"><span>▣</span> Messages <em class="admin-nav-soon">Soon</em></a>
+      <a class="active" aria-current="page" href="admin-suggestions.html"><span>✎</span> Farmer Suggestions</a>
+      <a href="admin-settings.html"><span>⚙</span> Settings</a>
+    </nav>
+    <div class="admin-sidebar-label">REPORTING</div>
+    <nav class="admin-side-nav"><a href="admin-submissions.html"><span>✓</span> Submissions &amp; approvals</a><a href="admin-finance.html"><span>▥</span> Analytics &amp; finance</a></nav>
+    <div class="admin-sidebar-bottom"><div class="admin-online-dot"></div><span>Administrator workspace</span></div>
+  </aside>
+  <header class="topbar">
+    <a class="brand" href="admin.html"><span class="brand-mark">🌱</span><span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span></a>
+    <div class="top-actions"><button id="adminLogoutBtn" class="btn btn-outline" type="button">Sign out</button></div>
+  </header>
+  <main class="main container admin-page-content">
+    <section class="admin-dashboard-heading">
+      <div><span class="admin-eyebrow">ULIMI WA MALAWI / FARMER FEEDBACK</span><h1>Farmer Suggestions</h1><p>Review ideas and problems submitted by farmers, track progress, and send a response.</p></div>
+    </section>
+    <section class="admin-suggestion-stats" aria-label="Suggestion status summary">
+      <article><span>Total suggestions</span><strong id="suggestionStatTotal">—</strong></article>
+      <article><span>New</span><strong id="suggestionStatNew">—</strong></article>
+      <article><span>Reviewing</span><strong id="suggestionStatReviewing">—</strong></article>
+      <article><span>Responded / closed</span><strong id="suggestionStatDone">—</strong></article>
+    </section>
+    <section class="admin-card admin-suggestions-panel">
+      <div class="admin-suggestions-toolbar">
+        <div><span class="admin-eyebrow">INCOMING FEEDBACK</span><h2>Suggestions inbox <span id="adminSuggestionsCount">0</span></h2></div>
+        <div class="admin-suggestion-toolbar-actions">
+          <button id="refreshSuggestionsBtn" class="btn btn-outline" type="button">↻ Refresh</button>
+          <button id="exportSuggestionsBtn" class="btn btn-outline" type="button">↓ Export CSV</button>
+        </div>
+      </div>
+      <div class="admin-suggestion-filters">
+        <label class="suggestion-search-label" for="suggestionSearch">Search suggestions
+          <input id="suggestionSearch" type="search" placeholder="Search subject, message, farmer ID…" autocomplete="off">
+        </label>
+        <label for="suggestionStatusFilter">Status
+          <select id="suggestionStatusFilter"><option value="all">All statuses</option><option value="new">New</option><option value="reviewing">Reviewing</option><option value="responded">Responded</option><option value="closed">Closed</option></select>
+        </label>
+        <label for="suggestionCategoryFilter">Category
+          <select id="suggestionCategoryFilter"><option value="all">All categories</option></select>
+        </label>
+        <label for="suggestionSort">Sort
+          <select id="suggestionSort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select>
+        </label>
+      </div>
+      <div class="admin-suggestion-results-row"><span id="suggestionResultsText" aria-live="polite">Loading suggestions…</span><button id="clearSuggestionFilters" class="admin-suggestion-clear" type="button">Clear filters</button></div>
+      <div id="adminSuggestionsNotice" class="admin-suggestion-notice" role="status">Checking administrator access…</div>
+      <div id="adminSuggestionsList" class="admin-suggestions-list" aria-live="polite"><div class="admin-suggestion-empty">Loading suggestions…</div></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/admin-suggestions.js"></script>
 <script src="../js/admin-menu.js"></script>
-</body></html>
+</body>
+</html>
