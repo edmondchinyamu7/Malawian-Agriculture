@@ -1317,3 +1317,64 @@
 .admin-directory-controls input{flex:1}
 .admin-directory-controls input:focus,.admin-directory-controls select:focus{outline:2px solid #74b98a;outline-offset:2px}
 @media(max-width:600px){.admin-directory-controls{display:grid}.admin-directory-controls input,.admin-directory-controls select{width:100%;min-width:0}}
+
+
+/* Phase 2 admin dashboard visual consistency and accessibility */
+.admin-shell {
+  --admin-forest: #103d2b;
+  --admin-green: #176b49;
+}
+.admin-shell .admin-card,
+.admin-shell .admin-visual-card,
+.admin-shell .admin-recent-card,
+.admin-shell .admin-membership-card {
+  border-color: #dce7dd;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(20,54,34,.055);
+}
+.admin-shell .admin-card h2,
+.admin-shell .admin-card h3,
+.admin-shell .admin-page-heading,
+.admin-shell .admin-dashboard-heading {
+  color: #173f2d;
+}
+.admin-shell .admin-card p,
+.admin-shell .admin-table-subtext {
+  color: #52665a;
+}
+.admin-shell .btn-admin,
+.admin-shell .admin-action-link {
+  color: #fff;
+  background: #103d2b;
+  border-color: #103d2b;
+}
+.admin-shell .btn-admin:hover,
+.admin-shell .admin-action-link:hover {
+  color: #fff;
+  background: #176b49;
+  border-color: #176b49;
+}
+.admin-shell .admin-table th {
+  color: #173f2d;
+  background: #edf4ee;
+}
+.admin-shell .admin-table td { color: #34483a; }
+.admin-shell .admin-sidebar { background: #103d2b; }
+.admin-shell .admin-side-nav a { border-radius: 9px; }
+.admin-shell input, .admin-shell select, .admin-shell textarea {
+  color: #20372a;
+  border-color: #cbd9ce;
+}
+.admin-shell input::placeholder, .admin-shell textarea::placeholder {
+  color: #68796d;
+  opacity: 1;
+}
+.admin-shell :focus-visible {
+  outline: 3px solid rgba(23,107,73,.38);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .admin-shell .admin-card { padding: 15px; }
+  .admin-shell .admin-actions { gap: 9px; }
+  .admin-shell .admin-actions .btn-admin { width: 100%; }
+}
