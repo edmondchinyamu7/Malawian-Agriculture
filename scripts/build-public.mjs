@@ -71,4 +71,12 @@ if (fs.existsSync(pagesSrc)) {
   }
 }
 
+// Copy search-engine discovery files into the deployed public directory.
+for (const file of ['robots.txt', 'sitemap.xml']) {
+  const src = path.join(ROOT, file);
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, path.join(PUBLIC, file));
+  }
+}
+
 console.log(`Build complete: synced ${syncedFiles} HTML files and static assets to public/ (protected admin pages excluded).`);
