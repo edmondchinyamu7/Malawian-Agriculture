@@ -735,6 +735,7 @@ export async function initAdminPriceManagement() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initAdminSidebarNavigation();
+  initResponsiveAdminMenu();
   initAdminPriceManagement();
 });
 
