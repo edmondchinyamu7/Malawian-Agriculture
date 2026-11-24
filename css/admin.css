@@ -1718,3 +1718,18 @@
  .admin-directory-actions .btn{width:100%}
  .admin-directory-result{line-height:1.5}
 }
+
+
+/* Market price directory: summary, filters and responsive controls */
+.admin-price-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+.admin-price-summary>div{display:flex;flex-direction:column;gap:5px;padding:13px 15px;border:1px solid #e1ebe3;border-radius:12px;background:#f7faf7;min-width:0}
+.admin-price-summary span{font-size:12px;color:#587061;font-weight:600}
+.admin-price-summary strong{font-size:22px;line-height:1.2;color:#174b32;font-variant-numeric:tabular-nums}
+.admin-price-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+.admin-price-filters{display:flex;align-items:center;gap:9px;flex:1;min-width:min(100%,300px);flex-wrap:wrap}
+.admin-price-filters input{flex:2 1 240px;min-width:180px}
+.admin-price-filters select{flex:1 1 145px;min-width:130px}
+.admin-price-filters input,.admin-price-filters select{min-height:44px;padding:9px 12px;border:1px solid #d7e2d9;border-radius:9px;background:#fff;color:#203b2b}
+.admin-price-toolbar-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.admin-price-toolbar-actions button{min-height:42px}
+@media(max-width:700px){.admin-price-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-price-toolbar,.admin-price-toolbar-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.admin-price-filters{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.admin-price-filters input,.admin-price-filters select{width:100%;min-width:0}.admin-price-toolbar-actions button{width:100%}}

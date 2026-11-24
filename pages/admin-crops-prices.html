@@ -117,6 +117,35 @@
           </button>
         </div>
 
+        <div class="admin-price-summary" aria-live="polite">
+          <div><span>Total records</span><strong id="adminPriceCount">—</strong></div>
+          <div><span>Verified</span><strong id="adminPriceVerifiedCount">—</strong></div>
+          <div><span>Pending review</span><strong id="adminPricePendingCount">—</strong></div>
+          <div><span>Rejected</span><strong id="adminPriceRejectedCount">—</strong></div>
+        </div>
+        <div class="admin-price-toolbar">
+          <div class="admin-price-filters">
+            <label class="sr-only" for="adminPriceSearch">Search market records</label>
+            <input id="adminPriceSearch" type="search" placeholder="Search crop, market, district or reporter" autocomplete="off">
+            <label class="sr-only" for="adminPriceStatusFilter">Filter by publication status</label>
+            <select id="adminPriceStatusFilter">
+              <option value="">All statuses</option>
+              <option value="verified">Verified</option>
+              <option value="pending">Pending review</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <label class="sr-only" for="adminPriceSourceFilter">Filter by record source</label>
+            <select id="adminPriceSourceFilter">
+              <option value="">All sources</option>
+              <option value="admin">Admin desk</option>
+              <option value="farmer">Farmer report</option>
+            </select>
+          </div>
+          <div class="admin-price-toolbar-actions">
+            <span id="adminPriceResultCount" class="admin-directory-result" role="status" aria-live="polite">Loading records…</span>
+            <button id="refreshAdminPrices" class="btn btn-outline" type="button">Refresh</button>
+          </div>
+        </div>
         <div style="overflow-x:auto">
           <table class="admin-table">
             <thead>
