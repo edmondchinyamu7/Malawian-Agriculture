@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Private account and administration areas
+Disallow: /api/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin-finance
+Disallow: /admin-finance/
+Disallow: /pages/admin
+Disallow: /pages/admin/
+
+Sitemap: https://malawian-agriculture.vercel.app/sitemap.xml
