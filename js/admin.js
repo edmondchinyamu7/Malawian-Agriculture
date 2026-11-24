@@ -492,35 +492,56 @@ function renderFarmerSubmissions() {
 function renderAdminTable() {
   const body = document.getElementById('adminPriceTableBody');
   if (!body) return;
-  if (!rows.length) {
-    body.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px">No market price records found.</td></tr>';
+  const count = id => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = money(rows.filter(row => row.status === id.replace('adminPrice', '').replace('Count', '').toLowerCase()).length);
+  };
+  const totalNode = document.getElementById('adminPriceCount');
+  const verifiedNode = document.getElementById('adminPriceVerifiedCount');
+  const pendingNode = document.getElementById('adminPricePendingCount');
+  const rejectedNode = document.getElementById('adminPriceRejectedCount');
+  if (totalNode) totalNode.textContent = money(rows.length);
+  if (verifiedNode) verifiedNode.textContent = money(rows.filter(row => row.status === 'verified').length);
+  if (pendingNode) pendingNode.textContent = money(rows.filter(row => row.status === 'pending').length);
+  if (rejectedNode) rejectedNode.textContent = money(rows.filter(row => row.status === 'rejected').length);
+
+  const search = (document.getElementById('adminPriceSearch')?.value || '').trim().toLowerCase();
+  const statusFilter = document.getElementById('adminPriceStatusFilter')?.value || '';
+  const sourceFilter = document.getElementById('adminPriceSourceFilter')?.value || '';
+  const filtered = rows.filter(row => {
+    const searchable = [row.crop_name, row.market_name, row.district, row.region, row.unit, row.reporter_name, row.source_name]
+      .filter(Boolean).join(' ').toLowerCase();
+    return (!search || searchable.includes(search))
+      && (!statusFilter || row.status === statusFilter)
+      && (!sourceFilter || (row.source_type || 'admin') === sourceFilter);
+  });
+  const resultCount = document.getElementById('adminPriceResultCount');
+  if (resultCount) resultCount.textContent = 'Showing ' + money(filtered.length) + ' of ' + money(rows.length) + ' records';
+
+  if (!filtered.length) {
+    body.innerHTML = '<tr><td colspan="7" class="admin-empty-cell">' +
+      (rows.length ? 'No market records match these filters. Try changing or clearing your search.' : 'No market price records found.') +
+      '</td></tr>';
     return;
   }
-  body.innerHTML = rows.map(raw => {
+  body.innerHTML = filtered.map(raw => {
     const item = toUi(raw);
-    const statusLabel = item.status === 'verified'
-      ? '✓ Verified'
-      : item.status === 'rejected'
-        ? 'Rejected'
-        : 'Pending review';
+    const statusLabel = item.status === 'verified' ? '✓ Verified' : item.status === 'rejected' ? 'Rejected' : 'Pending review';
     const confirming = pendingDeleteId === String(item.id);
     return `<tr>
-      <td><strong>${escapeHtml(item.crop)}</strong><div style="font-size:11px;color:#617268">${escapeHtml(item.sourceType === 'farmer' ? 'Farmer report' : 'Admin desk')}</div></td>
-      <td>${escapeHtml(item.marketName)} (${escapeHtml(item.district)})</td>
-      <td>${escapeHtml(item.unit)}</td>
+      <td><strong>${escapeHtml(item.crop || '—')}</strong><div style="font-size:11px;color:#617268">${escapeHtml(item.sourceType === 'farmer' ? 'Farmer report' : 'Admin desk')}</div></td>
+      <td>${escapeHtml(item.marketName || '—')} (${escapeHtml(item.district || '—')})</td>
+      <td>${escapeHtml(item.unit || '—')}</td>
       <td>MWK ${money(item.priceMin)} – ${money(item.priceMax)}</td>
       <td><span class="${item.status === 'verified' ? 'badge-verified' : 'badge-unverified'}">${escapeHtml(statusLabel)}</span></td>
-      <td style="font-size:11px;color:#617268">${escapeHtml(item.dateReported)}<br>${escapeHtml(item.reporter)}</td>
+      <td style="font-size:11px;color:#617268">${escapeHtml(item.dateReported || '—')}<br>${escapeHtml(item.reporter || '—')}</td>
       <td style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
         ${item.status !== 'verified'
           ? `<button class="action-btn action-verify" type="button" data-verify="${escapeHtml(item.id)}">Approve</button>`
           : `<button class="action-btn" type="button" data-pend="${escapeHtml(item.id)}">Unpublish</button>`}
-        ${item.status === 'pending'
-          ? `<button class="action-btn" type="button" data-reject-price="${escapeHtml(item.id)}">Reject</button>`
-          : ''}
+        ${item.status === 'pending' ? `<button class="action-btn" type="button" data-reject-price="${escapeHtml(item.id)}">Reject</button>` : ''}
         ${confirming
-          ? `<button class="action-btn action-delete" type="button" data-confirm-delete="${escapeHtml(item.id)}">Confirm Delete</button>
-             <button class="action-btn" type="button" data-cancel-delete="1">Cancel</button>`
+          ? `<button class="action-btn action-delete" type="button" data-confirm-delete="${escapeHtml(item.id)}">Confirm Delete</button><button class="action-btn" type="button" data-cancel-delete="1">Cancel</button>`
           : `<button class="action-btn action-delete" type="button" data-ask-delete="${escapeHtml(item.id)}">Delete</button>`}
       </td>
     </tr>`;
@@ -749,6 +770,20 @@ export async function initAdminPriceManagement() {
   const submissionStatus = document.getElementById('farmerSubmissionStatus');
   if (submissionSearch) submissionSearch.addEventListener('input', renderFarmerSubmissions);
   if (submissionStatus) submissionStatus.addEventListener('change', renderFarmerSubmissions);
+  const priceSearch = document.getElementById('adminPriceSearch');
+  const priceStatus = document.getElementById('adminPriceStatusFilter');
+  const priceSource = document.getElementById('adminPriceSourceFilter');
+  if (priceSearch) priceSearch.addEventListener('input', renderAdminTable);
+  if (priceStatus) priceStatus.addEventListener('change', renderAdminTable);
+  if (priceSource) priceSource.addEventListener('change', renderAdminTable);
+  const refreshPrices = document.getElementById('refreshAdminPrices');
+  if (refreshPrices) refreshPrices.addEventListener('click', async () => {
+    refreshPrices.disabled = true;
+    refreshPrices.textContent = 'Refreshing…';
+    try { await loadRows(); }
+    catch (error) { showToast('Could not refresh market records: ' + error.message); }
+    finally { refreshPrices.disabled = false; refreshPrices.textContent = 'Refresh'; }
+  });
   try {
     const tasks = [];
     if (needsMarketRows) tasks.push(loadRows());
