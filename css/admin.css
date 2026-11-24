@@ -1542,3 +1542,164 @@
     margin-right: 12px !important;
   }
 }
+
+
+/* Mobile usability pass: admin tables, filters, search and forms */
+.admin-table{
+  display:block;
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  border-collapse:separate;
+  border-spacing:0;
+  scrollbar-width:thin;
+  scrollbar-color:#9ab8a2 #edf3ee;
+}
+.admin-table th,
+.admin-table td{
+  white-space:nowrap;
+}
+.admin-table td:last-child,
+.admin-table th:last-child{
+  padding-right:16px;
+}
+.admin-table .action-btn,
+.admin-table button{
+  min-height:36px;
+  white-space:nowrap;
+}
+.admin-card,
+.admin-page-heading,
+.admin-welcome,
+.finance-page{
+  min-width:0;
+}
+.admin-card{
+  overflow:visible;
+}
+.admin-card > .admin-table{
+  margin-bottom:4px;
+}
+.admin-card input,
+.admin-card select,
+.admin-card textarea,
+.admin-page-heading input,
+.admin-page-heading select,
+.finance-page input,
+.finance-page select{
+  box-sizing:border-box;
+  max-width:100%;
+  min-width:0;
+}
+.admin-card input[type="search"],
+.admin-card input[type="text"],
+.admin-card input[type="email"],
+.admin-card input[type="number"],
+.admin-card select,
+.admin-page-heading input[type="search"],
+.admin-page-heading input[type="text"]{
+  min-height:44px;
+}
+.admin-card input:focus-visible,
+.admin-card select:focus-visible,
+.admin-card textarea:focus-visible,
+.admin-page-heading input:focus-visible,
+.admin-page-heading select:focus-visible{
+  outline:3px solid rgba(45,125,78,.2);
+  outline-offset:1px;
+}
+.admin-card .admin-actions,
+.admin-page-heading .admin-welcome-actions{
+  flex-wrap:wrap;
+}
+.admin-card .admin-actions button,
+.admin-card .admin-actions .btn,
+.admin-card .admin-actions .btn-admin,
+.admin-card .admin-actions .btn-outline{
+  min-height:42px;
+}
+@media(max-width:900px){
+  .admin-table{
+    font-size:12px;
+  }
+  .admin-table th,
+  .admin-table td{
+    padding:11px 12px;
+  }
+  .admin-card .admin-form{
+    gap:13px;
+  }
+}
+@media(max-width:600px){
+  .admin-card{
+    padding:14px;
+    margin-bottom:16px;
+  }
+  .admin-card > h2,
+  .admin-card > h3{
+    overflow-wrap:anywhere;
+  }
+  .admin-card .admin-form{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+  }
+  .admin-card .form-group{
+    min-width:0;
+    width:100%;
+  }
+  .admin-card .form-group input,
+  .admin-card .form-group select,
+  .admin-card .form-group textarea{
+    width:100%;
+    min-height:44px;
+    font-size:16px;
+  }
+  .admin-card .form-group textarea{
+    min-height:104px;
+  }
+  .admin-card .admin-actions{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    gap:9px;
+  }
+  .admin-card .admin-actions > *{
+    width:100%;
+    min-width:0;
+  }
+  .admin-card .admin-table{
+    min-width:0;
+    width:100%;
+    max-width:100%;
+    display:block;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+  }
+  .admin-card .admin-table table{
+    min-width:640px;
+  }
+  .admin-page-heading input,
+  .admin-page-heading select{
+    width:100%;
+    min-height:44px;
+    font-size:16px;
+  }
+  .finance-page{
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+  }
+}
+
+/* Keep wide data tables scrollable inside their own admin panel on phones. */
+@media(max-width:600px){
+  .admin-card{overflow-x:auto;overflow-y:visible}
+  .admin-card .admin-table{
+    display:table;
+    width:max-content;
+    min-width:640px;
+    max-width:none;
+    overflow:visible;
+  }
+  .admin-card .admin-table table{min-width:0}
+}
