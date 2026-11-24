@@ -1770,3 +1770,32 @@
 .admin-suggestion-empty strong{color:#34533f}
 @media(max-width:800px){.admin-suggestion-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-suggestion-filters .suggestion-search-label{grid-column:1/-1}}
 @media(max-width:600px){.admin-suggestion-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.admin-suggestion-stats article{padding:12px}.admin-suggestion-stats strong{font-size:23px}.admin-suggestions-toolbar,.admin-suggestion-toolbar-actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}.admin-suggestion-toolbar-actions button{width:100%}.admin-suggestion-filters{grid-template-columns:minmax(0,1fr)}.admin-suggestion-filters .suggestion-search-label{grid-column:auto}.admin-suggestion-results-row{align-items:flex-start}.admin-suggestion-item{padding:14px}.admin-suggestion-item-head{flex-direction:column}.admin-suggestion-actions{display:grid;grid-template-columns:minmax(0,1fr)}.admin-suggestion-status-label select,.admin-suggestion-actions button{width:100%}}
+
+
+/* Ensure Farmer Suggestions toolbar actions remain visible on narrow screens. */
+@media (max-width: 800px) {
+  .admin-suggestions-panel .admin-suggestions-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .admin-suggestions-panel .admin-suggestion-toolbar-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .admin-suggestions-panel .admin-suggestion-toolbar-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    white-space: normal;
+  }
+}
