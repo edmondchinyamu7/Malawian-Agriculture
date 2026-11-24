@@ -1378,3 +1378,120 @@
   .admin-shell .admin-actions { gap: 9px; }
   .admin-shell .admin-actions .btn-admin { width: 100%; }
 }
+
+
+/* Mobile admin navigation: closed by default, opened from the menu control */
+.admin-menu-toggle {
+  display: none;
+  width: 44px;
+  height: 42px;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px;
+  border: 1px solid #cbded0;
+  border-radius: 11px;
+  background: #f2f8f3;
+  color: #103d2b;
+  cursor: pointer;
+}
+.admin-menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.admin-menu-open .admin-menu-toggle span:first-child { transform: translateY(7px) rotate(45deg); }
+.admin-menu-open .admin-menu-toggle span:nth-child(2) { opacity: 0; }
+.admin-menu-open .admin-menu-toggle span:last-child { transform: translateY(-7px) rotate(-45deg); }
+.admin-sidebar-overlay { display: none; }
+@media (max-width: 900px) {
+  .admin-shell { padding-left: 0 !important; }
+  .admin-shell > .topbar { margin-left: 0 !important; }
+  .admin-menu-toggle { display: inline-flex; }
+  .admin-shell .admin-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(300px, 84vw);
+    max-width: 300px;
+    height: 100dvh;
+    overflow-y: auto;
+    padding: 22px 16px;
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform .24s ease, visibility .24s ease;
+    z-index: 1201;
+    box-shadow: 16px 0 40px rgba(8,35,23,.22);
+  }
+  .admin-shell .admin-sidebar-brand {
+    justify-content: flex-start;
+    padding: 4px 8px 26px;
+  }
+  .admin-shell .admin-sidebar-brand > span:last-child {
+    display: block;
+    font-size: 13px;
+  }
+  .admin-shell .admin-sidebar-brand small { display: block; }
+  .admin-shell .admin-sidebar-label {
+    display: block;
+    font-size: 10px;
+  }
+  .admin-shell .admin-side-nav { display: grid; }
+  .admin-shell .admin-side-nav a,
+  .admin-shell .admin-side-nav a:not(.active) {
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 13px 12px;
+    font-size: 13px;
+  }
+  .admin-shell .admin-side-nav a span { width: 22px; font-size: 17px; }
+  .admin-shell .admin-sidebar-bottom {
+    justify-content: flex-start;
+    font-size: 11px;
+    padding: 18px 8px 4px;
+  }
+  .admin-shell.admin-menu-open .admin-sidebar {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  .admin-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgba(7,25,17,.48);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility .2s ease;
+    z-index: 1200;
+  }
+  .admin-shell.admin-menu-open .admin-sidebar-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+  body.admin-menu-lock { overflow: hidden; }
+  .admin-shell > .main { padding-left: 16px; padding-right: 16px; }
+  .finance-page { margin-left: 16px !important; }
+}
+@media (max-width: 600px) {
+  .admin-shell > .topbar { min-height: 68px; padding: 10px 12px; gap: 10px; }
+  .admin-shell > .topbar .brand { min-width: 0; font-size: 11px; gap: 8px; }
+  .admin-shell > .topbar .brand small { font-size: 8px; }
+  .admin-shell > .topbar .brand-mark { width: 34px; height: 34px; }
+  .admin-shell > .topbar .top-actions { gap: 8px; }
+  .admin-shell > .topbar #adminLogoutBtn { min-height: 40px; padding: 8px 12px; font-size: 12px; }
+  .admin-shell > .main { padding: 0 10px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell .admin-sidebar,
+  .admin-sidebar-overlay,
+  .admin-menu-toggle span { transition: none !important; }
+}
