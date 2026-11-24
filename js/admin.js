@@ -380,14 +380,17 @@ function renderRegisteredFarmers() {
   const filtered = registeredFarmers.filter(profile => {
     const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ').toLowerCase();
     const role = String(profile.role || 'unspecified');
-    return (!search || name.includes(search) || role.toLowerCase().includes(search) || String(profile.id).toLowerCase().includes(search))
+    const id = String(profile.id || '').toLowerCase();
+    return (!search || name.includes(search) || role.toLowerCase().includes(search) || id.includes(search))
       && (!roleFilter || role === roleFilter);
   });
 
   const total = document.getElementById('registeredProfileCount');
   const farmers = document.getElementById('registeredFarmerCount');
+  const resultCount = document.getElementById('farmerDirectoryResultCount');
   if (total) total.textContent = money(registeredFarmers.length);
   if (farmers) farmers.textContent = money(registeredFarmers.filter(profile => profile.role === 'farmer').length);
+  if (resultCount) resultCount.textContent = 'Showing ' + money(filtered.length) + ' of ' + money(registeredFarmers.length) + ' profiles';
 
   const roleSelect = document.getElementById('farmerDirectoryRole');
   if (roleSelect) {
@@ -401,7 +404,7 @@ function renderRegisteredFarmers() {
 
   if (!filtered.length) {
     body.innerHTML = '<tr><td colspan="4" class="admin-empty-cell">' +
-      (registeredFarmers.length ? 'No profiles match your search or role filter.' : 'No registered profiles were returned.') +
+      (registeredFarmers.length ? 'No profiles match your search or role filter. Try changing or clearing the filters.' : 'No registered profiles were returned.') +
       '</td></tr>';
     return;
   }
@@ -409,8 +412,9 @@ function renderRegisteredFarmers() {
   body.innerHTML = filtered.map(profile => {
     const name = [profile.first_name, profile.last_name].filter(Boolean).join(' ') || 'Name not provided';
     const role = String(profile.role || 'unspecified');
-    const joined = profile.created_at
-      ? new Intl.DateTimeFormat('en-MW', { dateStyle: 'medium' }).format(new Date(profile.created_at))
+    const joinedDate = profile.created_at ? new Date(profile.created_at) : null;
+    const joined = joinedDate && !Number.isNaN(joinedDate.getTime())
+      ? new Intl.DateTimeFormat('en-MW', { dateStyle: 'medium' }).format(joinedDate)
       : '—';
     return '<tr><td><strong>' + escapeHtml(name) + '</strong></td>' +
       '<td><span class="admin-status-pill">' + escapeHtml(role.replace(/_/g, ' ')) + '</span></td>' +
@@ -453,11 +457,25 @@ function renderFarmerSubmissions() {
   if (count) count.textContent = money(reports.length);
   if (people) people.textContent = money(contributors.size);
   if (pendingCount) pendingCount.textContent = money(pending);
-  if (!reports.length) {
-    body.innerHTML = '<tr><td colspan="6" class="admin-empty-cell">No farmer-submitted market reports are available yet. Farmer records will appear here when submitted through the platform.</td></tr>';
+
+  const search = (document.getElementById('farmerSubmissionSearch')?.value || '').trim().toLowerCase();
+  const statusFilter = document.getElementById('farmerSubmissionStatus')?.value || '';
+  const filtered = reports.filter(row => {
+    const searchable = [row.reporter_name, row.crop_name, row.market_name, row.district, row.status]
+      .filter(Boolean).join(' ').toLowerCase();
+    return (!search || searchable.includes(search)) && (!statusFilter || row.status === statusFilter);
+  });
+  const resultCount = document.getElementById('farmerSubmissionResultCount');
+  if (resultCount) resultCount.textContent = 'Showing ' + money(filtered.length) + ' of ' + money(reports.length) + ' submissions';
+
+  if (!filtered.length) {
+    const message = reports.length
+      ? 'No submissions match your search or status filter. Try changing or clearing the filters.'
+      : 'No farmer-submitted market reports are available yet. Farmer records will appear here when submitted through the platform.';
+    body.innerHTML = '<tr><td colspan="6" class="admin-empty-cell">' + message + '</td></tr>';
     return;
   }
-  body.innerHTML = reports.map(row => {
+  body.innerHTML = filtered.map(row => {
     const status = row.status === 'verified' ? 'Verified' : row.status === 'rejected' ? 'Rejected' : 'Pending review';
     const statusClass = row.status === 'verified' ? 'is-verified' : row.status === 'rejected' ? 'is-rejected' : 'is-pending';
     return `<tr>
@@ -720,6 +738,17 @@ export async function initAdminPriceManagement() {
   const directoryRole = document.getElementById('farmerDirectoryRole');
   if (directorySearch) directorySearch.addEventListener('input', renderRegisteredFarmers);
   if (directoryRole) directoryRole.addEventListener('change', renderRegisteredFarmers);
+  const refreshDirectory = document.getElementById('refreshFarmerDirectory');
+  if (refreshDirectory) refreshDirectory.addEventListener('click', async () => {
+    refreshDirectory.disabled = true;
+    refreshDirectory.textContent = 'Refreshing…';
+    try { await loadRegisteredFarmers(); }
+    finally { refreshDirectory.disabled = false; refreshDirectory.textContent = 'Refresh'; }
+  });
+  const submissionSearch = document.getElementById('farmerSubmissionSearch');
+  const submissionStatus = document.getElementById('farmerSubmissionStatus');
+  if (submissionSearch) submissionSearch.addEventListener('input', renderFarmerSubmissions);
+  if (submissionStatus) submissionStatus.addEventListener('change', renderFarmerSubmissions);
   try {
     const tasks = [];
     if (needsMarketRows) tasks.push(loadRows());
