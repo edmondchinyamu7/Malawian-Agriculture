@@ -143,9 +143,57 @@ begin
 end;
 $function$;
 
--- Remove the direct insert route so authenticated clients must use the
--- trusted function above. Existing admin review/update behaviour is retained.
-revoke insert on table public.subscriptions from anon, authenticated, public;
+-- Defence in depth and backwards-compatible rollout: even if an older
+-- browser version inserts directly, the database overwrites its amount with
+-- the official catalogue price before RLS checks the pending request.
+create or replace function public.enforce_subscription_official_price()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $function$
+declare
+  v_amount_mwk integer;
+begin
+  if new.plan_id is null
+     or new.plan_id not in ('standard', 'professional', 'agribusiness') then
+    raise exception 'The selected paid plan is not valid.'
+      using errcode = '22023';
+  end if;
+
+  if new.billing_period is null
+     or new.billing_period not in ('monthly', 'yearly') then
+    raise exception 'Billing period must be monthly or yearly.'
+      using errcode = '22023';
+  end if;
+
+  select case
+      when new.billing_period = 'monthly' then sp.monthly_price_mwk
+      else sp.yearly_price_mwk
+    end
+    into v_amount_mwk
+  from public.subscription_plans sp
+  where sp.id = new.plan_id
+    and sp.active = true;
+
+  if not found or v_amount_mwk is null or v_amount_mwk <= 0 then
+    raise exception 'The selected subscription plan is unavailable.'
+      using errcode = '22023';
+  end if;
+
+  -- Ignore any amount supplied by a browser or other untrusted client.
+  new.amount_mwk := v_amount_mwk;
+  return new;
+end;
+$function$;
+
+drop trigger if exists subscriptions_enforce_official_price on public.subscriptions;
+create trigger subscriptions_enforce_official_price
+before insert on public.subscriptions
+for each row execute function public.enforce_subscription_official_price();
+
+-- Keep existing user-owned pending-request RLS and admin review/update rules.
+-- The trigger ensures a direct legacy insert cannot choose its own amount.
 grant execute on function public.submit_subscription_request(text, text, text)
   to authenticated;
 revoke all on function public.submit_subscription_request(text, text, text)
