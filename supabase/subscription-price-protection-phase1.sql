@@ -88,7 +88,7 @@ begin
       using errcode = '22023';
   end if;
 
-  if p_billing_period not in ('monthly', 'yearly') then
+  if p_billing_period is null or p_billing_period not in ('monthly', 'yearly') then
     raise exception 'Billing period must be monthly or yearly.'
       using errcode = '22023';
   end if;
