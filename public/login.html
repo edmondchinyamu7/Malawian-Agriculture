@@ -94,10 +94,6 @@
       color: #0b6245;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
-    .auth-tab-btn#adminTab.active {
-      color: #064e3b;
-      font-weight: 850;
-    }
     .form-group {
       margin-bottom: 16px;
     }
@@ -280,10 +276,6 @@
           <div class="auth-tabs" role="tablist">
             <button id="loginTab" class="auth-tab-btn active" type="button" role="tab" aria-selected="true" data-i18n="authTabLogin">Lowani</button>
             <button id="signupTab" class="auth-tab-btn" type="button" role="tab" aria-selected="false" data-i18n="authTabSignup">Lembetsani</button>
-            <button id="adminTab" class="auth-tab-btn" type="button" role="tab" aria-selected="false">
-              <svg class="pro-icon" style="width:15px;height:15px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>Admin</span>
-            </button>
           </div>
 
           <!-- Auth Form -->
@@ -301,7 +293,7 @@
 
             <div class="form-group">
               <label for="email" id="emailLabel" data-i18n="authLabelEmail">Keyala ya imelo (Email)</label>
-              <input class="form-control" id="email" type="email" required autocomplete="email" placeholder="alimi@example.mw">
+              <input class="form-control" id="email" type="email" required autocomplete="email" placeholder="name@example.com">
             </div>
 
             <div class="form-group" id="passwordGroup">
@@ -322,8 +314,6 @@
 
           <div class="auth-helper-notes">
             <p id="resetBackNote" hidden><button type="button" id="backToLoginBtn" class="forgot-link-btn">← Bwererani ku Lowani (Back to Sign In)</button></p>
-            <p id="adminLinkNote">Malo oyang'anira: <a href="login.html?admin=true" id="adminSwitchLink">Lowani ku Admin Portal ↗</a></p>
-            <p id="farmerLinkNote" hidden>Alimi ndi ophunzira: <a href="login.html" id="farmerSwitchLink">← Bwererani pa akaunti ya alimi</a></p>
             <p>Ulimi wa Malawi • <a href="index.html" data-i18n="authReturnHome">Bwererani poyambira</a></p>
           </div>
         </div>
@@ -385,7 +375,6 @@
             <li><a href="index.html" data-i18n="footerHome">Poyambira</a></li>
             <li><a href="modules.html" data-i18n="footerAllModules">Mitu yonse ya ulimi</a></li>
             <li><a href="login.html" data-i18n="footerFarmerLogin">Akaunti ya Mlimi (Lowani)</a></li>
-            <li><a href="pages/admin.html" data-i18n="footerAdmin">Uyang'anire wa msika</a></li>
             <li><a href="index.html#support" data-i18n="footerSupport">Thandizo la zaulimi</a></li>
           </ul>
         </div>
@@ -450,15 +439,7 @@
         $('forgotPasswordBtn').textContent = (lang === 'en') ? 'Forgot password?' : 'Mwaiwala mawu achinsinsi?';
         $('forgotPasswordBtn').hidden = (mode !== 'login');
       }
-      if (mode === 'admin') {
-        $('heading').textContent = (lang === 'en') ? 'Administrator Access Portal' : "Malo a Uyang'anire (Admin Portal)";
-        $('intro').textContent = (lang === 'en')
-          ? 'Sign in with your authorized administrator email and password.'
-          : "Lowani ndi imelo ndi mawu achinsinsi a administrator ovomerezeka.";
-        $('submitText').textContent = (lang === 'en') ? 'Sign in to Admin Portal' : 'Lowani mu Admin Portal';
-        $('emailLabel').textContent = (lang === 'en') ? 'Administrator Email' : 'Imelo ya Administrator';
-        $('passwordLabel').textContent = (lang === 'en') ? 'Admin Password' : 'Mawu achinsinsi a Admin (Password)';
-      } else if (mode === 'forgot') {
+      if (mode === 'forgot') {
         $('heading').textContent = (lang === 'en') ? 'Reset your password' : 'Bwezeretsani mawu achinsinsi';
         $('intro').textContent = (lang === 'en')
           ? 'Enter your registered email address and we will send you a password reset link.'
@@ -486,8 +467,6 @@
 
       const isSignup = m === 'signup';
       const isForgot = m === 'forgot';
-      const isAdmin = m === 'admin';
-
       $('namesSection').hidden = !isSignup;
       $('first').required = isSignup;
       $('last').required = isSignup;
@@ -501,26 +480,13 @@
       $('loginTab').setAttribute('aria-selected', String(m === 'login'));
       $('signupTab').classList.toggle('active', isSignup);
       $('signupTab').setAttribute('aria-selected', String(isSignup));
-      $('adminTab').classList.toggle('active', isAdmin);
-      $('adminTab').setAttribute('aria-selected', String(isAdmin));
-
-      if (isAdmin) {
-        $('email').type = 'email';
-        $('email').placeholder = 'popeeadlegacycompany@gmail.com';
-        if ($('adminLinkNote')) $('adminLinkNote').hidden = true;
-        if ($('farmerLinkNote')) $('farmerLinkNote').hidden = false;
-        if ($('resetBackNote')) $('resetBackNote').hidden = true;
-      } else if (isForgot) {
+      if (isForgot) {
         $('email').type = 'email';
         $('email').placeholder = 'alimi@example.mw';
-        if ($('adminLinkNote')) $('adminLinkNote').hidden = true;
-        if ($('farmerLinkNote')) $('farmerLinkNote').hidden = true;
         if ($('resetBackNote')) $('resetBackNote').hidden = false;
       } else {
         $('email').type = 'email';
         $('email').placeholder = 'alimi@example.mw';
-        if ($('adminLinkNote')) $('adminLinkNote').hidden = false;
-        if ($('farmerLinkNote')) $('farmerLinkNote').hidden = true;
         if ($('resetBackNote')) $('resetBackNote').hidden = true;
       }
 
@@ -529,11 +495,8 @@
 
     $('loginTab').addEventListener('click', () => setMode('login'));
     $('signupTab').addEventListener('click', () => setMode('signup'));
-    $('adminTab').addEventListener('click', () => setMode('admin'));
     $('forgotPasswordBtn')?.addEventListener('click', () => setMode('forgot'));
     $('backToLoginBtn')?.addEventListener('click', () => setMode('login'));
-    $('adminSwitchLink')?.addEventListener('click', (e) => { e.preventDefault(); setMode('admin'); });
-    $('farmerSwitchLink')?.addEventListener('click', (e) => { e.preventDefault(); setMode('login'); });
 
     window.addEventListener('languageChanged', updateLanguageLabels);
 
@@ -543,7 +506,8 @@
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+          'Authorization': `Bearer ${accessToken}`,
+          'X-Requested-With': 'fetch'
         },
         body: JSON.stringify({ accessToken })
       });
@@ -565,50 +529,62 @@
       return sessionData;
     }
 
-    function getSafeAdminRedirect() {
-      const target = urlParams.get('redirect');
-      if (target && target.startsWith('/') && !target.startsWith('//') && !target.includes('login')) {
-        return target;
+    function sanitizeLocalRedirect(rawTarget, fallback, blockedKeyword) {
+      if (typeof rawTarget !== 'string') return fallback;
+      const candidate = rawTarget.trim();
+      if (!candidate || !candidate.startsWith('/') || candidate.startsWith('//') || candidate.includes('\\') || /[\u0000-\u001F\u007F]/.test(candidate)) {
+        return fallback;
       }
-      return '/pages/admin.html';
+      try {
+        const parsed = new URL(candidate, window.location.origin);
+        if (parsed.origin !== window.location.origin) return fallback;
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return fallback;
+        const safePath = parsed.pathname + parsed.search + parsed.hash;
+        if (!safePath.startsWith('/') || safePath.startsWith('//')) return fallback;
+        if (blockedKeyword && safePath.toLowerCase().includes(blockedKeyword)) return fallback;
+        return safePath;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function getSafeAdminRedirect() {
+      return sanitizeLocalRedirect(urlParams.get('redirect'), '/pages/admin.html', 'login');
     }
 
     // Check if user is already authenticated (farmer or admin)
     async function checkCurrentSession() {
       try {
-        if (mode === 'admin') {
-          const srvRes = await fetch('/api/admin/session', { credentials: 'same-origin' });
-          if (srvRes.ok) {
-            const srvData = await srvRes.json().catch(() => ({}));
-            if (srvData.authenticated) {
-              window.location.replace(getSafeAdminRedirect());
-              return;
-            }
+        const srvRes = await fetch('/api/admin/session', { credentials: 'same-origin', cache: 'no-store' });
+        if (srvRes.ok) {
+          const srvData = await srvRes.json().catch(() => ({}));
+          if (srvData.authenticated) {
+            window.location.replace(getSafeAdminRedirect());
+            return;
           }
+        }
 
-          // If Supabase admin is already signed in, bridge cleanly to a server session cookie
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.access_token && session.user?.id) {
-            const { data: accessRow } = await supabase
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
+        if (user) {
+          const wantsAdmin = urlParams.get('admin') === 'true' || (urlParams.get('redirect') || '').includes('admin');
+          if (wantsAdmin && session?.access_token) {
+            const { data: adminRecord } = await supabase
               .from('admin_access')
               .select('user_id')
-              .eq('user_id', session.user.id)
+              .eq('user_id', user.id)
               .maybeSingle();
-            if (accessRow) {
+            if (adminRecord?.user_id === user.id) {
               try {
                 await establishServerAdminSession(session.access_token);
                 window.location.replace(getSafeAdminRedirect());
                 return;
               } catch (bridgeErr) {
-                showAlert(bridgeErr.message, 'error');
+                showAlert(bridgeErr?.message || 'Unable to restore administrator session.', 'error');
               }
             }
           }
-          return;
-        }
 
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user && mode !== 'admin') {
           $('alreadyLoggedInBox').hidden = false;
           $('sessionUserEmail').textContent = user.email || '';
           const lang = getCurrentLang();
@@ -625,10 +601,7 @@
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('admin') === 'true' || window.location.hash === '#admin') {
-      setMode('admin');
-      checkCurrentSession();
-    } else if (urlParams.get('mode') === 'forgot') {
+    if (urlParams.get('mode') === 'forgot') {
       setMode('forgot');
     } else {
       setMode('login');
@@ -685,65 +658,6 @@
       const originalText = $('submitText').textContent;
       $('submitText').textContent = lang === 'en' ? 'Please wait…' : 'Chonde dikirani…';
 
-      // 1. ADMINISTRATOR LOGIN (Supabase Auth + server-side admin_access & session cookie)
-      if (mode === 'admin') {
-        try {
-          if (!usernameInput || !password) {
-            throw new Error(lang === 'en' ? 'Enter your administrator email and password.' : 'Lembani imelo ndi mawu achinsinsi a administrator.');
-          }
-
-          if (usernameInput.includes('@')) {
-            const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-              email: usernameInput,
-              password
-            });
-            if (signInError) throw signInError;
-
-            let session = signInData?.session || null;
-            if (!session?.access_token) {
-              const { data: sessWrap } = await supabase.auth.getSession();
-              session = sessWrap?.session || null;
-            }
-            if (!signInData?.user || !session?.access_token) {
-              throw new Error(lang === 'en' ? 'Sign-in could not be verified.' : 'Tinalephera kutsimikiza kulowa kwanu.');
-            }
-
-            try {
-              await establishServerAdminSession(session.access_token);
-            } catch (srvErr) {
-              if (srvErr.status === 403) {
-                await supabase.auth.signOut();
-                throw new Error(lang === 'en'
-                  ? 'This account is not authorized for the administrator dashboard.'
-                  : 'Akauntiyi ilibe chilolezo cholowa mu dashboard ya administrator.');
-              }
-              throw srvErr;
-            }
-          } else {
-            // Optional server-env username/password admin fallback
-            const res = await fetch('/api/admin/login', {
-              method: 'POST',
-              credentials: 'same-origin',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ username: usernameInput, password })
-            });
-            const data = await res.json().catch(() => ({}));
-            if (!res.ok || !data.ok) {
-              throw new Error(data.message || (lang === 'en' ? 'Administrator sign-in failed.' : 'Zalephera kulowa mu admin portal.'));
-            }
-          }
-
-          showAlert(lang === 'en' ? 'Administrator verified. Opening dashboard…' : 'Administrator watsimikizidwa. Tikutsegula dashboard…', 'success');
-          const safeTarget = getSafeAdminRedirect();
-          setTimeout(() => window.location.assign(safeTarget), 250);
-        } catch (adminErr) {
-          showAlert(adminErr.message || (lang === 'en' ? 'Administrator sign-in failed.' : 'Zalephera kulowa mu admin portal.'), 'error');
-          submitBtn.disabled = false;
-          $('submitText').textContent = originalText;
-        }
-        return;
-      }
-
       // 2. FARMER REGISTRATION / SIGNUP (Supabase Auth)
       if (mode === 'signup') {
         if (!firstName || !lastName) {
@@ -793,23 +707,44 @@
         return;
       }
 
-      // 3. FARMER SIGN IN (Supabase Auth)
+      // One sign-in button handles both roles. Admin access is only granted
+      // after the server independently verifies the signed-in user's allow-list record.
       try {
         const authResult = await supabase.auth.signInWithPassword({
           email: usernameInput,
           password
         });
-
         if (authResult.error) throw authResult.error;
 
+        const signedInUser = authResult.data?.user;
+        const accessToken = authResult.data?.session?.access_token;
+        if (!signedInUser || !accessToken) {
+          throw new Error(lang === 'en' ? 'Sign-in could not be verified.' : 'Tinalephera kutsimikiza kulowa kwanu.');
+        }
+
+        const { data: adminRecord, error: adminLookupError } = await supabase
+          .from('admin_access')
+          .select('user_id')
+          .eq('user_id', signedInUser.id)
+          .maybeSingle();
+
+        if (adminLookupError) {
+          throw new Error(lang === 'en'
+            ? 'We could not verify your account permissions. Please try again.'
+            : 'Tinalephera kutsimikiza zilolezo za akaunti yanu. Yesaninso.');
+        }
+
+        if (adminRecord?.user_id === signedInUser.id) {
+          await establishServerAdminSession(accessToken);
+          showAlert(lang === 'en' ? 'Administrator verified. Opening dashboard…' : 'Administrator watsimikizidwa. Tikutsegula dashboard…', 'success');
+          setTimeout(() => window.location.assign(getSafeAdminRedirect()), 250);
+          return;
+        }
+
         showAlert(lang === 'en' ? 'Signed in! Redirecting…' : 'Mwalowa bwinobwino! Tikukulumikizani…', 'success');
-        const redirectUrl = urlParams.get('redirect');
+        const safeFarmerRedirect = sanitizeLocalRedirect(urlParams.get('redirect'), '/profile.html', 'admin');
         setTimeout(() => {
-          if (redirectUrl && redirectUrl.startsWith('/') && !redirectUrl.startsWith('//') && !redirectUrl.includes('admin')) {
-            window.location.assign(redirectUrl);
-          } else {
-            window.location.assign('/profile.html');
-          }
+          window.location.assign(safeFarmerRedirect);
         }, 400);
       } catch (err) {
         showAlert(err?.message || (lang === 'en' ? 'Sign-in failed. Check your email and password.' : 'Zalephera kulowa mu akaunti. Onetsetsani imelo ndi mawu achinsinsi.'), 'error');

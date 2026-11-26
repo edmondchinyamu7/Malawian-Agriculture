@@ -24,7 +24,7 @@
       </a>
       <div class="admin-sidebar-label">MAIN MENU</div>
       <nav class="admin-side-nav" aria-label="Main admin pages">
-        <a class="active" href="admin.html"><span>⌂</span> Overview</a>
+        <a class="active" aria-current="page" href="admin.html"><span>⌂</span> Overview</a>
         <a href="admin-farmers.html"><span>♙</span> Farmers</a>
         <a href="admin-crops-prices.html"><span>♧</span> Crops &amp; Prices</a>
         <a href="admin-content.html"><span>▤</span> Website Content</a>
@@ -50,34 +50,12 @@
 
     <!-- Topbar Navigation -->
     <header class="topbar">
-      <a class="brand" href="../index.html" aria-label="Ulimi wa Malawi home">
+      <a class="brand" href="admin.html" aria-label="Ulimi wa Malawi administration overview">
         <span class="brand-mark"><svg class="pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-8"/><path d="M12 14C6 14 3 10 3 4c6 0 9 3 9 10Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
         <span>ULIMI WA MALAWI<small>ADMINISTRATION PORTAL</small></span>
       </a>
-            <nav class="nav" id="nav">
-        <a href="../index.html" data-i18n="navHome">Poyambira</a>
-        <a href="crops.html" data-i18n="navCrops">Mbewu za m'Malawi</a>
-        <a href="crop-calendar.html" data-i18n="navCalendar">Kalendala ya ulimi</a>
-        <a href="../modules.html" data-i18n="navModules">Mitu yonse</a>
-        <a href="subscriptions.html" data-i18n="navSubscriptions">Mapulani</a>
-        <a href="../login.html" class="mobile-account-link" data-i18n="navLogin">Lowani / Lembetsani</a>
-      </nav>
       <div class="top-actions">
-        <div class="lang-switch" id="langSwitch" role="group" aria-label="Sankhani chilankhulo / Choose language">
-          <button class="lang-btn active" data-lang="ny" type="button" aria-pressed="true">🇲🇼 Chichewa</button>
-          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">🇬🇧 English</button>
-        </div>
-        <div class="account-area" id="accountArea">
-          <a class="account-login-link" href="/login.html" id="accountLoginLink" data-i18n="navLogin">Lowani / Lembetsani</a>
-          <div class="profile-menu" id="profileMenu" hidden>
-            <button class="profile-avatar" id="profileMenuButton" type="button" aria-label="Open profile menu" aria-expanded="false">U</button>
-            <div class="profile-dropdown" id="profileDropdown" hidden>
-              <a href="/profile.html" data-i18n="navProfile">Mbiri Yanga</a>
-              <button type="button" id="accountLogoutButton" data-i18n="navLogout">Tulukani</button>
-            </div>
-          </div>
-        </div>
-        <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false"><svg class="pro-icon menu-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <button id="adminLogoutBtn" class="btn btn-outline" type="button">Sign out</button>
       </div>
     </header>
 
@@ -85,17 +63,18 @@
     <main class="main container">
       <section class="admin-dashboard-heading" id="adminOverview">
         <div><span class="admin-eyebrow">ULIMI WA MALAWI / ADMINISTRATION</span><h1>Dashboard</h1><p>Welcome back, Administrator <span aria-hidden="true">✦</span></p></div>
-        <div class="admin-dashboard-heading-actions"><a class="admin-action-link" href="admin-crops-prices.html">＋ Add market price</a><a class="admin-action-link admin-action-secondary" href="admin-finance.html">Open analytics ↗</a></div>
+        <div class="admin-dashboard-heading-actions"><a class="admin-action-link" href="admin-crops-prices.html">＋ Add market price</a><a class="admin-action-link admin-action-secondary" href="admin-suggestions.html">Farmer suggestions</a><a class="admin-action-link admin-action-secondary" href="admin-finance.html">Open analytics ↗</a></div>
       </section>
 
       <section class="admin-overview-summary" aria-label="Live website overview">
         <div class="admin-summary-heading">
-          <div><span class="section-kicker">LIVE WEBSITE SUMMARY</span><h2>Platform at a glance</h2><p>Live totals from the market price and membership records currently available to this admin workspace.</p></div>
+          <div><span class="section-kicker">LIVE WEBSITE SUMMARY</span><h2>Platform at a glance</h2><p>Live totals from the market price, crop library, farmer feedback and membership records available to this admin workspace.</p></div>
           <span class="admin-summary-updated" id="adminSummaryUpdated">Loading website records…</span>
         </div>
         <div class="admin-summary-grid">
           <article class="admin-summary-stat"><span>Registered farmer accounts</span><strong id="overviewRegisteredFarmers">—</strong><small>Non-admin accounts in farmer profiles</small></article>
           <article class="admin-summary-stat"><span>Active farmers this month</span><strong id="overviewActiveFarmers">—</strong><small>Unique accounts with recorded activity this month</small></article>
+          <article class="admin-summary-stat"><span>Crop library records</span><strong id="overviewCropLibraryTotal">—</strong><small>Published crop guides in directory</small></article>
           <article class="admin-summary-stat"><span>Farmer suggestions</span><strong id="overviewSuggestionsTotal">—</strong><small>All suggestions submitted</small></article>
           <article class="admin-summary-stat"><span>Suggestions needing attention</span><strong id="overviewSuggestionsOpen">—</strong><small>New or currently being reviewed</small></article>
           <article class="admin-summary-stat"><span>Market price records</span><strong id="overviewPriceTotal">—</strong><small>All recorded market observations</small></article>
@@ -125,6 +104,10 @@
           <div class="admin-visual-head"><div><span class="admin-eyebrow">FARMER MEMBERSHIP</span><h2>Membership snapshot</h2><p>Subscription records available to this workspace</p></div><a href="admin-submissions.html">Review ↗</a></div>
           <div class="admin-membership-metrics"><div><span>All records</span><strong id="overviewSubscriptionTotalVisual">—</strong></div><div><span>Active</span><strong id="overviewSubscriptionActiveVisual">—</strong></div><div><span>Pending</span><strong id="overviewSubscriptionPendingVisual">—</strong></div></div>
         </article>
+        <article class="admin-visual-card admin-recent-suggestions-card">
+          <div class="admin-visual-head"><div><span class="admin-eyebrow">FARMER FEEDBACK</span><h2>Recent farmer suggestions</h2><p>Latest submissions and review statuses from farmers</p></div><a href="admin-suggestions.html">Open inbox ↗</a></div>
+          <div id="adminRecentSuggestionsActivity" class="admin-recent-activity"><p class="admin-empty-state">Loading farmer suggestions…</p></div>
+        </article>
       </section>
 
       <div id="adminRlsBanner" class="admin-card" hidden style="background:#fffbeb;border-color:#fde68a"></div>
@@ -134,6 +117,7 @@
 <section class="admin-overview-shortcuts" aria-label="Admin workspace pages">
 <a href="admin-farmers.html"><strong>Farmers</strong><span>Review farmer-submitted reports and contributors</span><b>Open page ↗</b></a>
 <a href="admin-crops-prices.html"><strong>Crops &amp; Prices</strong><span>Add, verify and manage market price records</span><b>Open page ↗</b></a>
+<a href="admin-suggestions.html"><strong>Farmer Suggestions</strong><span>Read farmer feedback, reply and export CSV</span><b>Open page ↗</b></a>
 <a href="admin-content.html"><strong>Website Content</strong><span>Preview published public website sections</span><b>Open page ↗</b></a>
 <a href="admin-submissions.html"><strong>Submissions &amp; approvals</strong><span>Review pending membership payment requests</span><b>Open page ↗</b></a>
 <a href="admin-finance.html"><strong>Analytics &amp; finance</strong><span>View account, subscription and financial records</span><b>Open page ↗</b></a>
@@ -268,7 +252,6 @@
   <!-- Modular Scripts -->
   <script type="module" src="../js/main.js"></script>
   <script type="module" src="../js/i18n.js"></script>
-  <script type="module" src="../js/navigation.js"></script>
   <script type="module" src="../js/admin.js"></script>
   <script type="module" src="../js/auth.js"></script>
 </body>

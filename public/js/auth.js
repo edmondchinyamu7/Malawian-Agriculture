@@ -44,7 +44,11 @@ export async function logoutUser() {
     await supabase.auth.signOut();
   } catch (_) {}
   try {
-    await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+    await fetch('/api/admin/logout', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'X-Requested-With': 'fetch' }
+    });
   } catch (_) {}
   window.location.assign('/login.html');
 }

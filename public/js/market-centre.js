@@ -225,11 +225,27 @@ export function renderPriceComparison() {
   }).join('');
 }
 
+function sanitizeHttpUrl(rawUrl) {
+  if (typeof rawUrl !== 'string') return '';
+  const trimmed = rawUrl.trim();
+  if (!trimmed) return '';
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+      return parsed.href;
+    }
+  } catch {
+    return '';
+  }
+  return '';
+}
+
 export function openMarketDetail(id) {
   const item = marketData.find(row => String(row.id) === String(id));
   if (!item) return;
   const checkSvg = getIconSvg('check', 'pro-icon');
   const unitNote = perKgHint(item.unit, item.priceMin, item.priceMax);
+  const safeSourceUrl = sanitizeHttpUrl(item.sourceUrl);
   const bodyHtml = `
     <div style="margin-bottom:14px"><span class="badge-verified" style="display:inline-flex;align-items:center;gap:4px">${checkSvg} Admin-verified reference observation</span></div>
     <div class="modal-grid" style="margin-bottom:16px">
@@ -246,7 +262,7 @@ export function openMarketDetail(id) {
     <p><strong>Source:</strong> ${escapeHtml(item.sourceName || item.reporter || 'Not recorded')}<br>
     <strong>Price basis:</strong> ${escapeHtml(item.priceBasis || 'Not specified')}<br>
     <strong>Record reference:</strong> ${escapeHtml(item.sourceReference || 'Not supplied')}<br>
-    ${item.sourceUrl ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Open source record ↗</a><br>` : ''}
+    ${safeSourceUrl ? `<a href="${escapeHtml(safeSourceUrl)}" target="_blank" rel="noopener noreferrer">Open source record ↗</a><br>` : ''}
     <strong>Data type:</strong> ${escapeHtml(item.sourceType || 'Published reference')}</p>
     <div class="notice"><strong>Important:</strong> This is a dated reference observation, not a live offer or guaranteed transaction price. Confirm today's price, quality grade and unit directly with the market before trading.</div>
   `;

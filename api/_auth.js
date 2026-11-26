@@ -180,10 +180,13 @@ export function buildSessionCookie(token, isSecure = false) {
     `${COOKIE_NAME}=${encodeURIComponent(token)}`,
     'HttpOnly',
     'Path=/',
-    `Max-Age=${SESSION_MAX_AGE_SECONDS}`,
-    'SameSite=Lax'
+    `Max-Age=${SESSION_MAX_AGE_SECONDS}`
   ];
-  if (isSecure) parts.push('Secure');
+  if (isSecure) {
+    parts.push('Secure', 'SameSite=None', 'Partitioned');
+  } else {
+    parts.push('SameSite=Lax');
+  }
   return parts.join('; ');
 }
 
@@ -192,10 +195,13 @@ export function buildClearCookie(isSecure = false) {
     `${COOKIE_NAME}=`,
     'HttpOnly',
     'Path=/',
-    'Max-Age=0',
-    'SameSite=Lax'
+    'Max-Age=0'
   ];
-  if (isSecure) parts.push('Secure');
+  if (isSecure) {
+    parts.push('Secure', 'SameSite=None', 'Partitioned');
+  } else {
+    parts.push('SameSite=Lax');
+  }
   return parts.join('; ');
 }
 
@@ -207,11 +213,16 @@ export function setNoStoreHeaders(res) {
 }
 
 export function getClientIp(req) {
-  const xff = req?.headers?.['x-forwarded-for'];
-  if (typeof xff === 'string' && xff.trim()) {
-    return xff.split(',')[0].trim();
+  if (process.env.VERCEL) {
+    const vercelIp = req?.headers?.['x-vercel-forwarded-for'] || req?.headers?.['x-real-ip'];
+    if (typeof vercelIp === 'string' && vercelIp.trim()) {
+      return vercelIp.split(',')[0].trim();
+    }
   }
-  return req?.ip || req?.socket?.remoteAddress || 'unknown';
+  if (typeof req?.ip === 'string' && req.ip.trim()) {
+    return req.ip.trim();
+  }
+  return req?.socket?.remoteAddress || 'unknown';
 }
 
 export function checkLoginRateLimit(req) {
@@ -248,13 +259,19 @@ export function verifySameOrigin(req) {
   const fetchSite = String(req?.headers?.['sec-fetch-site'] || '').toLowerCase();
   if (fetchSite === 'cross-site') return false;
 
-  const host = String(req?.headers?.['x-forwarded-host'] || req?.headers?.host || '').split(',')[0].trim().toLowerCase();
-  if (!host) return true;
+  const allowedHosts = new Set(
+    [req?.headers?.['x-forwarded-host'], req?.headers?.host]
+      .filter(Boolean)
+      .flatMap(val => String(val).split(',').map(h => h.trim().toLowerCase()))
+      .filter(Boolean)
+  );
+  if (allowedHosts.size === 0) return false;
 
   const origin = req?.headers?.origin;
   if (origin) {
+    if (origin === 'null') return false;
     try {
-      return new URL(origin).host.toLowerCase() === host;
+      return allowedHosts.has(new URL(origin).host.toLowerCase());
     } catch {
       return false;
     }
@@ -263,13 +280,14 @@ export function verifySameOrigin(req) {
   const referer = req?.headers?.referer;
   if (referer) {
     try {
-      return new URL(referer).host.toLowerCase() === host;
+      return allowedHosts.has(new URL(referer).host.toLowerCase());
     } catch {
       return false;
     }
   }
 
-  return true;
+  const requestedWith = String(req?.headers?.['x-requested-with'] || '').trim().toLowerCase();
+  return requestedWith === 'fetch' || requestedWith === 'xmlhttprequest';
 }
 
 export function extractBearerToken(req, body = null) {

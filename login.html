@@ -506,7 +506,8 @@
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+          'Authorization': `Bearer ${accessToken}`,
+          'X-Requested-With': 'fetch'
         },
         body: JSON.stringify({ accessToken })
       });
@@ -528,18 +529,33 @@
       return sessionData;
     }
 
-    function getSafeAdminRedirect() {
-      const target = urlParams.get('redirect');
-      if (target && target.startsWith('/') && !target.startsWith('//') && !target.includes('login')) {
-        return target;
+    function sanitizeLocalRedirect(rawTarget, fallback, blockedKeyword) {
+      if (typeof rawTarget !== 'string') return fallback;
+      const candidate = rawTarget.trim();
+      if (!candidate || !candidate.startsWith('/') || candidate.startsWith('//') || candidate.includes('\\') || /[\u0000-\u001F\u007F]/.test(candidate)) {
+        return fallback;
       }
-      return '/pages/admin.html';
+      try {
+        const parsed = new URL(candidate, window.location.origin);
+        if (parsed.origin !== window.location.origin) return fallback;
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return fallback;
+        const safePath = parsed.pathname + parsed.search + parsed.hash;
+        if (!safePath.startsWith('/') || safePath.startsWith('//')) return fallback;
+        if (blockedKeyword && safePath.toLowerCase().includes(blockedKeyword)) return fallback;
+        return safePath;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function getSafeAdminRedirect() {
+      return sanitizeLocalRedirect(urlParams.get('redirect'), '/pages/admin.html', 'login');
     }
 
     // Check if user is already authenticated (farmer or admin)
     async function checkCurrentSession() {
       try {
-        const srvRes = await fetch('/api/admin/session', { credentials: 'same-origin' });
+        const srvRes = await fetch('/api/admin/session', { credentials: 'same-origin', cache: 'no-store' });
         if (srvRes.ok) {
           const srvData = await srvRes.json().catch(() => ({}));
           if (srvData.authenticated) {
@@ -548,8 +564,27 @@
           }
         }
 
-        const { data: { user } } = await supabase.auth.getUser();
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user;
         if (user) {
+          const wantsAdmin = urlParams.get('admin') === 'true' || (urlParams.get('redirect') || '').includes('admin');
+          if (wantsAdmin && session?.access_token) {
+            const { data: adminRecord } = await supabase
+              .from('admin_access')
+              .select('user_id')
+              .eq('user_id', user.id)
+              .maybeSingle();
+            if (adminRecord?.user_id === user.id) {
+              try {
+                await establishServerAdminSession(session.access_token);
+                window.location.replace(getSafeAdminRedirect());
+                return;
+              } catch (bridgeErr) {
+                showAlert(bridgeErr?.message || 'Unable to restore administrator session.', 'error');
+              }
+            }
+          }
+
           $('alreadyLoggedInBox').hidden = false;
           $('sessionUserEmail').textContent = user.email || '';
           const lang = getCurrentLang();
@@ -707,13 +742,9 @@
         }
 
         showAlert(lang === 'en' ? 'Signed in! Redirecting…' : 'Mwalowa bwinobwino! Tikukulumikizani…', 'success');
-        const redirectUrl = urlParams.get('redirect');
+        const safeFarmerRedirect = sanitizeLocalRedirect(urlParams.get('redirect'), '/profile.html', 'admin');
         setTimeout(() => {
-          if (redirectUrl && redirectUrl.startsWith('/') && !redirectUrl.startsWith('//') && !redirectUrl.includes('admin')) {
-            window.location.assign(redirectUrl);
-          } else {
-            window.location.assign('/profile.html');
-          }
+          window.location.assign(safeFarmerRedirect);
         }, 400);
       } catch (err) {
         showAlert(err?.message || (lang === 'en' ? 'Sign-in failed. Check your email and password.' : 'Zalephera kulowa mu akaunti. Onetsetsani imelo ndi mawu achinsinsi.'), 'error');

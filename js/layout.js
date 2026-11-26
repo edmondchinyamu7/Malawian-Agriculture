@@ -9,7 +9,10 @@
     );
 
     return Promise.all(placeholders.map(async function (placeholder) {
-      var path = placeholder.getAttribute('data-include');
+      var path = String(placeholder.getAttribute('data-include') || '').trim();
+      if (!/^(?:partials|\.\.\/partials)\/[a-z0-9-]+\.html$/i.test(path)) {
+        throw new Error('Blocked unsafe page module include path.');
+      }
       var response = await fetch(path, { headers: { 'Accept': 'text/html' } });
       if (!response.ok) {
         throw new Error('Could not load page module: ' + path + ' (' + response.status + ')');
