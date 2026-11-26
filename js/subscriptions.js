@@ -393,21 +393,12 @@ async function submitPaymentRequest() {
   }
 
   try {
-    const amount = currentBilling === 'yearly'
-      ? selectedPlanForPayment.yearly_price
-      : selectedPlanForPayment.monthly_price;
-
-    const { error } = await supabase.from('subscriptions').insert({
-      user_id: acc.user.id,
-      plan_id: selectedPlanForPayment.id,
-      status: 'pending',
-      provider: 'manual',
-      provider_reference: refValue,
-      billing_period: currentBilling,
-      amount_mwk: amount,
-      started_at: null,
-      expires_at: null,
-      auto_renewing: false
+    // The database calculates amount_mwk from the trusted subscription_plans
+    // record. Never send a price from browser state as an authoritative value.
+    const { error } = await supabase.rpc('submit_subscription_request', {
+      p_plan_id: selectedPlanForPayment.id,
+      p_billing_period: currentBilling,
+      p_provider_reference: refValue
     });
 
     if (error) throw error;
@@ -468,6 +459,7 @@ async function initSubscriptions() {
         const local = DEFAULT_PLANS.find(p => p.id === dbPlan.id);
         if (local) {
           if (dbPlan.monthly_price_mwk !== undefined) local.monthly_price = dbPlan.monthly_price_mwk;
+          if (dbPlan.yearly_price_mwk !== undefined) local.yearly_price = dbPlan.yearly_price_mwk;
           if (dbPlan.name) local.name = dbPlan.name;
           if (dbPlan.description) local.description_en = dbPlan.description;
         }
