@@ -459,6 +459,7 @@ async function initSubscriptions() {
         const local = DEFAULT_PLANS.find(p => p.id === dbPlan.id);
         if (local) {
           if (dbPlan.monthly_price_mwk !== undefined) local.monthly_price = dbPlan.monthly_price_mwk;
+          if (dbPlan.yearly_price_mwk !== undefined) local.yearly_price = dbPlan.yearly_price_mwk;
           if (dbPlan.name) local.name = dbPlan.name;
           if (dbPlan.description) local.description_en = dbPlan.description;
         }
